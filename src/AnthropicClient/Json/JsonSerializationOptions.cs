@@ -14,6 +14,8 @@ static class JsonSerializationOptions
       new ContentConverter(),
       new ToolChoiceConverter(),
       new ErrorConverter(),
+      new EventDataConverter(),
+      new ContentDeltaConverter(),
     },
     DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
   };

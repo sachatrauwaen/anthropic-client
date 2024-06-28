@@ -13,12 +13,12 @@ public class ToolResultContent : Content
   /// Gets the tool use ID of the content.
   /// </summary>
   [JsonPropertyName("tool_use_id")]
-  public string ToolUseId { get; set; } = string.Empty;
+  public string ToolUseId { get; init; } = string.Empty;
 
   /// <summary>
   /// Gets the content of the tool result.
   /// </summary>
-  public string Content { get; set; } = string.Empty;
+  public string Content { get; init; } = string.Empty;
 
   [JsonConstructor]
   internal ToolResultContent() : base(ContentType.ToolResult) { }

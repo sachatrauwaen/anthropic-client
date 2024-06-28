@@ -11,11 +11,11 @@ public class ChatUsage
   /// Gets the number of input tokens used.
   /// </summary>
   [JsonPropertyName("input_tokens")]
-  public int InputTokens { get; set; }
+  public int InputTokens { get; init; }
 
   /// <summary>
   /// Gets the number of output tokens used.
   /// </summary>
   [JsonPropertyName("output_tokens")]
-  public int OutputTokens { get; set; }
+  public int OutputTokens { get; init; }
 }
