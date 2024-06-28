@@ -24,7 +24,7 @@ public class AnthropicResult<T>
   /// <summary>
   /// The request ID of the operation.
   /// </summary>
-  public string RequestId { get; }
+  public AnthropicHeaders Headers { get; }
 
   /// <summary>
   /// Initializes a new instance of the <see cref="AnthropicResult{T}"/> class.
@@ -32,35 +32,35 @@ public class AnthropicResult<T>
   /// <param name="value">The value of the result.</param>
   /// <param name="error">The error of the result.</param>
   /// <param name="isSuccess">Indicates whether the operation was successful.</param>
-  /// <param name="requestId">The request ID of the operation.</param>
+  /// <param name="headers">The Anthropic headers for the result.</param>
   /// <returns>A new instance of the <see cref="AnthropicResult{T}"/> class.</returns>
-  protected AnthropicResult(T value, AnthropicError error, bool isSuccess, string requestId)
+  protected AnthropicResult(T value, AnthropicError error, bool isSuccess, AnthropicHeaders headers)
   {
     Value = value;
     Error = error;
     IsSuccess = isSuccess;
-    RequestId = requestId;
+    Headers = headers;
   }
 
   /// <summary>
   /// Creates a successful result.
   /// </summary>
   /// <param name="value">The value of the result.</param>
-  /// <param name="requestId">The request ID of the operation.</param>
+  /// <param name="headers">The Anthropic headers for the result.</param>
   /// <returns>A new instance of the <see cref="AnthropicResult{T}"/> class.</returns>
-  public static AnthropicResult<T> Success(T value, string requestId)
+  public static AnthropicResult<T> Success(T value, AnthropicHeaders headers)
   {
-    return new AnthropicResult<T>(value, null!, true, requestId);
+    return new AnthropicResult<T>(value, null!, true, headers);
   }
 
   /// <summary>
   /// Creates a failed result.
   /// </summary>
   /// <param name="error">The error of the result.</param>
-  /// <param name="requestId">The request ID of the operation.</param>
+  /// <param name="headers">The Anthropic headers for the result.</param>
   /// <returns>A new instance of the <see cref="AnthropicResult{T}"/> class.</returns>
-  public static AnthropicResult<T> Failure(AnthropicError error, string requestId)
+  public static AnthropicResult<T> Failure(AnthropicError error, AnthropicHeaders headers)
   {
-    return new AnthropicResult<T>(default!, error, false, requestId);
+    return new AnthropicResult<T>(default!, error, false, headers);
   }
 }

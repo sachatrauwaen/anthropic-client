@@ -7,7 +7,7 @@ public class ContentStartEventData : EventData
   public int Index { get; init; }
 
   [JsonPropertyName("content_block")]
-  public Content ContentBlock { get; init; }
+  public Content ContentBlock { get; init; } = default!;
 
   [JsonConstructor]
   internal ContentStartEventData() : base(EventType.ContentBlockStart)

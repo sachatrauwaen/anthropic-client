@@ -4,8 +4,8 @@ namespace AnthropicClient.Models;
 
 public class MessageDeltaEventData : EventData
 {
-  public MessageDelta Delta { get; init; }
-  public ChatUsage Usage { get; init; }
+  public MessageDelta Delta { get; init; } = new();
+  public ChatUsage Usage { get; init; } = new();
 
   [JsonConstructor]
   internal MessageDeltaEventData() : base(EventType.MessageDelta)

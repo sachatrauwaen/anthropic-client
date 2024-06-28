@@ -5,5 +5,5 @@ public class EndToEndTest(
   ConfigurationFixture configFixture
 ) : IClassFixture<HttpClientFixture>, IClassFixture<ConfigurationFixture>
 {
-  protected readonly Client _client = new(configFixture.AnthropicApiKey, httpClientFixture.HttpClient);
+  protected readonly AnthropicApiClient _client = new(configFixture.AnthropicApiKey, httpClientFixture.HttpClient);
 }

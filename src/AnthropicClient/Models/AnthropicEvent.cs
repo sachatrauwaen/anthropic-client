@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace AnthropicClient.Models;
 
-public record AnthropicEvent
+public class AnthropicEvent
 {
   public string Type { get; init; } = string.Empty;
   public EventData Data { get; init; } = default!;

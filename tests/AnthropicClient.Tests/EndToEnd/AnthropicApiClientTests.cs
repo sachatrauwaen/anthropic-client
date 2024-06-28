@@ -6,7 +6,7 @@ public class ClientTests(
 ) : EndToEndTest(httpClientFixture, configFixture)
 {
   [Fact]
-  public async Task CreateChatMessage_WhenCalled_ShouldReturnChatResponse()
+  public async Task CreateChatMessage_WhenCalled_ItShouldReturnChatResponse()
   {
     var request = new ChatMessageRequest(
       model: AnthropicModels.Claude3Haiku,
@@ -20,7 +20,7 @@ public class ClientTests(
   }
 
   [Fact]
-  public async Task CreateChatMessage_WhenCalledWithStreamRequest_IteratesOverChatResponse()
+  public async Task CreateChatMessage_WhenCalledWithStreamRequest_ItShouldReturnEvents()
   {
     var request = new StreamChatMessageRequest(
       model: AnthropicModels.Claude3Haiku,
@@ -37,5 +37,25 @@ public class ClientTests(
     }
 
     events.Should().NotBeEmpty();
+  }
+
+  [Fact]
+  public async Task CreateChatMessage_WhenCalledWithStreamRequest_ItShouldYieldAMessageCompleteEvent()
+  {
+    var request = new StreamChatMessageRequest(
+      model: AnthropicModels.Claude3Haiku,
+      messages: [new(MessageRole.User, [new TextContent("Hello!")])]
+    );
+
+    var response = _client.CreateChatMessageAsync(request);
+  
+    await foreach (var e in response)
+    {
+      if (e.Data is MessageCompleteEventData messageCompleteData)
+      {
+        messageCompleteData.Message.Should().NotBeNull();
+        break;
+      }
+    }
   }
 }
