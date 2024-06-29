@@ -67,13 +67,52 @@ public class AnthropicHeaders
   /// <returns>A new instance of the <see cref="AnthropicHeaders"/> class.</returns>
   public AnthropicHeaders(HttpResponseHeaders headers)
   {
-    RequestId = headers.GetValues(RequestIdHeaderKey).FirstOrDefault() ?? string.Empty;
-    RateLimitRequestsLimit = int.Parse(headers.GetValues(RateLimitRequestsLimitHeaderKey).FirstOrDefault() ?? "0");
-    RateLimitRequestsRemaining = int.Parse(headers.GetValues(RateLimitRequestsRemainingHeaderKey).FirstOrDefault() ?? "0");
-    RateLimitRequestsReset = DateTimeOffset.Parse(headers.GetValues(RateLimitRequestsResetHeaderKey).FirstOrDefault() ?? DateTimeOffset.MinValue.ToString());
-    RateLimitTokensLimit = int.Parse(headers.GetValues(RateLimitTokensLimitHeaderKey).FirstOrDefault() ?? "0");
-    RateLimitTokensRemaining = int.Parse(headers.GetValues(RateLimitTokensRemainingHeaderKey).FirstOrDefault() ?? "0");
-    RateLimitTokensReset = DateTimeOffset.Parse(headers.GetValues(RateLimitTokensResetHeaderKey).FirstOrDefault() ?? DateTimeOffset.MinValue.ToString());
-    RetryAfter = int.Parse(headers.GetValues(RetryAfterHeaderKey).FirstOrDefault() ?? "0");
+    RequestId = headers.TryGetValues(RequestIdHeaderKey, out var requestIdValues)
+      ? requestIdValues.FirstOrDefault()
+      : string.Empty;
+    
+    RateLimitRequestsLimit = int.Parse(
+      headers.TryGetValues(RateLimitRequestsLimitHeaderKey, out var requestLimitValues)
+        ? requestLimitValues.FirstOrDefault()
+        : "0"
+    );
+    
+    RateLimitRequestsRemaining = int.Parse(
+      headers.TryGetValues(RateLimitRequestsRemainingHeaderKey, out var remainingRequestsValues)
+        ? remainingRequestsValues.FirstOrDefault()
+        : "0"
+    );
+    
+    RateLimitRequestsReset = DateTimeOffset.Parse(
+      headers.TryGetValues(RateLimitRequestsResetHeaderKey, out var requestResetValues)
+        ? requestResetValues.FirstOrDefault()
+        : DateTimeOffset.MinValue.ToString()
+    );
+    
+    
+    RateLimitTokensLimit = int.Parse(
+      headers.TryGetValues(RateLimitTokensLimitHeaderKey, out var limitValues)
+        ? limitValues.FirstOrDefault()
+        : "0"
+    );
+    
+    RateLimitTokensRemaining = int.Parse(
+      headers.TryGetValues(RateLimitTokensRemainingHeaderKey, out var remainingTokensValues)
+        ? remainingTokensValues.FirstOrDefault()
+        : "0"
+    );
+    
+    RateLimitTokensReset = DateTimeOffset.Parse(
+      headers.TryGetValues(RateLimitTokensResetHeaderKey, out var tokenResetValues) 
+        ? tokenResetValues.FirstOrDefault() 
+        : DateTimeOffset.MinValue.ToString()
+    );
+    
+    
+    RetryAfter = int.Parse(
+      headers.TryGetValues(RetryAfterHeaderKey, out var retryValues) 
+        ? retryValues.FirstOrDefault() 
+        : "0"
+    );
   }
 }
