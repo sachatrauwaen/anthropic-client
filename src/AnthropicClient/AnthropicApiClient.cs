@@ -35,7 +35,6 @@ public class AnthropicApiClient : IAnthropicApiClient
   private const string ApiKeyHeader = "x-api-key";
   private const string MessagesEndpoint = "messages";
   private const string JsonContentType = "application/json";
-  private const string RequestIdHeader = "request-id";
   private const string EventPrefix = "event:";
   private const string DataPrefix = "data:";
   private readonly Dictionary<string, string> _defaultHeaders = new()
