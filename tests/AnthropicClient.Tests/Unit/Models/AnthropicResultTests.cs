@@ -6,25 +6,25 @@ public class AnthropicResultTests
   public void Success_WhenCalled_ItShouldReturnSuccessResult()
   {
     var value = "success";
-    var requestId = Guid.NewGuid().ToString();
+    var headers = new AnthropicHeaders();
 
-    var actual = AnthropicResult<string>.Success(value, requestId);
+    var actual = AnthropicResult<string>.Success(value, headers);
 
     actual.IsSuccess.Should().BeTrue();
     actual.Value.Should().Be(value);
-    actual.RequestId.Should().Be(requestId);
+    actual.Headers.Should().Be(headers);
   }
 
   [Fact]
   public void Failure_WhenCalled_ItShouldReturnFailureResult()
   {
     var error = new AnthropicError(new AuthenticationError("message"));
-    var requestId = Guid.NewGuid().ToString();
+    var headers = new AnthropicHeaders();
 
-    var actual = AnthropicResult<string>.Failure(error, requestId);
+    var actual = AnthropicResult<string>.Failure(error, headers);
 
     actual.IsSuccess.Should().BeFalse();
     actual.Error.Should().Be(error);
-    actual.RequestId.Should().Be(requestId);
+    actual.Headers.Should().Be(headers);
   }
 }

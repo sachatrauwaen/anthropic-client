@@ -1,9 +1,6 @@
 namespace AnthropicClient.Tests.EndToEnd;
 
-public class ClientTests(
-  HttpClientFixture httpClientFixture,
-  ConfigurationFixture configFixture
-) : EndToEndTest(httpClientFixture, configFixture)
+public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(configFixture)
 {
   [Fact]
   public async Task CreateChatMessage_WhenCalled_ItShouldReturnChatResponse()
