@@ -172,6 +172,13 @@ public class AnthropicApiClient : IAnthropicApiClient
         chatResponse is not null
       )
       {
+        var existingUsage = chatResponse.Usage;
+        var newUsage = new ChatUsage()
+        {
+          InputTokens = existingUsage.InputTokens + msgDeltaData.Usage.InputTokens,
+          OutputTokens = existingUsage.OutputTokens + msgDeltaData.Usage.OutputTokens,
+        };
+
         chatResponse = new ChatResponse()
         {
           Id = chatResponse.Id,
@@ -180,7 +187,7 @@ public class AnthropicApiClient : IAnthropicApiClient
           StopReason = msgDeltaData.Delta.StopReason,
           StopSequence = msgDeltaData.Delta.StopSequence,
           Type = chatResponse.Type,
-          Usage = msgDeltaData.Usage,
+          Usage = newUsage,
           Content = chatResponse.Content,
         };
       }
