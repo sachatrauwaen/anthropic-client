@@ -25,7 +25,7 @@ public class Tool
   /// Gets the input schema of the tool.
   /// </summary>
   [JsonPropertyName("input_schema")]
-  public JsonNode InputSchema { get; }
+  public JsonObject InputSchema { get; }
 
   /// <summary>
   /// Gets the function of the tool.
@@ -109,6 +109,15 @@ public class Tool
   /// <exception cref="ArgumentNullException">Thrown when <paramref name="name"/>, <paramref name="description"/>, or <paramref name="func"/> is null.</exception>
   /// <returns>The created tool as instance of <see cref="Tool"/>.</returns>
   public static Tool CreateFromFunction<TResult>(string name, string description, Func<TResult> func)
+  {
+    ArgumentValidator.ThrowIfNull(name, nameof(name));
+    ArgumentValidator.ThrowIfNull(description, nameof(description));
+    ArgumentValidator.ThrowIfNull(func, nameof(func));
+
+    return new Tool(name, description, new AnthropicFunction(func.Method, func.Target));
+  }
+
+  public static Tool CreateFromFunction<T1, TResult>(string name, string description, Func<T1, TResult> func)
   {
     ArgumentValidator.ThrowIfNull(name, nameof(name));
     ArgumentValidator.ThrowIfNull(description, nameof(description));
