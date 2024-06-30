@@ -46,7 +46,6 @@ static class JsonSchemaGenerator
       }
 
       var attribute = parameter.GetCustomAttribute<FunctionParameterAttribute>();
-
       var paramName = attribute?.Name ?? parameter.Name;
       var paramDescription = attribute?.Description ?? string.Empty;
       var paramRequired = attribute?.Required ?? !parameter.HasDefaultValue;
@@ -78,7 +77,7 @@ static class JsonSchemaGenerator
     {
       return new JsonObject()
       {
-        [RefKey] = $"#/definitions/{type.FullName}"
+        [RefKey] = GetDefinitionPath(type)
       };
     }
 
@@ -151,14 +150,65 @@ static class JsonSchemaGenerator
   private static JsonObject GenerateTypeDefinitionSchema(Type type, JsonObject inputSchema)
   {
     var definitions = inputSchema[DefinitionsKey] ?? new JsonObject();
-    var typeSchema = new JsonObject();
+    var typeSchema = new JsonObject()
+    {
+      [TypeKey] = ObjectType
+    };
 
-    // TODO: Implement schema generation for complex types
+    List<MemberInfo> members = [];
+    var bindingFlags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly;
+    members.AddRange(type.GetProperties(bindingFlags));
+    members.AddRange(type.GetFields(bindingFlags));
 
+    var memberProperties = new JsonObject();
+    var memberRequiredProperties = new JsonArray();
+
+    foreach (var member in members)
+    {
+      JsonObject memberProperty;
+
+      var memberType = member switch
+      {
+        PropertyInfo property => property.PropertyType,
+        FieldInfo field => field.FieldType,
+        _ => throw new InvalidOperationException("Member is not a property or field")
+      };
+
+      // TODO: Provide attribute to allow specifying...
+      // 1. Name
+      // 2. Description
+      // 3. Required
+      // 4. Default values
+      // 5. Possible values
+      var memberPropertyName = memberType.Name;
+      var memberDescription = string.Empty;
+      var memberRequired = Nullable.GetUnderlyingType(memberType) is null;
+
+      memberProperty = definitions.AsObject().ContainsKey(memberType.FullName)
+        ? new JsonObject()
+          {
+            [RefKey] = GetDefinitionPath(memberType)
+          }
+        : GenerateParameterTypeSchema(memberType, inputSchema);
+
+      if (memberRequired)
+      {
+        memberRequiredProperties.Add(memberPropertyName);
+      }
+
+      memberProperty[DescriptionKey] = memberDescription;
+      memberProperties[memberPropertyName] = memberProperty;
+    }
+
+    typeSchema[PropertiesKey] = memberProperties;
+    typeSchema[RequiredPropertiesKey] = memberRequiredProperties;
     definitions[type.FullName] = typeSchema;
+    inputSchema[DefinitionsKey] = definitions;
     return new JsonObject()
     {
-      [RefKey] = $"#/definitions/{type.FullName}"
+      [RefKey] = GetDefinitionPath(type)
     };
   }
+
+  private static string GetDefinitionPath(Type type) => $"#/definitions/{type.FullName}";
 }

@@ -447,7 +447,61 @@ public class JsonSchemaGeneratorTestData : IEnumerable<object[]>
         },
       }
     };
+
+    // class parameter type with no attributes
+    yield return new object[]
+    {
+      Tool.CreateFromFunction(TestToolName,TestToolDescription,(Person person) => person),
+      new JsonObject()
+      {
+        ["type"] = "object",
+        ["definitions"] = new JsonObject()
+        {
+          [$"{typeof(Person).FullName}"] = new JsonObject()
+          {
+            ["type"] = "object",
+            ["properties"] = new JsonObject()
+            {
+              ["String"] = new JsonObject()
+              {
+                ["type"] = "string",
+                ["description"] = string.Empty
+              },
+              ["Int32"] = new JsonObject()
+              {
+                ["type"] = "integer",
+                ["description"] = string.Empty
+              }
+            },
+            ["required"] = new JsonArray()
+            {
+              "String",
+              "Int32"
+            }
+          }
+        },
+        ["properties"] = new JsonObject()
+        {
+          ["person"] = new JsonObject()
+          {
+            ["$ref"] = $"#/definitions/{typeof(Person).FullName}",
+            ["description"] = string.Empty
+          }
+        },
+        ["required"] = new JsonArray()
+        {
+          "person",
+        },
+      }
+    };
   }
 
   IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+}
+
+
+class Person
+{
+  public string Name { get; } = string.Empty;
+  public int Age { get; }
 }
