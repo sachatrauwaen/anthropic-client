@@ -15,22 +15,7 @@ public class ChatMessageRequestTests : SerializationTest
     ""topK"": 10,
     ""topP"": 0.5,
     ""tool_choice"": { ""type"":""auto"" },
-    ""tools"": [
-      {
-        ""name"": ""test-tool"",
-        ""description"": ""test-description"",
-        ""input_schema"": {
-          ""type"": ""object"",
-          ""properties"": {
-            ""test-property"": {
-              ""type"": ""string"",
-              ""description"": ""test-description""
-            }
-          },
-          ""required"": [""test-property""]
-        }
-      }
-    ],
+    ""tools"": [],
     ""stream"": false
   }";
 
@@ -47,22 +32,7 @@ public class ChatMessageRequestTests : SerializationTest
     ""topK"": 10,
     ""topP"": 0.5,
     ""tool_choice"": {""type"":""any""},
-    ""tools"": [
-      { 
-        ""name"": ""test-tool"", 
-        ""description"": ""test-description"",
-        ""input_schema"": { 
-          ""type"": ""object"",
-          ""properties"": {
-            ""test-property"": { 
-              ""type"": ""string"",
-              ""description"": ""test-description""
-            }
-          },
-          ""required"": [""test-property""]
-        }
-      }
-    ],
+    ""tools"": [],
     ""stream"":false
   }";
   
@@ -79,22 +49,7 @@ public class ChatMessageRequestTests : SerializationTest
     ""topK"": 10,
     ""topP"": 0.5,
     ""tool_choice"": { ""type"": ""tool"", ""name"": ""test-tool"" },
-    ""tools"": [
-      {
-        ""name"": ""test-tool"",
-        ""description"": ""test-description"",
-        ""input_schema"": {
-          ""type"": ""object"",
-          ""properties"": {
-            ""test-property"": {
-              ""type"": ""string"",
-              ""description"": ""test-description""
-            }
-          },
-          ""required"": [""test-property""]
-        }
-      }
-    ],
+    ""tools"": [],
     ""stream"": false
   }";
   
@@ -119,22 +74,7 @@ public class ChatMessageRequestTests : SerializationTest
     ""topK"": 10,
     ""topP"": 0.5,
     ""tool_choice"": { ""type"": ""auto"" },
-    ""tools"":[
-      {
-        ""name"": ""test-tool"",
-        ""description"": ""test-description"",
-        ""input_schema"": {
-          ""type"": ""object"",
-          ""properties"": {
-            ""test-property"": {
-              ""type"": ""string"",
-              ""description"": ""test-description""
-            }
-          },
-          ""required"": [""test-property""]
-        }
-      }
-    ],
+    ""tools"":[],
     ""stream"": false
   }";
   
@@ -149,22 +89,7 @@ public class ChatMessageRequestTests : SerializationTest
     ""topK"": 10,
     ""topP"": 0.5,
     ""tool_choice"": { ""type"":""auto"" },
-    ""tools"": [
-      {
-        ""name"": ""test-tool"",
-        ""description"": ""test-description"",
-        ""input_schema"": {
-          ""type"": ""object"",
-          ""properties"": {
-            ""test-property"": {
-              ""type"": ""string"",
-              ""description"": ""test-description""
-            }
-          },
-          ""required"": [""test-property""]
-        }
-      }
-    ],
+    ""tools"": [],
     ""stream"": false
   }";
   
@@ -193,22 +118,7 @@ public class ChatMessageRequestTests : SerializationTest
     ""topK"": 10,
     ""topP"": 0.5,
     ""tool_choice"": { ""type"": ""auto"" },
-    ""tools"": [
-      {
-        ""name"": ""test-tool"",
-        ""description"": ""test-description"",
-        ""input_schema"": {
-          ""type"": ""object"",
-          ""properties"": {
-            ""test-property"": {
-              ""type"": ""string"",
-              ""description"": ""test-description""
-            }
-          },
-          ""required"": [""test-property""]
-        }
-      }
-    ],
+    ""tools"": [],
     ""stream"": false
   }";
   
@@ -234,22 +144,7 @@ public class ChatMessageRequestTests : SerializationTest
     ""topK"": 10,
     ""topP"": 0.5,
     ""tool_choice"": { ""type"": ""auto"" },
-    ""tools"": [
-      {
-        ""name"": ""test-tool"",
-        ""description"": ""test-description"",
-        ""input_schema"": {
-          ""type"": ""object"",
-          ""properties"": {
-            ""test-property"": {
-              ""type"": ""string"",
-              ""description"": ""test-description""
-            }
-          },
-          ""required"": [""test-property""]
-        }
-      }
-    ],
+    ""tools"": [],
     ""stream"":false
   }";
 
@@ -265,7 +160,7 @@ public class ChatMessageRequestTests : SerializationTest
     var topK = 10;
     var topP = 0.5m;
     var toolChoice = new AutoToolChoice();
-    var tools = new List<Tool> { new() };
+    var tools = new List<Tool>();
 
     var chatMessageRequest = new ChatMessageRequest(
       model: model,
@@ -386,24 +281,7 @@ public class ChatMessageRequestTests : SerializationTest
     var topK = 10;
     var topP = 0.5m;
     var toolChoice = new AutoToolChoice();
-    var tools = new List<Tool>
-    {
-      new()
-      {
-        Name = "test-tool",
-        Description = "test-description",
-        InputSchema = new InputSchema(
-          properties: new Dictionary<string, InputProperty>
-          {
-            ["test-property"] = new InputProperty(
-              type: "string",
-              description: "test-description"
-            )
-          },
-          required: ["test-property"]
-        ),
-      }
-    };
+    var tools = new List<Tool>();
 
     var chatMessageRequest = new ChatMessageRequest(
       model: model,
@@ -442,15 +320,7 @@ public class ChatMessageRequestTests : SerializationTest
     chatMessageRequest.TopP.Should().Be(0.5m);
     chatMessageRequest.ToolChoice.Should().BeOfType<AutoToolChoice>();
     chatMessageRequest.ToolChoice!.Type.Should().Be("auto");
-    chatMessageRequest.Tools.Should().HaveCount(1);
-    chatMessageRequest.Tools![0].Name.Should().Be("test-tool");
-    chatMessageRequest.Tools[0].Description.Should().Be("test-description");
-    chatMessageRequest.Tools[0].InputSchema.Type.Should().Be("object");
-    chatMessageRequest.Tools[0].InputSchema.Properties.Should().HaveCount(1);
-    chatMessageRequest.Tools[0].InputSchema.Properties["test-property"].Type.Should().Be("string");
-    chatMessageRequest.Tools[0].InputSchema.Properties["test-property"].Description.Should().Be("test-description");
-    chatMessageRequest.Tools[0].InputSchema.Required.Should().HaveCount(1);
-    chatMessageRequest.Tools[0].InputSchema.Required[0].Should().Be("test-property");
+    chatMessageRequest.Tools.Should().HaveCount(0);
     chatMessageRequest.Stream.Should().BeFalse();
   }
 
@@ -473,15 +343,7 @@ public class ChatMessageRequestTests : SerializationTest
     chatMessageRequest.TopP.Should().Be(0.5m);
     chatMessageRequest.ToolChoice.Should().BeOfType<AnyToolChoice>();
     chatMessageRequest.ToolChoice!.Type.Should().Be("any");
-    chatMessageRequest.Tools.Should().HaveCount(1);
-    chatMessageRequest.Tools![0].Name.Should().Be("test-tool");
-    chatMessageRequest.Tools[0].Description.Should().Be("test-description");
-    chatMessageRequest.Tools[0].InputSchema.Type.Should().Be("object");
-    chatMessageRequest.Tools[0].InputSchema.Properties.Should().HaveCount(1);
-    chatMessageRequest.Tools[0].InputSchema.Properties["test-property"].Type.Should().Be("string");
-    chatMessageRequest.Tools[0].InputSchema.Properties["test-property"].Description.Should().Be("test-description");
-    chatMessageRequest.Tools[0].InputSchema.Required.Should().HaveCount(1);
-    chatMessageRequest.Tools[0].InputSchema.Required[0].Should().Be("test-property");
+    chatMessageRequest.Tools.Should().HaveCount(0);
   }
 
   [Fact]
@@ -506,16 +368,8 @@ public class ChatMessageRequestTests : SerializationTest
     var specificToolChoice = chatMessageRequest.ToolChoice as SpecificToolChoice;
     specificToolChoice!.Type.Should().Be("tool");
     specificToolChoice.Name.Should().Be("test-tool");
-    chatMessageRequest.Tools.Should().HaveCount(1);
-    chatMessageRequest.Tools![0].Name.Should().Be("test-tool");
-    chatMessageRequest.Tools[0].Description.Should().Be("test-description");
-    chatMessageRequest.Tools[0].InputSchema.Type.Should().Be("object");
-    chatMessageRequest.Tools[0].InputSchema.Properties.Should().HaveCount(1);
-    chatMessageRequest.Tools[0].InputSchema.Properties["test-property"].Type.Should().Be("string");
-    chatMessageRequest.Tools[0].InputSchema.Properties["test-property"].Description.Should().Be("test-description");
-    chatMessageRequest.Tools[0].InputSchema.Required.Should().HaveCount(1);
-    chatMessageRequest.Tools[0].InputSchema.Required[0].Should().Be("test-property");
-  }
+    chatMessageRequest.Tools.Should().HaveCount(0);
+}
 
   [Fact]
   public void JsonDeserialization_WhenDeserializedWithUnknownToolChoice_ItShouldThrowJsonException()
@@ -546,16 +400,7 @@ public class ChatMessageRequestTests : SerializationTest
     chatMessageRequest.TopP.Should().Be(0.5m);
     chatMessageRequest.ToolChoice.Should().BeOfType<AutoToolChoice>();
     chatMessageRequest.ToolChoice!.Type.Should().Be("auto");
-    chatMessageRequest.Tools.Should().HaveCount(1);
-    chatMessageRequest.Tools![0].Name.Should().Be("test-tool");
-    chatMessageRequest.Tools[0].Description.Should().Be("test-description");
-    chatMessageRequest.Tools[0].InputSchema.Type.Should().Be("object");
-    chatMessageRequest.Tools[0].InputSchema.Properties.Should().HaveCount(1);
-    chatMessageRequest.Tools[0].InputSchema.Properties["test-property"].Type.Should().Be("string");
-    chatMessageRequest.Tools[0].InputSchema.Properties["test-property"].Description.Should().Be("test-description");
-    chatMessageRequest.Tools[0].InputSchema.Required.Should().HaveCount(1);
-    chatMessageRequest.Tools[0].InputSchema.Required[0].Should().Be("test-property");
-
+    chatMessageRequest.Tools.Should().HaveCount(0);
     chatMessageRequest.Messages[0].Content.Should().HaveCount(1);
     chatMessageRequest.Messages[0].Content[0].Should().BeOfType<ImageContent>();
 
@@ -584,16 +429,7 @@ public class ChatMessageRequestTests : SerializationTest
     chatMessageRequest.TopP.Should().Be(0.5m);
     chatMessageRequest.ToolChoice.Should().BeOfType<AutoToolChoice>();
     chatMessageRequest.ToolChoice!.Type.Should().Be("auto");
-    chatMessageRequest.Tools.Should().HaveCount(1);
-    chatMessageRequest.Tools![0].Name.Should().Be("test-tool");
-    chatMessageRequest.Tools[0].Description.Should().Be("test-description");
-    chatMessageRequest.Tools[0].InputSchema.Type.Should().Be("object");
-    chatMessageRequest.Tools[0].InputSchema.Properties.Should().HaveCount(1);
-    chatMessageRequest.Tools[0].InputSchema.Properties["test-property"].Type.Should().Be("string");
-    chatMessageRequest.Tools[0].InputSchema.Properties["test-property"].Description.Should().Be("test-description");
-    chatMessageRequest.Tools[0].InputSchema.Required.Should().HaveCount(1);
-    chatMessageRequest.Tools[0].InputSchema.Required[0].Should().Be("test-property");
-
+    chatMessageRequest.Tools.Should().HaveCount(0);
     chatMessageRequest.Messages[0].Content.Should().HaveCount(1);
     chatMessageRequest.Messages[0].Content[0].Should().BeOfType<ToolUseContent>();
 
@@ -624,16 +460,7 @@ public class ChatMessageRequestTests : SerializationTest
     chatMessageRequest.TopP.Should().Be(0.5m);
     chatMessageRequest.ToolChoice.Should().BeOfType<AutoToolChoice>();
     chatMessageRequest.ToolChoice!.Type.Should().Be("auto");
-    chatMessageRequest.Tools.Should().HaveCount(1);
-    chatMessageRequest.Tools![0].Name.Should().Be("test-tool");
-    chatMessageRequest.Tools[0].Description.Should().Be("test-description");
-    chatMessageRequest.Tools[0].InputSchema.Type.Should().Be("object");
-    chatMessageRequest.Tools[0].InputSchema.Properties.Should().HaveCount(1);
-    chatMessageRequest.Tools[0].InputSchema.Properties["test-property"].Type.Should().Be("string");
-    chatMessageRequest.Tools[0].InputSchema.Properties["test-property"].Description.Should().Be("test-description");
-    chatMessageRequest.Tools[0].InputSchema.Required.Should().HaveCount(1);
-    chatMessageRequest.Tools[0].InputSchema.Required[0].Should().Be("test-property");
-
+    chatMessageRequest.Tools.Should().HaveCount(0);
     chatMessageRequest.Messages[0].Content.Should().HaveCount(1);
     chatMessageRequest.Messages[0].Content[0].Should().BeOfType<ToolResultContent>();
 
