@@ -35,8 +35,8 @@ public class Tool
   
   internal Tool(string name, string description, AnthropicFunction function)
   {
-    ArgumentValidator.ThrowIfNull(name, nameof(name));
-    ArgumentValidator.ThrowIfNull(description, nameof(description));
+    ArgumentValidator.ThrowIfNullOrWhitespace(name, nameof(name));
+    ArgumentValidator.ThrowIfNullOrWhitespace(description, nameof(description));
     ArgumentValidator.ThrowIfNull(function, nameof(function));
 
     Name = name;
@@ -57,11 +57,6 @@ public class Tool
   /// <returns>The created tool as instance of <see cref="Tool"/>.</returns>
   public static Tool CreateFromStaticMethod(string name, string description, Type type, string methodName)
   {
-    ArgumentValidator.ThrowIfNull(name, nameof(name));
-    ArgumentValidator.ThrowIfNull(description, nameof(description));
-    ArgumentValidator.ThrowIfNull(type, nameof(type));
-    ArgumentValidator.ThrowIfNull(methodName, nameof(methodName));
-
     var method = type.GetMethod(methodName, BindingFlags.Public | BindingFlags.Static);
     
     if (method is null)
@@ -84,11 +79,6 @@ public class Tool
   /// <returns>The created tool as instance of <see cref="Tool"/>.</returns>
   public static Tool CreateFromInstanceMethod(string name, string description, object instance, string methodName)
   {
-    ArgumentValidator.ThrowIfNull(name, nameof(name));
-    ArgumentValidator.ThrowIfNull(description, nameof(description));
-    ArgumentValidator.ThrowIfNull(instance, nameof(instance));
-    ArgumentValidator.ThrowIfNull(methodName, nameof(methodName));
-
     var method = instance.GetType().GetMethod(methodName, BindingFlags.Public | BindingFlags.Instance);
     
     if (method is null)
@@ -102,7 +92,7 @@ public class Tool
   /// <summary>
   /// Creates a tool from a function.
   /// </summary>
-  /// <typeparam name="TResult">The type of the result.</typeparam>
+  /// <typeparam name="TResult">The type of the result for the delegate.</typeparam>
   /// <param name="name">The name of the tool.</param>
   /// <param name="description">The description of the tool.</param>
   /// <param name="func">The function.</param>
@@ -110,19 +100,21 @@ public class Tool
   /// <returns>The created tool as instance of <see cref="Tool"/>.</returns>
   public static Tool CreateFromFunction<TResult>(string name, string description, Func<TResult> func)
   {
-    ArgumentValidator.ThrowIfNull(name, nameof(name));
-    ArgumentValidator.ThrowIfNull(description, nameof(description));
-    ArgumentValidator.ThrowIfNull(func, nameof(func));
-
     return new Tool(name, description, new AnthropicFunction(func.Method, func.Target));
   }
 
+  /// <summary>
+  /// Creates a tool from a function.
+  /// </summary>
+  /// <typeparam name="T1">The type of the first parameter for the delegate.</typeparam>
+  /// <typeparam name="TResult">The type of the result for the delegate.</typeparam>
+  /// <param name="name">The name of the tool.</param>
+  /// <param name="description">The description of the tool.</param>
+  /// <param name="func">The function.</param>
+  /// <exception cref="ArgumentNullException">Thrown when <paramref name="name"/>, <paramref name="description"/>, or <paramref name="func"/> is null.</exception>
+  /// <returns>The created tool as instance of <see cref="Tool"/>.</returns>
   public static Tool CreateFromFunction<T1, TResult>(string name, string description, Func<T1, TResult> func)
   {
-    ArgumentValidator.ThrowIfNull(name, nameof(name));
-    ArgumentValidator.ThrowIfNull(description, nameof(description));
-    ArgumentValidator.ThrowIfNull(func, nameof(func));
-
     return new Tool(name, description, new AnthropicFunction(func.Method, func.Target));
   }
 }
