@@ -180,7 +180,7 @@ static class JsonSchemaGenerator
       // 3. Required
       // 4. Default values
       // 5. Possible values
-      var memberPropertyName = memberType.Name;
+      var memberPropertyName = member.Name;
       var memberDescription = string.Empty;
       var memberRequired = Nullable.GetUnderlyingType(memberType) is null;
 

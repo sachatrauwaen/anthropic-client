@@ -462,12 +462,12 @@ public class JsonSchemaGeneratorTestData : IEnumerable<object[]>
             ["type"] = "object",
             ["properties"] = new JsonObject()
             {
-              ["String"] = new JsonObject()
+              ["Name"] = new JsonObject()
               {
                 ["type"] = "string",
                 ["description"] = string.Empty
               },
-              ["Int32"] = new JsonObject()
+              ["Age"] = new JsonObject()
               {
                 ["type"] = "integer",
                 ["description"] = string.Empty
@@ -475,8 +475,8 @@ public class JsonSchemaGeneratorTestData : IEnumerable<object[]>
             },
             ["required"] = new JsonArray()
             {
-              "String",
-              "Int32"
+              "Name",
+              "Age"
             }
           }
         },
