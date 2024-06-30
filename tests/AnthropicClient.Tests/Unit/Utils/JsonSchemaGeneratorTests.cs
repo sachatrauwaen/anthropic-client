@@ -20,7 +20,7 @@ public class JsonSchemaGeneratorTests
   }
 
   [Fact]
-  public void GenerateInputSchema_GivenFunctionWithParameter_ItShouldReturnSchemaWithProperty()
+  public void GenerateInputSchema_GivenFunctionWithParameterThatHasDefaultValue_ItShouldReturnSchemaWithPropertyNameDescriptionAndNoRequiredProperties()
   {
     var expectedSchema = new JsonObject()
     {
