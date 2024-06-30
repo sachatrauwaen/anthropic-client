@@ -36,9 +36,11 @@ static class JsonSchemaGenerator
         continue;
       }
 
-      var paramName = parameter.Name;
-      var paramDescription = string.Empty;
-      var paramRequired = parameter.HasDefaultValue;
+      var attribute = parameter.GetCustomAttribute<FunctionParameterAttribute>();
+
+      var paramName = attribute?.Name ?? parameter.Name;
+      var paramDescription = attribute?.Description ?? string.Empty;
+      var paramRequired = attribute?.Required ?? !parameter.HasDefaultValue;
 
       var paramObject = new JsonObject();
       paramObject[DescriptionKey] = paramDescription;
