@@ -494,11 +494,82 @@ public class JsonSchemaGeneratorTestData : IEnumerable<object[]>
         },
       }
     };
+
+    // nested class parameter type with no attributes
+    yield return new object[]
+    {
+      Tool.CreateFromFunction(TestToolName,TestToolDescription,(Family family) => family),
+      new JsonObject()
+      {
+        ["type"] = "object",
+        ["definitions"] = new JsonObject()
+        {
+          [$"{typeof(Person).FullName}"] = new JsonObject()
+          {
+            ["type"] = "object",
+            ["properties"] = new JsonObject()
+            {
+              ["Name"] = new JsonObject()
+              {
+                ["type"] = "string",
+                ["description"] = string.Empty
+              },
+              ["Age"] = new JsonObject()
+              {
+                ["type"] = "integer",
+                ["description"] = string.Empty
+              }
+            },
+            ["required"] = new JsonArray()
+            {
+              "Name",
+              "Age"
+            }
+          },
+          [$"{typeof(Family).FullName}"] = new JsonObject()
+          {
+            ["type"] = "object",
+            ["properties"] = new JsonObject()
+            {
+              ["Members"] = new JsonObject()
+              {
+                ["type"] = "array",
+                ["items"] = new JsonObject()
+                {
+                  ["$ref"] = $"#/definitions/{typeof(Person).FullName}"
+                },
+                ["description"] = string.Empty
+              }
+            },
+            ["required"] = new JsonArray()
+            {
+              "Members"
+            }
+          }
+        },
+        ["properties"] = new JsonObject()
+        {
+          ["family"] = new JsonObject()
+          {
+            ["$ref"] = $"#/definitions/{typeof(Family).FullName}",
+            ["description"] = string.Empty
+          }
+        },
+        ["required"] = new JsonArray()
+        {
+          "family",
+        },
+      }
+    };
   }
 
   IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }
 
+class Family 
+{
+  public List<Person> Members { get; } = [];
+}
 
 class Person
 {

@@ -68,12 +68,12 @@ static class JsonSchemaGenerator
 
   private static JsonObject GenerateParameterTypeSchema(Type type, JsonObject inputSchema)
   {
-    var definitions = inputSchema[DefinitionsKey];
+    var definitions = inputSchema[DefinitionsKey] ?? new JsonObject();
 
     // Check if a definition for the type already exists
     // If it does, return a reference to the definition
     // no need to evaluate the type further
-    if (definitions is not null && definitions.AsObject().ContainsKey(type.FullName))
+    if (definitions.AsObject().ContainsKey(type.FullName))
     {
       return new JsonObject()
       {
@@ -150,6 +150,8 @@ static class JsonSchemaGenerator
   private static JsonObject GenerateTypeDefinitionSchema(Type type, JsonObject inputSchema)
   {
     var definitions = inputSchema[DefinitionsKey] ?? new JsonObject();
+    inputSchema[DefinitionsKey] = definitions;
+
     var typeSchema = new JsonObject()
     {
       [TypeKey] = ObjectType
