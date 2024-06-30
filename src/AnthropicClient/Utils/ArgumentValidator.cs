@@ -20,4 +20,19 @@ public static class ArgumentValidator
       throw new ArgumentNullException(name);
     }
   }
+
+  /// <summary>
+  /// Throws an <see cref="ArgumentException"/> if the value is null or empty.
+  /// </summary>
+  /// <param name="value">The value to check.</param>
+  /// <param name="name">The name of the value.</param>
+  /// <exception cref="ArgumentException">Thrown when the value is null or empty.</exception>
+  /// <returns>Nothing.</returns>
+  public static void ThrowIfNullOrWhitespace(string value, string name)
+  {
+    if (string.IsNullOrWhiteSpace(value))
+    {
+      throw new ArgumentException("Value cannot be null or empty.", name);
+    }
+  }
 }
