@@ -1,6 +1,6 @@
 using System.Text.Json.Nodes;
 
-namespace AnthropicClient.Tests.Unit.Models;
+namespace AnthropicClient.Tests.Unit.Utils;
 
 public class JsonSchemaGeneratorTests
 {
@@ -94,6 +94,32 @@ public class JsonSchemaGeneratorTests
 
     var schema = JsonSchemaGenerator.GenerateInputSchema(function);
 
+    JsonAssert.Equal(expectedSchema, schema);
+  }
+
+  [Fact]
+  public void GenerateInputSchema_GivenFunctionWithParametersThatIncludesCancellationToken_ItShouldReturnSchemaWithoutCancellationToken()
+  {
+    var expectedSchema = new JsonObject()
+    {
+      ["type"] = "object",
+      ["properties"] = new JsonObject(),
+      ["required"] = new JsonArray(),
+    };
+
+    var testMethod = (CancellationToken token) => true;
+    var function = new AnthropicFunction(testMethod.Method);
+
+    var schema = JsonSchemaGenerator.GenerateInputSchema(function);
+
+    JsonAssert.Equal(expectedSchema, schema);
+  }
+
+  [Theory]
+  [ClassData(typeof(JsonSchemaGeneratorTestData))]
+  public void GenerateInputSchema_GivenFunction_ItShouldReturnExpectedSchema(Tool tool, JsonObject expectedSchema)
+  {
+    var schema = JsonSchemaGenerator.GenerateInputSchema(tool.Function);
     JsonAssert.Equal(expectedSchema, schema);
   }
 }
