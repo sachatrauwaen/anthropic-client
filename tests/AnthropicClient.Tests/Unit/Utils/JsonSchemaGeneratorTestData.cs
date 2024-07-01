@@ -561,6 +561,83 @@ public class JsonSchemaGeneratorTestData : IEnumerable<object[]>
         },
       }
     };
+
+    var family =new Family();
+
+    // parameters from instance method
+    yield return new object[]
+    {
+      Tool.CreateFromInstanceMethod(TestToolName,TestToolDescription, family, nameof(family.AddMember)),
+      new JsonObject()
+      {
+        ["type"] = "object",
+        ["definitions"] = new JsonObject()
+        {
+          [$"{typeof(Person).FullName}"] = new JsonObject()
+          {
+            ["type"] = "object",
+            ["properties"] = new JsonObject()
+            {
+              ["Name"] = new JsonObject()
+              {
+                ["type"] = "string",
+                ["description"] = string.Empty
+              },
+              ["Age"] = new JsonObject()
+              {
+                ["type"] = "integer",
+                ["description"] = string.Empty
+              }
+            },
+            ["required"] = new JsonArray()
+            {
+              "Name",
+              "Age"
+            }
+          },
+        },
+        ["properties"] = new JsonObject()
+        {
+          ["member"] = new JsonObject()
+          {
+            ["$ref"] = $"#/definitions/{typeof(Person).FullName}",
+            ["description"] = string.Empty
+          }
+        },
+        ["required"] = new JsonArray()
+        {
+          "member",
+        },
+      }
+    };
+
+    // parameters from static method
+    yield return new object[]
+    {
+      Tool.CreateFromStaticMethod(TestToolName,TestToolDescription, typeof(Person), nameof(Person.Create)),
+      new JsonObject()
+      {
+        ["type"] = "object",
+        ["properties"] = new JsonObject()
+        {
+          ["name"] = new JsonObject()
+          {
+            ["type"] = "string",
+            ["description"] = string.Empty
+          },
+          ["age"] = new JsonObject()
+          {
+            ["type"] = "integer",
+            ["description"] = string.Empty
+          }
+        },
+        ["required"] = new JsonArray()
+        {
+          "name",
+          "age",
+        },
+      }
+    };
   }
 
   IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
@@ -569,10 +646,18 @@ public class JsonSchemaGeneratorTestData : IEnumerable<object[]>
 class Family 
 {
   public List<Person> Members { get; } = [];
+
+  public bool AddMember(Person member)
+  {
+    Members.Add(member);
+    return true;
+  }
 }
 
-class Person
+class Person(string name, int age)
 {
-  public string Name { get; } = string.Empty;
-  public int Age { get; }
+  public string Name { get; } = name;
+  public int Age { get; } = age;
+
+  public static Person Create(string name, int age) => new Person(name, age);
 }
