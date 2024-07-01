@@ -52,7 +52,6 @@ public class Tool
     ArgumentValidator.ThrowIfNull(function, nameof(function));
     
     var sanitizedName = SanitizeName(name);
-    ThrowIfNameIsInvalid(sanitizedName);
 
     Name = sanitizedName;
     DisplayName = name;
@@ -70,7 +69,6 @@ public class Tool
   /// <param name="methodName">The name of the method.</param>
   /// <exception cref="ArgumentNullException">Thrown when <paramref name="name"/>, <paramref name="description"/>, <paramref name="type"/>, or <paramref name="methodName"/> is null.</exception>
   /// <exception cref="ArgumentException">Thrown when the method is not found in the type.</exception>
-  /// <exception cref="ArgumentException">Thrown when the name of the tool is invalid.</exception>
   /// <returns>The created tool as instance of <see cref="Tool"/>.</returns>
   /// <remarks>The name of the tool will be sanitized to conform to the Anthropic tool naming rules.</remarks>
   public static Tool CreateFromStaticMethod(string name, string description, Type type, string methodName)
@@ -94,7 +92,6 @@ public class Tool
   /// <param name="methodName">The name of the method.</param>
   /// <exception cref="ArgumentNullException">Thrown when <paramref name="name"/>, <paramref name="description"/>, <paramref name="instance"/>, or <paramref name="methodName"/> is null.</exception>
   /// <exception cref="ArgumentException">Thrown when the method is not found in the type.</exception>
-  /// <exception cref="ArgumentException">Thrown when the name of the tool is invalid.</exception>
   /// <returns>The created tool as instance of <see cref="Tool"/>.</returns>
   /// <remarks>The name of the tool will be sanitized to conform to the Anthropic tool naming rules.</remarks>
   public static Tool CreateFromInstanceMethod(string name, string description, object instance, string methodName)
@@ -117,7 +114,6 @@ public class Tool
   /// <param name="description">The description of the tool.</param>
   /// <param name="func">The function.</param>
   /// <exception cref="ArgumentNullException">Thrown when <paramref name="name"/>, <paramref name="description"/>, or <paramref name="func"/> is null.</exception>
-  /// <exception cref="ArgumentException">Thrown when the name of the tool is invalid.</exception>
   /// <returns>The created tool as instance of <see cref="Tool"/>.</returns>
   /// <remarks>The name of the tool will be sanitized to conform to the Anthropic tool naming rules.</remarks>
   public static Tool CreateFromFunction<TResult>(string name, string description, Func<TResult> func)
@@ -134,7 +130,6 @@ public class Tool
   /// <param name="description">The description of the tool.</param>
   /// <param name="func">The function.</param>
   /// <exception cref="ArgumentNullException">Thrown when <paramref name="name"/>, <paramref name="description"/>, or <paramref name="func"/> is null.</exception>
-  /// <exception cref="ArgumentException">Thrown when the name of the tool is invalid.</exception>
   /// <returns>The created tool as instance of <see cref="Tool"/>.</returns>
   /// <remarks>The name of the tool will be sanitized to conform to the Anthropic tool naming rules.</remarks>
   public static Tool CreateFromFunction<T1, TResult>(string name, string description, Func<T1, TResult> func)
@@ -154,13 +149,5 @@ public class Tool
     sanitizedName = new Regex("[^a-zA-Z0-9_-]").Replace(sanitizedName, "_");
 
     return sanitizedName;
-  }
-
-  private void ThrowIfNameIsInvalid(string name)
-  {
-    if (_nameRegex.IsMatch(name) is false)
-    {
-      throw new ArgumentException("Tool name must be between 1 and 64 characters long and contain only letters, numbers, underscores, and hyphens.", nameof(name));
-    }
   }
 }
