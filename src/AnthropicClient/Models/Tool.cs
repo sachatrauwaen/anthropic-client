@@ -147,6 +147,26 @@ public class Tool
     return new Tool(name, description, new AnthropicFunction(func.Method, func.Target));
   }
 
+  /// <summary>
+  /// Creates a tool from a function.
+  /// </summary>
+  /// <typeparam name="T1">The type of the first parameter for the delegate.</typeparam>
+  /// <typeparam name="T2">The type of the second parameter for the delegate.</typeparam>
+  /// <typeparam name="TResult">The type of the result for the delegate.</typeparam>
+  /// <param name="name">The name of the tool.</param>
+  /// <param name="description">The description of the tool.</param>
+  /// <param name="func">The function.</param>
+  /// <exception cref="ArgumentNullException">Thrown when <paramref name="func"/> is null.</exception>
+  /// <returns>The created tool as instance of <see cref="Tool"/>.</returns>
+  /// <remarks>The name of the tool will be sanitized to conform to the Anthropic tool naming rules.</remarks>
+  public static Tool CreateFromFunction<T1, T2, TResult>(string name, string description, Func<T1, T2, TResult> func)
+  {
+    ArgumentValidator.ThrowIfNull(func, nameof(func));
+
+    return new Tool(name, description, new AnthropicFunction(func.Method, func.Target));
+  }
+  
+
   private static string SanitizeName(string name)
   {
     var sanitizedName = name.Trim();
