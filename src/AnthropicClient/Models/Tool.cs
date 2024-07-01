@@ -65,12 +65,16 @@ public class Tool
   /// <param name="description">The description of the tool.</param>
   /// <param name="type">The type that contains the method.</param>
   /// <param name="methodName">The name of the method.</param>
-  /// <exception cref="ArgumentNullException">Thrown when <paramref name="name"/>, <paramref name="description"/>, <paramref name="type"/>, or <paramref name="methodName"/> is null.</exception>
+  /// <exception cref="ArgumentException">Thrown when <paramref name="methodName"/> is null or empty.</exception>
+  /// <exception cref="ArgumentNullException">Thrown when <paramref name="type"/> is null.</exception>
   /// <exception cref="ArgumentException">Thrown when the method is not found in the type.</exception>
   /// <returns>The created tool as instance of <see cref="Tool"/>.</returns>
   /// <remarks>The name of the tool will be sanitized to conform to the Anthropic tool naming rules.</remarks>
   public static Tool CreateFromStaticMethod(string name, string description, Type type, string methodName)
   {
+    ArgumentValidator.ThrowIfNullOrWhitespace(methodName, nameof(methodName));
+    ArgumentValidator.ThrowIfNull(type, nameof(type));
+
     var method = type.GetMethod(methodName, BindingFlags.Public | BindingFlags.Static);
     
     if (method is null)
@@ -88,12 +92,16 @@ public class Tool
   /// <param name="description">The description of the tool.</param>
   /// <param name="instance">The instance that contains the method.</param>
   /// <param name="methodName">The name of the method.</param>
-  /// <exception cref="ArgumentNullException">Thrown when <paramref name="name"/>, <paramref name="description"/>, <paramref name="instance"/>, or <paramref name="methodName"/> is null.</exception>
-  /// <exception cref="ArgumentException">Thrown when the method is not found in the type.</exception>
+  /// <exception cref="ArgumentException">Thrown when <paramref name="methodName"/> is null or empty.</exception> 
+  /// <exception cref="ArgumentNullException">Thrown when <paramref name="instance"/> is null.</exception> 
+  /// <exception cref="ArgumentException">Thrown when <paramref name="methodName"/> is not found in the type of <paramref name="instance"/>.</exception> 
   /// <returns>The created tool as instance of <see cref="Tool"/>.</returns>
   /// <remarks>The name of the tool will be sanitized to conform to the Anthropic tool naming rules.</remarks>
   public static Tool CreateFromInstanceMethod(string name, string description, object instance, string methodName)
   {
+    ArgumentValidator.ThrowIfNullOrWhitespace(methodName, nameof(methodName));
+    ArgumentValidator.ThrowIfNull(instance, nameof(instance));
+
     var method = instance.GetType().GetMethod(methodName, BindingFlags.Public | BindingFlags.Instance);
     
     if (method is null)
@@ -111,11 +119,13 @@ public class Tool
   /// <param name="name">The name of the tool.</param>
   /// <param name="description">The description of the tool.</param>
   /// <param name="func">The function.</param>
-  /// <exception cref="ArgumentNullException">Thrown when <paramref name="name"/>, <paramref name="description"/>, or <paramref name="func"/> is null.</exception>
+  /// <exception cref="ArgumentNullException">Thrown when <paramref name="func"/> is null.</exception>
   /// <returns>The created tool as instance of <see cref="Tool"/>.</returns>
   /// <remarks>The name of the tool will be sanitized to conform to the Anthropic tool naming rules.</remarks>
   public static Tool CreateFromFunction<TResult>(string name, string description, Func<TResult> func)
   {
+    ArgumentValidator.ThrowIfNull(func, nameof(func));
+
     return new Tool(name, description, new AnthropicFunction(func.Method, func.Target));
   }
 
@@ -127,11 +137,13 @@ public class Tool
   /// <param name="name">The name of the tool.</param>
   /// <param name="description">The description of the tool.</param>
   /// <param name="func">The function.</param>
-  /// <exception cref="ArgumentNullException">Thrown when <paramref name="name"/>, <paramref name="description"/>, or <paramref name="func"/> is null.</exception>
+  /// <exception cref="ArgumentNullException">Thrown when <paramref name="func"/> is null.</exception>
   /// <returns>The created tool as instance of <see cref="Tool"/>.</returns>
   /// <remarks>The name of the tool will be sanitized to conform to the Anthropic tool naming rules.</remarks>
   public static Tool CreateFromFunction<T1, TResult>(string name, string description, Func<T1, TResult> func)
   {
+    ArgumentValidator.ThrowIfNull(func, nameof(func));
+
     return new Tool(name, description, new AnthropicFunction(func.Method, func.Target));
   }
 
