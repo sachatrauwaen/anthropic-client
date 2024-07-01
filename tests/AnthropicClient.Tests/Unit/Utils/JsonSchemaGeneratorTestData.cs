@@ -32,6 +32,29 @@ public class JsonSchemaGeneratorTestData : IEnumerable<object[]>
       }
     };
 
+    // GUID parameter type
+    yield return new object[]
+    {
+      Tool.CreateFromFunction(TestToolName,TestToolDescription,(Guid id) => id),
+      new JsonObject()
+      {
+        ["type"] = "object",
+        ["properties"] = new JsonObject()
+        {
+          ["id"] = new JsonObject()
+          {
+            ["type"] = "string",
+            ["format"] = "uuid",
+            ["description"] = string.Empty
+          }
+        },
+        ["required"] = new JsonArray()
+        {
+          "id"
+        },
+      }
+    };
+
     // char parameter type
     yield return new object[]
     {
@@ -638,6 +661,169 @@ public class JsonSchemaGeneratorTestData : IEnumerable<object[]>
         },
       }
     };
+
+    // multiple parameters of same complex type
+    yield return new object[]
+    {
+      Tool.CreateFromFunction(TestToolName,TestToolDescription,(Person person1, Person person2) => person1),
+      new JsonObject()
+      {
+        ["type"] = "object",
+        ["definitions"] = new JsonObject()
+        {
+          [$"{typeof(Person).FullName}"] = new JsonObject()
+          {
+            ["type"] = "object",
+            ["properties"] = new JsonObject()
+            {
+              ["Name"] = new JsonObject()
+              {
+                ["type"] = "string",
+                ["description"] = string.Empty
+              },
+              ["Age"] = new JsonObject()
+              {
+                ["type"] = "integer",
+                ["description"] = string.Empty
+              }
+            },
+            ["required"] = new JsonArray()
+            {
+              "Name",
+              "Age"
+            }
+          }
+        },
+        ["properties"] = new JsonObject()
+        {
+          ["person1"] = new JsonObject()
+          {
+            ["$ref"] = $"#/definitions/{typeof(Person).FullName}",
+            ["description"] = string.Empty
+          },
+          ["person2"] = new JsonObject()
+          {
+            ["$ref"] = $"#/definitions/{typeof(Person).FullName}",
+            ["description"] = string.Empty
+          }
+        },
+        ["required"] = new JsonArray()
+        {
+          "person1",
+          "person2"
+        },
+      }
+    };
+
+    // complex type with field
+    yield return new object[]
+    {
+      Tool.CreateFromFunction(TestToolName,TestToolDescription,(Dad dad) => dad),
+      new JsonObject()
+      {
+        ["type"] = "object",
+        ["definitions"] = new JsonObject()
+        {
+          [$"{typeof(Dad).FullName}"] = new JsonObject()
+          {
+            ["type"] = "object",
+            ["properties"] = new JsonObject()
+            {
+              ["Role"] = new JsonObject()
+              {
+                ["type"] = "string",
+                ["description"] = string.Empty
+              }
+            },
+            ["required"] = new JsonArray()
+            {
+              "Role"
+            }
+          }
+        },
+        ["properties"] = new JsonObject()
+        {
+          ["dad"] = new JsonObject()
+          {
+            ["$ref"] = $"#/definitions/{typeof(Dad).FullName}",
+            ["description"] = string.Empty
+          }
+        },
+        ["required"] = new JsonArray()
+        {
+          "dad",
+        },
+      }
+    };
+
+    // complex type with members of same type
+    yield return new object[]
+    {
+      Tool.CreateFromFunction(TestToolName,TestToolDescription,(NuclearFamily family) => family),
+      new JsonObject()
+      {
+        ["type"] = "object",
+        ["definitions"] = new JsonObject()
+        {
+          [$"{typeof(Person).FullName}"] = new JsonObject()
+          {
+            ["type"] = "object",
+            ["properties"] = new JsonObject()
+            {
+              ["Name"] = new JsonObject()
+              {
+                ["type"] = "string",
+                ["description"] = string.Empty
+              },
+              ["Age"] = new JsonObject()
+              {
+                ["type"] = "integer",
+                ["description"] = string.Empty
+              }
+            },
+            ["required"] = new JsonArray()
+            {
+              "Name",
+              "Age"
+            }
+          },
+          [$"{typeof(NuclearFamily).FullName}"] = new JsonObject()
+          {
+            ["type"] = "object",
+            ["properties"] = new JsonObject()
+            {
+              ["Father"] = new JsonObject()
+              {
+                ["$ref"] = $"#/definitions/{typeof(Person).FullName}",
+                ["description"] = string.Empty
+              },
+              ["Mother"] = new JsonObject()
+              {
+                ["$ref"] = $"#/definitions/{typeof(Person).FullName}",
+                ["description"] = string.Empty
+              }
+            },
+            ["required"] = new JsonArray()
+            {
+              "Father",
+              "Mother"
+            }
+          }
+        },
+        ["properties"] = new JsonObject()
+        {
+          ["family"] = new JsonObject()
+          {
+            ["$ref"] = $"#/definitions/{typeof(NuclearFamily).FullName}",
+            ["description"] = string.Empty
+          }
+        },
+        ["required"] = new JsonArray()
+        {
+          "family",
+        },
+      }
+    }; 
   }
 
   IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
@@ -654,10 +840,21 @@ class Family
   }
 }
 
+class NuclearFamily
+{
+  public Person Father { get; } = new Person("Father", 40);
+  public Person Mother { get; } = new Person("Mother", 38);
+}
+
 class Person(string name, int age)
 {
   public string Name { get; } = name;
   public int Age { get; } = age;
 
   public static Person Create(string name, int age) => new Person(name, age);
+}
+
+class Dad
+{
+  public string Role = "Father";
 }
