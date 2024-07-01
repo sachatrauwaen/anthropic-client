@@ -29,13 +29,14 @@ public class JsonSchemaGeneratorTests
       {
         ["age"] = new JsonObject()
         {
+          ["type"] = "integer",
           ["description"] = string.Empty
         }
       },
       ["required"] = new JsonArray(),
     };
 
-    var testMethod = (int age) => age;
+    var testMethod = (int age = 0) => age;
     var function = new AnthropicFunction(testMethod.Method);
     
     var schema = JsonSchemaGenerator.GenerateInputSchema(function);
@@ -53,6 +54,7 @@ public class JsonSchemaGeneratorTests
       {
         ["name"] = new JsonObject()
         {
+          ["type"] = "string",
           ["description"] = string.Empty
         }
       },
@@ -80,6 +82,7 @@ public class JsonSchemaGeneratorTests
       {
         ["Person's Age"] = new JsonObject()
         {
+          ["type"] = "integer",
           ["description"] = "The age of the person."
         }
       },
