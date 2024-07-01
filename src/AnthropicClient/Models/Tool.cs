@@ -1,6 +1,7 @@
 using System.Reflection;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 
 using AnthropicClient.Utils;
 
@@ -11,8 +12,13 @@ namespace AnthropicClient.Models;
 /// </summary>
 public class Tool
 {
+  // Anthropic imposes a limit on tool names. Tool names must be...
+  // - between 1 and 64 characters long
+  // - contain only letters, numbers, underscores, and hyphens
+  private readonly Regex _nameRegex = new(@"^[a-zA-Z0-9_-]{1,64}$");
+
   /// <summary>
-  /// Gets the name of the tool.
+  /// Gets the name of the tool. This name will conform to the Anthropic tool naming rules.
   /// </summary>
   public string Name { get; }
 
@@ -32,14 +38,24 @@ public class Tool
   /// </summary>
   [JsonIgnore]
   public AnthropicFunction Function { get; }
+
+  /// <summary>
+  /// Gets the display name of the tool.
+  /// </summary>
+  [JsonIgnore]
+  public string DisplayName { get; }
   
   internal Tool(string name, string description, AnthropicFunction function)
   {
     ArgumentValidator.ThrowIfNullOrWhitespace(name, nameof(name));
     ArgumentValidator.ThrowIfNullOrWhitespace(description, nameof(description));
     ArgumentValidator.ThrowIfNull(function, nameof(function));
+    
+    var sanitizedName = SanitizeName(name);
+    ThrowIfNameIsInvalid(sanitizedName);
 
-    Name = name;
+    Name = sanitizedName;
+    DisplayName = name;
     Description = description;
     Function = function;
     InputSchema = JsonSchemaGenerator.GenerateInputSchema(function);
@@ -54,7 +70,9 @@ public class Tool
   /// <param name="methodName">The name of the method.</param>
   /// <exception cref="ArgumentNullException">Thrown when <paramref name="name"/>, <paramref name="description"/>, <paramref name="type"/>, or <paramref name="methodName"/> is null.</exception>
   /// <exception cref="ArgumentException">Thrown when the method is not found in the type.</exception>
+  /// <exception cref="ArgumentException">Thrown when the name of the tool is invalid.</exception>
   /// <returns>The created tool as instance of <see cref="Tool"/>.</returns>
+  /// <remarks>The name of the tool will be sanitized to conform to the Anthropic tool naming rules.</remarks>
   public static Tool CreateFromStaticMethod(string name, string description, Type type, string methodName)
   {
     var method = type.GetMethod(methodName, BindingFlags.Public | BindingFlags.Static);
@@ -76,7 +94,9 @@ public class Tool
   /// <param name="methodName">The name of the method.</param>
   /// <exception cref="ArgumentNullException">Thrown when <paramref name="name"/>, <paramref name="description"/>, <paramref name="instance"/>, or <paramref name="methodName"/> is null.</exception>
   /// <exception cref="ArgumentException">Thrown when the method is not found in the type.</exception>
+  /// <exception cref="ArgumentException">Thrown when the name of the tool is invalid.</exception>
   /// <returns>The created tool as instance of <see cref="Tool"/>.</returns>
+  /// <remarks>The name of the tool will be sanitized to conform to the Anthropic tool naming rules.</remarks>
   public static Tool CreateFromInstanceMethod(string name, string description, object instance, string methodName)
   {
     var method = instance.GetType().GetMethod(methodName, BindingFlags.Public | BindingFlags.Instance);
@@ -97,7 +117,9 @@ public class Tool
   /// <param name="description">The description of the tool.</param>
   /// <param name="func">The function.</param>
   /// <exception cref="ArgumentNullException">Thrown when <paramref name="name"/>, <paramref name="description"/>, or <paramref name="func"/> is null.</exception>
+  /// <exception cref="ArgumentException">Thrown when the name of the tool is invalid.</exception>
   /// <returns>The created tool as instance of <see cref="Tool"/>.</returns>
+  /// <remarks>The name of the tool will be sanitized to conform to the Anthropic tool naming rules.</remarks>
   public static Tool CreateFromFunction<TResult>(string name, string description, Func<TResult> func)
   {
     return new Tool(name, description, new AnthropicFunction(func.Method, func.Target));
@@ -112,9 +134,33 @@ public class Tool
   /// <param name="description">The description of the tool.</param>
   /// <param name="func">The function.</param>
   /// <exception cref="ArgumentNullException">Thrown when <paramref name="name"/>, <paramref name="description"/>, or <paramref name="func"/> is null.</exception>
+  /// <exception cref="ArgumentException">Thrown when the name of the tool is invalid.</exception>
   /// <returns>The created tool as instance of <see cref="Tool"/>.</returns>
+  /// <remarks>The name of the tool will be sanitized to conform to the Anthropic tool naming rules.</remarks>
   public static Tool CreateFromFunction<T1, TResult>(string name, string description, Func<T1, TResult> func)
   {
     return new Tool(name, description, new AnthropicFunction(func.Method, func.Target));
+  }
+
+  private static string SanitizeName(string name)
+  {
+    var sanitizedName = name.Trim();
+
+    if (sanitizedName.Length > 64)
+    {
+      sanitizedName = sanitizedName.Substring(0, 64);
+    }
+
+    sanitizedName = new Regex("[^a-zA-Z0-9_-]").Replace(sanitizedName, "_");
+
+    return sanitizedName;
+  }
+
+  private void ThrowIfNameIsInvalid(string name)
+  {
+    if (_nameRegex.IsMatch(name) is false)
+    {
+      throw new ArgumentException("Tool name must be between 1 and 64 characters long and contain only letters, numbers, underscores, and hyphens.", nameof(name));
+    }
   }
 }
