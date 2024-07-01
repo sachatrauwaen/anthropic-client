@@ -12,11 +12,6 @@ namespace AnthropicClient.Models;
 /// </summary>
 public class Tool
 {
-  // Anthropic imposes a limit on tool names. Tool names must be...
-  // - between 1 and 64 characters long
-  // - contain only letters, numbers, underscores, and hyphens
-  private readonly Regex _nameRegex = new(@"^[a-zA-Z0-9_-]{1,64}$");
-
   /// <summary>
   /// Gets the name of the tool. This name will conform to the Anthropic tool naming rules.
   /// </summary>
@@ -51,6 +46,9 @@ public class Tool
     ArgumentValidator.ThrowIfNullOrWhitespace(description, nameof(description));
     ArgumentValidator.ThrowIfNull(function, nameof(function));
     
+    // Anthropic imposes a limit on tool names. Tool names must be...
+    // - between 1 and 64 characters long
+    // - contain only letters, numbers, underscores, and hyphens
     var sanitizedName = SanitizeName(name);
 
     Name = sanitizedName;
