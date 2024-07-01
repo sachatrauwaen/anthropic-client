@@ -14,6 +14,7 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
 
     result.IsSuccess.Should().BeTrue();
     result.Value.Should().BeOfType<ChatResponse>();
+    result.Value.Content.Should().NotBeNullOrEmpty();
   }
 
   [Fact]
