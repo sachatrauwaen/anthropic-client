@@ -7,3 +7,7 @@ global using AnthropicClient.Utils;
 global using FluentAssertions;
 
 global using Microsoft.Extensions.Configuration;
+
+global using RichardSzalay.MockHttp;
+global using System.Net;
+global using System.Collections;

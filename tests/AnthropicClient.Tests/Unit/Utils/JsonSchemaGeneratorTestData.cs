@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Text.Json.Nodes;
 
 namespace AnthropicClient.Tests.Unit.Utils;
