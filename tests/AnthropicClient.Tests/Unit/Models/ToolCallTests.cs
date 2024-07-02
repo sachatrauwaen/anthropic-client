@@ -1,6 +1,8 @@
+using System.Text.Json.Nodes;
+
 namespace AnthropicClient.Tests.Unit.Models;
 
-public class ToolCallTests
+public class ToolCallTests : SerializationTest
 {
   [Fact]
   public async Task InvokeAsync_WhenCalledToolHasNoParamsIsNotAwaitableAndToolCallIsSuccessful_ItShouldReturnSuccessResult()
@@ -146,4 +148,82 @@ public class ToolCallTests
     result.Value.Should().Be("42");
     result.Error.Should().BeNull();
   }
+
+  [Fact]
+  public async Task InvokeAsync_WhenCalledToolHasDefaultValueAndToolUseHasNotInput_ItShouldReturnSuccessResult()
+  {
+    var func = (int i = 42) => i.ToString();
+    var anthropicFunction = new AnthropicFunction(func.Method, func.Target);
+    var tool = new Tool("tool", "description", anthropicFunction);
+
+    var toolCall = new ToolCall(tool, new ToolUseContent());
+
+    var result = await toolCall.InvokeAsync();
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().Be("42");
+    result.Error.Should().BeNull();
+  }
+
+  [Fact]
+  public async Task InvokeAsync_WhenCalledToolHasNoDefaultValueAndNoInput_ItShouldReturnFailureResult()
+  {
+    var func = (int i) => i.ToString();
+    var anthropicFunction = new AnthropicFunction(func.Method, func.Target);
+    var tool = new Tool("tool", "description", anthropicFunction);
+
+    var toolCall = new ToolCall(tool, new ToolUseContent());
+
+    var result = await toolCall.InvokeAsync();
+
+    result.IsSuccess.Should().BeFalse();
+    result.Value.Should().BeNull();
+    result.Error.Should().NotBeNull();
+  }
+
+  [Fact]
+  public async Task InvokeAsync_WhenCalledAndToolHasEnumParameter_ItShouldReturnSuccessResult()
+  {
+    var func = (DayOfWeek day) => day.ToString();
+    var anthropicFunction = new AnthropicFunction(func.Method, func.Target);
+    var tool = new Tool("tool", "description", anthropicFunction);
+
+    var input = new Dictionary<string, object?> { { "day", DayOfWeek.Monday } };
+    var toolCall = new ToolCall(tool, new ToolUseContent { Input = input });
+
+    var result = await toolCall.InvokeAsync();
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().Be("Monday");
+    result.Error.Should().BeNull();
+  }
+
+  [Fact]
+  public async Task InvokeAsync_WhenCalledAndToolHasComplexParameterType_ItShouldReturnSuccessResult()
+  {
+    var func = (Person person) => person.Name;
+    var anthropicFunction = new AnthropicFunction(func.Method, func.Target);
+    var tool = new Tool("tool", "description", anthropicFunction);
+
+    var personJson = @"{
+      ""person"": {
+        ""Name"": ""John""
+      }
+    }";
+
+    var input = Deserialize<Dictionary<string, object?>>(personJson);
+    
+    var toolCall = new ToolCall(tool, new ToolUseContent { Input = input! });
+
+    var result = await toolCall.InvokeAsync();
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().Be("John");
+    result.Error.Should().BeNull();
+  }
+}
+
+class Person
+{
+  public string Name { get; set; } = string.Empty;
 }

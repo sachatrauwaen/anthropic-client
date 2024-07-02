@@ -823,7 +823,51 @@ public class JsonSchemaGeneratorTestData : IEnumerable<object[]>
           "family",
         },
       }
-    }; 
+    };
+
+    // string parameter type with custom name
+    yield return new object[]
+    {
+      Tool.CreateFromFunction(TestToolName,TestToolDescription,([FunctionParameter("Person's Name", "Name", true)]string name) => name),
+      new JsonObject()
+      {
+        ["type"] = "object",
+        ["properties"] = new JsonObject()
+        {
+          ["Name"] = new JsonObject()
+          {
+            ["type"] = "string",
+            ["description"] = "Person's Name"
+          }
+        },
+        ["required"] = new JsonArray()
+        {
+          "Name"
+        },
+      }
+    };
+
+    // string parameter with custom description
+    yield return new object[]
+    {
+      Tool.CreateFromFunction(TestToolName,TestToolDescription,([FunctionParameter("The name of the person.", required: true)]string name) => name),
+      new JsonObject()
+      {
+        ["type"] = "object",
+        ["properties"] = new JsonObject()
+        {
+          ["name"] = new JsonObject()
+          {
+            ["type"] = "string",
+            ["description"] = "The name of the person."
+          }
+        },
+        ["required"] = new JsonArray()
+        {
+          "name"
+        },
+      }
+    };
   }
 
   IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
