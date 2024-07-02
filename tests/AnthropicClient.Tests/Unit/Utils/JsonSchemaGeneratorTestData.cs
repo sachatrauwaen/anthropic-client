@@ -585,7 +585,7 @@ public class JsonSchemaGeneratorTestData : IEnumerable<object[]>
       }
     };
 
-    var family =new Family();
+    var family = new Family();
 
     // parameters from instance method
     yield return new object[]
@@ -868,12 +868,70 @@ public class JsonSchemaGeneratorTestData : IEnumerable<object[]>
         },
       }
     };
+
+    // complex type with attributes
+    yield return new object[]
+    {
+      Tool.CreateFromFunction(TestToolName,TestToolDescription,(Rule rule) => rule),
+      new JsonObject()
+      {
+        ["type"] = "object",
+        ["definitions"] = new JsonObject()
+        {
+          [$"{typeof(Rule).FullName}"] = new JsonObject()
+          {
+            ["type"] = "object",
+            ["properties"] = new JsonObject()
+            {
+              ["Status"] = new JsonObject()
+              {
+                ["type"] = "string",
+                ["description"] = "Indicates the current status of the rule.",
+                ["default"] = "Active",
+                ["enum"] = new JsonArray()
+                {
+                  "Inactive",
+                  "Active",
+                }
+              },
+              ["Type"] = new JsonObject()
+              {
+                ["type"] = "string",
+                ["description"] = "The type of the rule.",
+                ["default"] = "Type A",
+                ["enum"] = new JsonArray()
+                {
+                  "Type B",
+                  "Type A",
+                }
+              }
+            },
+            ["required"] = new JsonArray()
+            {
+              "Status"
+            }
+          }
+        },
+        ["properties"] = new JsonObject()
+        {
+          ["rule"] = new JsonObject()
+          {
+            ["$ref"] = $"#/definitions/{typeof(Rule).FullName}",
+            ["description"] = string.Empty
+          }
+        },
+        ["required"] = new JsonArray()
+        {
+          "rule",
+        },
+      }
+    };
   }
 
   IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }
 
-class Family 
+class Family
 {
   public List<Person> Members { get; } = [];
 
@@ -901,4 +959,23 @@ class Person(string name, int age)
 class Dad
 {
   public string Role = "Father";
+}
+
+class Rule
+{
+  [FunctionProperty(
+    "Indicates the current status of the rule.",
+    true,
+    "Active",
+    new object[] { "Active", "Inactive" }
+  )]
+  public string Status { get; } = "Active";
+
+  [FunctionProperty(
+    "The type of the rule.",
+    false,
+    "Type A",
+    new object[] { "Type B" }
+  )]
+  public string Type { get; } = "Type A";
 }

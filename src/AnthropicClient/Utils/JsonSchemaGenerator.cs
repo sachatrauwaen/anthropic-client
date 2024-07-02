@@ -1,7 +1,9 @@
 using System.Reflection;
+using System.Text.Json;
 using System.Text.Json.Nodes;
 
 using AnthropicClient.Models;
+using AnthropicClient.Json;
 
 namespace AnthropicClient.Utils;
 
@@ -179,15 +181,11 @@ static class JsonSchemaGenerator
         _ => throw new InvalidOperationException("Member is not a property or field")
       };
 
-      // TODO: Provide attribute to allow specifying...
-      // 1. Name
-      // 2. Description
-      // 3. Required
-      // 4. Default values
-      // 5. Possible values
+      var attribute = member.GetCustomAttribute<FunctionPropertyAttribute>();
+
       var memberPropertyName = member.Name;
-      var memberDescription = string.Empty;
-      var memberRequired = Nullable.GetUnderlyingType(memberType) is null;
+      var memberDescription = attribute?.Description ?? string.Empty;
+      var memberRequired = attribute?.Required ?? Nullable.GetUnderlyingType(memberType) is null;
 
       memberProperty = definitions.AsObject().ContainsKey(memberType.FullName)
         ? new JsonObject()
@@ -199,6 +197,38 @@ static class JsonSchemaGenerator
       if (memberRequired)
       {
         memberRequiredProperties.Add(memberPropertyName);
+      }
+
+      JsonNode? defaultValue = null;
+
+      if (attribute?.DefaultValue is not null)
+      {
+        defaultValue = JsonNode.Parse(JsonSerializer.Serialize(attribute.DefaultValue, JsonSerializationOptions.DefaultOptions));
+        memberProperty["default"] = defaultValue;
+      }
+
+      if (attribute?.PossibleValues is { Length: > 0 })
+      {
+        var enumValues = new JsonArray();
+
+        foreach (var value in attribute.PossibleValues)
+        {
+          var enumValue = JsonNode.Parse(JsonSerializer.Serialize(value, JsonSerializationOptions.DefaultOptions));
+
+          if (defaultValue is null || JsonNode.DeepEquals(enumValue, defaultValue) is false)
+          {
+            enumValues.Add(enumValue);
+          }
+        }
+
+        var containsDefaultValue = enumValues.Where(value => JsonNode.DeepEquals(value, defaultValue)).Any();
+
+        if (defaultValue is not null && containsDefaultValue is false)
+        {
+          enumValues.Add(JsonNode.Parse(defaultValue.ToJsonString(JsonSerializationOptions.DefaultOptions)));
+        }
+
+        memberProperty[EnumKey] = enumValues;
       }
 
       memberProperty[DescriptionKey] = memberDescription;
