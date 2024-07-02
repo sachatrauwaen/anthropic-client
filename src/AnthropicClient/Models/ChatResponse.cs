@@ -48,4 +48,10 @@ public class ChatResponse
   /// Gets the contents of the chat response.
   /// </summary>
   public List<Content> Content { get; init; } = [];
+
+  /// <summary>
+  /// Gets the tool call of the chat response. If the chat response does not contain a tool call, this property is null.
+  /// </summary>
+  [JsonIgnore]
+  public ToolCall? ToolCall { get; set; } = null;
 }

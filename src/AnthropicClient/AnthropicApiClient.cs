@@ -82,6 +82,12 @@ public class AnthropicApiClient : IAnthropicApiClient
     }
 
     var chatResponse = Deserialize<ChatResponse>(responseContent) ?? new ChatResponse();
+    
+    if (request.Tools is not null && request.Tools.Count > 0)
+    {
+      chatResponse.ToolCall = GetToolCall(chatResponse, request.Tools);
+    }
+    
     return AnthropicResult<ChatResponse>.Success(chatResponse, anthropicHeaders);
   }
 
@@ -190,6 +196,11 @@ public class AnthropicApiClient : IAnthropicApiClient
           Usage = newUsage,
           Content = chatResponse.Content,
         };
+
+        if (request.Tools is not null && request.Tools.Count > 0)
+        {
+          chatResponse.ToolCall = GetToolCall(chatResponse, request.Tools);
+        }
       }
 
       // yield chat response on message stop
@@ -226,6 +237,25 @@ public class AnthropicApiClient : IAnthropicApiClient
         continue;
       }
     } while (true);
+  }
+
+  private ToolCall? GetToolCall(ChatResponse response, List<Tool> tools)
+  {
+    var toolUse = response.Content.OfType<ToolUseContent>().FirstOrDefault();
+
+    if (toolUse is null)
+    {
+      return null;
+    }
+
+    var tool = tools.FirstOrDefault(t => t.Name == toolUse.Name);
+
+    if (tool is null)
+    {
+      return null;
+    }
+
+    return new ToolCall(tool, toolUse);
   }
 
   private async Task<HttpResponseMessage> SendRequestAsync(MessageRequest request)
