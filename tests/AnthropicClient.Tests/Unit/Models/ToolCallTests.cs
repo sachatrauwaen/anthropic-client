@@ -221,6 +221,40 @@ public class ToolCallTests : SerializationTest
     result.Value.Should().Be("John");
     result.Error.Should().BeNull();
   }
+
+  [Fact]
+  public async Task InvokeAsync_WhenCalledAndToolReturnsVoid_ItShouldReturnSuccessResult()
+  {
+    var func = (int i) => { };
+    var anthropicFunction = new AnthropicFunction(func.Method, func.Target);
+    var tool = new Tool("tool", "description", anthropicFunction);
+
+    var input = new Dictionary<string, object?> { { "i", 42 } };
+    var toolCall = new ToolCall(tool, new ToolUseContent { Input = input });
+
+    var result = await toolCall.InvokeAsync();
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeNull();
+    result.Error.Should().BeNull();
+  }
+
+  [Fact]
+  public async Task InvokeAsync_WhenCalledAndToolReturnsTask_ItShouldReturnSuccessResult()
+  {
+    var func = async (int i) => await Task.CompletedTask;
+    var anthropicFunction = new AnthropicFunction(func.Method, func.Target);
+    var tool = new Tool("tool", "description", anthropicFunction);
+
+    var input = new Dictionary<string, object?> { { "i", 42 } };
+    var toolCall = new ToolCall(tool, new ToolUseContent { Input = input });
+
+    var result = await toolCall.InvokeAsync();
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeNull();
+    result.Error.Should().BeNull();
+  }
 }
 
 class Person

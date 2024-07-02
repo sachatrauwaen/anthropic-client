@@ -1,5 +1,6 @@
 using System.Reflection;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 using AnthropicClient.Json;
 
@@ -65,7 +66,9 @@ public class ToolCall
 
         const string resultPropertyName = "Result";
         var resultProperty = task.GetType().GetProperty(resultPropertyName);
-        result = resultProperty is not null ? (T)resultProperty.GetValue(task) : default;
+        var isVoidTaskResult = resultProperty.PropertyType.FullName.Contains("VoidTaskResult");
+
+        result = resultProperty is not null && isVoidTaskResult is false ? (T)resultProperty.GetValue(task) : default;
       }
       else
       {

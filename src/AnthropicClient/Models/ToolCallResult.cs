@@ -6,7 +6,7 @@ namespace AnthropicClient.Models;
 public class ToolCallResult<T>
 {
   /// <summary>
-  /// The value of the tool call result.
+  /// The value of the tool call result. Can be null if the call failed, the call was successful but the return type is void or Task, or the call was successful but the return value is null
   /// </summary>
   public T? Value { get; }
 
