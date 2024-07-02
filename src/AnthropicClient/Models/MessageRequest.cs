@@ -9,7 +9,7 @@ namespace AnthropicClient.Models;
 /// </summary>
 public abstract class MessageRequest
 {
-    /// <summary>
+  /// <summary>
   /// Gets the model ID to use for the request.
   /// </summary>
   public string Model { get; init; } = string.Empty;
@@ -66,7 +66,7 @@ public abstract class MessageRequest
   /// Gets the tools to use for the request.
   /// </summary>
   public List<Tool>? Tools { get; init; } = null;
-  
+
   /// <summary>
   /// Gets a value indicating whether the message should be streamed.
   /// </summary>

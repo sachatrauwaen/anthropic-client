@@ -12,7 +12,7 @@ public class ToolTests : SerializationTest
   public void Constructor_WhenGivenInvalidNameValue_ItShouldThrowArgumentException(string name)
   {
     var method = () => true;
-    var function = new AnthropicFunction(method.Method); 
+    var function = new AnthropicFunction(method.Method);
     var action = () => new Tool(name, "description", function);
 
     action.Should().Throw<ArgumentException>();
@@ -25,7 +25,7 @@ public class ToolTests : SerializationTest
   public void Constructor_WhenGivenInvalidDescriptionValue_ItShouldThrowArgumentException(string description)
   {
     var method = () => true;
-    var function = new AnthropicFunction(method.Method); 
+    var function = new AnthropicFunction(method.Method);
     var action = () => new Tool("name", description, function);
 
     action.Should().Throw<ArgumentException>();
@@ -43,7 +43,7 @@ public class ToolTests : SerializationTest
   public void Constructor_WhenCalled_ItShouldInitializeProperties()
   {
     var method = () => true;
-    var function = new AnthropicFunction(method.Method); 
+    var function = new AnthropicFunction(method.Method);
     var tool = new Tool("test name", "description", function);
 
     var expectedSchema = new JsonObject()
@@ -56,7 +56,7 @@ public class ToolTests : SerializationTest
     tool.Description.Should().Be("description");
     tool.Function.Should().Be(function);
     tool.InputSchema.Should().BeEquivalentTo(
-      expectedSchema, 
+      expectedSchema,
       t => t.IgnoringCyclicReferences()
     );
   }
@@ -65,7 +65,7 @@ public class ToolTests : SerializationTest
   public void Constructor_WhenCalledAndGivenNameIsMoreThanMaxLength_ItShouldTruncateName()
   {
     var method = () => true;
-    var function = new AnthropicFunction(method.Method); 
+    var function = new AnthropicFunction(method.Method);
     var tool = new Tool(new string('a', 65), "description", function);
 
     tool.Name.Should().HaveLength(64);
@@ -115,7 +115,7 @@ public class ToolTests : SerializationTest
     tool.Function.Method.Name.Should().Be(nameof(TestClass.TestStaticMethod));
     tool.Function.Instance.Should().BeNull();
     tool.InputSchema.Should().BeEquivalentTo(
-      expectedSchema, 
+      expectedSchema,
       t => t.IgnoringCyclicReferences()
     );
   }
@@ -173,7 +173,7 @@ public class ToolTests : SerializationTest
     tool.Function.Method.Name.Should().Be(nameof(TestClass.TestInstanceMethod));
     tool.Function.Instance.Should().Be(instance);
     tool.InputSchema.Should().BeEquivalentTo(
-      expectedSchema, 
+      expectedSchema,
       t => t.IgnoringCyclicReferences()
     );
   }
@@ -202,7 +202,7 @@ public class ToolTests : SerializationTest
     tool.Description.Should().Be("description");
     tool.Function.Method.Should().BeSameAs(func.Method);
     tool.InputSchema.Should().BeEquivalentTo(
-      expectedSchema, 
+      expectedSchema,
       t => t.IgnoringCyclicReferences()
     );
   }
@@ -242,7 +242,7 @@ public class ToolTests : SerializationTest
     tool.Description.Should().Be("description");
     tool.Function.Method.Should().BeSameAs(func.Method);
     tool.InputSchema.Should().BeEquivalentTo(
-      expectedSchema, 
+      expectedSchema,
       t => t.IgnoringCyclicReferences()
     );
   }

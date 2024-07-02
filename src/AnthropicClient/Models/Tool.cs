@@ -39,13 +39,13 @@ public class Tool
   /// </summary>
   [JsonIgnore]
   public string DisplayName { get; }
-  
+
   internal Tool(string name, string description, AnthropicFunction function)
   {
     ArgumentValidator.ThrowIfNullOrWhitespace(name, nameof(name));
     ArgumentValidator.ThrowIfNullOrWhitespace(description, nameof(description));
     ArgumentValidator.ThrowIfNull(function, nameof(function));
-    
+
     // Anthropic imposes a limit on tool names. Tool names must be...
     // - between 1 and 64 characters long
     // - contain only letters, numbers, underscores, and hyphens
@@ -76,7 +76,7 @@ public class Tool
     ArgumentValidator.ThrowIfNull(type, nameof(type));
 
     var method = type.GetMethod(methodName, BindingFlags.Public | BindingFlags.Static);
-    
+
     if (method is null)
     {
       throw new ArgumentException($"Method '{methodName}' not found in type '{type.FullName}'.", nameof(methodName));
@@ -103,7 +103,7 @@ public class Tool
     ArgumentValidator.ThrowIfNull(instance, nameof(instance));
 
     var method = instance.GetType().GetMethod(methodName, BindingFlags.Public | BindingFlags.Instance);
-    
+
     if (method is null)
     {
       throw new ArgumentException($"Method '{methodName}' not found in type '{instance.GetType().FullName}'.", nameof(methodName));
@@ -165,7 +165,7 @@ public class Tool
 
     return new Tool(name, description, new AnthropicFunction(func.Method, func.Target));
   }
-  
+
 
   private static string SanitizeName(string name)
   {

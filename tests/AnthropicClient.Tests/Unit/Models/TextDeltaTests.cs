@@ -11,9 +11,9 @@ public class TextDeltaTests : SerializationTest
   public void Constructor_WhenCalled_ItShouldInitializeProperties()
   {
     var text = "Hello World!";
-    
+
     var textDelta = new TextDelta(text);
-    
+
     textDelta.Type.Should().Be("text_delta");
     textDelta.Text.Should().Be(text);
   }
@@ -24,7 +24,7 @@ public class TextDeltaTests : SerializationTest
     var textDelta = new TextDelta("Hello World!");
 
     var actual = Serialize(textDelta);
-  
+
     JsonAssert.Equal(_testJson, actual);
   }
 

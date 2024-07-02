@@ -135,7 +135,7 @@ public class ToolCallTests : SerializationTest
   [Fact]
   public async Task InvokeAsync_WhenCalledAndToolHasCustomParameterName_ItShouldReturnSuccessResult()
   {
-    var func = ([FunctionParameter("Person's Age", "Age")]int i) => i.ToString();
+    var func = ([FunctionParameter("Person's Age", "Age")] int i) => i.ToString();
     var anthropicFunction = new AnthropicFunction(func.Method, func.Target);
     var tool = new Tool("tool", "description", anthropicFunction);
 
@@ -212,7 +212,7 @@ public class ToolCallTests : SerializationTest
     }";
 
     var input = Deserialize<Dictionary<string, object?>>(personJson);
-    
+
     var toolCall = new ToolCall(tool, new ToolUseContent { Input = input! });
 
     var result = await toolCall.InvokeAsync();

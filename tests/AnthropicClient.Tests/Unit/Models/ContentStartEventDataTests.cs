@@ -67,7 +67,7 @@ public class ContentStartEventDataTests : SerializationTest
       Name = "get_weather",
       Input = []
     };
-  
+
     var contentStartEventData = new ContentStartEventData(index, toolUseContent);
 
     var actual = Serialize(contentStartEventData);

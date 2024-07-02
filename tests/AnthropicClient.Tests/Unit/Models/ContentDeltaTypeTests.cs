@@ -6,9 +6,9 @@ public class ContentDeltaTypeTests
   public void TextDelta_WhenCalled_ItShouldReturnExpectedValue()
   {
     var expected = "text_delta";
-    
+
     var actual = ContentDeltaType.TextDelta;
-    
+
     actual.Should().Be(expected);
   }
 
@@ -16,9 +16,9 @@ public class ContentDeltaTypeTests
   public void JsonDelta_WhenCalled_ItShouldReturnExpectedValue()
   {
     var expected = "input_json_delta";
-    
+
     var actual = ContentDeltaType.JsonDelta;
-    
+
     actual.Should().Be(expected);
   }
 }

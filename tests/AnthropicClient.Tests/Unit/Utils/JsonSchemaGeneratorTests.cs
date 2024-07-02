@@ -13,7 +13,7 @@ public class JsonSchemaGeneratorTests
     };
     var testMethod = () => true;
     var function = new AnthropicFunction(testMethod.Method);
-    
+
     var schema = JsonSchemaGenerator.GenerateInputSchema(function);
 
     JsonAssert.Equal(expectedSchema, schema);
@@ -38,7 +38,7 @@ public class JsonSchemaGeneratorTests
 
     var testMethod = (int age = 0) => age;
     var function = new AnthropicFunction(testMethod.Method);
-    
+
     var schema = JsonSchemaGenerator.GenerateInputSchema(function);
 
     JsonAssert.Equal(expectedSchema, schema);
@@ -66,7 +66,7 @@ public class JsonSchemaGeneratorTests
 
     var testMethod = (string name) => name;
     var function = new AnthropicFunction(testMethod.Method);
-    
+
     var schema = JsonSchemaGenerator.GenerateInputSchema(function);
 
     JsonAssert.Equal(expectedSchema, schema);

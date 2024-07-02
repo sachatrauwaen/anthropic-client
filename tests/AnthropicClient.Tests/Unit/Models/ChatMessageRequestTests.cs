@@ -35,7 +35,7 @@ public class ChatMessageRequestTests : SerializationTest
     ""tools"": [],
     ""stream"":false
   }";
-  
+
   private readonly string _testJsonWithSpecificToolChoice = @"{
     ""model"": ""claude-3-sonnet-20240229"",
     ""system"": ""test-system"",
@@ -52,7 +52,7 @@ public class ChatMessageRequestTests : SerializationTest
     ""tools"": [],
     ""stream"": false
   }";
-  
+
   private readonly string _testJsonWithImageContent = @"{
     ""model"": ""claude-3-sonnet-20240229"",
     ""system"": ""test-system"",
@@ -77,7 +77,7 @@ public class ChatMessageRequestTests : SerializationTest
     ""tools"":[],
     ""stream"": false
   }";
-  
+
   private readonly string _testJsonWithUnknownContent = @"{
     ""model"": ""claude-3-sonnet-20240229"",
     ""system"": ""test-system"",
@@ -92,7 +92,7 @@ public class ChatMessageRequestTests : SerializationTest
     ""tools"": [],
     ""stream"": false
   }";
-  
+
   private readonly string _testJsonWithToolUseContent = @"{
     ""model"": ""claude-3-sonnet-20240229"",
     ""system"": ""test-system"",
@@ -121,7 +121,7 @@ public class ChatMessageRequestTests : SerializationTest
     ""tools"": [],
     ""stream"": false
   }";
-  
+
   private readonly string _testJsonWithToolResultContent = @"{
     ""model"": ""claude-3-sonnet-20240229"",
     ""system"": ""test-system"",
@@ -369,7 +369,7 @@ public class ChatMessageRequestTests : SerializationTest
     specificToolChoice!.Type.Should().Be("tool");
     specificToolChoice.Name.Should().Be("test-tool");
     chatMessageRequest.Tools.Should().HaveCount(0);
-}
+  }
 
   [Fact]
   public void JsonDeserialization_WhenDeserializedWithUnknownToolChoice_ItShouldThrowJsonException()

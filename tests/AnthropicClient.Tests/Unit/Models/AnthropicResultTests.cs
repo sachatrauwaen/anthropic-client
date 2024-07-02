@@ -1,6 +1,6 @@
 namespace AnthropicClient.Tests.Unit.Models;
 
-public class AnthropicResultTests 
+public class AnthropicResultTests
 {
   [Fact]
   public void Success_WhenCalled_ItShouldReturnSuccessResult()

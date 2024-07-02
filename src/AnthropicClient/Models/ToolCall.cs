@@ -60,9 +60,9 @@ public class ToolCall
       if (isAwaitable)
       {
         var task = (Task)Tool.Function.Method.Invoke(Tool.Function.Instance, arguments);
-        
+
         await task;
-        
+
         const string resultPropertyName = "Result";
         var resultProperty = task.GetType().GetProperty(resultPropertyName);
         result = resultProperty is not null ? (T)resultProperty.GetValue(task) : default;
@@ -89,9 +89,9 @@ public class ToolCall
     {
       var parameter = parameters[i];
       var attribute = parameter.GetCustomAttribute<FunctionParameterAttribute>();
-      var parameterName = attribute is not null 
-        ? string.IsNullOrWhiteSpace(attribute.Name) 
-          ? parameter.Name 
+      var parameterName = attribute is not null
+        ? string.IsNullOrWhiteSpace(attribute.Name)
+          ? parameter.Name
           : attribute.Name
         : parameter.Name;
 

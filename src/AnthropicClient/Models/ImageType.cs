@@ -24,6 +24,6 @@ public static class ImageType
   /// Represents the WebP image type.
   /// </summary>
   public const string Webp = "image/webp";
-  
+
   internal static bool IsValidImageType(string imageType) => imageType is Jpg or Png or Gif or Webp;
 }

@@ -6,9 +6,9 @@ public class InvalidRequestErrorTests : SerializationTest
   public void Constructor_WhenCalled_ItShouldInitializeProperties()
   {
     var message = "message";
-    
+
     var error = new InvalidRequestError(message);
-    
+
     error.Type.Should().Be("invalid_request_error");
     error.Message.Should().Be(message);
   }
@@ -17,11 +17,11 @@ public class InvalidRequestErrorTests : SerializationTest
   public void Serialization_WhenSerialized_ItShouldHaveExpectedShape()
   {
     var message = "message";
-    
+
     var error = new InvalidRequestError(message);
-    
+
     var serialized = Serialize(error);
-    
+
     JsonAssert.Equal(
       @"{
         ""type"": ""invalid_request_error"",
@@ -38,9 +38,9 @@ public class InvalidRequestErrorTests : SerializationTest
       ""type"": ""invalid_request_error"",
       ""message"": ""message""
     }";
-    
+
     var error = Deserialize<InvalidRequestError>(json);
-    
+
     error!.Type.Should().Be("invalid_request_error");
     error.Message.Should().Be("message");
   }

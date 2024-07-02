@@ -3,8 +3,8 @@ using System.Text;
 using System.Text.Json;
 
 using AnthropicClient.Json;
-using AnthropicClient.Utils;
 using AnthropicClient.Models;
+using AnthropicClient.Utils;
 
 namespace AnthropicClient;
 
@@ -82,12 +82,12 @@ public class AnthropicApiClient : IAnthropicApiClient
     }
 
     var chatResponse = Deserialize<ChatResponse>(responseContent) ?? new ChatResponse();
-    
+
     if (request.Tools is not null && request.Tools.Count > 0)
     {
       chatResponse.ToolCall = GetToolCall(chatResponse, request.Tools);
     }
-    
+
     return AnthropicResult<ChatResponse>.Success(chatResponse, anthropicHeaders);
   }
 
@@ -108,13 +108,13 @@ public class AnthropicApiClient : IAnthropicApiClient
     do
     {
       var line = await streamReader.ReadLineAsync();
-      
+
       // I know...this is not pretty, but here is why...
       // as events are being yielded I want to also
       // build up the complete chat response
       // so I can yield it as a special event to make tool
       // calling easier to handle
-      
+
       // initialize chat response on message start
       if (currentEvent.Type is EventType.MessageStart && currentEvent.Data is MessageStartEventData msgStartData)
       {
@@ -173,7 +173,7 @@ public class AnthropicApiClient : IAnthropicApiClient
 
       // update chat response with message delta data
       if (
-        currentEvent.Type is EventType.MessageDelta && 
+        currentEvent.Type is EventType.MessageDelta &&
         currentEvent.Data is MessageDeltaEventData msgDeltaData &&
         chatResponse is not null
       )

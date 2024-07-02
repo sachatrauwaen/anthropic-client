@@ -26,7 +26,7 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
     );
 
     var response = _client.CreateChatMessageAsync(request);
-    
+
     var events = new List<AnthropicEvent>();
 
     await foreach (var e in response)
@@ -46,7 +46,7 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
     );
 
     var response = _client.CreateChatMessageAsync(request);
-  
+
     await foreach (var e in response)
     {
       if (e.Data is MessageCompleteEventData messageCompleteData)

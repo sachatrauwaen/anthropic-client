@@ -7,7 +7,7 @@ namespace AnthropicClient.Models;
 /// </summary>
 [AttributeUsage(AttributeTargets.Parameter)]
 public sealed class FunctionParameterAttribute : Attribute
-{ 
+{
   /// <summary>
   /// The name of the parameter.
   /// </summary>

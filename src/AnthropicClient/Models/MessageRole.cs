@@ -14,6 +14,6 @@ public static class MessageRole
   /// Represents the assistant role.
   /// </summary>
   public const string Assistant = "assistant";
-  
+
   internal static bool IsValidRole(string role) => role is User or Assistant;
 }

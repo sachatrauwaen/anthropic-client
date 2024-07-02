@@ -19,6 +19,6 @@ public class ToolChoiceType
   /// Represents the specific tool choice type.
   /// </summary>
   public const string Tool = "tool";
-  
+
   internal static bool IsValidType(string type) => type is Auto or Any or Tool;
 }
