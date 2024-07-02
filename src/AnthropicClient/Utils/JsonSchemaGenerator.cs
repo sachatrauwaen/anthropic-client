@@ -44,7 +44,12 @@ static class JsonSchemaGenerator
       }
 
       var attribute = parameter.GetCustomAttribute<FunctionParameterAttribute>();
-      var paramName = attribute?.Name ?? parameter.Name;
+      var paramName = attribute is not null 
+        ? string.IsNullOrWhiteSpace(attribute.Name) 
+          ? parameter.Name 
+          : attribute.Name
+        : parameter.Name;
+      
       var paramDescription = attribute?.Description ?? string.Empty;
       var paramRequired = attribute?.Required ?? !parameter.HasDefaultValue;
 
