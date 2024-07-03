@@ -50,7 +50,7 @@ public class MessageDelta
   /// Gets the stop sequence.
   /// </summary>
   [JsonPropertyName("stop_sequence")]
-  public string StopSequence { get; init; } = string.Empty;
+  public string? StopSequence { get; init; }
 
   [JsonConstructor]
   internal MessageDelta()
