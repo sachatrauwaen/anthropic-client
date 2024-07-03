@@ -236,7 +236,7 @@ public class AnthropicApiClientTests : IntegrationTest
 
   [Theory]
   [ClassData(typeof(EventTestData))]
-  public async Task CreateChatMessageAsync_WhenCalledAndMessageIsStreamed_ItShouldReturnAllEvents(string eventString, AnthropicEvent anthropicEvent)
+  public async Task CreateChatMessageAsync_WhenCalledAndMessageIsStreamed_ItShouldHandleAllEventTypes(string eventString, AnthropicEvent anthropicEvent)
   {
     _mockHttpMessageHandler
       .WhenCreateStreamMessageRequest()
@@ -257,5 +257,73 @@ public class AnthropicApiClientTests : IntegrationTest
     var e = await result.FirstOrDefaultAsync();
 
     e.Should().BeEquivalentTo(anthropicEvent);
+  }
+
+  [Fact]
+  public async Task CreateChatMessageAsync_WhenCalledAndMessageIsStreamed_ItShouldReturnAllExpectedEvents()
+  {
+    var eventStream = EventTestData.GetEventStream();
+    var events = EventTestData.GetAllEvents();
+
+    _mockHttpMessageHandler
+      .WhenCreateStreamMessageRequest()
+      .Respond(
+        HttpStatusCode.OK,
+        "text/event-stream",
+        eventStream
+      );
+
+    var request = new StreamChatMessageRequest(
+      model: AnthropicModels.Claude35Sonnet,
+      messages: [
+        new(MessageRole.User, [new TextContent("Hello!")]),
+      ]
+    );
+
+    var result = Client.CreateChatMessageAsync(request);
+
+    var actualEvents = await result.ToListAsync();
+
+    actualEvents.Should().BeEquivalentTo(events);
+  }
+
+  [Fact]
+  public async Task CreateChatMessageAsync_WhenCalledMessageIsStreamedAndToolProvide_ItShouldReturnToolCall()
+  {
+    var eventStream = EventTestData.GetEventStream();
+
+    _mockHttpMessageHandler
+      .WhenCreateStreamMessageRequest()
+      .Respond(
+        HttpStatusCode.OK,
+        "text/event-stream",
+        eventStream
+      );
+
+    var getWeather = (string location, string unit) => $"The weather in {location} is 72°{unit}";
+
+    var request = new StreamChatMessageRequest(
+      model: AnthropicModels.Claude35Sonnet,
+      messages: [
+        new(MessageRole.User, [new TextContent("Hello!")]),
+      ],
+      tools: [
+        Tool.CreateFromFunction("get_weather", "Gets the weather for a location", getWeather)
+      ]
+    );
+
+    var result = Client.CreateChatMessageAsync(request);
+    var msgCompleteEvent = await result
+      .Where(e => e.Type is EventType.MessageComplete)
+      .FirstAsync();
+    
+    msgCompleteEvent.Data.Should().BeOfType<MessageCompleteEventData>();
+    
+    var toolCall = msgCompleteEvent.Data.As<MessageCompleteEventData>().Message.ToolCall;
+    var toolCallResult = await toolCall!.InvokeAsync<string>();
+
+    toolCallResult.IsSuccess.Should().BeTrue();
+    toolCallResult.Error.Should().BeNull();
+    toolCallResult.Value.Should().Be(getWeather("San Francisco, CA","fahrenheit"));
   }
 }

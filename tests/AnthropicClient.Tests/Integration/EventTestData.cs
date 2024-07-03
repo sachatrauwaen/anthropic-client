@@ -2,6 +2,45 @@ namespace AnthropicClient.Tests.Integration;
 
 public class EventTestData : IEnumerable<object[]>
 {
+  public static MemoryStream GetEventStream()
+  {
+    var events = new EventTestData().Select(x => x[0].ToString())!;
+    var content = string.Join("\n\n", events);
+    return new MemoryStream(Encoding.UTF8.GetBytes(content));
+  }
+  public static List<AnthropicEvent> GetAllEvents() => new EventTestData().Select(x => x[1] as AnthropicEvent).Append(MessageCompleteEvent).ToList()!;
+
+  public static readonly AnthropicEvent MessageCompleteEvent = new()
+  {
+    Type = EventType.MessageComplete,
+    Data = new MessageCompleteEventData(
+      new()
+      {
+        Id = "msg_014p7gG3wDgGV9EUtLvnow3U",
+        Type = "message",
+        Role = MessageRole.Assistant,
+        Model = AnthropicModels.Claude3Haiku,
+        StopSequence = null,
+        Usage = new ChatUsage { InputTokens = 472, OutputTokens = 91 },
+        StopReason = "tool_use",
+        Content = [
+          new TextContent("Okay, let's check the weather for San Francisco, CA:"),
+          new ToolUseContent()
+          {
+            Id = "toolu_01T1x1fJ34qAmk2tNTrN7Up6",
+            Name = "get_weather",
+            Input = new Dictionary<string, object?> 
+            { 
+              { "location", "San Francisco, CA" }, 
+              { "unit", "fahrenheit" } 
+            },
+          },
+        ]
+      },
+      new()
+    )
+  };
+
   public IEnumerator<object[]> GetEnumerator()
   {
     yield return new object[]
@@ -377,6 +416,248 @@ public class EventTestData : IEnumerable<object[]>
             Input = [],
           },
         },
+      },
+    };
+
+    yield return new object[]
+    {
+      """
+      event: content_block_delta
+      data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":""}}
+      """,
+      new AnthropicEvent()
+      {
+        Type = EventType.ContentBlockDelta,
+        Data = new ContentDeltaEventData()
+        {
+          Index = 1,
+          Delta = new JsonDelta()
+          {
+            Type = "input_json_delta",
+            PartialJson = "",
+          },
+        },
+      },
+    };
+
+    yield return new object[]
+    {
+      """
+      event: content_block_delta
+      data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"{\"location\":"}}
+      """,
+      new AnthropicEvent()
+      {
+        Type = EventType.ContentBlockDelta,
+        Data = new ContentDeltaEventData()
+        {
+          Index = 1,
+          Delta = new JsonDelta()
+          {
+            Type = "input_json_delta",
+            PartialJson = "{\"location\":",
+          },
+        },
+      },
+    };
+
+    yield return new object[]
+    {
+      """
+      event: content_block_delta
+      data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":" \"San"}}
+      """,
+      new AnthropicEvent()
+      {
+        Type = EventType.ContentBlockDelta,
+        Data = new ContentDeltaEventData()
+        {
+          Index = 1,
+          Delta = new JsonDelta()
+          {
+            Type = "input_json_delta",
+            PartialJson = " \"San",
+          },
+        },
+      },
+    };
+
+    yield return new object[]
+    {
+      """
+      event: content_block_delta
+      data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":" Francisc"}}
+      """,
+      new AnthropicEvent()
+      {
+        Type = EventType.ContentBlockDelta,
+        Data = new ContentDeltaEventData()
+        {
+          Index = 1,
+          Delta = new JsonDelta()
+          {
+            Type = "input_json_delta",
+            PartialJson = " Francisc",
+          },
+        },
+      },
+    };
+
+    yield return new object[]
+    {
+      """
+      event: content_block_delta
+      data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"o,"}}
+      """,
+      new AnthropicEvent()
+      {
+        Type = EventType.ContentBlockDelta,
+        Data = new ContentDeltaEventData()
+        {
+          Index = 1,
+          Delta = new JsonDelta()
+          {
+            Type = "input_json_delta",
+            PartialJson = "o,",
+          },
+        },
+      },
+    };
+
+    yield return new object[]
+    {
+      """
+      event: content_block_delta
+      data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":" CA\""}}
+      """,
+      new AnthropicEvent()
+      {
+        Type = EventType.ContentBlockDelta,
+        Data = new ContentDeltaEventData()
+        {
+          Index = 1,
+          Delta = new JsonDelta()
+          {
+            Type = "input_json_delta",
+            PartialJson = " CA\"",
+          },
+        },
+      },
+    };
+
+    yield return new object[]
+    {
+      """
+      event: content_block_delta
+      data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":", "}}
+      """,
+      new AnthropicEvent()
+      {
+        Type = EventType.ContentBlockDelta,
+        Data = new ContentDeltaEventData()
+        {
+          Index = 1,
+          Delta = new JsonDelta()
+          {
+            Type = "input_json_delta",
+            PartialJson = ", ",
+          },
+        },
+      },
+    };
+
+    yield return new object[]
+    {
+      """
+      event: content_block_delta
+      data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"\"unit\": \"fah"}}
+      """,
+      new AnthropicEvent()
+      {
+        Type = EventType.ContentBlockDelta,
+        Data = new ContentDeltaEventData()
+        {
+          Index = 1,
+          Delta = new JsonDelta()
+          {
+            Type = "input_json_delta",
+            PartialJson = "\"unit\": \"fah",
+          },
+        },
+      },
+    };
+
+    yield return new object[]
+    {
+      """
+      event: content_block_delta
+      data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"renheit\"}"}}
+      """,
+      new AnthropicEvent()
+      {
+        Type = EventType.ContentBlockDelta,
+        Data = new ContentDeltaEventData()
+        {
+          Index = 1,
+          Delta = new JsonDelta()
+          {
+            Type = "input_json_delta",
+            PartialJson = "renheit\"}",
+          },
+        },
+      },
+    };
+
+    yield return new object[]
+    {
+      """
+      event: content_block_stop
+      data: {"type":"content_block_stop","index":1}
+      """,
+      new AnthropicEvent()
+      {
+        Type = EventType.ContentBlockStop,
+        Data = new ContentStopEventData()
+        {
+          Index = 1,
+        },
+      },
+    };
+
+    yield return new object[]
+    {
+      """
+      event: message_delta
+      data: {"type":"message_delta","delta":{"stop_reason":"tool_use","stop_sequence":null},"usage":{"output_tokens":89}}
+      """,
+      new AnthropicEvent()
+      {
+        Type = EventType.MessageDelta,
+        Data = new MessageDeltaEventData()
+        {
+          Delta = new MessageDelta()
+          {
+            StopReason = "tool_use",
+            StopSequence = null,
+          },
+          Usage = new ChatUsage()
+          {
+            OutputTokens = 89,
+          },
+        },
+      }
+    };
+
+    yield return new object[]
+    {
+      """
+      event: message_stop
+      data: {"type":"message_stop"}
+      """,
+      new AnthropicEvent()
+      {
+        Type = EventType.MessageStop,
+        Data = new MessageStopEventData(),
       },
     };
   }
