@@ -246,6 +246,67 @@ public class ToolTests : SerializationTest
       t => t.IgnoringCyclicReferences()
     );
   }
+
+  [Fact]
+  public void CreateFromClass_WhenCalledWithToolWhoseNameIsNull_ItShouldThrowException()
+  {
+    var action = () => Tool.CreateFromClass<ToolWithNullName>();
+
+    action.Should().Throw<ArgumentException>();
+  }
+
+  [Fact]
+  public void CreateFromClass_WhenCalledWithToolWhoseNameIsEmpty_ItShouldThrowException()
+  {
+    var action = () => Tool.CreateFromClass<ToolWithEmptyName>();
+
+    action.Should().Throw<ArgumentException>();
+  }
+
+  [Fact]
+  public void CreateFromClass_WhenCalledWithToolWhoseDescriptionIsNull_ItShouldThrowException()
+  {
+    var action = () => Tool.CreateFromClass<ToolWithNullDescription>();
+
+    action.Should().Throw<ArgumentException>();
+  }
+
+  [Fact]
+  public void CreateFromClass_WhenCalledWithToolWhoseDescriptionIsEmpty_ItShouldThrowException()
+  {
+    var action = () => Tool.CreateFromClass<ToolWithEmptyDescription>();
+
+    action.Should().Throw<ArgumentException>();
+  }
+
+  [Fact]
+  public void CreateFromClass_WhenCalledWithToolWhoseFunctionIsNull_ItShouldThrowException()
+  {
+    var action = () => Tool.CreateFromClass<ToolWithNullFunction>();
+
+    action.Should().Throw<ArgumentNullException>();
+  }
+
+  [Fact]
+  public void CreateFromClass_WhenCalledWithProperTool_ItShouldReturnTool()
+  {
+    var tool = Tool.CreateFromClass<ProperTool>();
+
+    var expectedSchema = new JsonObject()
+    {
+      ["type"] = "object",
+    };
+
+    tool.Name.Should().Be("Name");
+    tool.DisplayName.Should().Be("Name");
+    tool.Description.Should().Be("Description");
+    tool.Function.Method.Name.Should().Be(nameof(ProperTool.GetWeather));
+    tool.Function.Instance.Should().BeNull();
+    tool.InputSchema.Should().BeEquivalentTo(
+      expectedSchema,
+      t => t.IgnoringCyclicReferences()
+    );
+  }
 }
 
 class TestClass
@@ -254,4 +315,83 @@ class TestClass
 
   public static bool TestStaticMethod() => true;
   public bool TestInstanceMethod() => _result;
+}
+
+class ProperTool : ITool
+{
+  public string Name => "Name";
+
+  public string Description { get; } = "Description";
+
+  public MethodInfo Function => typeof(ProperTool).GetMethod(nameof(GetWeather))!;
+
+  public static string GetWeather()
+  {
+    return "Sunny";
+  }
+}
+
+class ToolWithNullName : ITool
+{
+  public string Name => null!;
+
+  public string Description { get; } = "Description";
+
+  public MethodInfo Function => typeof(ToolWithNullName).GetMethod(nameof(Tool))!;
+
+  public static string GetWeather()
+  {
+    return "Sunny";
+  }
+}
+
+class ToolWithEmptyName : ITool
+{
+  public string Name => string.Empty;
+
+  public string Description { get; } = "Description";
+
+  public MethodInfo Function => typeof(ToolWithEmptyName).GetMethod(nameof(Tool))!;
+
+  public static string GetWeather()
+  {
+    return "Sunny";
+  }
+}
+
+class ToolWithNullDescription : ITool
+{
+  public string Name => "Name";
+
+  public string Description => null!;
+
+  public MethodInfo Function => typeof(ToolWithNullDescription).GetMethod(nameof(Tool))!;
+
+  public static string GetWeather()
+  {
+    return "Sunny";
+  }
+}
+
+class ToolWithEmptyDescription : ITool
+{
+  public string Name => "Name";
+
+  public string Description => string.Empty;
+
+  public MethodInfo Function => typeof(ToolWithEmptyDescription).GetMethod(nameof(Tool))!;
+
+  public static string GetWeather()
+  {
+    return "Sunny";
+  }
+}
+
+class ToolWithNullFunction : ITool
+{
+  public string Name => "Name";
+
+  public string Description => "Description";
+
+  public MethodInfo Function => null!;
 }

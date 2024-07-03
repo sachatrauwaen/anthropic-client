@@ -8,6 +8,27 @@ using AnthropicClient.Utils;
 namespace AnthropicClient.Models;
 
 /// <summary>
+/// Interface that a class can implement to be used to create a tool.
+/// </summary>
+public interface ITool
+{
+  /// <summary>
+  /// Gets the name of the tool. Should not be null or empty.
+  /// </summary>
+  public string Name { get; }
+
+  /// <summary>
+  /// Gets the description of the tool. Should not be null or empty.
+  /// </summary>
+  public string Description { get; }
+
+  /// <summary>
+  /// Gets the input schema of the tool. Should not be null.
+  /// </summary>
+  public MethodInfo Function { get; }
+}
+
+/// <summary>
 /// Represents a tool that can be used in the chat.
 /// </summary>
 public class Tool
@@ -40,6 +61,18 @@ public class Tool
   [JsonIgnore]
   public string DisplayName { get; }
 
+  [JsonConstructor]
+  internal Tool()
+  {
+    var func = () => {};
+
+    Name = string.Empty;
+    Description = string.Empty;
+    InputSchema = [];
+    Function = new AnthropicFunction(func.Method);
+    DisplayName = string.Empty;
+  }
+
   internal Tool(string name, string description, AnthropicFunction function)
   {
     ArgumentValidator.ThrowIfNullOrWhitespace(name, nameof(name));
@@ -56,6 +89,25 @@ public class Tool
     Description = description;
     Function = function;
     InputSchema = JsonSchemaGenerator.GenerateInputSchema(function);
+  }
+
+  /// <summary>
+  /// Creates a tool from a type that implements <see cref="ITool"/>.
+  /// </summary>
+  /// <typeparam name="T">The type that implements <see cref="ITool"/>.</typeparam>
+  /// <exception cref="ArgumentException">Thrown when the name or description of the tool is null or empty.</exception>
+  /// <exception cref="ArgumentNullException">Thrown when the function of the tool is null.</exception>
+  /// <returns>The created tool as instance of <see cref="Tool"/>.</returns>
+  /// <remarks>The implementation of <see cref="ITool"/> must have a parameterless constructor.</remarks>
+  public static Tool CreateFromClass<T>() where T : ITool, new()
+  {
+    var tool = new T();
+
+    ArgumentValidator.ThrowIfNullOrWhitespace(tool.Name, nameof(tool.Name));
+    ArgumentValidator.ThrowIfNullOrWhitespace(tool.Description, nameof(tool.Description));
+    ArgumentValidator.ThrowIfNull(tool.Function, nameof(tool.Function));
+
+    return new Tool(tool.Name, tool.Description, new AnthropicFunction(tool.Function));
   }
 
   /// <summary>
