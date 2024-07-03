@@ -213,6 +213,12 @@ public class AnthropicApiClient : IAnthropicApiClient
 
       if (line is null)
       {
+        if (string.IsNullOrWhiteSpace(currentEvent.Type) is false)
+        {
+          yield return currentEvent;
+          currentEvent = new AnthropicEvent();
+        }
+
         break;
       }
 

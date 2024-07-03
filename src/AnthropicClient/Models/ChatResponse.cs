@@ -26,13 +26,13 @@ public class ChatResponse
   /// Gets the stop reason of the chat response.
   /// </summary>
   [JsonPropertyName("stop_reason")]
-  public string StopReason { get; init; } = string.Empty;
+  public string? StopReason { get; init; }
 
   /// <summary>
   /// Gets the stop sequence of the chat response.
   /// </summary>
   [JsonPropertyName("stop_sequence")]
-  public string StopSequence { get; init; } = string.Empty;
+  public string? StopSequence { get; init; }
 
   /// <summary>
   /// Gets the type of the chat response.

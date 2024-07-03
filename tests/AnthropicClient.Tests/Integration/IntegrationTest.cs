@@ -28,13 +28,13 @@ public static class MockHttpMessageHandlerExtensions
   {
     return mockHttpMessageHandler
       .SetupBaseRequest()
-      .WithJsonContent<ChatMessageRequest>(r => r.Stream == false);
+      .WithJsonContent<ChatMessageRequest>(r => r.Stream == false, JsonSerializationOptions.DefaultOptions);
   }
 
   public static MockedRequest WhenCreateStreamMessageRequest(this MockHttpMessageHandler mockHttpMessageHandler)
   {
     return mockHttpMessageHandler
       .SetupBaseRequest()
-      .WithJsonContent<ChatMessageRequest>(r => r.Stream == true);
+      .WithJsonContent<StreamChatMessageRequest>(r => r.Stream == true, JsonSerializationOptions.DefaultOptions);
   }
 }
