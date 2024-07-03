@@ -29,7 +29,7 @@ public interface ITool
 }
 
 /// <summary>
-/// Represents a tool that can be used in the chat.
+/// Represents a tool that can be used.
 /// </summary>
 public class Tool
 {

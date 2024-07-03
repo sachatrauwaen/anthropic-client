@@ -1,4 +1,4 @@
-namespace AnthropicClient.Tests.Integration;
+namespace AnthropicClient.Tests.Data;
 
 public class ErrorTestData : IEnumerable<object[]>
 {

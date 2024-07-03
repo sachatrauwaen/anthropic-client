@@ -10,7 +10,7 @@ public class MessageStartEventData : EventData
   /// <summary>
   /// Gets the message.
   /// </summary>
-  public ChatResponse Message { get; init; } = new();
+  public MessageResponse Message { get; init; } = new();
 
   [JsonConstructor]
   internal MessageStartEventData() : base(EventType.MessageStart)
@@ -22,7 +22,7 @@ public class MessageStartEventData : EventData
   /// </summary>
   /// <param name="message">The message.</param>
   /// <returns>A new instance of the <see cref="MessageStartEventData"/> class.</returns>
-  public MessageStartEventData(ChatResponse message) : base(EventType.MessageStart)
+  public MessageStartEventData(MessageResponse message) : base(EventType.MessageStart)
   {
     Message = message;
   }

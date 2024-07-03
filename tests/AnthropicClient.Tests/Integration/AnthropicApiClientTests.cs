@@ -4,7 +4,7 @@ public class AnthropicApiClientTests : IntegrationTest
 {
   [Theory]
   [ClassData(typeof(ErrorTestData))]
-  public async Task CreateChatMessageAsync_WhenCalledAndErrorReturned_ItShouldHandleError(
+  public async Task CreateMessageAsync_WhenCalledAndErrorReturned_ItShouldHandleError(
     HttpStatusCode statusCode,
     string content,
     Type errorType
@@ -18,12 +18,12 @@ public class AnthropicApiClientTests : IntegrationTest
         content
       );
 
-    var request = new ChatMessageRequest(
+    var request = new MessageRequest(
       model: AnthropicModels.Claude3Haiku,
       messages: [new(MessageRole.User, [new TextContent("Hello!")])]
     );
 
-    var result = await Client.CreateChatMessageAsync(request);
+    var result = await Client.CreateMessageAsync(request);
 
     result.IsSuccess.Should().BeFalse();
     result.Error.Should().BeOfType<AnthropicError>();
@@ -33,7 +33,7 @@ public class AnthropicApiClientTests : IntegrationTest
   }
 
   [Fact]
-  public async Task CreateChatMessageAsync_WhenCalledAndMessageCreatedWithTextContent_ItShouldReturnMessage()
+  public async Task CreateMessageAsync_WhenCalledAndMessageCreatedWithTextContent_ItShouldReturnMessage()
   {
     _mockHttpMessageHandler
       .WhenCreateMessageRequest()
@@ -60,15 +60,15 @@ public class AnthropicApiClientTests : IntegrationTest
         }"
       );
 
-    var request = new ChatMessageRequest(
+    var request = new MessageRequest(
       model: AnthropicModels.Claude35Sonnet,
       messages: [new(MessageRole.User, [new TextContent("Hello!")])]
     );
 
-    var result = await Client.CreateChatMessageAsync(request);
+    var result = await Client.CreateMessageAsync(request);
 
     result.IsSuccess.Should().BeTrue();
-    result.Value.Should().BeOfType<ChatResponse>();
+    result.Value.Should().BeOfType<MessageResponse>();
     result.Error.Should().BeNull();
 
     var message = result.Value;
@@ -90,7 +90,7 @@ public class AnthropicApiClientTests : IntegrationTest
   }
 
   [Fact]
-  public async Task CreateChatMessageAsync_WhenCalledAndMessageCreatedWithToolUseContentAndToolIsProvided_ItShouldReturnMessageWithToolCall()
+  public async Task CreateMessageAsync_WhenCalledAndMessageCreatedWithToolUseContentAndToolIsProvided_ItShouldReturnMessageWithToolCall()
   {
     _mockHttpMessageHandler
       .WhenCreateMessageRequest()
@@ -121,7 +121,7 @@ public class AnthropicApiClientTests : IntegrationTest
 
     var func = (string ticker) => ticker;
 
-    var request = new ChatMessageRequest(
+    var request = new MessageRequest(
       model: AnthropicModels.Claude35Sonnet,
       messages: [
         new(MessageRole.User, [new TextContent("Hello!")]),
@@ -131,10 +131,10 @@ public class AnthropicApiClientTests : IntegrationTest
       ]
     );
 
-    var result = await Client.CreateChatMessageAsync(request);
+    var result = await Client.CreateMessageAsync(request);
 
     result.IsSuccess.Should().BeTrue();
-    result.Value.Should().BeOfType<ChatResponse>();
+    result.Value.Should().BeOfType<MessageResponse>();
     result.Error.Should().BeNull();
 
     var message = result.Value;
@@ -168,7 +168,7 @@ public class AnthropicApiClientTests : IntegrationTest
 
 
   [Fact]
-  public async Task CreateChatMessageAsync_WhenCalledAndMessageCreatedWithToolUseButNoToolProvided_ItShouldReturnMessageWithoutToolCall()
+  public async Task CreateMessageAsync_WhenCalledAndMessageCreatedWithToolUseButNoToolProvided_ItShouldReturnMessageWithoutToolCall()
   {
     _mockHttpMessageHandler
       .WhenCreateMessageRequest()
@@ -197,17 +197,17 @@ public class AnthropicApiClientTests : IntegrationTest
         }"
       );
 
-    var request = new ChatMessageRequest(
+    var request = new MessageRequest(
       model: AnthropicModels.Claude35Sonnet,
       messages: [
         new(MessageRole.User, [new TextContent("Hello!")]),
       ]
     );
 
-    var result = await Client.CreateChatMessageAsync(request);
+    var result = await Client.CreateMessageAsync(request);
 
     result.IsSuccess.Should().BeTrue();
-    result.Value.Should().BeOfType<ChatResponse>();
+    result.Value.Should().BeOfType<MessageResponse>();
     result.Error.Should().BeNull();
 
     var message = result.Value;
@@ -236,7 +236,7 @@ public class AnthropicApiClientTests : IntegrationTest
 
   [Theory]
   [ClassData(typeof(EventTestData))]
-  public async Task CreateChatMessageAsync_WhenCalledAndMessageIsStreamed_ItShouldHandleAllEventTypes(string eventString, AnthropicEvent anthropicEvent)
+  public async Task CreateMessageAsync_WhenCalledAndMessageIsStreamed_ItShouldHandleAllEventTypes(string eventString, AnthropicEvent anthropicEvent)
   {
     _mockHttpMessageHandler
       .WhenCreateStreamMessageRequest()
@@ -246,21 +246,21 @@ public class AnthropicApiClientTests : IntegrationTest
         new MemoryStream(Encoding.UTF8.GetBytes(eventString))
       );
 
-    var request = new StreamChatMessageRequest(
+    var request = new StreamMessageRequest(
       model: AnthropicModels.Claude35Sonnet,
       messages: [
         new(MessageRole.User, [new TextContent("Hello!")]),
       ]
     );
 
-    var result = Client.CreateChatMessageAsync(request);
+    var result = Client.CreateMessageAsync(request);
     var e = await result.FirstOrDefaultAsync();
 
     e.Should().BeEquivalentTo(anthropicEvent);
   }
 
   [Fact]
-  public async Task CreateChatMessageAsync_WhenCalledAndMessageIsStreamed_ItShouldReturnAllExpectedEvents()
+  public async Task CreateMessageAsync_WhenCalledAndMessageIsStreamed_ItShouldReturnAllExpectedEvents()
   {
     var eventStream = EventTestData.GetEventStream();
     var events = EventTestData.GetAllEvents();
@@ -273,14 +273,14 @@ public class AnthropicApiClientTests : IntegrationTest
         eventStream
       );
 
-    var request = new StreamChatMessageRequest(
+    var request = new StreamMessageRequest(
       model: AnthropicModels.Claude35Sonnet,
       messages: [
         new(MessageRole.User, [new TextContent("Hello!")]),
       ]
     );
 
-    var result = Client.CreateChatMessageAsync(request);
+    var result = Client.CreateMessageAsync(request);
 
     var actualEvents = await result.ToListAsync();
 
@@ -288,7 +288,7 @@ public class AnthropicApiClientTests : IntegrationTest
   }
 
   [Fact]
-  public async Task CreateChatMessageAsync_WhenCalledMessageIsStreamedAndToolProvide_ItShouldReturnToolCall()
+  public async Task CreateMessageAsync_WhenCalledMessageIsStreamedAndToolProvide_ItShouldReturnToolCall()
   {
     var eventStream = EventTestData.GetEventStream();
 
@@ -302,7 +302,7 @@ public class AnthropicApiClientTests : IntegrationTest
 
     var getWeather = (string location, string unit) => $"The weather in {location} is 72°{unit}";
 
-    var request = new StreamChatMessageRequest(
+    var request = new StreamMessageRequest(
       model: AnthropicModels.Claude35Sonnet,
       messages: [
         new(MessageRole.User, [new TextContent("Hello!")]),
@@ -312,7 +312,7 @@ public class AnthropicApiClientTests : IntegrationTest
       ]
     );
 
-    var result = Client.CreateChatMessageAsync(request);
+    var result = Client.CreateMessageAsync(request);
     var msgCompleteEvent = await result
       .Where(e => e.Type is EventType.MessageComplete)
       .FirstAsync();

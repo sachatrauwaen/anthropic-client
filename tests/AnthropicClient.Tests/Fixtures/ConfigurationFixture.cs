@@ -1,4 +1,4 @@
-namespace AnthropicClient.Tests.EndToEnd;
+namespace AnthropicClient.Tests.Fixtures;
 
 public class ConfigurationFixture
 {

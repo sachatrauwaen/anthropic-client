@@ -1,5 +1,3 @@
-using System.Text.Json.Nodes;
-
 namespace AnthropicClient.Tests.Unit.Utils;
 
 public class JsonSchemaGeneratorTests

@@ -5,9 +5,9 @@ using AnthropicClient.Utils;
 namespace AnthropicClient.Models;
 
 /// <summary>
-/// Represents a chat message.
+/// Represents a message.
 /// </summary>
-public class ChatMessage
+public class Message
 {
   /// <summary>
   /// Gets the role of the message.
@@ -20,19 +20,19 @@ public class ChatMessage
   public List<Content> Content { get; init; } = [];
 
   [JsonConstructor]
-  internal ChatMessage()
+  internal Message()
   {
   }
 
   /// <summary>
-  /// Initializes a new instance of the <see cref="ChatMessage"/> class.
+  /// Initializes a new instance of the <see cref="Message"/> class.
   /// </summary>
   /// <param name="role">The role of the message.</param>
   /// <param name="content">The contents of the message.</param>
   /// <exception cref="ArgumentException">Thrown when the role is invalid.</exception>
   /// <exception cref="ArgumentNullException">Thrown when the role or content is null.</exception>
-  /// <returns>A new instance of the <see cref="ChatMessage"/> class.</returns>
-  public ChatMessage(string role, List<Content> content)
+  /// <returns>A new instance of the <see cref="Message"/> class.</returns>
+  public Message(string role, List<Content> content)
   {
     ArgumentValidator.ThrowIfNull(role, nameof(role));
     ArgumentValidator.ThrowIfNull(content, nameof(content));

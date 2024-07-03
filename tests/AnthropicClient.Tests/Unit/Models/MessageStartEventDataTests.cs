@@ -22,7 +22,7 @@ public class MessageStartEventDataTests : SerializationTest
   [Fact]
   public void Constructor_WhenCalled_ItShouldInitializeProperties()
   {
-    var expectedMessage = new ChatResponse
+    var expectedMessage = new MessageResponse
     {
       Id = "msg_1nZdL29xx5MUA1yADyHTEsnR8uuvGzszyY",
       Type = "message",
@@ -31,7 +31,7 @@ public class MessageStartEventDataTests : SerializationTest
       Model = "claude-3-5-sonnet-20240620",
       StopReason = string.Empty,
       StopSequence = string.Empty,
-      Usage = new ChatUsage { InputTokens = 25, OutputTokens = 1 }
+      Usage = new Usage { InputTokens = 25, OutputTokens = 1 }
     };
 
     var messageStartEventData = new MessageStartEventData(expectedMessage);
@@ -42,7 +42,7 @@ public class MessageStartEventDataTests : SerializationTest
   [Fact]
   public void JsonSerialization_WhenSerialized_ItShouldHaveExpectedShape()
   {
-    var expectedMessage = new ChatResponse
+    var expectedMessage = new MessageResponse
     {
       Id = "msg_1nZdL29xx5MUA1yADyHTEsnR8uuvGzszyY",
       Type = "message",
@@ -51,7 +51,7 @@ public class MessageStartEventDataTests : SerializationTest
       Model = "claude-3-5-sonnet-20240620",
       StopReason = string.Empty,
       StopSequence = string.Empty,
-      Usage = new ChatUsage { InputTokens = 25, OutputTokens = 1 }
+      Usage = new Usage { InputTokens = 25, OutputTokens = 1 }
     };
 
     var messageStartEventData = new MessageStartEventData(expectedMessage);
@@ -64,7 +64,7 @@ public class MessageStartEventDataTests : SerializationTest
   [Fact]
   public void JsonDeserialization_WhenDeserialized_ItShouldHaveExpectedValues()
   {
-    var expectedMessage = new ChatResponse
+    var expectedMessage = new MessageResponse
     {
       Id = "msg_1nZdL29xx5MUA1yADyHTEsnR8uuvGzszyY",
       Type = "message",
@@ -73,7 +73,7 @@ public class MessageStartEventDataTests : SerializationTest
       Model = "claude-3-5-sonnet-20240620",
       StopReason = string.Empty,
       StopSequence = string.Empty,
-      Usage = new ChatUsage { InputTokens = 25, OutputTokens = 1 }
+      Usage = new Usage { InputTokens = 25, OutputTokens = 1 }
     };
 
     var messageStartEventData = Deserialize<MessageStartEventData>(_testJson);

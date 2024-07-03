@@ -5,7 +5,7 @@ using AnthropicClient.Utils;
 namespace AnthropicClient.Models;
 
 /// <summary>
-/// Represents tool result content that is part of a chat message.
+/// Represents tool result content that is part of a message.
 /// </summary>
 public class ToolResultContent : Content
 {

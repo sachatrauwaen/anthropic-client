@@ -1,6 +1,4 @@
-using System.Text.Json.Nodes;
-
-namespace AnthropicClient.Tests.Unit.Utils;
+namespace AnthropicClient.Tests.Data;
 
 public class JsonSchemaGeneratorTestData : IEnumerable<object[]>
 {
@@ -340,7 +338,7 @@ public class JsonSchemaGeneratorTestData : IEnumerable<object[]>
       }
     };
 
-    // datetime parameter type
+    // date time parameter type
     yield return new object[]
     {
       Tool.CreateFromFunction(TestToolName,TestToolDescription,(DateTime date) => date),
@@ -363,7 +361,7 @@ public class JsonSchemaGeneratorTestData : IEnumerable<object[]>
       }
     };
 
-    // datetimeoffset parameter type
+    // date time offset parameter type
     yield return new object[]
     {
       Tool.CreateFromFunction(TestToolName,TestToolDescription,(DateTimeOffset date) => date),

@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 namespace AnthropicClient.Models;
 
 /// <summary>
-/// Represents part of the content of a chat message.
+/// Represents part of the content of a message.
 /// </summary>
 public abstract class Content
 {

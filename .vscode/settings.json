@@ -1,6 +1,8 @@
 {
   "dotnet.defaultSolution": "AnthropicClient.sln",
   "cSpell.words": [
-    "Browsable"
-  ]
+    "Browsable",
+    "Szalay"
+  ],
+  "dotnet.unitTests.runSettingsPath": "./tests/AnthropicClient.Tests/.runsettings"
 }

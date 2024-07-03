@@ -13,9 +13,9 @@ public class MessageDeltaEventData : EventData
   public MessageDelta Delta { get; init; } = new();
 
   /// <summary>
-  /// Gets the chat usage.
+  /// Gets the usage.
   /// </summary>
-  public ChatUsage Usage { get; init; } = new();
+  public Usage Usage { get; init; } = new();
 
   [JsonConstructor]
   internal MessageDeltaEventData() : base(EventType.MessageDelta)
@@ -26,9 +26,9 @@ public class MessageDeltaEventData : EventData
   /// Initializes a new instance of the <see cref="MessageDeltaEventData"/> class.
   /// </summary>
   /// <param name="delta">The message delta.</param>
-  /// <param name="usage">The chat usage.</param>
+  /// <param name="usage">The usage.</param>
   /// <returns>A new instance of the <see cref="MessageDeltaEventData"/> class.</returns>
-  public MessageDeltaEventData(MessageDelta delta, ChatUsage usage) : base(EventType.MessageDelta)
+  public MessageDeltaEventData(MessageDelta delta, Usage usage) : base(EventType.MessageDelta)
   {
     Delta = delta;
     Usage = usage;

@@ -1,6 +1,6 @@
 namespace AnthropicClient.Tests.Unit.Models;
 
-public class ChatResponseTests : SerializationTest
+public class MessageResponseTests : SerializationTest
 {
   [Fact]
   public void Constructor_WhenCalled_ShouldInitializeProperties()
@@ -11,7 +11,7 @@ public class ChatResponseTests : SerializationTest
     var expectedStopReason = "stop reason";
     var expectedStopSequence = "stop sequence";
     var expectedType = "type";
-    var expectedUsage = new ChatUsage
+    var expectedUsage = new Usage
     {
       InputTokens = 1,
       OutputTokens = 2
@@ -21,7 +21,7 @@ public class ChatResponseTests : SerializationTest
       new TextContent("text content"),
     };
 
-    var chatResponse = new ChatResponse
+    var messageResponse = new MessageResponse
     {
       Id = expectedId,
       Model = expectedModel,
@@ -33,14 +33,14 @@ public class ChatResponseTests : SerializationTest
       Content = expectedContent
     };
 
-    chatResponse.Id.Should().Be(expectedId);
-    chatResponse.Model.Should().Be(expectedModel);
-    chatResponse.Role.Should().Be(expectedRole);
-    chatResponse.StopReason.Should().Be(expectedStopReason);
-    chatResponse.StopSequence.Should().Be(expectedStopSequence);
-    chatResponse.Type.Should().Be(expectedType);
-    chatResponse.Usage.Should().BeEquivalentTo(expectedUsage);
-    chatResponse.Content.Should().BeEquivalentTo(expectedContent);
+    messageResponse.Id.Should().Be(expectedId);
+    messageResponse.Model.Should().Be(expectedModel);
+    messageResponse.Role.Should().Be(expectedRole);
+    messageResponse.StopReason.Should().Be(expectedStopReason);
+    messageResponse.StopSequence.Should().Be(expectedStopSequence);
+    messageResponse.Type.Should().Be(expectedType);
+    messageResponse.Usage.Should().BeEquivalentTo(expectedUsage);
+    messageResponse.Content.Should().BeEquivalentTo(expectedContent);
   }
 
   [Fact]
@@ -59,7 +59,7 @@ public class ChatResponseTests : SerializationTest
       ]
     }";
 
-    var chatResponse = new ChatResponse
+    var messageResponse = new MessageResponse
     {
       Id = "id",
       Model = "model",
@@ -67,7 +67,7 @@ public class ChatResponseTests : SerializationTest
       StopReason = "stop reason",
       StopSequence = "stop sequence",
       Type = "type",
-      Usage = new ChatUsage
+      Usage = new Usage
       {
         InputTokens = 1,
         OutputTokens = 2
@@ -78,7 +78,7 @@ public class ChatResponseTests : SerializationTest
       ]
     };
 
-    var actual = Serialize(chatResponse);
+    var actual = Serialize(messageResponse);
 
     JsonAssert.Equal(expectedJson, actual);
   }
@@ -99,20 +99,20 @@ public class ChatResponseTests : SerializationTest
       ]
     }";
 
-    var chatResponse = Deserialize<ChatResponse>(json);
+    var messageResponse = Deserialize<MessageResponse>(json);
 
-    chatResponse!.Id.Should().Be("id");
-    chatResponse.Model.Should().Be("model");
-    chatResponse.Role.Should().Be("role");
-    chatResponse.StopReason.Should().Be("stop reason");
-    chatResponse.StopSequence.Should().Be("stop sequence");
-    chatResponse.Type.Should().Be("type");
-    chatResponse.Usage.Should().BeEquivalentTo(new ChatUsage
+    messageResponse!.Id.Should().Be("id");
+    messageResponse.Model.Should().Be("model");
+    messageResponse.Role.Should().Be("role");
+    messageResponse.StopReason.Should().Be("stop reason");
+    messageResponse.StopSequence.Should().Be("stop sequence");
+    messageResponse.Type.Should().Be("type");
+    messageResponse.Usage.Should().BeEquivalentTo(new Usage
     {
       InputTokens = 1,
       OutputTokens = 2
     });
-    chatResponse.Content.Should().BeEquivalentTo(new List<Content>
+    messageResponse.Content.Should().BeEquivalentTo(new List<Content>
     {
       new TextContent("text content"),
     });

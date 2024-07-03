@@ -5,7 +5,7 @@ public class MessageCompleteEventDataTests
   [Fact]
   public void Constructor_WhenCalled_ItShouldInitializeProperties()
   {
-    var expectedMessage = new ChatResponse();
+    var expectedMessage = new MessageResponse();
     var expectedHeaders = new AnthropicHeaders();
 
     var messageCompleteEventData = new MessageCompleteEventData(expectedMessage, expectedHeaders);

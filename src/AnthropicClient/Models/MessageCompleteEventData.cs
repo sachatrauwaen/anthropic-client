@@ -11,17 +11,17 @@ public class MessageCompleteEventData : EventData
   public AnthropicHeaders Headers { get; init; }
 
   /// <summary>
-  /// Gets the chat response message.
+  /// Gets the response message.
   /// </summary>
-  public ChatResponse Message { get; init; }
+  public MessageResponse Message { get; init; }
 
   /// <summary>
   /// Initializes a new instance of the <see cref="MessageCompleteEventData"/> class.
   /// </summary>
-  /// <param name="message">The chat response message.</param>
+  /// <param name="message">The response message.</param>
   /// <param name="headers">The anthropic headers.</param>
   /// <returns>A new instance of the <see cref="MessageCompleteEventData"/> class.</returns>
-  public MessageCompleteEventData(ChatResponse message, AnthropicHeaders headers) : base(EventType.MessageComplete)
+  public MessageCompleteEventData(MessageResponse message, AnthropicHeaders headers) : base(EventType.MessageComplete)
   {
     Message = message;
     Headers = headers;

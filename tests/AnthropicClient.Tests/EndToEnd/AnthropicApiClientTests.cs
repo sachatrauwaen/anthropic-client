@@ -3,29 +3,29 @@ namespace AnthropicClient.Tests.EndToEnd;
 public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(configFixture)
 {
   [Fact]
-  public async Task CreateChatMessage_WhenCalled_ItShouldReturnChatResponse()
+  public async Task CreateMessageAsync_WhenCalled_ItShouldReturnResponse()
   {
-    var request = new ChatMessageRequest(
+    var request = new MessageRequest(
       model: AnthropicModels.Claude3Haiku,
       messages: [new(MessageRole.User, [new TextContent("Hello!")])]
     );
 
-    var result = await _client.CreateChatMessageAsync(request);
+    var result = await _client.CreateMessageAsync(request);
 
     result.IsSuccess.Should().BeTrue();
-    result.Value.Should().BeOfType<ChatResponse>();
+    result.Value.Should().BeOfType<MessageResponse>();
     result.Value.Content.Should().NotBeNullOrEmpty();
   }
 
   [Fact]
-  public async Task CreateChatMessage_WhenCalledWithStreamRequest_ItShouldReturnEvents()
+  public async Task CreateMessageAsync_WhenCalledWithStreamRequest_ItShouldReturnEvents()
   {
-    var request = new StreamChatMessageRequest(
+    var request = new StreamMessageRequest(
       model: AnthropicModels.Claude3Haiku,
       messages: [new(MessageRole.User, [new TextContent("Hello!")])]
     );
 
-    var response = _client.CreateChatMessageAsync(request);
+    var response = _client.CreateMessageAsync(request);
 
     var events = new List<AnthropicEvent>();
 
@@ -38,14 +38,14 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
   }
 
   [Fact]
-  public async Task CreateChatMessage_WhenCalledWithStreamRequest_ItShouldYieldAMessageCompleteEvent()
+  public async Task CreateMessageAsync_WhenCalledWithStreamRequest_ItShouldYieldAMessageCompleteEvent()
   {
-    var request = new StreamChatMessageRequest(
+    var request = new StreamMessageRequest(
       model: AnthropicModels.Claude3Haiku,
       messages: [new(MessageRole.User, [new TextContent("Hello!")])]
     );
 
-    var response = _client.CreateChatMessageAsync(request);
+    var response = _client.CreateMessageAsync(request);
 
     await foreach (var e in response)
     {
