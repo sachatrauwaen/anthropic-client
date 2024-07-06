@@ -10,6 +10,18 @@ This SDK was developed independently using existing libraries and the Anthropic 
 > [!NOTE]  
 > This client library is heavily inspired by the [Anthropic.SDK](https://github.com/tghamm/Anthropic.SDK) library. I chose to create a new library because I wanted to handle streaming and tool calling differently as well as have control over the client library as I plan to use it to build a connector for [SemanticKernel](https://github.com/microsoft/semantic-kernel). However if you are looking for a client library the Anthropic.SDK is a great place to start.
 
+## 📝 Issues
+
+If you encounter any issues while using this library please open an issue [here](https://github.com/StevanFreeborn/anthropic-client/issues).
+
+## 📜 License
+
+This library is licensed under the [MIT License](https://choosealicense.com/licenses/mit/) and is free to use and modify.
+
+## 📝 Contributing
+
+If you would like to contribute to this library please open a pull request [here](https://github.com/StevanFreeborn/anthropic-client/pulls).
+
 ## 🛠️ Dependencies
 
 ### [Microsoft.Bcl.AsyncInterfaces](https://www.nuget.org/packages/Microsoft.Bcl.AsyncInterfaces/)
@@ -84,7 +96,7 @@ This library was developed to make using the Anthropic API easier within a .NET 
 The primary use case for working with the Anthropic API is to create a message in response to a request that includes one or more other messages. The created message can then be received either as a complete response or a stream of events. This can be used to create a conversation between the caller and Anthropic's AI models and/or to use Anthropic's AI models to perform a task.
 
 > [!NOTE]
-> The following examples assume that you have already created an instance of the `AnthropicApiClient` class named `client`.
+> The following examples assume that you have already created an instance of the `AnthropicApiClient` class named `client`. You can also find these snippets in the [examples](./tests/AnthropicClient.Tests/Examples/) directory.
 
 ### Create a message
 
@@ -368,9 +380,26 @@ It is important to remember that while Anthropic's models do support tool use th
 
 This library aims to make this process convenient by allowing you to simply provide the tools you want Anthropic's models to consider for use when creating a message, receive the response, check if the response contains a tool call, and if it does invoke the tool to get the result.
 
+> [!NOTE]
+> Anthropic's API expects requests to contain messages that alternate between the user and the assistant. In addition if you receive a tool use from the model the API expects you to respond with a message that contains the result of the tool call. The tool use content will always be from the assistant while the tool result will always be from the user.
+
 ```csharp
 using AnthropicClient;
 using AnthropicClient.Models;
+
+class GetWeatherTool : ITool
+{
+  public string Name => "Get Weather";
+
+  public string Description => "Get the weather for a location in the specified units";
+
+  public MethodInfo Function => typeof(GetWeatherTool).GetMethod(nameof(GetWeather))!;
+
+  public static string GetWeather(string location, string units)
+  {
+    return $"The weather in {location} is 72 degrees {units}";
+  }
+}
 
 List<Message> messages = [
   new(
@@ -464,6 +493,113 @@ foreach (var content in finalResponse.Value.Content)
 }
 ```
 
-The `InvokeAsync` method does accept a generic type parameter that can be used to specify the type of the `Value` property of the `ToolCallResult`. If it is not specified it will be an `object`.
+If an exception is thrown while invoking the tool the `InvokeAsync` method will return a `ToolCallResult` with the exception contained in the `Error` property.
+
+> [!NOTE]
+> The `InvokeAsync` method does accept a generic type parameter that can be used to specify the type of the `Value` property of the `ToolCallResult`. If it is not specified it will be an `object`.
 
 #### Call a tool in streamed message
+
+Tool calling is also supported when streaming the message response. The following example demonstrates how you can handle a tool call in a streamed message response.
+
+```csharp
+using AnthropicClient;
+using AnthropicClient.Models;
+
+var tool = (string location, string units) => $"The weather in {location} is 72 degrees {units}";
+
+var messages = [
+  new(
+    MessageRole.User, 
+    [new TextContent("What is the weather in New York?")]
+  )
+];
+
+var tools = [Tool.CreateFromFunction(
+  "Get Weather", 
+  "Get the weather for a location in the specified units", 
+  tool
+)];
+
+var events = client.CreateMessageAsync(new StreamMessageRequest(
+  AnthropicModels.Claude3Haiku,
+  messages,
+  tools: tools
+));
+
+MessageResponse? response = null;
+
+await foreach (var e in events)
+{
+  switch (e.Data)
+  {
+    case var data when data is MessageCompleteEventData msgData:
+      response = msgData.Message;
+      break;
+  }
+}
+
+if (response is null)
+{
+  Console.WriteLine("Failed to get message response");
+  return;
+}
+
+foreach (var content in response.Content)
+{
+  messages.Add(new(MessageRole.Assistant, [content]));
+}
+
+if (response?.ToolCall is not null)
+{
+  var toolCallResult = await response.ToolCall.InvokeAsync<string>();
+  string toolResultContent;
+
+  if (toolCallResult.IsSuccess && toolCallResult.Value is not null)
+  {
+    toolResultContent = toolCallResult.Value;
+  }
+  else
+  {
+    toolResultContent = toolCallResult.Error.Message;
+  }
+
+  messages.Add(
+    new(
+      MessageRole.User, 
+      [
+        new ToolResultContent(
+          response.ToolCall.ToolUse.Id, 
+          toolResultContent
+        )
+      ]
+    )
+  );
+}
+
+var finalResponse = await client.CreateMessageAsync(new MessageRequest(
+  AnthropicModels.Claude3Haiku,
+  messages,
+  tools: tools
+));
+
+if (finalResponse.IsSuccess is false)
+{
+  Console.WriteLine($"Failed to create message");
+  Console.WriteLine($"Error Type: {0}", finalResponse.Error.Error.Type);
+  Console.WriteLine($"Error Message: {0}", finalResponse.Error.Error.Message);
+  return;
+}
+
+foreach (var content in finalResponse.Value.Content)
+{
+  switch (content)
+  {
+    case TextContent textContent:
+      Console.WriteLine(textContent.Text);
+      break;
+  }
+}
+```
+
+If you do find that you need more control over how exactly provided tools are called and how the result of those tools are returned you can avoid using the `InvokeAsync` method and instead use the `Tool` and `ToolUse` properties of the `ToolCall` instance to implement your own solution.

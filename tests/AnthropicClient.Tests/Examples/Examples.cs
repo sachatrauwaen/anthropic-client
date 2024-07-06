@@ -465,6 +465,105 @@ public class Examples(ConfigurationFixture config, ITestOutputHelper console) : 
       }
     }
   }
+
+  [Example]
+  public async Task CreateAMessageProvideAToolStreamTheResponseAndCallTheTool()
+  {
+    var tool = (string location, string units) => $"The weather in {location} is 72 degrees {units}";
+
+    List<Message> messages = [
+      new(
+        MessageRole.User, 
+        [new TextContent("What is the weather in New York?")]
+      )
+    ];
+
+    List<Tool> tools = [Tool.CreateFromFunction(
+      "Get Weather", 
+      "Get the weather for a location in the specified units", 
+      tool
+    )];
+
+    var events = _client.CreateMessageAsync(new StreamMessageRequest(
+      AnthropicModels.Claude3Haiku,
+      messages,
+      tools: tools
+    ));
+
+    MessageResponse? response = null;
+
+    await foreach (var e in events)
+    {
+      switch (e.Data)
+      {
+        case var data when data is MessageCompleteEventData msgData:
+          response = msgData.Message;
+          break;
+      }
+    }
+
+    if (response is null)
+    {
+      _console.WriteLine("Failed to get message response");
+      return;
+    }
+
+    foreach (var content in response.Content)
+    {
+      messages.Add(new(MessageRole.Assistant, [content]));
+    }
+
+    if (response?.ToolCall is not null)
+    {
+      var toolCallResult = await response.ToolCall.InvokeAsync<string>();
+      string toolResultContent;
+
+      if (toolCallResult.IsSuccess && toolCallResult.Value is not null)
+      {
+        toolResultContent = toolCallResult.Value;
+      }
+      else
+      {
+        toolResultContent = toolCallResult.Error.Message;
+      }
+
+      messages.Add(
+        new(
+          MessageRole.User, 
+          [
+            new ToolResultContent(
+              response.ToolCall.ToolUse.Id, 
+              toolResultContent
+            )
+          ]
+        )
+      );
+    }
+
+    var finalResponse = await _client.CreateMessageAsync(new MessageRequest(
+      AnthropicModels.Claude3Haiku,
+      messages,
+      tools: tools
+    ));
+
+    if (finalResponse.IsSuccess is false)
+    {
+      _console.WriteLine($"Failed to create message");
+      _console.WriteLine($"Error Type: {0}", finalResponse.Error.Error.Type);
+      _console.WriteLine($"Error Message: {0}", finalResponse.Error.Error.Message);
+      return;
+    }
+
+    foreach (var content in finalResponse.Value.Content)
+    {
+      switch (content)
+      {
+        case TextContent textContent:
+          _console.WriteLine(textContent.Text);
+          break; 
+      }
+    }
+  }
 }
 
 class GetWeatherTool : ITool
