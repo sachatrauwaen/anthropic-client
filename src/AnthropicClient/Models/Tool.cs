@@ -107,7 +107,7 @@ public class Tool
     ArgumentValidator.ThrowIfNullOrWhitespace(tool.Description, nameof(tool.Description));
     ArgumentValidator.ThrowIfNull(tool.Function, nameof(tool.Function));
 
-    return new Tool(tool.Name, tool.Description, new AnthropicFunction(tool.Function));
+    return new Tool(tool.Name, tool.Description, new AnthropicFunction(tool.Function, tool));
   }
 
   /// <summary>

@@ -160,7 +160,7 @@ public class ToolTests : SerializationTest
   public void CreateFromInstanceMethod_WhenCalled_ItShouldReturnTool()
   {
     var instance = new TestClass();
-    var tool = Tool.CreateFromInstanceMethod("test name", "description", instance, nameof(TestClass.TestInstanceMethod));
+    var tool = Tool.CreateFromInstanceMethod("test name", "description", instance, nameof(instance.TestInstanceMethod));
 
     var expectedSchema = new JsonObject()
     {
