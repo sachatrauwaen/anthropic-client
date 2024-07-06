@@ -154,7 +154,7 @@ public class Examples(ConfigurationFixture config, ITestOutputHelper console) : 
       "Get Weather", 
       "Get the weather for a location in the specified units", 
       typeof(GetWeatherTool), 
-      nameof(GetWeatherTool.GetWeather)
+      nameof(GetWeatherTool.GetWeatherStatically)
     );
 
     var response = await _client.CreateMessageAsync(new MessageRequest(

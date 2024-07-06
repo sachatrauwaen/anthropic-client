@@ -1,14 +1,13 @@
 namespace AnthropicClient.Tests.Unit.Models;
 
-public class AnthropicResultTests
+public class ToolCallResultTests
 {
   [Fact]
   public void Success_WhenCalled_ItShouldReturnSuccessResult()
   {
     var value = "success";
-    var headers = new AnthropicHeaders();
 
-    var actual = AnthropicResult<string>.Success(value, headers);
+    var actual = ToolCallResult<string>.Success(value);
 
     actual.IsSuccess.Should().BeTrue();
     actual.IsFailure.Should().BeFalse();
@@ -16,17 +15,14 @@ public class AnthropicResultTests
 
     var action = () => { var _ = actual.Error; };
     action.Should().Throw<InvalidOperationException>();
-
-    actual.Headers.Should().Be(headers);
   }
 
   [Fact]
   public void Failure_WhenCalled_ItShouldReturnFailureResult()
   {
-    var error = new AnthropicError(new AuthenticationError("message"));
-    var headers = new AnthropicHeaders();
+    var error = new Exception();
 
-    var actual = AnthropicResult<string>.Failure(error, headers);
+    var actual = ToolCallResult<string>.Failure(error);
 
     actual.IsSuccess.Should().BeFalse();
     actual.IsFailure.Should().BeTrue();
@@ -34,7 +30,5 @@ public class AnthropicResultTests
     
     var action = () => { var _ = actual.Value; };
     action.Should().Throw<InvalidOperationException>();
-
-    actual.Headers.Should().Be(headers);
   }
 }

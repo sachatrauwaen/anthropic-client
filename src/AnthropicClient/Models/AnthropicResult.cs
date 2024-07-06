@@ -6,20 +6,53 @@ using AnthropicClient.Models;
 /// <typeparam name="T">The type of the result value.</typeparam>
 public class AnthropicResult<T>
 {
+  private T _value = default!;
+
   /// <summary>
   /// The value of the result.
   /// </summary>
-  public T Value { get; }
+  /// <exception cref="InvalidOperationException">Thrown when the result is not successful.</exception>
+  public T Value 
+  { 
+    get
+    {
+      return IsSuccess ? _value : throw new InvalidOperationException("The result is not successful. Check the error property for more information.");
+    }
+
+    private set
+    {
+      _value = value;
+    }
+  }
+
+  private AnthropicError _error = default!;
 
   /// <summary>
   /// The error of the result.
   /// </summary>
-  public AnthropicError Error { get; }
+  /// <exception cref="InvalidOperationException">Thrown when the result is successful.</exception>
+  public AnthropicError Error 
+  { 
+    get
+    {
+      return IsSuccess ? throw new InvalidOperationException("The result is successful. Check the value property for more information.") : _error;
+    }
+
+    private set
+    {
+      _error = value;
+    }
+  }
 
   /// <summary>
   /// Indicates whether the operation was successful.
   /// </summary>
   public bool IsSuccess { get; }
+
+  /// <summary>
+  /// Indicates whether the operation failed.
+  /// </summary>
+  public bool IsFailure => !IsSuccess;
 
   /// <summary>
   /// The request ID of the operation.

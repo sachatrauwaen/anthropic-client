@@ -69,7 +69,6 @@ public class AnthropicApiClientTests : IntegrationTest
 
     result.IsSuccess.Should().BeTrue();
     result.Value.Should().BeOfType<MessageResponse>();
-    result.Error.Should().BeNull();
 
     var message = result.Value;
     message.Id.Should().Be("msg_013Zva2CMHLNnXjNJJKqJ2EF");
@@ -135,7 +134,6 @@ public class AnthropicApiClientTests : IntegrationTest
 
     result.IsSuccess.Should().BeTrue();
     result.Value.Should().BeOfType<MessageResponse>();
-    result.Error.Should().BeNull();
 
     var message = result.Value;
     message.Id.Should().Be("msg_01D7FLrfh4GYq7yT1ULFeyMV");
@@ -163,7 +161,6 @@ public class AnthropicApiClientTests : IntegrationTest
     var toolCallResult = await message.ToolCall!.InvokeAsync();
     toolCallResult.IsSuccess.Should().BeTrue();
     toolCallResult.Value!.ToString().Should().Be("^GSPC");
-    toolCallResult.Error.Should().BeNull();
   }
 
 
@@ -208,7 +205,6 @@ public class AnthropicApiClientTests : IntegrationTest
 
     result.IsSuccess.Should().BeTrue();
     result.Value.Should().BeOfType<MessageResponse>();
-    result.Error.Should().BeNull();
 
     var message = result.Value;
     message.Id.Should().Be("msg_01D7FLrfh4GYq7yT1ULFeyMV");
@@ -323,7 +319,6 @@ public class AnthropicApiClientTests : IntegrationTest
     var toolCallResult = await toolCall!.InvokeAsync<string>();
 
     toolCallResult.IsSuccess.Should().BeTrue();
-    toolCallResult.Error.Should().BeNull();
     toolCallResult.Value.Should().Be(getWeather("San Francisco, CA","fahrenheit"));
   }
 }
