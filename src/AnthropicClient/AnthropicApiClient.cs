@@ -14,18 +14,18 @@ namespace AnthropicClient;
 public interface IAnthropicApiClient
 {
   /// <summary>
-  /// Creates a chat message asynchronously.
+  /// Creates a message asynchronously.
   /// </summary>
-  /// <param name="request">The chat message request to create.</param>
-  /// <returns>A task that represents the asynchronous operation. The task result contains the chat response as an <see cref="AnthropicResult{T}"/>.</returns>
-  Task<AnthropicResult<ChatResponse>> CreateChatMessageAsync(ChatMessageRequest request);
+  /// <param name="request">The message request to create.</param>
+  /// <returns>A task that represents the asynchronous operation. The task result contains the response as an <see cref="AnthropicResult{T}"/>.</returns>
+  Task<AnthropicResult<MessageResponse>> CreateMessageAsync(MessageRequest request);
 
   /// <summary>
-  /// Creates a chat message asynchronously and streams the response.
+  /// Creates a message asynchronously and streams the response.
   /// </summary>
-  /// <param name="request">The chat message request to create.</param>
-  /// <returns>An asynchronous enumerable that yields the chat response line by line.</returns>
-  IAsyncEnumerable<AnthropicEvent> CreateChatMessageAsync(StreamChatMessageRequest request);
+  /// <param name="request">The message request to create.</param>
+  /// <returns>An asynchronous enumerable that yields the response event by event.</returns>
+  IAsyncEnumerable<AnthropicEvent> CreateMessageAsync(StreamMessageRequest request);
 }
 
 /// <inheritdoc cref="IAnthropicApiClient"/>
@@ -69,7 +69,7 @@ public class AnthropicApiClient : IAnthropicApiClient
   }
 
   /// <inheritdoc />
-  public async Task<AnthropicResult<ChatResponse>> CreateChatMessageAsync(ChatMessageRequest request)
+  public async Task<AnthropicResult<MessageResponse>> CreateMessageAsync(MessageRequest request)
   {
     var response = await SendRequestAsync(request);
     var anthropicHeaders = new AnthropicHeaders(response.Headers);
@@ -78,21 +78,21 @@ public class AnthropicApiClient : IAnthropicApiClient
     if (response.IsSuccessStatusCode is false)
     {
       var error = Deserialize<AnthropicError>(responseContent) ?? new AnthropicError();
-      return AnthropicResult<ChatResponse>.Failure(error, anthropicHeaders);
+      return AnthropicResult<MessageResponse>.Failure(error, anthropicHeaders);
     }
 
-    var chatResponse = Deserialize<ChatResponse>(responseContent) ?? new ChatResponse();
+    var msgResponse = Deserialize<MessageResponse>(responseContent) ?? new MessageResponse();
 
     if (request.Tools is not null && request.Tools.Count > 0)
     {
-      chatResponse.ToolCall = GetToolCall(chatResponse, request.Tools);
+      msgResponse.ToolCall = GetToolCall(msgResponse, request.Tools);
     }
 
-    return AnthropicResult<ChatResponse>.Success(chatResponse, anthropicHeaders);
+    return AnthropicResult<MessageResponse>.Success(msgResponse, anthropicHeaders);
   }
 
   /// <inheritdoc />
-  public async IAsyncEnumerable<AnthropicEvent> CreateChatMessageAsync(StreamChatMessageRequest request)
+  public async IAsyncEnumerable<AnthropicEvent> CreateMessageAsync(StreamMessageRequest request)
   {
     var response = await SendRequestAsync(request);
     var anthropicHeaders = new AnthropicHeaders(response.Headers);
@@ -100,7 +100,7 @@ public class AnthropicApiClient : IAnthropicApiClient
     using var responseContent = await response.Content.ReadAsStreamAsync();
     using var streamReader = new StreamReader(responseContent);
 
-    ChatResponse? chatResponse = null;
+    MessageResponse? msgResponse = null;
     Content? content = null;
     var toolInputJsonStringBuilder = new StringBuilder();
     var currentEvent = new AnthropicEvent();
@@ -111,14 +111,14 @@ public class AnthropicApiClient : IAnthropicApiClient
 
       // I know...this is not pretty, but here is why...
       // as events are being yielded I want to also
-      // build up the complete chat response
+      // build up the complete response
       // so I can yield it as a special event to make tool
       // calling easier to handle
 
-      // initialize chat response on message start
+      // initialize response on message start
       if (currentEvent.Type is EventType.MessageStart && currentEvent.Data is MessageStartEventData msgStartData)
       {
-        chatResponse = msgStartData.Message;
+        msgResponse = msgStartData.Message;
       }
 
       // initialize content block on content block start
@@ -144,14 +144,14 @@ public class AnthropicApiClient : IAnthropicApiClient
       }
 
       // finalize content block on content block stop
-      // and add it to the chat response
+      // and add it to the response
       if (currentEvent.Type is EventType.ContentBlockStop)
       {
-        if (content is not null && chatResponse is not null)
+        if (content is not null && msgResponse is not null)
         {
           if (content is TextContent textContent)
           {
-            chatResponse.Content.Add(textContent);
+            msgResponse.Content.Add(textContent);
           }
 
           if (content is ToolUseContent toolUseContent)
@@ -164,51 +164,51 @@ public class AnthropicApiClient : IAnthropicApiClient
               Input = input!,
             };
 
-            chatResponse.Content.Add(newToolUseContent);
+            msgResponse.Content.Add(newToolUseContent);
           }
 
           content = null;
         }
       }
 
-      // update chat response with message delta data
+      // update response with message delta data
       if (
         currentEvent.Type is EventType.MessageDelta &&
         currentEvent.Data is MessageDeltaEventData msgDeltaData &&
-        chatResponse is not null
+        msgResponse is not null
       )
       {
-        var existingUsage = chatResponse.Usage;
-        var newUsage = new ChatUsage()
+        var existingUsage = msgResponse.Usage;
+        var newUsage = new Usage()
         {
           InputTokens = existingUsage.InputTokens + msgDeltaData.Usage.InputTokens,
           OutputTokens = existingUsage.OutputTokens + msgDeltaData.Usage.OutputTokens,
         };
 
-        chatResponse = new ChatResponse()
+        msgResponse = new MessageResponse()
         {
-          Id = chatResponse.Id,
-          Model = chatResponse.Model,
-          Role = chatResponse.Role,
+          Id = msgResponse.Id,
+          Model = msgResponse.Model,
+          Role = msgResponse.Role,
           StopReason = msgDeltaData.Delta.StopReason,
           StopSequence = msgDeltaData.Delta.StopSequence,
-          Type = chatResponse.Type,
+          Type = msgResponse.Type,
           Usage = newUsage,
-          Content = chatResponse.Content,
+          Content = msgResponse.Content,
         };
 
         if (request.Tools is not null && request.Tools.Count > 0)
         {
-          chatResponse.ToolCall = GetToolCall(chatResponse, request.Tools);
+          msgResponse.ToolCall = GetToolCall(msgResponse, request.Tools);
         }
       }
 
-      // yield chat response on message stop
-      if (currentEvent.Type is EventType.MessageStop && chatResponse is not null)
+      // yield response on message stop
+      if (currentEvent.Type is EventType.MessageStop && msgResponse is not null)
       {
-        var eventData = new MessageCompleteEventData(chatResponse, anthropicHeaders);
+        var eventData = new MessageCompleteEventData(msgResponse, anthropicHeaders);
         yield return new AnthropicEvent(EventType.MessageComplete, eventData);
-        chatResponse = null;
+        msgResponse = null;
       }
 
       if (line is null)
@@ -245,7 +245,7 @@ public class AnthropicApiClient : IAnthropicApiClient
     } while (true);
   }
 
-  private ToolCall? GetToolCall(ChatResponse response, List<Tool> tools)
+  private ToolCall? GetToolCall(MessageResponse response, List<Tool> tools)
   {
     var toolUse = response.Content.OfType<ToolUseContent>().FirstOrDefault();
 
@@ -264,7 +264,7 @@ public class AnthropicApiClient : IAnthropicApiClient
     return new ToolCall(tool, toolUse);
   }
 
-  private async Task<HttpResponseMessage> SendRequestAsync(MessageRequest request)
+  private async Task<HttpResponseMessage> SendRequestAsync(BaseMessageRequest request)
   {
     var requestContent = new StringContent(Serialize(request), Encoding.UTF8, JsonContentType);
     return await _httpClient.PostAsync(MessagesEndpoint, requestContent);

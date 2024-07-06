@@ -1,6 +1,6 @@
 namespace AnthropicClient.Tests.Unit.Models;
 
-public class StreamChatMessageRequestTests : SerializationTest
+public class StreamMessageRequestTests : SerializationTest
 {
   private readonly string _testJson = @"{
     ""model"": ""claude-3-sonnet-20240229"",
@@ -23,7 +23,7 @@ public class StreamChatMessageRequestTests : SerializationTest
   public void Constructor_WhenCalled_ItShouldInitializeProperties()
   {
     var model = AnthropicModels.Claude3Sonnet;
-    var messages = new List<ChatMessage> { new() };
+    var messages = new List<Message> { new() };
     var maxTokens = 512;
     var system = "test-system";
     var metadata = new Dictionary<string, object> { ["test"] = "test" };
@@ -33,7 +33,7 @@ public class StreamChatMessageRequestTests : SerializationTest
     var toolChoice = new AutoToolChoice();
     var tools = new List<Tool>();
 
-    var chatMessageRequest = new StreamChatMessageRequest(
+    var messageRequest = new StreamMessageRequest(
       model: model,
       messages: messages,
       maxTokens: maxTokens,
@@ -46,23 +46,23 @@ public class StreamChatMessageRequestTests : SerializationTest
       tools: tools
     );
 
-    chatMessageRequest.Model.Should().Be(model);
-    chatMessageRequest.Messages.Should().BeSameAs(messages);
-    chatMessageRequest.MaxTokens.Should().Be(maxTokens);
-    chatMessageRequest.System.Should().Be(system);
-    chatMessageRequest.Metadata.Should().BeSameAs(metadata);
-    chatMessageRequest.Temperature.Should().Be(temperature);
-    chatMessageRequest.TopK.Should().Be(topK);
-    chatMessageRequest.TopP.Should().Be(topP);
-    chatMessageRequest.ToolChoice.Should().Be(toolChoice);
-    chatMessageRequest.Tools.Should().BeSameAs(tools);
-    chatMessageRequest.Stream.Should().BeTrue();
+    messageRequest.Model.Should().Be(model);
+    messageRequest.Messages.Should().BeSameAs(messages);
+    messageRequest.MaxTokens.Should().Be(maxTokens);
+    messageRequest.System.Should().Be(system);
+    messageRequest.Metadata.Should().BeSameAs(metadata);
+    messageRequest.Temperature.Should().Be(temperature);
+    messageRequest.TopK.Should().Be(topK);
+    messageRequest.TopP.Should().Be(topP);
+    messageRequest.ToolChoice.Should().Be(toolChoice);
+    messageRequest.Tools.Should().BeSameAs(tools);
+    messageRequest.Stream.Should().BeTrue();
   }
 
   [Fact]
   public void Constructor_WhenCalledAndModelIsNull_ItShouldThrowArgumentNullException()
   {
-    var action = () => new StreamChatMessageRequest(
+    var action = () => new StreamMessageRequest(
       model: null!,
       messages: [new()]
     );
@@ -73,7 +73,7 @@ public class StreamChatMessageRequestTests : SerializationTest
   [Fact]
   public void Constructor_WhenCalledAndMessagesIsNull_ItShouldThrowArgumentNullException()
   {
-    var action = () => new StreamChatMessageRequest(
+    var action = () => new StreamMessageRequest(
       model: AnthropicModels.Claude3Sonnet,
       messages: null!
     );
@@ -84,7 +84,7 @@ public class StreamChatMessageRequestTests : SerializationTest
   [Fact]
   public void Constructor_WhenCalledAndModelIsInvalid_ItShouldThrowArgumentException()
   {
-    var action = () => new StreamChatMessageRequest(
+    var action = () => new StreamMessageRequest(
       model: "invalid-model",
       messages: [new()]
     );
@@ -95,7 +95,7 @@ public class StreamChatMessageRequestTests : SerializationTest
   [Fact]
   public void Constructor_WhenCalledAndMessagesIsEmpty_ItShouldThrowArgumentException()
   {
-    var action = () => new StreamChatMessageRequest(
+    var action = () => new StreamMessageRequest(
       model: AnthropicModels.Claude3Sonnet,
       messages: []
     );
@@ -106,7 +106,7 @@ public class StreamChatMessageRequestTests : SerializationTest
   [Fact]
   public void Constructor_WhenCalledAndMaxTokensIsInvalid_ItShouldThrowArgumentException()
   {
-    var action = () => new StreamChatMessageRequest(
+    var action = () => new StreamMessageRequest(
       model: AnthropicModels.Claude3Sonnet,
       messages: [new()],
       maxTokens: 0
@@ -120,7 +120,7 @@ public class StreamChatMessageRequestTests : SerializationTest
   [InlineData(2)]
   public void Constructor_WhenCalledAndTemperatureIsInvalid_ItShouldThrowArgumentException(decimal temperature)
   {
-    var action = () => new StreamChatMessageRequest(
+    var action = () => new StreamMessageRequest(
       model: AnthropicModels.Claude3Sonnet,
       messages: [new()],
       temperature: temperature
@@ -132,7 +132,7 @@ public class StreamChatMessageRequestTests : SerializationTest
   [Fact]
   public void JsonSerialization_WhenSerialized_ItShouldHaveExpectedShape()
   {
-    var messages = new List<ChatMessage>()
+    var messages = new List<Message>()
     {
       new()
       {
@@ -154,7 +154,7 @@ public class StreamChatMessageRequestTests : SerializationTest
     var toolChoice = new AutoToolChoice();
     var tools = new List<Tool>();
 
-    var chatMessageRequest = new StreamChatMessageRequest(
+    var messageRequest = new StreamMessageRequest(
       model: model,
       messages: messages,
       maxTokens: maxTokens,
@@ -167,7 +167,7 @@ public class StreamChatMessageRequestTests : SerializationTest
       tools: tools
     );
 
-    var actual = Serialize(chatMessageRequest);
+    var actual = Serialize(messageRequest);
 
     JsonAssert.Equal(_testJson, actual);
   }
@@ -175,23 +175,23 @@ public class StreamChatMessageRequestTests : SerializationTest
   [Fact]
   public void JsonDeserialization_WhenDeserialized_ItShouldHaveExpectedShape()
   {
-    var chatMessageRequest = Deserialize<StreamChatMessageRequest>(_testJson);
+    var messageRequest = Deserialize<StreamMessageRequest>(_testJson);
 
-    chatMessageRequest!.Model.Should().Be(AnthropicModels.Claude3Sonnet);
-    chatMessageRequest.System.Should().Be("test-system");
-    chatMessageRequest.Messages.Should().HaveCount(1);
-    chatMessageRequest.MaxTokens.Should().Be(512);
-    chatMessageRequest.Metadata.Should().HaveCount(1);
+    messageRequest!.Model.Should().Be(AnthropicModels.Claude3Sonnet);
+    messageRequest.System.Should().Be("test-system");
+    messageRequest.Messages.Should().HaveCount(1);
+    messageRequest.MaxTokens.Should().Be(512);
+    messageRequest.Metadata.Should().HaveCount(1);
 
-    var testValue = chatMessageRequest.Metadata!.GetValueOrDefault("test")!.ToString();
+    var testValue = messageRequest.Metadata!.GetValueOrDefault("test")!.ToString();
     testValue.Should().Be("test");
 
-    chatMessageRequest.Temperature.Should().Be(0.5m);
-    chatMessageRequest.TopK.Should().Be(10);
-    chatMessageRequest.TopP.Should().Be(0.5m);
-    chatMessageRequest.ToolChoice.Should().BeOfType<AutoToolChoice>();
-    chatMessageRequest.ToolChoice!.Type.Should().Be("auto");
-    chatMessageRequest.Tools.Should().HaveCount(0);
-    chatMessageRequest.Stream.Should().BeTrue();
+    messageRequest.Temperature.Should().Be(0.5m);
+    messageRequest.TopK.Should().Be(10);
+    messageRequest.TopP.Should().Be(0.5m);
+    messageRequest.ToolChoice.Should().BeOfType<AutoToolChoice>();
+    messageRequest.ToolChoice!.Type.Should().Be("auto");
+    messageRequest.Tools.Should().HaveCount(0);
+    messageRequest.Stream.Should().BeTrue();
   }
 }

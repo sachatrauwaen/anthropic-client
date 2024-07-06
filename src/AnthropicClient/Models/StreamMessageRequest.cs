@@ -3,15 +3,15 @@ using System.Text.Json.Serialization;
 namespace AnthropicClient.Models;
 
 /// <summary>
-/// Represents a chat message request.
+/// Represents a message request.
 /// </summary>
-public class ChatMessageRequest : MessageRequest
+public class StreamMessageRequest : BaseMessageRequest
 {
   [JsonConstructor]
-  internal ChatMessageRequest() : base() { }
+  internal StreamMessageRequest() : base() { }
 
   /// <summary>
-  /// Initializes a new instance of the <see cref="ChatMessageRequest"/> class.
+  /// Initializes a new instance of the <see cref="StreamMessageRequest"/> class.
   /// </summary>
   /// <param name="model">The model ID to use for the request.</param>
   /// <param name="messages">The messages to send to the model.</param>
@@ -28,10 +28,10 @@ public class ChatMessageRequest : MessageRequest
   /// <exception cref="ArgumentException">Thrown when the messages contain no messages.</exception>
   /// <exception cref="ArgumentException">Thrown when the max tokens is less than one.</exception>
   /// <exception cref="ArgumentException">Thrown when the temperature is less than zero or greater than one.</exception>
-  /// <returns>A new instance of the <see cref="ChatMessageRequest"/> class.</returns>
-  public ChatMessageRequest(
+  /// <returns>A new instance of the <see cref="StreamMessageRequest"/> class.</returns>
+  public StreamMessageRequest(
     string model,
-    List<ChatMessage> messages,
+    List<Message> messages,
     int maxTokens = 1024,
     string? system = null,
     Dictionary<string, object>? metadata = null,
@@ -51,7 +51,7 @@ public class ChatMessageRequest : MessageRequest
     topP,
     toolChoice,
     tools,
-    false
+    true
   )
   {
   }

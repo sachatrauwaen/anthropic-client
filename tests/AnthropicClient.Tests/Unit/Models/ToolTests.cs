@@ -160,7 +160,7 @@ public class ToolTests : SerializationTest
   public void CreateFromInstanceMethod_WhenCalled_ItShouldReturnTool()
   {
     var instance = new TestClass();
-    var tool = Tool.CreateFromInstanceMethod("test name", "description", instance, nameof(TestClass.TestInstanceMethod));
+    var tool = Tool.CreateFromInstanceMethod("test name", "description", instance, nameof(instance.TestInstanceMethod));
 
     var expectedSchema = new JsonObject()
     {
@@ -301,7 +301,7 @@ public class ToolTests : SerializationTest
     tool.DisplayName.Should().Be("Name");
     tool.Description.Should().Be("Description");
     tool.Function.Method.Name.Should().Be(nameof(ProperTool.GetWeather));
-    tool.Function.Instance.Should().BeNull();
+    tool.Function.Instance.Should().BeOfType<ProperTool>();
     tool.InputSchema.Should().BeEquivalentTo(
       expectedSchema,
       t => t.IgnoringCyclicReferences()

@@ -16,7 +16,6 @@ public class ToolCallTests : SerializationTest
 
     result.IsSuccess.Should().BeTrue();
     result.Value.Should().Be("Hello, World!");
-    result.Error.Should().BeNull();
   }
 
   [Fact]
@@ -30,7 +29,6 @@ public class ToolCallTests : SerializationTest
     var result = await toolCall.InvokeAsync();
 
     result.IsSuccess.Should().BeFalse();
-    result.Value.Should().BeNull();
     result.Error.Should().NotBeNull();
   }
 
@@ -46,7 +44,6 @@ public class ToolCallTests : SerializationTest
 
     result.IsSuccess.Should().BeTrue();
     result.Value.Should().Be("Hello, World!");
-    result.Error.Should().BeNull();
   }
 
   [Fact]
@@ -60,7 +57,6 @@ public class ToolCallTests : SerializationTest
     var result = await toolCall.InvokeAsync();
 
     result.IsSuccess.Should().BeFalse();
-    result.Value.Should().BeNull();
     result.Error.Should().NotBeNull();
   }
 
@@ -78,7 +74,6 @@ public class ToolCallTests : SerializationTest
 
     result.IsSuccess.Should().BeTrue();
     result.Value.Should().Be("42");
-    result.Error.Should().BeNull();
   }
 
   [Fact]
@@ -94,7 +89,6 @@ public class ToolCallTests : SerializationTest
     var result = await toolCall.InvokeAsync();
 
     result.IsSuccess.Should().BeFalse();
-    result.Value.Should().BeNull();
     result.Error.Should().NotBeNull();
   }
 
@@ -112,7 +106,6 @@ public class ToolCallTests : SerializationTest
 
     result.IsSuccess.Should().BeTrue();
     result.Value.Should().Be("42");
-    result.Error.Should().BeNull();
   }
 
   [Fact]
@@ -128,7 +121,6 @@ public class ToolCallTests : SerializationTest
     var result = await toolCall.InvokeAsync();
 
     result.IsSuccess.Should().BeFalse();
-    result.Value.Should().BeNull();
     result.Error.Should().NotBeNull();
   }
 
@@ -146,7 +138,6 @@ public class ToolCallTests : SerializationTest
 
     result.IsSuccess.Should().BeTrue();
     result.Value.Should().Be("42");
-    result.Error.Should().BeNull();
   }
 
   [Fact]
@@ -162,7 +153,6 @@ public class ToolCallTests : SerializationTest
 
     result.IsSuccess.Should().BeTrue();
     result.Value.Should().Be("42");
-    result.Error.Should().BeNull();
   }
 
   [Fact]
@@ -177,7 +167,6 @@ public class ToolCallTests : SerializationTest
     var result = await toolCall.InvokeAsync();
 
     result.IsSuccess.Should().BeFalse();
-    result.Value.Should().BeNull();
     result.Error.Should().NotBeNull();
   }
 
@@ -195,7 +184,6 @@ public class ToolCallTests : SerializationTest
 
     result.IsSuccess.Should().BeTrue();
     result.Value.Should().Be("Monday");
-    result.Error.Should().BeNull();
   }
 
   [Fact]
@@ -219,7 +207,6 @@ public class ToolCallTests : SerializationTest
 
     result.IsSuccess.Should().BeTrue();
     result.Value.Should().Be("John");
-    result.Error.Should().BeNull();
   }
 
   [Fact]
@@ -236,7 +223,6 @@ public class ToolCallTests : SerializationTest
 
     result.IsSuccess.Should().BeTrue();
     result.Value.Should().BeNull();
-    result.Error.Should().BeNull();
   }
 
   [Fact]
@@ -253,7 +239,6 @@ public class ToolCallTests : SerializationTest
 
     result.IsSuccess.Should().BeTrue();
     result.Value.Should().BeNull();
-    result.Error.Should().BeNull();
   }
 }
 

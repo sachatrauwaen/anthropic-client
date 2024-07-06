@@ -1,6 +1,6 @@
 namespace AnthropicClient.Tests.Unit.Models;
 
-public class ChatUsageTests : SerializationTest
+public class UsageTests : SerializationTest
 {
   [Fact]
   public void Constructor_WhenCalled_ShouldInitializeProperties()
@@ -8,14 +8,14 @@ public class ChatUsageTests : SerializationTest
     var expectedInputTokens = 1;
     var expectedOutputTokens = 2;
 
-    var chatUsage = new ChatUsage
+    var usage = new Usage
     {
       InputTokens = expectedInputTokens,
       OutputTokens = expectedOutputTokens
     };
 
-    chatUsage.InputTokens.Should().Be(expectedInputTokens);
-    chatUsage.OutputTokens.Should().Be(expectedOutputTokens);
+    usage.InputTokens.Should().Be(expectedInputTokens);
+    usage.OutputTokens.Should().Be(expectedOutputTokens);
   }
 
   [Fact]
@@ -23,13 +23,13 @@ public class ChatUsageTests : SerializationTest
   {
     var expectedJson = @"{ ""input_tokens"": 1, ""output_tokens"": 2 }";
 
-    var chatUsage = new ChatUsage
+    var usage = new Usage
     {
       InputTokens = 1,
       OutputTokens = 2
     };
 
-    var actual = Serialize(chatUsage);
+    var actual = Serialize(usage);
 
     JsonAssert.Equal(expectedJson, actual);
   }
@@ -39,9 +39,9 @@ public class ChatUsageTests : SerializationTest
   {
     var json = @"{ ""input_tokens"": 1, ""output_tokens"": 2 }";
 
-    var chatUsage = Deserialize<ChatUsage>(json);
+    var usage = Deserialize<Usage>(json);
 
-    chatUsage!.InputTokens.Should().Be(1);
-    chatUsage.OutputTokens.Should().Be(2);
+    usage!.InputTokens.Should().Be(1);
+    usage.OutputTokens.Should().Be(2);
   }
 }

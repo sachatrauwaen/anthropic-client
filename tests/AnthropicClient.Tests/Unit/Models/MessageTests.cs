@@ -1,6 +1,6 @@
 namespace AnthropicClient.Tests.Unit.Models;
 
-public class ChatMessageTests : SerializationTest
+public class MessageTests : SerializationTest
 {
   private readonly string _testJson = @"{
     ""role"": ""assistant"",
@@ -15,10 +15,10 @@ public class ChatMessageTests : SerializationTest
     var role = "assistant";
     var content = new List<Content> { new TextContent("text") };
 
-    var chatMessage = new ChatMessage(role, content);
+    var message = new Message(role, content);
 
-    chatMessage.Role.Should().Be(role);
-    chatMessage.Content.Should().BeSameAs(content);
+    message.Role.Should().Be(role);
+    message.Content.Should().BeSameAs(content);
   }
 
   [Fact]
@@ -26,7 +26,7 @@ public class ChatMessageTests : SerializationTest
   {
     var content = new List<Content> { new TextContent("text") };
 
-    var action = () => new ChatMessage(null!, content);
+    var action = () => new Message(null!, content);
 
     action.Should().Throw<ArgumentNullException>();
   }
@@ -36,7 +36,7 @@ public class ChatMessageTests : SerializationTest
   {
     var role = "assistant";
 
-    var action = () => new ChatMessage(role, null!);
+    var action = () => new Message(role, null!);
 
     action.Should().Throw<ArgumentNullException>();
   }
@@ -47,7 +47,7 @@ public class ChatMessageTests : SerializationTest
     var role = "invalid";
     var content = new List<Content> { new TextContent("text") };
 
-    var action = () => new ChatMessage(role, content);
+    var action = () => new Message(role, content);
 
     action.Should().Throw<ArgumentException>();
   }
@@ -57,22 +57,22 @@ public class ChatMessageTests : SerializationTest
   {
     var role = "assistant";
     var content = new List<Content> { new TextContent("text") };
-    var chatMessage = new ChatMessage(role, content);
+    var message = new Message(role, content);
 
-    var actual = Serialize(chatMessage);
+    var actual = Serialize(message);
 
     JsonAssert.Equal(_testJson, actual);
   }
 
   [Fact]
-  public void JsonDeserialization_WhenDeserialized_ItShouldReturnChatMessage()
+  public void JsonDeserialization_WhenDeserialized_ItShouldReturnMessage()
   {
-    var chatMessage = Deserialize<ChatMessage>(_testJson);
+    var message = Deserialize<Message>(_testJson);
 
-    chatMessage.Should().NotBeNull();
-    chatMessage!.Role.Should().Be("assistant");
-    chatMessage.Content.Should().HaveCount(1);
-    chatMessage.Content[0].Should().BeOfType<TextContent>();
-    chatMessage.Content[0].As<TextContent>().Text.Should().Be("text");
+    message.Should().NotBeNull();
+    message!.Role.Should().Be("assistant");
+    message.Content.Should().HaveCount(1);
+    message.Content[0].Should().BeOfType<TextContent>();
+    message.Content[0].As<TextContent>().Text.Should().Be("text");
   }
 }

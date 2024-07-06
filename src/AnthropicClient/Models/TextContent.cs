@@ -5,7 +5,7 @@ using AnthropicClient.Utils;
 namespace AnthropicClient.Models;
 
 /// <summary>
-/// Represents text content that is part of a chat message.
+/// Represents text content that is part of a message.
 /// </summary>
 public class TextContent : Content
 {

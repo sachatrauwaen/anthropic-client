@@ -1,4 +1,4 @@
-namespace AnthropicClient.Tests.Integration;
+namespace AnthropicClient.Tests.Data;
 
 public class EventTestData : IEnumerable<object[]>
 {
@@ -21,7 +21,7 @@ public class EventTestData : IEnumerable<object[]>
         Role = MessageRole.Assistant,
         Model = AnthropicModels.Claude3Haiku,
         StopSequence = null,
-        Usage = new ChatUsage { InputTokens = 472, OutputTokens = 91 },
+        Usage = new Usage { InputTokens = 472, OutputTokens = 91 },
         StopReason = "tool_use",
         Content = [
           new TextContent("Okay, let's check the weather for San Francisco, CA:"),
@@ -54,14 +54,14 @@ public class EventTestData : IEnumerable<object[]>
         Type = EventType.MessageStart,
         Data = new MessageStartEventData()
         {
-          Message = new ChatResponse()
+          Message = new MessageResponse()
           {
             Id = "msg_014p7gG3wDgGV9EUtLvnow3U",
             Type = "message",
             Role = "assistant",
             Model = "claude-3-haiku-20240307",
             StopSequence = null,
-            Usage = new ChatUsage()
+            Usage = new Usage()
             {
               InputTokens = 472,
               OutputTokens = 2,
@@ -640,7 +640,7 @@ public class EventTestData : IEnumerable<object[]>
             StopReason = "tool_use",
             StopSequence = null,
           },
-          Usage = new ChatUsage()
+          Usage = new Usage()
           {
             OutputTokens = 89,
           },

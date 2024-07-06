@@ -3,9 +3,9 @@ using System.Text.Json.Serialization;
 namespace AnthropicClient.Models;
 
 /// <summary>
-/// Represents the usage of a chat response.
+/// Represents the usage of a response.
 /// </summary>
-public class ChatUsage
+public class Usage
 {
   /// <summary>
   /// Gets the number of input tokens used.

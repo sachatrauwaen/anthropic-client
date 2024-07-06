@@ -5,7 +5,7 @@ using AnthropicClient.Utils;
 namespace AnthropicClient.Models;
 
 /// <summary>
-/// Represents image content that is part of a chat message.
+/// Represents image content that is part of a message.
 /// </summary>
 public class ImageContent : Content
 {

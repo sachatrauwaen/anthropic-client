@@ -15,7 +15,7 @@ public class AnthropicError
   /// <summary>
   /// The error object.
   /// </summary>
-  public Error? Error { get; init; } = null;
+  public Error Error { get; init; } = new ApiError();
 
   [JsonConstructor]
   internal AnthropicError()
