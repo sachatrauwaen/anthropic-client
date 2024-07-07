@@ -84,6 +84,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref }}
+          token: ${{ secrets.ACTIONS_PAT }}
       - name: Setup .NET 8
         uses: actions/setup-dotnet@v4
         with:
