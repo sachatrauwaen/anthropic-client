@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="0.0.1"></a>
+## [0.0.1](https://www.github.com/StevanFreeborn/anthropic-client/releases/tag/v0.0.1) (2024-07-07)
+
+### Bug Fixes
+
+* add correct package project url ([afee3b2](https://www.github.com/StevanFreeborn/anthropic-client/commit/afee3b293a69ed616dedb7656a05cda74502f7a9))
+
+### Other
+
+* Create CNAME ([2e64dcb](https://www.github.com/StevanFreeborn/anthropic-client/commit/2e64dcb7dbbc11180b8c6f56c50a77e2f6bdc13a))
+* Merge branch 'main' of github.com:StevanFreeborn/anthropic-client ([4f156a5](https://www.github.com/StevanFreeborn/anthropic-client/commit/4f156a53cf467ee809136e1d8c66167bbb6890be))
+* Merge branch 'main' of github.com:StevanFreeborn/anthropic-client ([56f74c6](https://www.github.com/StevanFreeborn/anthropic-client/commit/56f74c68c9ccf2e2ef4222e1bcfe0149f0db1046))
+* Merge branch 'main' of github.com:StevanFreeborn/anthropic-client ([78d75eb](https://www.github.com/StevanFreeborn/anthropic-client/commit/78d75eb9440d07a2f121105be6d3382249542c1d))
+* Merge branch 'main' of github.com:StevanFreeborn/anthropic-client ([ddeb651](https://www.github.com/StevanFreeborn/anthropic-client/commit/ddeb6519a2e314ac9194a624e91d4953a1fd3c12))
+* add badges ([599a11c](https://www.github.com/StevanFreeborn/anthropic-client/commit/599a11cd2ded815cc2dceab49aa6140193a4e4ab))
+* add material theme for documentation site ([8a6af15](https://www.github.com/StevanFreeborn/anthropic-client/commit/8a6af152b05f4deb220501de4c69adbde98f7bb2))
+* documentation for v0.0.0 [skip ci] ([7ad471d](https://www.github.com/StevanFreeborn/anthropic-client/commit/7ad471d7608dc89c1efa9803c055123d7929f2bf))
+* documentation for v0.0.0 [skip ci] ([57e950e](https://www.github.com/StevanFreeborn/anthropic-client/commit/57e950e1ce360d416bd98f204e5b17f28c51a8a1))
+* documentation for v0.0.0 [skip ci] ([2879bfd](https://www.github.com/StevanFreeborn/anthropic-client/commit/2879bfde33f0c26df5e79346b8ca594c40585e8a))
+* documentation for v0.0.0 [skip ci] ([9d6935c](https://www.github.com/StevanFreeborn/anthropic-client/commit/9d6935c9eb7d9518ab797be5fa4cff7dc852e565))
+* fix workflow ([1de786c](https://www.github.com/StevanFreeborn/anthropic-client/commit/1de786c27c709574104f5563e439ff10fe7902c9))
+* remove PDF option ([6eaaaef](https://www.github.com/StevanFreeborn/anthropic-client/commit/6eaaaef3b624dca4b674dbabb6f17e5fe3f0e95e))
+* workout documentation job ([2a7dd11](https://www.github.com/StevanFreeborn/anthropic-client/commit/2a7dd118c6dadf2b5675282111f76cfb5bd5566f))
+
 <a name="0.0.0"></a>
 ## [0.0.0](https://www.github.com/StevanFreeborn/anthropic-client/releases/tag/v0.0.0) (2024-07-07)
 
