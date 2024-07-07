@@ -1,5 +1,5 @@
 {
-  "source_base_path": "/home/runner/work/anthropic-client/anthropic-client/docfx",
+  "source_base_path": "C:/Users/sfree/software_projects/anthropic-client/docfx",
   "xrefmap": "xrefmap.yml",
   "files": [
     {
@@ -644,11 +644,11 @@
       "type": "Toc",
       "source_relative_path": "api/toc.yml",
       "output": {
-        ".json": {
-          "relative_path": "api/toc.json"
-        },
         ".html": {
           "relative_path": "api/toc.html"
+        },
+        ".json": {
+          "relative_path": "api/toc.json"
         }
       },
       "version": ""
@@ -667,11 +667,11 @@
       "type": "Toc",
       "source_relative_path": "toc.yml",
       "output": {
-        ".json": {
-          "relative_path": "toc.json"
-        },
         ".html": {
           "relative_path": "toc.html"
+        },
+        ".json": {
+          "relative_path": "toc.json"
         }
       },
       "version": ""

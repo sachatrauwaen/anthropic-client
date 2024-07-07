@@ -30,12 +30,14 @@
     "output": "../docs",
     "template": [
       "default",
-      "modern"
+      "modern",
+      "templates/material"
     ],
     "globalMetadata": {
       "_appName": "AnthropicClient",
       "_appTitle": "AnthropicClient",
       "_enableSearch": true
-    }
+    },
+    "postProcessors": ["ExtractSearchIndex"]
   }
 }
