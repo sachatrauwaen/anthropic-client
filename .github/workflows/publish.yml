@@ -110,9 +110,11 @@ jobs:
           git config --local user.name "Stevan Freeborn" 
           git add .
           git commit -m "docs: documentation for v${{ steps.get-version.outputs.version }} [skip ci]"
+        continue-on-error: true
       - name: Push documentation
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.ACTIONS_PAT }}
           branch: ${{ github.ref }}
           tags: true
+        continue-on-error: true
