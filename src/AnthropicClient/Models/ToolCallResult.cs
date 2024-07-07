@@ -11,8 +11,8 @@ public class ToolCallResult<T>
   /// The value of the tool call result. Can be null if the call failed, the call was successful but the return type is void or Task, or the call was successful but the return value is null
   /// </summary>
   /// <exception cref="InvalidOperationException">Thrown when the result is not successful.</exception>
-  public T? Value 
-  { 
+  public T? Value
+  {
     get
     {
       return IsSuccess ? _value : throw new InvalidOperationException("The result is not successful. Check the error property for more information.");
@@ -30,8 +30,8 @@ public class ToolCallResult<T>
   /// The error of the tool call result.
   /// </summary>
   /// <exception cref="InvalidOperationException">Thrown when the result is successful.</exception>
-  public Exception Error 
-  { 
+  public Exception Error
+  {
     get
     {
       return IsSuccess ? throw new InvalidOperationException("The result is successful. Check the value property for more information.") : _error;
@@ -40,7 +40,7 @@ public class ToolCallResult<T>
     private set
     {
       _error = value;
-    } 
+    }
   }
 
   /// <summary>

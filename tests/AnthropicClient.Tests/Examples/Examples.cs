@@ -18,7 +18,7 @@ public class Examples(ConfigurationFixture config, ITestOutputHelper console) : 
       AnthropicModels.Claude3Haiku,
       [
         new(
-          MessageRole.User, 
+          MessageRole.User,
           [new TextContent("Please write a haiku about the ocean.")]
         )
       ]
@@ -42,7 +42,7 @@ public class Examples(ConfigurationFixture config, ITestOutputHelper console) : 
       }
     }
   }
-  
+
   [Example]
   public async Task CreateAndStreamMessage()
   {
@@ -50,7 +50,7 @@ public class Examples(ConfigurationFixture config, ITestOutputHelper console) : 
       AnthropicModels.Claude3Haiku,
       [
         new(
-          MessageRole.User, 
+          MessageRole.User,
           [new TextContent("Please write a haiku about the ocean.")]
         )
       ]
@@ -83,7 +83,7 @@ public class Examples(ConfigurationFixture config, ITestOutputHelper console) : 
       AnthropicModels.Claude3Haiku,
       [
         new(
-          MessageRole.User, 
+          MessageRole.User,
           [new TextContent("Please write a haiku about the ocean.")]
         )
       ]
@@ -118,7 +118,7 @@ public class Examples(ConfigurationFixture config, ITestOutputHelper console) : 
       AnthropicModels.Claude3Haiku,
       [
         new(
-          MessageRole.User, 
+          MessageRole.User,
           [new TextContent("What is the weather in New York?")]
         )
       ],
@@ -151,9 +151,9 @@ public class Examples(ConfigurationFixture config, ITestOutputHelper console) : 
   public async Task CreateAToolFromAStaticMethod()
   {
     var getWeatherTool = Tool.CreateFromStaticMethod(
-      "Get Weather", 
-      "Get the weather for a location in the specified units", 
-      typeof(GetWeatherTool), 
+      "Get Weather",
+      "Get the weather for a location in the specified units",
+      typeof(GetWeatherTool),
       nameof(GetWeatherTool.GetWeatherStatically)
     );
 
@@ -161,7 +161,7 @@ public class Examples(ConfigurationFixture config, ITestOutputHelper console) : 
       AnthropicModels.Claude3Haiku,
       [
         new(
-          MessageRole.User, 
+          MessageRole.User,
           [new TextContent("What is the weather in New York?")]
         )
       ],
@@ -196,8 +196,8 @@ public class Examples(ConfigurationFixture config, ITestOutputHelper console) : 
     var toolInstance = new GetWeatherTool();
 
     var getWeatherTool = Tool.CreateFromInstanceMethod(
-      "Get Weather", 
-      "Get the weather for a location in the specified units", 
+      "Get Weather",
+      "Get the weather for a location in the specified units",
       toolInstance,
       nameof(toolInstance.GetWeather)
     );
@@ -206,7 +206,7 @@ public class Examples(ConfigurationFixture config, ITestOutputHelper console) : 
       AnthropicModels.Claude3Haiku,
       [
         new(
-          MessageRole.User, 
+          MessageRole.User,
           [new TextContent("What is the weather in New York?")]
         )
       ],
@@ -234,15 +234,15 @@ public class Examples(ConfigurationFixture config, ITestOutputHelper console) : 
       }
     }
   }
-    
+
   [Example]
   public async Task CreateAToolFromDelegate()
   {
     var tool = (string location, string units) => $"The weather in {location} is 72 degrees {units}";
 
     var getWeatherTool = Tool.CreateFromFunction(
-      "Get Weather", 
-      "Get the weather for a location in the specified units", 
+      "Get Weather",
+      "Get the weather for a location in the specified units",
       tool
     );
 
@@ -250,7 +250,7 @@ public class Examples(ConfigurationFixture config, ITestOutputHelper console) : 
       AnthropicModels.Claude3Haiku,
       [
         new(
-          MessageRole.User, 
+          MessageRole.User,
           [new TextContent("What is the weather in New York?")]
         )
       ],
@@ -283,14 +283,14 @@ public class Examples(ConfigurationFixture config, ITestOutputHelper console) : 
   public async Task CreateAToolFromDelegateWithParameterAttributes()
   {
     var tool = (
-      [FunctionParameter(description: "The location of the weather being got", name: "Location", required: true)] 
-      string location, 
+      [FunctionParameter(description: "The location of the weather being got", name: "Location", required: true)]
+      string location,
       string units
     ) => $"The weather in {location} is 72 degrees {units}";
 
     var getWeatherTool = Tool.CreateFromFunction(
-      "Get Weather", 
-      "Get the weather for a location in the specified units", 
+      "Get Weather",
+      "Get the weather for a location in the specified units",
       tool
     );
 
@@ -298,7 +298,7 @@ public class Examples(ConfigurationFixture config, ITestOutputHelper console) : 
       AnthropicModels.Claude3Haiku,
       [
         new(
-          MessageRole.User, 
+          MessageRole.User,
           [new TextContent("What is the weather in New York?")]
         )
       ],
@@ -333,8 +333,8 @@ public class Examples(ConfigurationFixture config, ITestOutputHelper console) : 
     var tool = (GetWeatherInput input) => $"The weather in {input.Location} is 72 degrees {input.Units}";
 
     var getWeatherTool = Tool.CreateFromFunction(
-      "Get Weather", 
-      "Get the weather for a location in the specified units", 
+      "Get Weather",
+      "Get the weather for a location in the specified units",
       tool
     );
 
@@ -342,7 +342,7 @@ public class Examples(ConfigurationFixture config, ITestOutputHelper console) : 
       AnthropicModels.Claude3Haiku,
       [
         new(
-          MessageRole.User, 
+          MessageRole.User,
           [new TextContent("What is the weather in New York?")]
         )
       ],
@@ -376,7 +376,7 @@ public class Examples(ConfigurationFixture config, ITestOutputHelper console) : 
   {
     List<Message> messages = [
       new(
-        MessageRole.User, 
+        MessageRole.User,
         [new TextContent("What is the weather in New York?")]
       )
     ];
@@ -430,10 +430,10 @@ public class Examples(ConfigurationFixture config, ITestOutputHelper console) : 
 
       messages.Add(
         new(
-          MessageRole.User, 
+          MessageRole.User,
           [
             new ToolResultContent(
-              response.Value.ToolCall.ToolUse.Id, 
+              response.Value.ToolCall.ToolUse.Id,
               toolResultContent
             )
           ]
@@ -461,7 +461,7 @@ public class Examples(ConfigurationFixture config, ITestOutputHelper console) : 
       {
         case TextContent textContent:
           _console.WriteLine(textContent.Text);
-          break; 
+          break;
       }
     }
   }
@@ -473,14 +473,14 @@ public class Examples(ConfigurationFixture config, ITestOutputHelper console) : 
 
     List<Message> messages = [
       new(
-        MessageRole.User, 
+        MessageRole.User,
         [new TextContent("What is the weather in New York?")]
       )
     ];
 
     List<Tool> tools = [Tool.CreateFromFunction(
-      "Get Weather", 
-      "Get the weather for a location in the specified units", 
+      "Get Weather",
+      "Get the weather for a location in the specified units",
       tool
     )];
 
@@ -529,10 +529,10 @@ public class Examples(ConfigurationFixture config, ITestOutputHelper console) : 
 
       messages.Add(
         new(
-          MessageRole.User, 
+          MessageRole.User,
           [
             new ToolResultContent(
-              response.ToolCall.ToolUse.Id, 
+              response.ToolCall.ToolUse.Id,
               toolResultContent
             )
           ]
@@ -560,7 +560,7 @@ public class Examples(ConfigurationFixture config, ITestOutputHelper console) : 
       {
         case TextContent textContent:
           _console.WriteLine(textContent.Text);
-          break; 
+          break;
       }
     }
   }

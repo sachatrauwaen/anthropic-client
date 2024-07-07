@@ -27,7 +27,7 @@ public class AnthropicApiClientTests : IntegrationTest
 
     result.IsSuccess.Should().BeFalse();
     result.Error.Should().BeOfType<AnthropicError>();
-    
+
     var actualErrorType = result.Error.Error!.GetType();
     actualErrorType.Should().Be(errorType);
   }
@@ -81,7 +81,7 @@ public class AnthropicApiClientTests : IntegrationTest
     message.Usage.OutputTokens.Should().Be(25);
     message.Content.Should().HaveCount(1);
     message.ToolCall.Should().BeNull();
-    
+
     var textContent = message.Content[0];
     textContent.Should().BeOfType<TextContent>();
     textContent.As<TextContent>().Text.Should().Be("Hi! My name is Claude.");
@@ -312,13 +312,13 @@ public class AnthropicApiClientTests : IntegrationTest
     var msgCompleteEvent = await result
       .Where(e => e.Type is EventType.MessageComplete)
       .FirstAsync();
-    
+
     msgCompleteEvent.Data.Should().BeOfType<MessageCompleteEventData>();
-    
+
     var toolCall = msgCompleteEvent.Data.As<MessageCompleteEventData>().Message.ToolCall;
     var toolCallResult = await toolCall!.InvokeAsync<string>();
 
     toolCallResult.IsSuccess.Should().BeTrue();
-    toolCallResult.Value.Should().Be(getWeather("San Francisco, CA","fahrenheit"));
+    toolCallResult.Value.Should().Be(getWeather("San Francisco, CA", "fahrenheit"));
   }
 }

@@ -29,10 +29,10 @@ public class EventTestData : IEnumerable<object[]>
           {
             Id = "toolu_01T1x1fJ34qAmk2tNTrN7Up6",
             Name = "get_weather",
-            Input = new Dictionary<string, object?> 
-            { 
-              { "location", "San Francisco, CA" }, 
-              { "unit", "fahrenheit" } 
+            Input = new Dictionary<string, object?>
+            {
+              { "location", "San Francisco, CA" },
+              { "unit", "fahrenheit" }
             },
           },
         ]

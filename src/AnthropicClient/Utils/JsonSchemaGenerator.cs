@@ -2,8 +2,8 @@ using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
-using AnthropicClient.Models;
 using AnthropicClient.Json;
+using AnthropicClient.Models;
 
 namespace AnthropicClient.Utils;
 
@@ -46,18 +46,18 @@ static class JsonSchemaGenerator
       }
 
       var attribute = parameter.GetCustomAttribute<FunctionParameterAttribute>();
-      var paramName = attribute is not null 
-        ? string.IsNullOrWhiteSpace(attribute.Name) 
-          ? parameter.Name 
+      var paramName = attribute is not null
+        ? string.IsNullOrWhiteSpace(attribute.Name)
+          ? parameter.Name
           : attribute.Name
         : parameter.Name;
-      
+
       var paramDescription = attribute?.Description ?? string.Empty;
       var paramRequired = attribute?.Required ?? !parameter.HasDefaultValue;
 
       var paramSchema = GenerateParameterTypeSchema(parameter.ParameterType, inputSchema);
       paramSchema[DescriptionKey] = paramDescription;
-      
+
       properties[paramName] = paramSchema;
 
       if (paramRequired)
@@ -88,62 +88,62 @@ static class JsonSchemaGenerator
 
     var paramSchema = type switch
     {
-      var t when t == typeof(string) || t == typeof(char) => new JsonObject() 
-      { 
-        [TypeKey] = StringType 
+      var t when t == typeof(string) || t == typeof(char) => new JsonObject()
+      {
+        [TypeKey] = StringType
       },
-      var t when 
-        t == typeof(int) ||  
+      var t when
+        t == typeof(int) ||
         t == typeof(uint) ||
         t == typeof(long) ||
-        t == typeof(ulong) || 
+        t == typeof(ulong) ||
         t == typeof(short) ||
-        t == typeof(ushort) || 
-        t == typeof(byte) || 
-        t == typeof(sbyte) => new JsonObject() 
-      { 
-        [TypeKey] = "integer" 
+        t == typeof(ushort) ||
+        t == typeof(byte) ||
+        t == typeof(sbyte) => new JsonObject()
+        {
+          [TypeKey] = "integer"
+        },
+      var t when t == typeof(bool) => new JsonObject()
+      {
+        [TypeKey] = "boolean"
       },
-      var t when t == typeof(bool) => new JsonObject() 
-      { 
-        [TypeKey] = "boolean" 
+      var t when
+        t == typeof(double) ||
+        t == typeof(float) ||
+        t == typeof(decimal) => new JsonObject()
+        {
+          [TypeKey] = "number"
+        },
+      var t when t == typeof(DateTime) || t == typeof(DateTimeOffset) => new JsonObject()
+      {
+        [TypeKey] = StringType,
+        [FormatKey] = "date-time"
       },
-      var t when 
-        t == typeof(double) || 
-        t == typeof(float) || 
-        t == typeof(decimal) => new JsonObject() 
-      { 
-        [TypeKey] = "number" 
+      var t when t == typeof(Guid) => new JsonObject()
+      {
+        [TypeKey] = StringType,
+        [FormatKey] = "uuid"
       },
-      var t when t == typeof(DateTime) || t == typeof(DateTimeOffset) => new JsonObject() 
-      { 
-        [TypeKey] = StringType, 
-        [FormatKey] = "date-time" 
-      },
-      var t when t == typeof(Guid) => new JsonObject() 
-      { 
-        [TypeKey] = StringType, 
-        [FormatKey] = "uuid" 
-      },
-      var t when t.IsEnum => new JsonObject() 
-      { 
-        [TypeKey] = StringType, 
+      var t when t.IsEnum => new JsonObject()
+      {
+        [TypeKey] = StringType,
         [EnumKey] = Enum.GetNames(t).Aggregate(
-          new JsonArray(), (acc, name) => 
+          new JsonArray(), (acc, name) =>
           {
-            acc.Add(name); 
-            return acc; 
+            acc.Add(name);
+            return acc;
           }
         )
       },
-      var t when t.IsArray => new JsonObject() 
-      { 
-        [TypeKey] = ArrayType, 
+      var t when t.IsArray => new JsonObject()
+      {
+        [TypeKey] = ArrayType,
         [ItemsKey] = GenerateParameterTypeSchema(t.GetElementType()!, inputSchema)
       },
-      var t when t.IsGenericType && t.GetGenericTypeDefinition() == typeof(List<>) => new JsonObject() 
-      { 
-        [TypeKey] = ArrayType, 
+      var t when t.IsGenericType && t.GetGenericTypeDefinition() == typeof(List<>) => new JsonObject()
+      {
+        [TypeKey] = ArrayType,
         [ItemsKey] = GenerateParameterTypeSchema(t.GetGenericArguments()[0], inputSchema)
       },
       _ => GenerateTypeDefinitionSchema(type, inputSchema)
@@ -189,9 +189,9 @@ static class JsonSchemaGenerator
 
       memberProperty = definitions.AsObject().ContainsKey(memberType.FullName)
         ? new JsonObject()
-          {
-            [RefKey] = GetDefinitionPath(memberType)
-          }
+        {
+          [RefKey] = GetDefinitionPath(memberType)
+        }
         : GenerateParameterTypeSchema(memberType, inputSchema);
 
       if (memberRequired)
