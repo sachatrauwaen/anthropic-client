@@ -96,7 +96,7 @@ This library was developed to make using the Anthropic API easier within a .NET 
 The primary use case for working with the Anthropic API is to create a message in response to a request that includes one or more other messages. The created message can then be received either as a complete response or a stream of events. This can be used to create a conversation between the caller and Anthropic's AI models and/or to use Anthropic's AI models to perform a task.
 
 > [!NOTE]
-> The following examples assume that you have already created an instance of the `AnthropicApiClient` class named `client`. You can also find these snippets in the [examples](./tests/AnthropicClient.Tests/Examples/) directory.
+> The following examples assume that you have already created an instance of the `AnthropicApiClient` class named `client`. You can also find these snippets in the examples directory.
 
 ### Create a message
 

@@ -6,6 +6,8 @@
 # dotenv files
 .env
 appsettings*.json
+docfx/api/
+docfx/index.md
 
 # User-specific files
 *.rsuser
