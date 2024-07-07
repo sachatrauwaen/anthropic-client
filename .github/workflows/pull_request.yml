@@ -1,0 +1,51 @@
+name: Pull Request
+on:
+  pull_request:
+    paths-ignore:
+      - "**/.gitignore"
+      - "**/.editorconfig"
+      - .github/**
+      - .vscode/**
+    branches:
+      - master
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.x
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Format code
+        run: dotnet format --check --verbosity diagnosticdotnet format --verify-no-changes --verbosity diagnostic
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.x
+      - name: Install report generator
+        run: dotnet tool install --global dotnet-reportgenerator-globaltool --version 5.3.7
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Run tests
+        env:
+          SKIP_EXAMPLES: true
+        run: dotnet test
+      - name: Upload html coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: html-report
+          path: tests/AnthropicClient.Tests/TestResults/coverage/report/
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: tests/AnthropicClient.Tests/TestResults/coverage/coverage.cobertura.xml

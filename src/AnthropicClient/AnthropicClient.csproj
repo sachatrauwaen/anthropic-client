@@ -6,6 +6,8 @@
     <PackageId>AnthropicClient</PackageId>
     <Version>0.0.0</Version>
     <Authors>Stevan Freeborn</Authors>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReleaseNotes>CHANGELOG.md</PackageReleaseNotes>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
@@ -21,6 +23,11 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="8.0.0" />
     <PackageReference Include="System.Text.Json" Version="8.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\"/>
+    <None Include="CHANGELOG.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
 </Project>
