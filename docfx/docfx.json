@@ -35,8 +35,7 @@
     "globalMetadata": {
       "_appName": "AnthropicClient",
       "_appTitle": "AnthropicClient",
-      "_enableSearch": true,
-      "pdf": true
+      "_enableSearch": true
     }
   }
 }
