@@ -67,6 +67,10 @@ jobs:
         with:
           name: change-log
           path: src/AntropicClient
+      - name: Publish NuGet package
+        run: |
+          dotnet pack src/AnthropicClient/AntropicClient.csproj -o ./artifacts
+          dotnet nuget push ./artifacts/*.nupkg --api-key ${{ secrets.NUGET_KEY }} --source https://api.nuget.org/v3/index.json
       - name: Create GitHub release
         uses: softprops/action-gh-release@v1
         with:

@@ -39,6 +39,7 @@ jobs:
       - name: Run tests
         env:
           SKIP_EXAMPLES: true
+          AnthropicApiKey: ${{ secrets.ANTHROPIC_KEY }}
         run: dotnet test
       - name: Upload html coverage report
         uses: actions/upload-artifact@v4
