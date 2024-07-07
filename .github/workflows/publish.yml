@@ -78,17 +78,33 @@ jobs:
           name: AnthropicClient v${{ steps.get-version.outputs.version }}
           tag_name: v${{ steps.get-version.outputs.version }}
           body_path: src/AnthropicClient/CHANGELOG.md
+  documentation:
+    needs: version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.x
       - name: Install Docfx
         run: dotnet tool install --global docfx
+      - name: Get project version
+        uses: kzrnm/get-net-sdk-project-versions-action@v1
+        id: get-version
+        with:
+          proj-path: src/AnthropicClient/AnthropicClient.csproj
       - name: Build documentation
         run: |
           cp README.md docfx/index.md
+          docfx metadata docfx/docfx.json
           docfx build docfx/docfx.json
       - name: Commit documentation
         run: |
           git config --local user.email "65925598+StevanFreeborn@users.noreply.github.com"
           git config --local user.name "Stevan Freeborn" 
-          git add docfx/_site
+          git add .
           git commit -m "docs: documentation for v${{ steps.get-version.outputs.version }} [skip ci]"
       - name: Push documentation
         uses: ad-m/github-push-action@master
