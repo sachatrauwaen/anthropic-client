@@ -61,15 +61,15 @@ jobs:
         uses: kzrnm/get-net-sdk-project-versions-action@v1
         id: get-version
         with:
-          proj-path: src/AntropicClient/AntropicClient.csproj
+          proj-path: src/AnthropicClient/AnthropicClient.csproj
       - name: Download changlog
         uses: actions/download-artifact@v4
         with:
           name: change-log
-          path: src/AntropicClient
+          path: src/AnthropicClient
       - name: Publish NuGet package
         run: |
-          dotnet pack src/AnthropicClient/AntropicClient.csproj -o ./artifacts
+          dotnet pack src/AnthropicClient/AnthropicClient.csproj -o ./artifacts
           dotnet nuget push ./artifacts/*.nupkg --api-key ${{ secrets.NUGET_KEY }} --source https://api.nuget.org/v3/index.json
       - name: Create GitHub release
         uses: softprops/action-gh-release@v1
