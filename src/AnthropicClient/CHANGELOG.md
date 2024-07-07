@@ -44,6 +44,7 @@ All notable changes to this project will be documented in this file. See [versio
 
 ### Other
 
+* Merge branch 'main' of github.com:StevanFreeborn/anthropic-client ([98e9596](https://www.github.com/StevanFreeborn/anthropic-client/commit/98e9596070422bc6488b249a3f752de7942496ff))
 * Merge pull request #1 from StevanFreeborn/stevanfreeborn/docs/prepare-documentation-for-release ([3969937](https://www.github.com/StevanFreeborn/anthropic-client/commit/3969937ffadc19379f848771cdee21b1257efb0d))
 * Merge pull request #2 from StevanFreeborn/stevanfreeborn/chore/add-workflows ([1e7fa66](https://www.github.com/StevanFreeborn/anthropic-client/commit/1e7fa6686510814d7da95719491555f9dd95a369))
 * add additional streaming tests ([bd8e4c7](https://www.github.com/StevanFreeborn/anthropic-client/commit/bd8e4c70ab2398ba3ae2d032019b592added4df9))
@@ -58,6 +59,7 @@ All notable changes to this project will be documented in this file. See [versio
 * add package metadat ([d1855dd](https://www.github.com/StevanFreeborn/anthropic-client/commit/d1855ddd3706c091f6f66e88f9bfd95769d04e20))
 * add test cases ([ff649cb](https://www.github.com/StevanFreeborn/anthropic-client/commit/ff649cb3d19afa8c8dd4b539f06014461ff7c187))
 * add workflows ([ebbae05](https://www.github.com/StevanFreeborn/anthropic-client/commit/ebbae05a22472cf3976c0e7c072d5417b6c8b5e5))
+* delete change log ([6067d5d](https://www.github.com/StevanFreeborn/anthropic-client/commit/6067d5d70c2a6fb80f142fb9325d0765d4af0564))
 * don't reuse http client as fixture ([6caa4b1](https://www.github.com/StevanFreeborn/anthropic-client/commit/6caa4b1b069bf773d034d5f2aa7fa68f07a6dfb9))
 * fix branch name ([be836d6](https://www.github.com/StevanFreeborn/anthropic-client/commit/be836d6f485543ccc6174966e262e3d838d4451d))
 * fix dotnet format command ([d5cfe65](https://www.github.com/StevanFreeborn/anthropic-client/commit/d5cfe65622030a6cd02fef2f86660847d09cdcfe))
@@ -79,4 +81,6 @@ All notable changes to this project will be documented in this file. See [versio
 * work on README ([1d352a6](https://www.github.com/StevanFreeborn/anthropic-client/commit/1d352a6f95faca8d6f5eff7901dfff57007ad030))
 * work on README ([5c0cad2](https://www.github.com/StevanFreeborn/anthropic-client/commit/5c0cad254583781e53de81ba8fec16eafa408b72))
 * work on README ([dd380c9](https://www.github.com/StevanFreeborn/anthropic-client/commit/dd380c9253d2b00a2823ccc49c5a67bd47c88227))
+* workflow fix mispelling ([dde8543](https://www.github.com/StevanFreeborn/anthropic-client/commit/dde8543b627487a302d075391abe3f0c77583d87))
+* **release:** 0.0.0 [skip ci] ([f2b3e0e](https://www.github.com/StevanFreeborn/anthropic-client/commit/f2b3e0e7d32a3e0a0de11ef3c2cb43da1283255a))
 
