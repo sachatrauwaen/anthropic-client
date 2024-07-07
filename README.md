@@ -1,5 +1,12 @@
 # AnthropicClient
 
+[![Pull Request](https://github.com/StevanFreeborn/anthropic-client/actions/workflows/pull_request.yml/badge.svg)](https://github.com/StevanFreeborn/anthropic-client/actions/workflows/pull_request.yml)
+[![codecov](https://codecov.io/gh/StevanFreeborn/anthropic-client/graph/badge.svg?token=hZ3MjhxDv9)](https://codecov.io/gh/StevanFreeborn/anthropic-client)
+[![Publish](https://github.com/StevanFreeborn/anthropic-client/actions/workflows/publish.yml/badge.svg)](https://github.com/StevanFreeborn/anthropic-client/actions/workflows/publish.yml)
+[![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
+![NuGet Version](https://img.shields.io/nuget/v/AnthropicClient)
+![NuGet Downloads](https://img.shields.io/nuget/dt/AnthropicClient)
+
 This library for the Anthropic API is meant to simplify development in C# for Anthropic users.
 
 > [!NOTE]
