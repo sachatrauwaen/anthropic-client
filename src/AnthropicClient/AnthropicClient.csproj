@@ -6,8 +6,13 @@
     <PackageId>AnthropicClient</PackageId>
     <Version>0.0.0</Version>
     <Authors>Stevan Freeborn</Authors>
+    <Description>Anthropic Client Library</Description>
+    <PackageProjectUrl>https://stevanfreeborn.github.io/anthropic-client</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/StevanFreeborn/anthropic-client</RepositoryUrl>
+    <PackageTags>anthropic;client</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageReleaseNotes>CHANGELOG.md</PackageReleaseNotes>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
@@ -27,6 +32,7 @@
 
   <ItemGroup>
     <None Include="..\..\README.md" Pack="true" PackagePath="\"/>
+    <None Include="..\..\LICENSE.md" Pack="true" PackagePath="\"/>
     <None Include="CHANGELOG.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
