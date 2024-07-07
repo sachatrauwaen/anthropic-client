@@ -8,7 +8,7 @@ on:
       - .github/**
       - .vscode/**
     branches:
-      - master
+      - main
 jobs:
   format:
     runs-on: ubuntu-latest
