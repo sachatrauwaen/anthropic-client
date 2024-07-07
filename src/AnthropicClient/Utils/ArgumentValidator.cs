@@ -3,7 +3,7 @@ namespace AnthropicClient.Utils;
 /// <summary>
 /// Provides methods to validate arguments.
 /// </summary>
-public static class ArgumentValidator
+static class ArgumentValidator
 {
   /// <summary>
   /// Throws an <see cref="ArgumentNullException"/> if the value is null.

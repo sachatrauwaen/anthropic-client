@@ -27,7 +27,7 @@ public class ToolCallResultTests
     actual.IsSuccess.Should().BeFalse();
     actual.IsFailure.Should().BeTrue();
     actual.Error.Should().Be(error);
-    
+
     var action = () => { var _ = actual.Value; };
     action.Should().Throw<InvalidOperationException>();
   }

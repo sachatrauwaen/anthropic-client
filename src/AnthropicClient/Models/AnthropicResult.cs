@@ -12,8 +12,8 @@ public class AnthropicResult<T>
   /// The value of the result.
   /// </summary>
   /// <exception cref="InvalidOperationException">Thrown when the result is not successful.</exception>
-  public T Value 
-  { 
+  public T Value
+  {
     get
     {
       return IsSuccess ? _value : throw new InvalidOperationException("The result is not successful. Check the error property for more information.");
@@ -31,8 +31,8 @@ public class AnthropicResult<T>
   /// The error of the result.
   /// </summary>
   /// <exception cref="InvalidOperationException">Thrown when the result is successful.</exception>
-  public AnthropicError Error 
-  { 
+  public AnthropicError Error
+  {
     get
     {
       return IsSuccess ? throw new InvalidOperationException("The result is successful. Check the value property for more information.") : _error;

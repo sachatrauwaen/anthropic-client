@@ -1,0 +1,685 @@
+{
+  "source_base_path": "C:/Users/sfree/software_projects/anthropic-client/docfx",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Resource",
+      "output": {
+        "resource": {
+          "relative_path": "index.json"
+        }
+      }
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.AnthropicApiClient.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.AnthropicApiClient.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.IAnthropicApiClient.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.IAnthropicApiClient.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.AnthropicError.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.AnthropicError.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.AnthropicEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.AnthropicEvent.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.AnthropicFunction.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.AnthropicFunction.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.AnthropicHeaders.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.AnthropicHeaders.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.AnthropicModels.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.AnthropicModels.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.AnyToolChoice.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.AnyToolChoice.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.ApiError.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.ApiError.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.AuthenticationError.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.AuthenticationError.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.AutoToolChoice.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.AutoToolChoice.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.BaseMessageRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.BaseMessageRequest.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.Content.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.Content.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.ContentDelta.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.ContentDelta.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.ContentDeltaEventData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.ContentDeltaEventData.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.ContentDeltaType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.ContentDeltaType.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.ContentStartEventData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.ContentStartEventData.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.ContentStopEventData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.ContentStopEventData.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.ContentType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.ContentType.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.Error.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.Error.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.ErrorEventData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.ErrorEventData.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.ErrorType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.ErrorType.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.EventData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.EventData.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.EventType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.EventType.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.FunctionParameterAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.FunctionParameterAttribute.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.FunctionPropertyAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.FunctionPropertyAttribute.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.ITool.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.ITool.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.ImageContent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.ImageContent.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.ImageSource.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.ImageSource.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.ImageType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.ImageType.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.InputProperty.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.InputProperty.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.InputSchema.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.InputSchema.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.InvalidRequestError.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.InvalidRequestError.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.JsonDelta.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.JsonDelta.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.Message.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.Message.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.MessageCompleteEventData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.MessageCompleteEventData.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.MessageDelta.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.MessageDelta.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.MessageDeltaEventData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.MessageDeltaEventData.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.MessageRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.MessageRequest.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.MessageResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.MessageResponse.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.MessageRole.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.MessageRole.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.MessageStartEventData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.MessageStartEventData.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.MessageStopEventData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.MessageStopEventData.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.NotFoundError.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.NotFoundError.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.OverloadedError.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.OverloadedError.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.PermissionError.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.PermissionError.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.PingEventData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.PingEventData.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.RateLimitError.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.RateLimitError.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.SpecificToolChoice.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.SpecificToolChoice.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.StopReasonType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.StopReasonType.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.StreamMessageRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.StreamMessageRequest.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.TextContent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.TextContent.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.TextDelta.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.TextDelta.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.Tool.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.Tool.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.ToolCall.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.ToolCall.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.ToolCallResult-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.ToolCallResult-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.ToolChoice.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.ToolChoice.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.ToolChoiceType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.ToolChoiceType.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.ToolResultContent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.ToolResultContent.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.ToolUseContent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.ToolUseContent.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.Usage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.Usage.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html"
+        },
+        ".json": {
+          "relative_path": "api/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html"
+        },
+        ".json": {
+          "relative_path": "toc.json"
+        }
+      },
+      "version": ""
+    }
+  ],
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

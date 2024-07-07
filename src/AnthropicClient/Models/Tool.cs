@@ -64,7 +64,7 @@ public class Tool
   [JsonConstructor]
   internal Tool()
   {
-    var func = () => {};
+    var func = () => { };
 
     Name = string.Empty;
     Description = string.Empty;
