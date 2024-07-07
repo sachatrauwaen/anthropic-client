@@ -22,7 +22,7 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
       - name: Format code
-        run: dotnet format --check --verbosity diagnosticdotnet format --verify-no-changes --verbosity diagnostic
+        run: dotnet format --verify-no-changes --verbosity diagnostic
   test:
     runs-on: ubuntu-latest
     steps:
