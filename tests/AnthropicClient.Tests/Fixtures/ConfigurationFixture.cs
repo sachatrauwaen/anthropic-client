@@ -7,7 +7,7 @@ public class ConfigurationFixture
   public ConfigurationFixture()
   {
     var configuration = new ConfigurationBuilder()
-      .AddJsonFile("appsettings.Test.json")
+      .AddJsonFile("appsettings.Test.json", optional: true)
       .AddEnvironmentVariables()
       .Build();
 
