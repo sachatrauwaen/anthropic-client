@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="0.0.2"></a>
+## [0.0.2](https://www.github.com/StevanFreeborn/anthropic-client/releases/tag/v0.0.2) (2024-07-10)
+
+### Bug Fixes
+
+* add stop sequences parameter ([0363756](https://www.github.com/StevanFreeborn/anthropic-client/commit/0363756571a00d951f185502d86aac4bbdc6e570))
+
+### Other
+
+* Merge branch 'main' of github.com:StevanFreeborn/anthropic-client ([3b9dc67](https://www.github.com/StevanFreeborn/anthropic-client/commit/3b9dc6706e47a3deca861e5306498e91f52b6fb8))
+* Merge pull request #5 from StevanFreeborn/stevanfreeborn/fix/allow-stop-sequence-to-be-passed ([3bdb417](https://www.github.com/StevanFreeborn/anthropic-client/commit/3bdb4173f31f04446d04a9b2479d39850895c5fc))
+* correct xml comment ([48f813f](https://www.github.com/StevanFreeborn/anthropic-client/commit/48f813f49fbcf13c298017634bd6c8d7638f9edb))
+* documentation for v0.0.1 [skip ci] ([0a2ea19](https://www.github.com/StevanFreeborn/anthropic-client/commit/0a2ea1934d936b8b613388a4014cd1286e798825))
+* update gitattributes to treat font files as binary ([2726426](https://www.github.com/StevanFreeborn/anthropic-client/commit/27264261ce0c71e241d2de82ffe3ee076159dca9))
+* update workflow to continue on error ([7c04f0a](https://www.github.com/StevanFreeborn/anthropic-client/commit/7c04f0a29c38903ebcb535db5619d9f40387aacb))
+
 <a name="0.0.1"></a>
 ## [0.0.1](https://www.github.com/StevanFreeborn/anthropic-client/releases/tag/v0.0.1) (2024-07-07)
 
