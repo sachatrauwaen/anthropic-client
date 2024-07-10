@@ -15,7 +15,7 @@ public abstract class BaseMessageRequest
   public string Model { get; init; } = string.Empty;
 
   /// <summary>
-  /// Gets the system ID to use for the request.
+  /// Gets the system prompt to use for the request.
   /// </summary>
   public string? System { get; init; } = null;
 
