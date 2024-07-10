@@ -23,6 +23,7 @@ public class MessageRequest : BaseMessageRequest
   /// <param name="topP">The top-P value to use for the request.</param>
   /// <param name="toolChoice">The tool choice mode to use for the request.</param>
   /// <param name="tools">The tools to use for the request.</param>
+  /// <param name="stopSequences">The prompt stop sequences.</param>
   /// <exception cref="ArgumentException">Thrown when the model ID is invalid.</exception>
   /// <exception cref="ArgumentNullException">Thrown when the model or messages is null.</exception>
   /// <exception cref="ArgumentException">Thrown when the messages contain no messages.</exception>
@@ -39,7 +40,8 @@ public class MessageRequest : BaseMessageRequest
     int? topK = null,
     decimal? topP = null,
     ToolChoice? toolChoice = null,
-    List<Tool>? tools = null
+    List<Tool>? tools = null,
+    List<string>? stopSequences = null
   ) : base(
     model,
     messages,
@@ -51,7 +53,8 @@ public class MessageRequest : BaseMessageRequest
     topP,
     toolChoice,
     tools,
-    false
+    false,
+    stopSequences
   )
   {
   }
