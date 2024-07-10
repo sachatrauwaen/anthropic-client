@@ -162,9 +162,9 @@ Class BaseMessageRequest  <a class="header-action link-secondary" title="View so
 
   <a id="AnthropicClient_Models_BaseMessageRequest__ctor_" data-uid="AnthropicClient.Models.BaseMessageRequest.#ctor*"></a>
 
-  <h3 id="AnthropicClient_Models_BaseMessageRequest__ctor_System_String_System_Collections_Generic_List_AnthropicClient_Models_Message__System_Int32_System_String_System_Collections_Generic_Dictionary_System_String_System_Object__System_Decimal_System_Nullable_System_Int32__System_Nullable_System_Decimal__AnthropicClient_Models_ToolChoice_System_Collections_Generic_List_AnthropicClient_Models_Tool__System_Boolean_" data-uid="AnthropicClient.Models.BaseMessageRequest.#ctor(System.String,System.Collections.Generic.List{AnthropicClient.Models.Message},System.Int32,System.String,System.Collections.Generic.Dictionary{System.String,System.Object},System.Decimal,System.Nullable{System.Int32},System.Nullable{System.Decimal},AnthropicClient.Models.ToolChoice,System.Collections.Generic.List{AnthropicClient.Models.Tool},System.Boolean)">
-  BaseMessageRequest(string, List&lt;Message&gt;, int, string?, Dictionary&lt;string, object&gt;?, decimal, int?, decimal?, ToolChoice?, List&lt;Tool&gt;?, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/StevanFreeborn/anthropic-client/blob/main/src/AnthropicClient/Models/BaseMessageRequest.cs/#L98"><i class="bi bi-code-slash"></i></a>
+  <h3 id="AnthropicClient_Models_BaseMessageRequest__ctor_System_String_System_Collections_Generic_List_AnthropicClient_Models_Message__System_Int32_System_String_System_Collections_Generic_Dictionary_System_String_System_Object__System_Decimal_System_Nullable_System_Int32__System_Nullable_System_Decimal__AnthropicClient_Models_ToolChoice_System_Collections_Generic_List_AnthropicClient_Models_Tool__System_Boolean_System_Collections_Generic_List_System_String__" data-uid="AnthropicClient.Models.BaseMessageRequest.#ctor(System.String,System.Collections.Generic.List{AnthropicClient.Models.Message},System.Int32,System.String,System.Collections.Generic.Dictionary{System.String,System.Object},System.Decimal,System.Nullable{System.Int32},System.Nullable{System.Decimal},AnthropicClient.Models.ToolChoice,System.Collections.Generic.List{AnthropicClient.Models.Tool},System.Boolean,System.Collections.Generic.List{System.String})">
+  BaseMessageRequest(string, List&lt;Message&gt;, int, string?, Dictionary&lt;string, object&gt;?, decimal, int?, decimal?, ToolChoice?, List&lt;Tool&gt;?, bool, List&lt;string&gt;?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/StevanFreeborn/anthropic-client/blob/main/src/AnthropicClient/Models/BaseMessageRequest.cs/#L99"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="AnthropicClient.Models.BaseMessageRequest.html">BaseMessageRequest</a> class.</p>
@@ -172,7 +172,7 @@ Class BaseMessageRequest  <a class="header-action link-secondary" title="View so
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected BaseMessageRequest(string model, List&lt;Message&gt; messages, int maxTokens = 1024, string? system = null, Dictionary&lt;string, object&gt;? metadata = null, decimal temperature = 0.0, int? topK = null, decimal? topP = null, ToolChoice? toolChoice = null, List&lt;Tool&gt;? tools = null, bool stream = false)</code></pre>
+    <pre><code class="lang-csharp hljs">protected BaseMessageRequest(string model, List&lt;Message&gt; messages, int maxTokens = 1024, string? system = null, Dictionary&lt;string, object&gt;? metadata = null, decimal temperature = 0.0, int? topK = null, decimal? topP = null, ToolChoice? toolChoice = null, List&lt;Tool&gt;? tools = null, bool stream = false, List&lt;string&gt;? stopSequences = null)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -209,6 +209,9 @@ Class BaseMessageRequest  <a class="header-action link-secondary" title="View so
 </dd>
     <dt><code>stream</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
     <dd><p>A value indicating whether the message should be streamed.</p>
+</dd>
+    <dt><code>stopSequences</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>The prompt stop sequences.</p>
 </dd>
   </dl>
 
@@ -446,7 +449,7 @@ public List&lt;string&gt; StopSequences { get; init; }</code></pre>
   <a class="header-action link-secondary" title="View source" href="https://github.com/StevanFreeborn/anthropic-client/blob/main/src/AnthropicClient/Models/BaseMessageRequest.cs/#L20"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Gets the system ID to use for the request.</p>
+  <div class="markdown level1 summary"><p>Gets the system prompt to use for the request.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
