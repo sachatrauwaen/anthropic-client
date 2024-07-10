@@ -15,7 +15,7 @@ public abstract class BaseMessageRequest
   public string Model { get; init; } = string.Empty;
 
   /// <summary>
-  /// Gets the system ID to use for the request.
+  /// Gets the system prompt to use for the request.
   /// </summary>
   public string? System { get; init; } = null;
 
@@ -89,6 +89,7 @@ public abstract class BaseMessageRequest
   /// <param name="toolChoice">The tool choice mode to use for the request.</param>
   /// <param name="tools">The tools to use for the request.</param>
   /// <param name="stream">A value indicating whether the message should be streamed.</param>
+  /// <param name="stopSequences">The prompt stop sequences.</param>
   /// <exception cref="ArgumentException">Thrown when the model ID is invalid.</exception>
   /// <exception cref="ArgumentNullException">Thrown when the model or messages is null.</exception>
   /// <exception cref="ArgumentException">Thrown when the messages contain no messages.</exception>
@@ -106,7 +107,8 @@ public abstract class BaseMessageRequest
     decimal? topP = null,
     ToolChoice? toolChoice = null,
     List<Tool>? tools = null,
-    bool stream = false
+    bool stream = false,
+    List<string>? stopSequences = null
   )
   {
     ArgumentValidator.ThrowIfNull(model, nameof(model));
@@ -143,5 +145,6 @@ public abstract class BaseMessageRequest
     ToolChoice = toolChoice;
     Tools = tools;
     Stream = stream;
+    StopSequences = stopSequences ?? [];
   }
 }
