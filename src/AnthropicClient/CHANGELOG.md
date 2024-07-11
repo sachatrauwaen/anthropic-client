@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="0.0.3"></a>
+## [0.0.3](https://www.github.com/StevanFreeborn/anthropic-client/releases/tag/v0.0.3) (2024-07-11)
+
+### Bug Fixes
+
+* address nuget health checks ([989951d](https://www.github.com/StevanFreeborn/anthropic-client/commit/989951db552b2305e2fab9131e26d2fcc2e9283a))
+
+### Other
+
+* Merge pull request #8 from StevanFreeborn/stevanfreeborn/feat/address-nuget-health-checks ([f245d64](https://www.github.com/StevanFreeborn/anthropic-client/commit/f245d6442f040d8dcabd27f013b90373ab25370a))
+* documentation for v0.0.2 [skip ci] ([d486bc8](https://www.github.com/StevanFreeborn/anthropic-client/commit/d486bc869101e9ca87dfc60f9aa6b6ad12f073de))
+* upgrade System.Text.Json dep ([5576b68](https://www.github.com/StevanFreeborn/anthropic-client/commit/5576b688c50b21031f68fca7e2728d1398a366c5))
+
 <a name="0.0.2"></a>
 ## [0.0.2](https://www.github.com/StevanFreeborn/anthropic-client/releases/tag/v0.0.2) (2024-07-10)
 
