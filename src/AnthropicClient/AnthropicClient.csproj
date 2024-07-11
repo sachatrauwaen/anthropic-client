@@ -9,6 +9,8 @@
     <Description>Anthropic Client Library</Description>
     <PackageProjectUrl>https://anthropicclient.stevanfreeborn.com/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/StevanFreeborn/anthropic-client</RepositoryUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <RepositoryType>git</RepositoryType>
     <PackageTags>anthropic;client</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
@@ -22,6 +24,10 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+
   <ItemGroup>
     <InternalsVisibleTo Include="$(AssemblyName).Tests" />
   </ItemGroup>
@@ -29,6 +35,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="8.0.0" />
     <PackageReference Include="System.Text.Json" Version="8.0.3" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
