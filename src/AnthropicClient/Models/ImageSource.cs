@@ -20,6 +20,11 @@ public class ImageSource
   /// </summary>
   public string Data { get; init; } = string.Empty;
 
+  /// <summary>
+  /// Gets the type of encoding of the image data.
+  /// </summary>
+  public string Type { get; init; } = "base64";
+
   [JsonConstructor]
   internal ImageSource()
   {
