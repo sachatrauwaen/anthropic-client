@@ -1,3 +1,6 @@
+using Xunit.Abstractions;
+using Xunit.Sdk;
+
 namespace AnthropicClient.Tests.EndToEnd;
 
 public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(configFixture)
@@ -55,5 +58,41 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
         break;
       }
     }
+  }
+
+  [Fact]
+  public async Task CreateMessageAsync_WhenImageIsSent_ItShouldReturnResponse()
+  {
+    var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "Files", "base64-elephant.txt");
+    var mediaType = "image/jpeg";
+    var base64Data = await File.ReadAllTextAsync(imagePath);
+
+    var request = new MessageRequest(
+      model: AnthropicModels.Claude3Haiku,
+      messages: [
+        new(MessageRole.User, [
+          new ImageContent(mediaType, base64Data),
+          new TextContent("What is in this image?")
+        ]),
+      ]
+    );
+
+    var result = await _client.CreateMessageAsync(request);
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeOfType<MessageResponse>();
+    result.Value.Content.Should().NotBeNullOrEmpty();
+
+    var text = result.Value.Content.Aggregate("", (acc, content) =>
+    {
+      if (content is TextContent textContent)
+      {
+        acc += textContent.Text;
+      }
+
+      return acc;
+    });
+
+    text.Should().Contain("elephant");
   }
 }

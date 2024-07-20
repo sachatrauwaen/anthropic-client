@@ -321,4 +321,42 @@ public class AnthropicApiClientTests : IntegrationTest
     toolCallResult.IsSuccess.Should().BeTrue();
     toolCallResult.Value.Should().Be(getWeather("San Francisco, CA", "fahrenheit"));
   }
+
+  [Fact]
+  public async Task CreateMessageAsync_WhenCalledMessageIsStreamAndRequestFails_ItShouldReturnErrorEvent()
+  {
+    _mockHttpMessageHandler
+      .WhenCreateStreamMessageRequest()
+      .Respond(
+        HttpStatusCode.BadRequest,
+        "application/json",
+        @"{
+          ""type"": ""error"",
+          ""error"": {
+            ""type"": ""invalid_request_error"",
+            ""message"": ""messages: roles must alternate between user and assistant, but found multiple user roles in a row""
+          }
+        }"
+      );
+
+    var request = new StreamMessageRequest(
+      model: AnthropicModels.Claude35Sonnet,
+      messages: [
+        new(MessageRole.User, [new TextContent("Hello!")]),
+        new(MessageRole.User, [new TextContent("Hello!")])
+      ]
+    );
+
+    var result = Client.CreateMessageAsync(request);
+    var events = await result.ToListAsync();
+
+    events.Should().HaveCount(1);
+    events[0].Type.Should().Be(EventType.Error);
+    events[0].Data.Should().BeOfType<ErrorEventData>();
+    events[0].Data.Should().BeEquivalentTo(new ErrorEventData(
+      new InvalidRequestError(
+        "messages: roles must alternate between user and assistant, but found multiple user roles in a row"
+      )
+    ));
+  }
 }

@@ -95,6 +95,14 @@ public class AnthropicApiClient : IAnthropicApiClient
   public async IAsyncEnumerable<AnthropicEvent> CreateMessageAsync(StreamMessageRequest request)
   {
     var response = await SendRequestAsync(request);
+
+    if (response.IsSuccessStatusCode is false)
+    {
+      var error = Deserialize<AnthropicError>(await response.Content.ReadAsStringAsync()) ?? new AnthropicError();
+      yield return new AnthropicEvent(EventType.Error, new ErrorEventData(error.Error));
+      yield break;
+    }
+
     var anthropicHeaders = new AnthropicHeaders(response.Headers);
 
     using var responseContent = await response.Content.ReadAsStreamAsync();
