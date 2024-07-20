@@ -77,6 +77,7 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
 
     var result = await _client.CreateMessageAsync(request);
 
+    result.Error.Error.Message.Should().BeNullOrEmpty();
     result.IsSuccess.Should().BeTrue();
     result.Value.Should().BeOfType<MessageResponse>();
     result.Value.Content.Should().NotBeNullOrEmpty();
