@@ -80,8 +80,8 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
     result.IsSuccess.Should().BeTrue();
     result.Value.Should().BeOfType<MessageResponse>();
     result.Value.Content.Should().NotBeNullOrEmpty();
-    
-    var text = result.Value.Content.Aggregate("", (acc, content) => 
+
+    var text = result.Value.Content.Aggregate("", (acc, content) =>
     {
       if (content is TextContent textContent)
       {
