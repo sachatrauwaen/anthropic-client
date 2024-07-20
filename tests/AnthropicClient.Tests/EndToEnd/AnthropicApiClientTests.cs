@@ -3,10 +3,8 @@ using Xunit.Sdk;
 
 namespace AnthropicClient.Tests.EndToEnd;
 
-public class ClientTests(ConfigurationFixture configFixture, ITestOutputHelper testOutputHelper) : EndToEndTest(configFixture)
+public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(configFixture)
 {
-  private readonly ITestOutputHelper _testOutputHelper = testOutputHelper;
-
   [Fact]
   public async Task CreateMessageAsync_WhenCalled_ItShouldReturnResponse()
   {
@@ -67,16 +65,18 @@ public class ClientTests(ConfigurationFixture configFixture, ITestOutputHelper t
   {
     var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "Files", "elephant.jpg");
     var mediaType = "image/jpeg";
-    var imageBytes = await File.ReadAllBytesAsync(imagePath);
-    var base64Image = Convert.ToBase64String(imageBytes);
+    var imageStream = File.Open(imagePath, FileMode.Open);
 
-    _testOutputHelper.WriteLine(base64Image);
+    byte[] data;
+    using var ms = new MemoryStream();
+    await imageStream.CopyToAsync(ms);
+    data = ms.ToArray();
 
     var request = new MessageRequest(
       model: AnthropicModels.Claude3Haiku,
       messages: [
         new(MessageRole.User, [
-          new ImageContent(mediaType, base64Image),
+          new ImageContent(mediaType, Convert.ToBase64String(data)),
           new TextContent("What is in this image?")
         ]),
       ]
