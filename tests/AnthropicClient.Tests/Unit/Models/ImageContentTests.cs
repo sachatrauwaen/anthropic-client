@@ -5,7 +5,8 @@ public class ImageContentTests : SerializationTest
   private readonly string _testJson = @"{
     ""source"": { 
       ""media_type"": ""image/png"",
-      ""data"": ""data""
+      ""data"": ""data"",
+      ""type"": ""base64""
     },
     ""type"": ""image""
   }";
