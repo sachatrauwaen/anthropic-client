@@ -1430,6 +1430,19 @@ references:
   isSpec: "True"
   fullName: AnthropicClient.Models.ImageSource.MediaType
   nameWithType: ImageSource.MediaType
+- uid: AnthropicClient.Models.ImageSource.Type
+  name: Type
+  href: api/AnthropicClient.Models.ImageSource.html#AnthropicClient_Models_ImageSource_Type
+  commentId: P:AnthropicClient.Models.ImageSource.Type
+  fullName: AnthropicClient.Models.ImageSource.Type
+  nameWithType: ImageSource.Type
+- uid: AnthropicClient.Models.ImageSource.Type*
+  name: Type
+  href: api/AnthropicClient.Models.ImageSource.html#AnthropicClient_Models_ImageSource_Type_
+  commentId: Overload:AnthropicClient.Models.ImageSource.Type
+  isSpec: "True"
+  fullName: AnthropicClient.Models.ImageSource.Type
+  nameWithType: ImageSource.Type
 - uid: AnthropicClient.Models.ImageType
   name: ImageType
   href: api/AnthropicClient.Models.ImageType.html
