@@ -63,9 +63,10 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
   [Fact]
   public async Task CreateMessageAsync_WhenImageIsSent_ItShouldReturnResponse()
   {
-    var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "Files", "base64-elephant.txt");
+    var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "Files", "elephant.jpg");
     var mediaType = "image/jpeg";
-    var base64Data = await File.ReadAllTextAsync(imagePath);
+    var bytes = await File.ReadAllBytesAsync(imagePath);
+    var base64Data = Convert.ToBase64String(bytes);
 
     var request = new MessageRequest(
       model: AnthropicModels.Claude3Haiku,
