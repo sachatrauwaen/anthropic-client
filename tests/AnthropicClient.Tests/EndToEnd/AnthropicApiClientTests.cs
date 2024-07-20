@@ -1,9 +1,12 @@
+using Xunit.Abstractions;
 using Xunit.Sdk;
 
 namespace AnthropicClient.Tests.EndToEnd;
 
-public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(configFixture)
+public class ClientTests(ConfigurationFixture configFixture, ITestOutputHelper testOutputHelper) : EndToEndTest(configFixture)
 {
+  private readonly ITestOutputHelper _testOutputHelper = testOutputHelper;
+
   [Fact]
   public async Task CreateMessageAsync_WhenCalled_ItShouldReturnResponse()
   {
@@ -67,9 +70,7 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
     var imageBytes = await File.ReadAllBytesAsync(imagePath);
     var base64Image = Convert.ToBase64String(imageBytes);
 
-    var testOutputHelper = new TestOutputHelper();
-
-    testOutputHelper.WriteLine(base64Image);
+    _testOutputHelper.WriteLine(base64Image);
 
     var request = new MessageRequest(
       model: AnthropicModels.Claude3Haiku,
@@ -83,7 +84,6 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
 
     var result = await _client.CreateMessageAsync(request);
 
-    result.Error.Error.Message.Should().BeNullOrEmpty();
     result.IsSuccess.Should().BeTrue();
     result.Value.Should().BeOfType<MessageResponse>();
     result.Value.Content.Should().NotBeNullOrEmpty();
