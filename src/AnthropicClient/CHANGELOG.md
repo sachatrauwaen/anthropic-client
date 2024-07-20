@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="0.0.4"></a>
+## [0.0.4](https://www.github.com/StevanFreeborn/anthropic-client/releases/tag/v0.0.4) (2024-07-20)
+
+### Bug Fixes
+
+* add end to end test for vision ([b3d4ac3](https://www.github.com/StevanFreeborn/anthropic-client/commit/b3d4ac3faa94086369a02b0a47a19db9441b274e))
+* add missing type property to image source model ([0a692d1](https://www.github.com/StevanFreeborn/anthropic-client/commit/0a692d1b9a5f39869aef05892f0801fefe31f50e))
+* yield error when initial stream response is not successful ([3b47ed3](https://www.github.com/StevanFreeborn/anthropic-client/commit/3b47ed3fb4e8b30a73a8297e6485985fee7c129a))
+
+### Other
+
+* Merge pull request #11 from StevanFreeborn/stevanfreeborn/fix/missing-type-property-and-response-handling ([d27538b](https://www.github.com/StevanFreeborn/anthropic-client/commit/d27538b65620333ade65e920110a21acd829123f))
+* add missing type property ([f970b07](https://www.github.com/StevanFreeborn/anthropic-client/commit/f970b07ed79979b94961c93a192b57fc12a81097))
+* debug ci failure ([641eaf3](https://www.github.com/StevanFreeborn/anthropic-client/commit/641eaf30a476cece3cc8bb37f147aa42625992d2))
+* debug ci failure ([30c0116](https://www.github.com/StevanFreeborn/anthropic-client/commit/30c01161136949471d661284fa86838ac663ec87))
+* debug CI failure ([48b2716](https://www.github.com/StevanFreeborn/anthropic-client/commit/48b2716a61894c471bd2b703254ceb7126354f5e))
+* debug CI failure ([9b714df](https://www.github.com/StevanFreeborn/anthropic-client/commit/9b714df12f1d7a6e2e500726ac10a345e4c66054))
+* debug test failure in CI ([f39e76c](https://www.github.com/StevanFreeborn/anthropic-client/commit/f39e76cfa64f649e9297bab319ef6ddd58995e0e))
+* run format ([93761b8](https://www.github.com/StevanFreeborn/anthropic-client/commit/93761b8e7e0ac67f205abd93f6e9db9465924b02))
+* use base64 text file ([a16b64d](https://www.github.com/StevanFreeborn/anthropic-client/commit/a16b64d5a079f65884a8f3a2cf15be4da06f73d3))
+
 <a name="0.0.3"></a>
 ## [0.0.3](https://www.github.com/StevanFreeborn/anthropic-client/releases/tag/v0.0.3) (2024-07-11)
 
