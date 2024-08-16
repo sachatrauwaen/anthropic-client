@@ -191,6 +191,8 @@ public class AnthropicApiClient : IAnthropicApiClient
         {
           InputTokens = existingUsage.InputTokens + msgDeltaData.Usage.InputTokens,
           OutputTokens = existingUsage.OutputTokens + msgDeltaData.Usage.OutputTokens,
+          CacheCreationInputTokens = existingUsage.CacheCreationInputTokens + msgDeltaData.Usage.CacheCreationInputTokens,
+          CacheReadInputTokens = existingUsage.CacheReadInputTokens + msgDeltaData.Usage.CacheReadInputTokens,
         };
 
         msgResponse = new MessageResponse()

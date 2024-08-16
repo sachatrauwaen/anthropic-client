@@ -4,7 +4,10 @@ public class StreamMessageRequestTests : SerializationTest
 {
   private readonly string _testJson = @"{
     ""model"": ""claude-3-sonnet-20240229"",
-    ""system"": ""test-system"",
+    ""system"": [{
+      ""type"": ""text"",
+      ""text"": ""test-system""
+    }],
     ""messages"": [
       { ""role"": ""user"", ""content"": [{ ""text"": ""Hello!"", ""type"": ""text"" }] }
     ],
@@ -178,7 +181,7 @@ public class StreamMessageRequestTests : SerializationTest
     var messageRequest = Deserialize<StreamMessageRequest>(_testJson);
 
     messageRequest!.Model.Should().Be(AnthropicModels.Claude3Sonnet);
-    messageRequest.System.Should().Be("test-system");
+    messageRequest.System.Should().BeNull();
     messageRequest.Messages.Should().HaveCount(1);
     messageRequest.MaxTokens.Should().Be(512);
     messageRequest.Metadata.Should().HaveCount(1);

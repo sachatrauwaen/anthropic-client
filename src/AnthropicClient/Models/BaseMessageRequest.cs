@@ -15,14 +15,39 @@ public abstract class BaseMessageRequest
   public string Model { get; init; } = string.Empty;
 
   /// <summary>
-  /// Gets the system prompt to use for the request.
+  /// Gets the system message that will be used as the system prompt if no system messages are provided.
   /// </summary>
+  [JsonIgnore]
   public string? System { get; init; } = null;
 
   /// <summary>
-  /// Gets the messages to send to the model.
+  /// Gets the system messages to send to the model to be used as the system prompt.
   /// </summary>
+  [JsonIgnore]
   public List<TextContent>? SystemMessages { get; init; } = null;
+
+  /// <summary>
+  /// Gets the system prompt that will be used for the request. 
+  /// If will return the system messages if they are provided, otherwise it will return the system message.
+  /// If neither are provided, it will return null.
+  /// </summary>
+  [JsonPropertyName("system")]
+  public List<TextContent>? SystemPrompt => GetSystemPrompt();
+
+  private List<TextContent>? GetSystemPrompt()
+  {
+    if (SystemMessages is not null)
+    {
+      return SystemMessages;
+    }
+
+    if (System is not null)
+    {
+      return [new TextContent(System)];
+    }
+
+    return null;
+  }
 
   /// <summary>
   /// Gets the messages to send to the model.

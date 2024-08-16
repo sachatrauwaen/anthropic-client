@@ -13,7 +13,9 @@ public class AnthropicEventTests : SerializationTest
         ""stop_sequence"": """",
         ""usage"": {
           ""input_tokens"": 472,
-          ""output_tokens"": 2
+          ""output_tokens"": 2,
+          ""cache_creation_input_tokens"": 0,
+          ""cache_read_input_tokens"": 0
         },
         ""content"": [],
         ""stop_reason"": """"
@@ -70,7 +72,9 @@ public class AnthropicEventTests : SerializationTest
       },
       ""usage"": {
         ""output_tokens"": 89,
-        ""input_tokens"": 0
+        ""input_tokens"": 0,
+        ""cache_creation_input_tokens"": 0,
+        ""cache_read_input_tokens"": 0
       },
       ""type"": ""message_delta""
     }

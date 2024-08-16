@@ -4,7 +4,10 @@ public class MessageRequestTests : SerializationTest
 {
   private readonly string _testJson = @"{
     ""model"": ""claude-3-sonnet-20240229"",
-    ""system"": ""test-system"",
+    ""system"": [{
+      ""type"": ""text"",
+      ""text"": ""test-system""
+    }],
     ""messages"": [
       { ""role"": ""user"", ""content"": [{ ""text"": ""Hello!"", ""type"": ""text"" }] }
     ],
@@ -21,7 +24,10 @@ public class MessageRequestTests : SerializationTest
 
   private readonly string _testJsonWithAnyToolChoice = @"{
     ""model"": ""claude-3-sonnet-20240229"",
-    ""system"": ""test-system"", 
+    ""system"": [{
+      ""type"": ""text"",
+      ""text"": ""test-system""
+    }], 
     ""messages"":[
       { ""role"": ""user"", ""content"": [{ ""text"": ""Hello!"", ""type"":""text"" }] }
     ],
@@ -38,7 +44,10 @@ public class MessageRequestTests : SerializationTest
 
   private readonly string _testJsonWithSpecificToolChoice = @"{
     ""model"": ""claude-3-sonnet-20240229"",
-    ""system"": ""test-system"",
+    ""system"": [{
+      ""type"": ""text"",
+      ""text"": ""test-system""
+    }],
     ""messages"": [
       { ""role"": ""user"", ""content"": [{ ""text"": ""Hello!"", ""type"": ""text"" }] }
     ],
@@ -55,7 +64,10 @@ public class MessageRequestTests : SerializationTest
 
   private readonly string _testJsonWithImageContent = @"{
     ""model"": ""claude-3-sonnet-20240229"",
-    ""system"": ""test-system"",
+    ""system"": [{
+      ""type"": ""text"",
+      ""text"": ""test-system""
+    }],
     ""messages"":[
       { 
         ""role"": ""user"", 
@@ -80,7 +92,10 @@ public class MessageRequestTests : SerializationTest
 
   private readonly string _testJsonWithUnknownContent = @"{
     ""model"": ""claude-3-sonnet-20240229"",
-    ""system"": ""test-system"",
+    ""system"": [{
+      ""type"": ""text"",
+      ""text"": ""test-system""
+    }],
     ""messages"": [{ ""role"": ""user"", ""content"": [{ ""type"": ""unknown"", ""text"": ""text"" }] }],
     ""max_tokens"": 512,
     ""metadata"": { ""test"": ""test"" },
@@ -95,7 +110,10 @@ public class MessageRequestTests : SerializationTest
 
   private readonly string _testJsonWithToolUseContent = @"{
     ""model"": ""claude-3-sonnet-20240229"",
-    ""system"": ""test-system"",
+    ""system"": [{
+      ""type"": ""text"",
+      ""text"": ""test-system""
+    }],
     ""messages"": [
       {
         ""role"": ""assistant"",
@@ -124,7 +142,10 @@ public class MessageRequestTests : SerializationTest
 
   private readonly string _testJsonWithToolResultContent = @"{
     ""model"": ""claude-3-sonnet-20240229"",
-    ""system"": ""test-system"",
+    ""system"": [{
+      ""type"": ""text"",
+      ""text"": ""test-system""
+    }],
     ""messages"": [
       {
         ""role"": ""assistant"",
@@ -307,7 +328,7 @@ public class MessageRequestTests : SerializationTest
     var messageRequest = Deserialize<MessageRequest>(_testJson);
 
     messageRequest!.Model.Should().Be(AnthropicModels.Claude3Sonnet);
-    messageRequest.System.Should().Be("test-system");
+    messageRequest.System.Should().BeNull();
     messageRequest.Messages.Should().HaveCount(1);
     messageRequest.MaxTokens.Should().Be(512);
     messageRequest.Metadata.Should().HaveCount(1);
@@ -330,7 +351,7 @@ public class MessageRequestTests : SerializationTest
     var messageRequest = Deserialize<MessageRequest>(_testJsonWithAnyToolChoice);
 
     messageRequest!.Model.Should().Be(AnthropicModels.Claude3Sonnet);
-    messageRequest.System.Should().Be("test-system");
+    messageRequest.System.Should().BeNull();
     messageRequest.Messages.Should().HaveCount(1);
     messageRequest.MaxTokens.Should().Be(512);
     messageRequest.Metadata.Should().HaveCount(1);
@@ -352,7 +373,7 @@ public class MessageRequestTests : SerializationTest
     var messageRequest = Deserialize<MessageRequest>(_testJsonWithSpecificToolChoice);
 
     messageRequest!.Model.Should().Be(AnthropicModels.Claude3Sonnet);
-    messageRequest.System.Should().Be("test-system");
+    messageRequest.System.Should().BeNull();
     messageRequest.Messages.Should().HaveCount(1);
     messageRequest.MaxTokens.Should().Be(512);
     messageRequest.Metadata.Should().HaveCount(1);
@@ -387,7 +408,7 @@ public class MessageRequestTests : SerializationTest
     var messageRequest = Deserialize<MessageRequest>(_testJsonWithImageContent);
 
     messageRequest!.Model.Should().Be(AnthropicModels.Claude3Sonnet);
-    messageRequest.System.Should().Be("test-system");
+    messageRequest.System.Should().BeNull();
     messageRequest.Messages.Should().HaveCount(1);
     messageRequest.MaxTokens.Should().Be(512);
     messageRequest.Metadata.Should().HaveCount(1);
@@ -416,7 +437,7 @@ public class MessageRequestTests : SerializationTest
     var messageRequest = Deserialize<MessageRequest>(_testJsonWithToolUseContent);
 
     messageRequest!.Model.Should().Be(AnthropicModels.Claude3Sonnet);
-    messageRequest.System.Should().Be("test-system");
+    messageRequest.System.Should().BeNull();
     messageRequest.Messages.Should().HaveCount(1);
     messageRequest.MaxTokens.Should().Be(512);
     messageRequest.Metadata.Should().HaveCount(1);
@@ -447,7 +468,7 @@ public class MessageRequestTests : SerializationTest
     var messageRequest = Deserialize<MessageRequest>(_testJsonWithToolResultContent);
 
     messageRequest!.Model.Should().Be(AnthropicModels.Claude3Sonnet);
-    messageRequest.System.Should().Be("test-system");
+    messageRequest.System.Should().BeNull();
     messageRequest.Messages.Should().HaveCount(1);
     messageRequest.MaxTokens.Should().Be(512);
     messageRequest.Metadata.Should().HaveCount(1);
