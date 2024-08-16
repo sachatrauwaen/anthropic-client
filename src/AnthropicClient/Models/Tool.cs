@@ -56,6 +56,11 @@ public class Tool
   public AnthropicFunction Function { get; }
 
   /// <summary>
+  /// Gets or sets the cache control to be used for the tool.
+  /// </summary>
+  public CacheControl? CacheControl { get; set; }
+
+  /// <summary>
   /// Gets the display name of the tool.
   /// </summary>
   [JsonIgnore]
@@ -73,7 +78,7 @@ public class Tool
     DisplayName = string.Empty;
   }
 
-  internal Tool(string name, string description, AnthropicFunction function)
+  internal Tool(string name, string description, AnthropicFunction function, CacheControl? cacheControl = null)
   {
     ArgumentValidator.ThrowIfNullOrWhitespace(name, nameof(name));
     ArgumentValidator.ThrowIfNullOrWhitespace(description, nameof(description));
@@ -89,6 +94,7 @@ public class Tool
     Description = description;
     Function = function;
     InputSchema = JsonSchemaGenerator.GenerateInputSchema(function);
+    CacheControl = cacheControl;
   }
 
   /// <summary>
@@ -99,7 +105,7 @@ public class Tool
   /// <exception cref="ArgumentNullException">Thrown when the function of the tool is null.</exception>
   /// <returns>The created tool as instance of <see cref="Tool"/>.</returns>
   /// <remarks>The implementation of <see cref="ITool"/> must have a parameterless constructor.</remarks>
-  public static Tool CreateFromClass<T>() where T : ITool, new()
+  public static Tool CreateFromClass<T>(CacheControl? cacheControl = null) where T : ITool, new()
   {
     var tool = new T();
 
@@ -107,7 +113,7 @@ public class Tool
     ArgumentValidator.ThrowIfNullOrWhitespace(tool.Description, nameof(tool.Description));
     ArgumentValidator.ThrowIfNull(tool.Function, nameof(tool.Function));
 
-    return new Tool(tool.Name, tool.Description, new AnthropicFunction(tool.Function, tool));
+    return new Tool(tool.Name, tool.Description, new AnthropicFunction(tool.Function, tool), cacheControl);
   }
 
   /// <summary>
@@ -117,12 +123,19 @@ public class Tool
   /// <param name="description">The description of the tool.</param>
   /// <param name="type">The type that contains the method.</param>
   /// <param name="methodName">The name of the method.</param>
+  /// <param name="cacheControl">The cache control to be used for the tool.</param>
   /// <exception cref="ArgumentException">Thrown when <paramref name="methodName"/> is null or empty.</exception>
   /// <exception cref="ArgumentNullException">Thrown when <paramref name="type"/> is null.</exception>
   /// <exception cref="ArgumentException">Thrown when the method is not found in the type.</exception>
   /// <returns>The created tool as instance of <see cref="Tool"/>.</returns>
   /// <remarks>The name of the tool will be sanitized to conform to the Anthropic tool naming rules.</remarks>
-  public static Tool CreateFromStaticMethod(string name, string description, Type type, string methodName)
+  public static Tool CreateFromStaticMethod(
+    string name, 
+    string description, 
+    Type type, 
+    string methodName,
+    CacheControl? cacheControl = null
+  )
   {
     ArgumentValidator.ThrowIfNullOrWhitespace(methodName, nameof(methodName));
     ArgumentValidator.ThrowIfNull(type, nameof(type));
@@ -134,7 +147,7 @@ public class Tool
       throw new ArgumentException($"Method '{methodName}' not found in type '{type.FullName}'.", nameof(methodName));
     }
 
-    return new Tool(name, description, new AnthropicFunction(method));
+    return new Tool(name, description, new AnthropicFunction(method), cacheControl);
   }
 
   /// <summary>
@@ -144,12 +157,19 @@ public class Tool
   /// <param name="description">The description of the tool.</param>
   /// <param name="instance">The instance that contains the method.</param>
   /// <param name="methodName">The name of the method.</param>
+  /// <param name="cacheControl">The cache control to be used for the tool.</param>
   /// <exception cref="ArgumentException">Thrown when <paramref name="methodName"/> is null or empty.</exception> 
   /// <exception cref="ArgumentNullException">Thrown when <paramref name="instance"/> is null.</exception> 
   /// <exception cref="ArgumentException">Thrown when <paramref name="methodName"/> is not found in the type of <paramref name="instance"/>.</exception> 
   /// <returns>The created tool as instance of <see cref="Tool"/>.</returns>
   /// <remarks>The name of the tool will be sanitized to conform to the Anthropic tool naming rules.</remarks>
-  public static Tool CreateFromInstanceMethod(string name, string description, object instance, string methodName)
+  public static Tool CreateFromInstanceMethod(
+    string name, 
+    string description, 
+    object instance, 
+    string methodName,
+    CacheControl? cacheControl = null
+  )
   {
     ArgumentValidator.ThrowIfNullOrWhitespace(methodName, nameof(methodName));
     ArgumentValidator.ThrowIfNull(instance, nameof(instance));
@@ -161,7 +181,7 @@ public class Tool
       throw new ArgumentException($"Method '{methodName}' not found in type '{instance.GetType().FullName}'.", nameof(methodName));
     }
 
-    return new Tool(name, description, new AnthropicFunction(method, instance));
+    return new Tool(name, description, new AnthropicFunction(method, instance), null);
   }
 
   /// <summary>
@@ -171,14 +191,20 @@ public class Tool
   /// <param name="name">The name of the tool.</param>
   /// <param name="description">The description of the tool.</param>
   /// <param name="func">The function.</param>
+  /// <param name="cacheControl">The cache control to be used for the tool.</param>
   /// <exception cref="ArgumentNullException">Thrown when <paramref name="func"/> is null.</exception>
   /// <returns>The created tool as instance of <see cref="Tool"/>.</returns>
   /// <remarks>The name of the tool will be sanitized to conform to the Anthropic tool naming rules.</remarks>
-  public static Tool CreateFromFunction<TResult>(string name, string description, Func<TResult> func)
+  public static Tool CreateFromFunction<TResult>(
+    string name, 
+    string description, 
+    Func<TResult> func,
+    CacheControl? cacheControl = null
+  )
   {
     ArgumentValidator.ThrowIfNull(func, nameof(func));
 
-    return new Tool(name, description, new AnthropicFunction(func.Method, func.Target));
+    return new Tool(name, description, new AnthropicFunction(func.Method, func.Target), cacheControl);
   }
 
   /// <summary>
@@ -189,14 +215,20 @@ public class Tool
   /// <param name="name">The name of the tool.</param>
   /// <param name="description">The description of the tool.</param>
   /// <param name="func">The function.</param>
+  /// <param name="cacheControl">The cache control to be used for the tool.</param>
   /// <exception cref="ArgumentNullException">Thrown when <paramref name="func"/> is null.</exception>
   /// <returns>The created tool as instance of <see cref="Tool"/>.</returns>
   /// <remarks>The name of the tool will be sanitized to conform to the Anthropic tool naming rules.</remarks>
-  public static Tool CreateFromFunction<T1, TResult>(string name, string description, Func<T1, TResult> func)
+  public static Tool CreateFromFunction<T1, TResult>(
+    string name, 
+    string description, 
+    Func<T1, TResult> func,
+    CacheControl? cacheControl = null
+  )
   {
     ArgumentValidator.ThrowIfNull(func, nameof(func));
 
-    return new Tool(name, description, new AnthropicFunction(func.Method, func.Target));
+    return new Tool(name, description, new AnthropicFunction(func.Method, func.Target), cacheControl);
   }
 
   /// <summary>
@@ -208,14 +240,20 @@ public class Tool
   /// <param name="name">The name of the tool.</param>
   /// <param name="description">The description of the tool.</param>
   /// <param name="func">The function.</param>
+  /// <param name="cacheControl">The cache control to be used for the tool.</param>
   /// <exception cref="ArgumentNullException">Thrown when <paramref name="func"/> is null.</exception>
   /// <returns>The created tool as instance of <see cref="Tool"/>.</returns>
   /// <remarks>The name of the tool will be sanitized to conform to the Anthropic tool naming rules.</remarks>
-  public static Tool CreateFromFunction<T1, T2, TResult>(string name, string description, Func<T1, T2, TResult> func)
+  public static Tool CreateFromFunction<T1, T2, TResult>(
+    string name, 
+    string description, 
+    Func<T1, T2, TResult> func,
+    CacheControl? cacheControl = null
+  )
   {
     ArgumentValidator.ThrowIfNull(func, nameof(func));
 
-    return new Tool(name, description, new AnthropicFunction(func.Method, func.Target));
+    return new Tool(name, description, new AnthropicFunction(func.Method, func.Target), cacheControl);
   }
 
 

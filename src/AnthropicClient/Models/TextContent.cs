@@ -31,4 +31,18 @@ public class TextContent : Content
 
     Text = text;
   }
+
+  /// <summary>
+  /// Initializes a new instance of the <see cref="TextContent"/> class.
+  /// </summary>
+  /// <param name="text">The text of the content.</param>
+  /// <param name="cacheControl">The cache control to be used for the content.</param>
+  /// <returns>A new instance of the <see cref="TextContent"/> class.</returns>
+  /// <exception cref="ArgumentNullException">Thrown when the text or cache control is null.</exception>
+  public TextContent(string text, CacheControl cacheControl) : base(ContentType.Text, cacheControl)
+  {
+    ArgumentValidator.ThrowIfNull(text, nameof(text));
+
+    Text = text;
+  }
 }
