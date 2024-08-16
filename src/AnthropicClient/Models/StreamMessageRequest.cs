@@ -16,7 +16,7 @@ public class StreamMessageRequest : BaseMessageRequest
   /// <param name="model">The model ID to use for the request.</param>
   /// <param name="messages">The messages to send to the model.</param>
   /// <param name="maxTokens">The maximum number of tokens to generate.</param>
-  /// <param name="system">The system ID to use for the request.</param>
+  /// <param name="system">The system prompt to use for the request.</param>
   /// <param name="metadata">The metadata to include with the request.</param>
   /// <param name="temperature">The temperature to use for the request.</param>
   /// <param name="topK">The top-K value to use for the request.</param>
@@ -24,6 +24,7 @@ public class StreamMessageRequest : BaseMessageRequest
   /// <param name="toolChoice">The tool choice mode to use for the request.</param>
   /// <param name="tools">The tools to use for the request.</param>
   /// <param name="stopSequences">The prompt stop sequences.</param>
+  /// <param name="systemMessages">The system messages to include with the request.</param>
   /// <exception cref="ArgumentException">Thrown when the model ID is invalid.</exception>
   /// <exception cref="ArgumentNullException">Thrown when the model or messages is null.</exception>
   /// <exception cref="ArgumentException">Thrown when the messages contain no messages.</exception>
@@ -41,7 +42,8 @@ public class StreamMessageRequest : BaseMessageRequest
     decimal? topP = null,
     ToolChoice? toolChoice = null,
     List<Tool>? tools = null,
-    List<string>? stopSequences = null
+    List<string>? stopSequences = null,
+    List<TextContent>? systemMessages = null
   ) : base(
     model,
     messages,
@@ -54,7 +56,8 @@ public class StreamMessageRequest : BaseMessageRequest
     toolChoice,
     tools,
     true,
-    stopSequences
+    stopSequences,
+    systemMessages
   )
   {
   }
