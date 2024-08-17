@@ -16,7 +16,7 @@ public abstract class Content
   /// Gets the cache control to be used for the content.
   /// </summary>
   [JsonPropertyName("cache_control")]
-  public CacheControl? CacheControl { get; init; }
+  public CacheControl? CacheControl { get; set; }
 
   [JsonConstructor]
   internal Content()
