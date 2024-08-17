@@ -5,7 +5,7 @@ namespace AnthropicClient.Models;
 /// <summary>
 /// Represents the cache control to be used for content.
 /// </summary>
-public class CacheControl
+public abstract class CacheControl
 { 
   /// <summary>
   /// Gets the type of the cache control.
@@ -18,7 +18,7 @@ public class CacheControl
   /// <param name="type">The type of the cache control.</param>
   /// <returns>A new instance of the <see cref="CacheControl"/> class.</returns>
   /// <exception cref="ArgumentException">Thrown when the type is null or whitespace.</exception>
-  public CacheControl(string type)
+  protected CacheControl(string type)
   {
     ArgumentValidator.ThrowIfNullOrWhitespace(type, nameof(type));
 
