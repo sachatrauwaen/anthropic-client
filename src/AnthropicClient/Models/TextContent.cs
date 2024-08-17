@@ -19,6 +19,11 @@ public class TextContent : Content
   {
   }
 
+  private void Validate(string text)
+  {
+    ArgumentValidator.ThrowIfNull(text, nameof(text));
+  }
+
   /// <summary>
   /// Initializes a new instance of the <see cref="TextContent"/> class.
   /// </summary>
@@ -27,7 +32,7 @@ public class TextContent : Content
   /// <returns>A new instance of the <see cref="TextContent"/> class.</returns>
   public TextContent(string text) : base(ContentType.Text)
   {
-    ArgumentValidator.ThrowIfNull(text, nameof(text));
+    Validate(text);
 
     Text = text;
   }
@@ -41,8 +46,8 @@ public class TextContent : Content
   /// <exception cref="ArgumentNullException">Thrown when the text or cache control is null.</exception>
   public TextContent(string text, CacheControl cacheControl) : base(ContentType.Text, cacheControl)
   {
-    ArgumentValidator.ThrowIfNull(text, nameof(text));
-
+    Validate(text);
+    
     Text = text;
   }
 }

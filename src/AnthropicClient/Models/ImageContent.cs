@@ -19,6 +19,12 @@ public class ImageContent : Content
   {
   }
 
+  private void Validate(string mediaType, string data)
+  {
+    ArgumentValidator.ThrowIfNull(mediaType, nameof(mediaType));
+    ArgumentValidator.ThrowIfNull(data, nameof(data));
+  }
+
   /// <summary>
   /// Initializes a new instance of the <see cref="ImageContent"/> class.
   /// </summary>
@@ -28,8 +34,7 @@ public class ImageContent : Content
   /// <returns>A new instance of the <see cref="ImageContent"/> class.</returns>
   public ImageContent(string mediaType, string data) : base(ContentType.Image)
   {
-    ArgumentValidator.ThrowIfNull(mediaType, nameof(mediaType));
-    ArgumentValidator.ThrowIfNull(data, nameof(data));
+    Validate(mediaType, data);
 
     Source = new(mediaType, data);
   }
@@ -44,8 +49,7 @@ public class ImageContent : Content
   /// <exception cref="ArgumentNullException">Thrown when the media type, data, or cache control is null.</exception>
   public ImageContent(string mediaType, string data, CacheControl cacheControl) : base(ContentType.Image, cacheControl)
   {
-    ArgumentValidator.ThrowIfNull(mediaType, nameof(mediaType));
-    ArgumentValidator.ThrowIfNull(data, nameof(data));
+    Validate(mediaType, data);
 
     Source = new(mediaType, data);
   }
