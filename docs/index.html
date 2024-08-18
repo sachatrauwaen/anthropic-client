@@ -428,10 +428,11 @@ if (response.IsSuccess is false)
   return;
 }
 
+messages.Add(new(MessageRole.Assistant, response.Content));
+
+
 foreach (var content in response.Value.Content)
 {
-  messages.Add(new(MessageRole.Assistant, [content]));
-
   switch (content)
   {
     case TextContent textContent:
@@ -545,10 +546,7 @@ if (response is null)
   return;
 }
 
-foreach (var content in response.Content)
-{
-  messages.Add(new(MessageRole.Assistant, [content]));
-}
+messages.Add(new(MessageRole.Assistant, response.Content));
 
 if (response?.ToolCall is not null)
 {
@@ -602,6 +600,218 @@ foreach (var content in finalResponse.Value.Content)
 }
 </code></pre>
 <p>If you do find that you need more control over how exactly provided tools are called and how the result of those tools are returned you can avoid using the <code>InvokeAsync</code> method and instead use the <code>Tool</code> and <code>ToolUse</code> properties of the <code>ToolCall</code> instance to implement your own solution.</p>
+<h3 id="system-prompt">System Prompt</h3>
+<p>Anthropic's models support the use of system prompts to provide additional context to the user. This can be used to provide additional information to the user or to ask for additional information from the user. This feature is covered in depth in <a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/system-prompts">Anthropic's API Documentation</a>. This library aims to make using system prompts convenient by allowing you to provide the system prompts you want Anthropic's models to consider for use when creating a message.</p>
+<h4 id="system-message">System Message</h4>
+<p>You can create a system prompt by providing a <code>string</code> as the <code>system</code> parameter in the <code>MessageRequest</code> or <code>StreamMessageRequest</code> constructor.</p>
+<pre><code class="lang-csharp">using AnthropicClient;
+using AnthropicClient.Models;
+
+var response = await client.CreateMessageAsync(new MessageRequest(
+  AnthropicModels.Claude3Haiku,
+  [
+    new(
+      MessageRole.User, 
+      [new TextContent(&quot;Please write a haiku about the ocean.&quot;)]
+    )
+  ],
+  system: &quot;You are a internationally renowned poet. You excel at writing haikus.
+));
+
+if (response.IsSuccess is false)
+{
+  Console.WriteLine($&quot;Failed to create message&quot;);
+  Console.WriteLine($&quot;Error Type: {0}&quot;, response.Error.Error.Type);
+  Console.WriteLine($&quot;Error Message: {0}&quot;, response.Error.Error.Message);
+  return;
+}
+
+foreach (var content in response.Value.Content)
+{
+  switch (content)
+  {
+    case TextContent textContent:
+      Console.WriteLine(textContent.Text);
+      break;
+  }
+}
+</code></pre>
+<h4 id="system-messages">System Messages</h4>
+<p>You can create a more complex system prompt by providing a <code>List&lt;TextContent&gt;</code> as the <code>systemMessages</code> parameter in the <code>MessageRequest</code> or <code>StreamMessageRequest</code> constructor.</p>
+<pre><code class="lang-csharp">using AnthropicClient;
+using AnthropicClient.Models;
+
+var response = await client.CreateMessageAsync(new MessageRequest(
+  AnthropicModels.Claude3Haiku,
+  [
+    new(
+      MessageRole.User, 
+      [new TextContent(&quot;Please write a haiku about the ocean.&quot;)]
+    )
+  ],
+  systemMessages: [
+    new TextContent(&quot;You are a internationally renowned poet. You excel at writing haikus.&quot;),
+    new TextContent(&quot;You have been asked to write a haiku about the ocean.&quot;)
+  ]
+));
+
+if (response.IsSuccess is false)
+{
+  Console.WriteLine($&quot;Failed to create message&quot;);
+  Console.WriteLine($&quot;Error Type: {0}&quot;, response.Error.Error.Type);
+  Console.WriteLine($&quot;Error Message: {0}&quot;, response.Error.Error.Message);
+  return;
+}
+
+foreach (var content in response.Value.Content)
+{
+  switch (content)
+  {
+    case TextContent textContent:
+      Console.WriteLine(textContent.Text);
+      break;
+  }
+}
+</code></pre>
+<h3 id="prompt-caching">Prompt Caching</h3>
+<p>Anthropic has recently introduced a feature called <a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching">Prompt Caching</a> that allows you to cache all or part of the prompt you send to the model. This can be used to improve the performance of your application by reducing latency and token usage. This feature is covered in depth in <a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching">Anthropic's API Documentation</a>.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>This feature is in beta and requires you to set an <code>anthropic-beta</code> header on your requests to use it.
+The value of the header should be <code>prompt-caching-2024-07-31</code>.</p>
+</div>
+<p>When using this library you can opt-in to prompt caching by adding the required header to the <code>HttpClient</code> instance you provide to the <code>AnthropicApiClient</code> constructor.</p>
+<pre><code class="lang-csharp">using AnthropicClient;
+
+var httpClient = new HttpClient();
+httpClient.DefaultRequestHeaders.Add(&quot;anthropic-beta&quot;, &quot;prompt-caching-2024-07-31&quot;);
+
+var client = new AnthropicApiClient(apiKey, httpClient);
+</code></pre>
+<p>Prompt caching can be used to cache all parts of the prompt including system messages, user messages, and tools. You should refer to the <a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching">Anthropic API Documentation</a> for specifics on limitations and requirements for using prompt caching. This library aims to make using prompt caching convenient and give you complete control over what parts of the prompt are cached. Currently there is only one type of cache control available - <code>EphemeralCacheControl</code>.</p>
+<h4 id="caching-system-messages">Caching System Messages</h4>
+<p>System messages can be cached by providing a <code>List&lt;TextContent&gt;</code> as the <code>systemMessages</code> parameter in the <code>MessageRequest</code> or <code>StreamMessageRequest</code> constructor and having one or more of the <code>TextContent</code> instances have the <code>CacheControl</code> property set.</p>
+<pre><code class="lang-csharp">using AnthropicClient;
+using AnthropicClient.Models;
+
+var response = await client.CreateMessageAsync(new MessageRequest(
+  AnthropicModels.Claude3Haiku,
+  [
+    new(
+      MessageRole.User, 
+      [new TextContent(&quot;Please write a haiku about the ocean.&quot;)]
+    )
+  ],
+  systemMessages: [
+    new TextContent(&quot;You are a internationally renowned poet. You excel at writing haikus. Please use the following as examples.&quot;),
+    new TextContent(exampleHaikus, new EphemeralCacheControl())
+  ]
+));
+
+if (response.IsSuccess is false)
+{
+  Console.WriteLine($&quot;Failed to create message&quot;);
+  Console.WriteLine($&quot;Error Type: {0}&quot;, response.Error.Error.Type);
+  Console.WriteLine($&quot;Error Message: {0}&quot;, response.Error.Error.Message);
+  return;
+}
+
+foreach (var content in response.Value.Content)
+{
+  switch (content)
+  {
+    case TextContent textContent:
+      Console.WriteLine(textContent.Text);
+      break;
+  }
+}
+</code></pre>
+<h4 id="caching-user-messages">Caching User Messages</h4>
+<p>User messages can be cached by providing a <code>List&lt;Content&gt;</code> as the <code>messages</code> parameter in the <code>MessageRequest</code> or <code>StreamMessageRequest</code> constructor and having one or more of the <code>Content</code> instances have the <code>CacheControl</code> property set.</p>
+<pre><code class="lang-csharp">using AnthropicClient;
+using AnthropicClient.Models;
+
+var response = await client.CreateMessageAsync(new MessageRequest(
+  AnthropicModels.Claude3Haiku,
+  [
+    new(
+      MessageRole.User, 
+      [
+        new TextContent(&quot;Please write a haiku about the ocean. Here are some examples of haikus I like.&quot;),
+        new TextContent(exampleHaikus, new EphemeralCacheControl())
+      ]
+    ),
+  ]
+));
+
+if (response.IsSuccess is false)
+{
+  Console.WriteLine($&quot;Failed to create message&quot;);
+  Console.WriteLine($&quot;Error Type: {0}&quot;, response.Error.Error.Type);
+  Console.WriteLine($&quot;Error Message: {0}&quot;, response.Error.Error.Message);
+  return;
+}
+
+foreach (var content in response.Value.Content)
+{
+  switch (content)
+  {
+    case TextContent textContent:
+      Console.WriteLine(textContent.Text);
+      break;
+  }
+}
+</code></pre>
+<h4 id="caching-tools">Caching Tools</h4>
+<p>Tools can be cached by providing a <code>List&lt;Tool&gt;</code> as the <code>tools</code> parameter in the <code>MessageRequest</code> or <code>StreamMessageRequest</code> constructor and having one or more of the <code>Tool</code> instances have the <code>CacheControl</code> property set. This property can be set after the tool is created manually or by using one of the static methods on the <code>Tool</code> class.</p>
+<pre><code class="lang-csharp">using AnthropicClient;
+using AnthropicClient.Models;
+
+var tool = (string location, string units) =&gt; $&quot;The weather in {location} is 72 degrees {units}&quot;;
+
+var getWeatherTool = Tool.CreateFromFunction(
+  &quot;Get Weather&quot;, 
+  &quot;Get the weather for a location in the specified units&quot;, 
+  tool,
+  new EphemeralCacheControl()
+);
+
+var response = await client.CreateMessageAsync(new MessageRequest(
+  AnthropicModels.Claude3Haiku,
+  [
+    new(
+      MessageRole.User, 
+      [new TextContent(&quot;What is the weather in New York?&quot;)]
+    )
+  ],
+  tools: [
+    // Lots of other tools
+    // ...
+    getWeatherTool
+  ]
+));
+
+if (response.IsSuccess is false)
+{
+  Console.WriteLine($&quot;Failed to create message&quot;);
+  Console.WriteLine($&quot;Error Type: {0}&quot;, response.Error.Error.Type);
+  Console.WriteLine($&quot;Error Message: {0}&quot;, response.Error.Error.Message);
+  return;
+}
+
+foreach (var content in response.Value.Content)
+{
+  switch (content)
+  {
+    case TextContent textContent:
+      Console.WriteLine(textContent.Text);
+      break;
+    case ToolUseContent toolUseContent:
+      Console.WriteLine(toolUseContent.Name);
+      break;
+  }
+}
+</code></pre>
 
 </article>
 

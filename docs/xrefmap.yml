@@ -481,15 +481,15 @@ references:
   commentId: T:AnthropicClient.Models.BaseMessageRequest
   fullName: AnthropicClient.Models.BaseMessageRequest
   nameWithType: BaseMessageRequest
-- uid: AnthropicClient.Models.BaseMessageRequest.#ctor(System.String,System.Collections.Generic.List{AnthropicClient.Models.Message},System.Int32,System.String,System.Collections.Generic.Dictionary{System.String,System.Object},System.Decimal,System.Nullable{System.Int32},System.Nullable{System.Decimal},AnthropicClient.Models.ToolChoice,System.Collections.Generic.List{AnthropicClient.Models.Tool},System.Boolean,System.Collections.Generic.List{System.String})
-  name: BaseMessageRequest(string, List<Message>, int, string?, Dictionary<string, object>?, decimal, int?, decimal?, ToolChoice?, List<Tool>?, bool, List<string>?)
-  href: api/AnthropicClient.Models.BaseMessageRequest.html#AnthropicClient_Models_BaseMessageRequest__ctor_System_String_System_Collections_Generic_List_AnthropicClient_Models_Message__System_Int32_System_String_System_Collections_Generic_Dictionary_System_String_System_Object__System_Decimal_System_Nullable_System_Int32__System_Nullable_System_Decimal__AnthropicClient_Models_ToolChoice_System_Collections_Generic_List_AnthropicClient_Models_Tool__System_Boolean_System_Collections_Generic_List_System_String__
-  commentId: M:AnthropicClient.Models.BaseMessageRequest.#ctor(System.String,System.Collections.Generic.List{AnthropicClient.Models.Message},System.Int32,System.String,System.Collections.Generic.Dictionary{System.String,System.Object},System.Decimal,System.Nullable{System.Int32},System.Nullable{System.Decimal},AnthropicClient.Models.ToolChoice,System.Collections.Generic.List{AnthropicClient.Models.Tool},System.Boolean,System.Collections.Generic.List{System.String})
-  name.vb: New(String, List(Of Message), Integer, String, Dictionary(Of String, Object), Decimal, Integer?, Decimal?, ToolChoice, List(Of Tool), Boolean, List(Of String))
-  fullName: AnthropicClient.Models.BaseMessageRequest.BaseMessageRequest(string, System.Collections.Generic.List<AnthropicClient.Models.Message>, int, string?, System.Collections.Generic.Dictionary<string, object>?, decimal, int?, decimal?, AnthropicClient.Models.ToolChoice?, System.Collections.Generic.List<AnthropicClient.Models.Tool>?, bool, System.Collections.Generic.List<string>?)
-  fullName.vb: AnthropicClient.Models.BaseMessageRequest.New(String, System.Collections.Generic.List(Of AnthropicClient.Models.Message), Integer, String, System.Collections.Generic.Dictionary(Of String, Object), Decimal, Integer?, Decimal?, AnthropicClient.Models.ToolChoice, System.Collections.Generic.List(Of AnthropicClient.Models.Tool), Boolean, System.Collections.Generic.List(Of String))
-  nameWithType: BaseMessageRequest.BaseMessageRequest(string, List<Message>, int, string?, Dictionary<string, object>?, decimal, int?, decimal?, ToolChoice?, List<Tool>?, bool, List<string>?)
-  nameWithType.vb: BaseMessageRequest.New(String, List(Of Message), Integer, String, Dictionary(Of String, Object), Decimal, Integer?, Decimal?, ToolChoice, List(Of Tool), Boolean, List(Of String))
+- uid: AnthropicClient.Models.BaseMessageRequest.#ctor(System.String,System.Collections.Generic.List{AnthropicClient.Models.Message},System.Int32,System.String,System.Collections.Generic.Dictionary{System.String,System.Object},System.Decimal,System.Nullable{System.Int32},System.Nullable{System.Decimal},AnthropicClient.Models.ToolChoice,System.Collections.Generic.List{AnthropicClient.Models.Tool},System.Boolean,System.Collections.Generic.List{System.String},System.Collections.Generic.List{AnthropicClient.Models.TextContent})
+  name: BaseMessageRequest(string, List<Message>, int, string?, Dictionary<string, object>?, decimal, int?, decimal?, ToolChoice?, List<Tool>?, bool, List<string>?, List<TextContent>?)
+  href: api/AnthropicClient.Models.BaseMessageRequest.html#AnthropicClient_Models_BaseMessageRequest__ctor_System_String_System_Collections_Generic_List_AnthropicClient_Models_Message__System_Int32_System_String_System_Collections_Generic_Dictionary_System_String_System_Object__System_Decimal_System_Nullable_System_Int32__System_Nullable_System_Decimal__AnthropicClient_Models_ToolChoice_System_Collections_Generic_List_AnthropicClient_Models_Tool__System_Boolean_System_Collections_Generic_List_System_String__System_Collections_Generic_List_AnthropicClient_Models_TextContent__
+  commentId: M:AnthropicClient.Models.BaseMessageRequest.#ctor(System.String,System.Collections.Generic.List{AnthropicClient.Models.Message},System.Int32,System.String,System.Collections.Generic.Dictionary{System.String,System.Object},System.Decimal,System.Nullable{System.Int32},System.Nullable{System.Decimal},AnthropicClient.Models.ToolChoice,System.Collections.Generic.List{AnthropicClient.Models.Tool},System.Boolean,System.Collections.Generic.List{System.String},System.Collections.Generic.List{AnthropicClient.Models.TextContent})
+  name.vb: New(String, List(Of Message), Integer, String, Dictionary(Of String, Object), Decimal, Integer?, Decimal?, ToolChoice, List(Of Tool), Boolean, List(Of String), List(Of TextContent))
+  fullName: AnthropicClient.Models.BaseMessageRequest.BaseMessageRequest(string, System.Collections.Generic.List<AnthropicClient.Models.Message>, int, string?, System.Collections.Generic.Dictionary<string, object>?, decimal, int?, decimal?, AnthropicClient.Models.ToolChoice?, System.Collections.Generic.List<AnthropicClient.Models.Tool>?, bool, System.Collections.Generic.List<string>?, System.Collections.Generic.List<AnthropicClient.Models.TextContent>?)
+  fullName.vb: AnthropicClient.Models.BaseMessageRequest.New(String, System.Collections.Generic.List(Of AnthropicClient.Models.Message), Integer, String, System.Collections.Generic.Dictionary(Of String, Object), Decimal, Integer?, Decimal?, AnthropicClient.Models.ToolChoice, System.Collections.Generic.List(Of AnthropicClient.Models.Tool), Boolean, System.Collections.Generic.List(Of String), System.Collections.Generic.List(Of AnthropicClient.Models.TextContent))
+  nameWithType: BaseMessageRequest.BaseMessageRequest(string, List<Message>, int, string?, Dictionary<string, object>?, decimal, int?, decimal?, ToolChoice?, List<Tool>?, bool, List<string>?, List<TextContent>?)
+  nameWithType.vb: BaseMessageRequest.New(String, List(Of Message), Integer, String, Dictionary(Of String, Object), Decimal, Integer?, Decimal?, ToolChoice, List(Of Tool), Boolean, List(Of String), List(Of TextContent))
 - uid: AnthropicClient.Models.BaseMessageRequest.#ctor*
   name: BaseMessageRequest
   href: api/AnthropicClient.Models.BaseMessageRequest.html#AnthropicClient_Models_BaseMessageRequest__ctor_
@@ -591,6 +591,32 @@ references:
   isSpec: "True"
   fullName: AnthropicClient.Models.BaseMessageRequest.System
   nameWithType: BaseMessageRequest.System
+- uid: AnthropicClient.Models.BaseMessageRequest.SystemMessages
+  name: SystemMessages
+  href: api/AnthropicClient.Models.BaseMessageRequest.html#AnthropicClient_Models_BaseMessageRequest_SystemMessages
+  commentId: P:AnthropicClient.Models.BaseMessageRequest.SystemMessages
+  fullName: AnthropicClient.Models.BaseMessageRequest.SystemMessages
+  nameWithType: BaseMessageRequest.SystemMessages
+- uid: AnthropicClient.Models.BaseMessageRequest.SystemMessages*
+  name: SystemMessages
+  href: api/AnthropicClient.Models.BaseMessageRequest.html#AnthropicClient_Models_BaseMessageRequest_SystemMessages_
+  commentId: Overload:AnthropicClient.Models.BaseMessageRequest.SystemMessages
+  isSpec: "True"
+  fullName: AnthropicClient.Models.BaseMessageRequest.SystemMessages
+  nameWithType: BaseMessageRequest.SystemMessages
+- uid: AnthropicClient.Models.BaseMessageRequest.SystemPrompt
+  name: SystemPrompt
+  href: api/AnthropicClient.Models.BaseMessageRequest.html#AnthropicClient_Models_BaseMessageRequest_SystemPrompt
+  commentId: P:AnthropicClient.Models.BaseMessageRequest.SystemPrompt
+  fullName: AnthropicClient.Models.BaseMessageRequest.SystemPrompt
+  nameWithType: BaseMessageRequest.SystemPrompt
+- uid: AnthropicClient.Models.BaseMessageRequest.SystemPrompt*
+  name: SystemPrompt
+  href: api/AnthropicClient.Models.BaseMessageRequest.html#AnthropicClient_Models_BaseMessageRequest_SystemPrompt_
+  commentId: Overload:AnthropicClient.Models.BaseMessageRequest.SystemPrompt
+  isSpec: "True"
+  fullName: AnthropicClient.Models.BaseMessageRequest.SystemPrompt
+  nameWithType: BaseMessageRequest.SystemPrompt
 - uid: AnthropicClient.Models.BaseMessageRequest.Temperature
   name: Temperature
   href: api/AnthropicClient.Models.BaseMessageRequest.html#AnthropicClient_Models_BaseMessageRequest_Temperature
@@ -656,6 +682,56 @@ references:
   isSpec: "True"
   fullName: AnthropicClient.Models.BaseMessageRequest.TopP
   nameWithType: BaseMessageRequest.TopP
+- uid: AnthropicClient.Models.CacheControl
+  name: CacheControl
+  href: api/AnthropicClient.Models.CacheControl.html
+  commentId: T:AnthropicClient.Models.CacheControl
+  fullName: AnthropicClient.Models.CacheControl
+  nameWithType: CacheControl
+- uid: AnthropicClient.Models.CacheControl.#ctor(System.String)
+  name: CacheControl(string)
+  href: api/AnthropicClient.Models.CacheControl.html#AnthropicClient_Models_CacheControl__ctor_System_String_
+  commentId: M:AnthropicClient.Models.CacheControl.#ctor(System.String)
+  name.vb: New(String)
+  fullName: AnthropicClient.Models.CacheControl.CacheControl(string)
+  fullName.vb: AnthropicClient.Models.CacheControl.New(String)
+  nameWithType: CacheControl.CacheControl(string)
+  nameWithType.vb: CacheControl.New(String)
+- uid: AnthropicClient.Models.CacheControl.#ctor*
+  name: CacheControl
+  href: api/AnthropicClient.Models.CacheControl.html#AnthropicClient_Models_CacheControl__ctor_
+  commentId: Overload:AnthropicClient.Models.CacheControl.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: AnthropicClient.Models.CacheControl.CacheControl
+  fullName.vb: AnthropicClient.Models.CacheControl.New
+  nameWithType: CacheControl.CacheControl
+  nameWithType.vb: CacheControl.New
+- uid: AnthropicClient.Models.CacheControl.Type
+  name: Type
+  href: api/AnthropicClient.Models.CacheControl.html#AnthropicClient_Models_CacheControl_Type
+  commentId: P:AnthropicClient.Models.CacheControl.Type
+  fullName: AnthropicClient.Models.CacheControl.Type
+  nameWithType: CacheControl.Type
+- uid: AnthropicClient.Models.CacheControl.Type*
+  name: Type
+  href: api/AnthropicClient.Models.CacheControl.html#AnthropicClient_Models_CacheControl_Type_
+  commentId: Overload:AnthropicClient.Models.CacheControl.Type
+  isSpec: "True"
+  fullName: AnthropicClient.Models.CacheControl.Type
+  nameWithType: CacheControl.Type
+- uid: AnthropicClient.Models.CacheControlType
+  name: CacheControlType
+  href: api/AnthropicClient.Models.CacheControlType.html
+  commentId: T:AnthropicClient.Models.CacheControlType
+  fullName: AnthropicClient.Models.CacheControlType
+  nameWithType: CacheControlType
+- uid: AnthropicClient.Models.CacheControlType.Ephemeral
+  name: Ephemeral
+  href: api/AnthropicClient.Models.CacheControlType.html#AnthropicClient_Models_CacheControlType_Ephemeral
+  commentId: F:AnthropicClient.Models.CacheControlType.Ephemeral
+  fullName: AnthropicClient.Models.CacheControlType.Ephemeral
+  nameWithType: CacheControlType.Ephemeral
 - uid: AnthropicClient.Models.Content
   name: Content
   href: api/AnthropicClient.Models.Content.html
@@ -671,6 +747,15 @@ references:
   fullName.vb: AnthropicClient.Models.Content.New(String)
   nameWithType: Content.Content(string)
   nameWithType.vb: Content.New(String)
+- uid: AnthropicClient.Models.Content.#ctor(System.String,AnthropicClient.Models.CacheControl)
+  name: Content(string, CacheControl)
+  href: api/AnthropicClient.Models.Content.html#AnthropicClient_Models_Content__ctor_System_String_AnthropicClient_Models_CacheControl_
+  commentId: M:AnthropicClient.Models.Content.#ctor(System.String,AnthropicClient.Models.CacheControl)
+  name.vb: New(String, CacheControl)
+  fullName: AnthropicClient.Models.Content.Content(string, AnthropicClient.Models.CacheControl)
+  fullName.vb: AnthropicClient.Models.Content.New(String, AnthropicClient.Models.CacheControl)
+  nameWithType: Content.Content(string, CacheControl)
+  nameWithType.vb: Content.New(String, CacheControl)
 - uid: AnthropicClient.Models.Content.#ctor*
   name: Content
   href: api/AnthropicClient.Models.Content.html#AnthropicClient_Models_Content__ctor_
@@ -681,6 +766,19 @@ references:
   fullName.vb: AnthropicClient.Models.Content.New
   nameWithType: Content.Content
   nameWithType.vb: Content.New
+- uid: AnthropicClient.Models.Content.CacheControl
+  name: CacheControl
+  href: api/AnthropicClient.Models.Content.html#AnthropicClient_Models_Content_CacheControl
+  commentId: P:AnthropicClient.Models.Content.CacheControl
+  fullName: AnthropicClient.Models.Content.CacheControl
+  nameWithType: Content.CacheControl
+- uid: AnthropicClient.Models.Content.CacheControl*
+  name: CacheControl
+  href: api/AnthropicClient.Models.Content.html#AnthropicClient_Models_Content_CacheControl_
+  commentId: Overload:AnthropicClient.Models.Content.CacheControl
+  isSpec: "True"
+  fullName: AnthropicClient.Models.Content.CacheControl
+  nameWithType: Content.CacheControl
 - uid: AnthropicClient.Models.Content.Type
   name: Type
   href: api/AnthropicClient.Models.Content.html#AnthropicClient_Models_Content_Type
@@ -920,6 +1018,31 @@ references:
   commentId: F:AnthropicClient.Models.ContentType.ToolUse
   fullName: AnthropicClient.Models.ContentType.ToolUse
   nameWithType: ContentType.ToolUse
+- uid: AnthropicClient.Models.EphemeralCacheControl
+  name: EphemeralCacheControl
+  href: api/AnthropicClient.Models.EphemeralCacheControl.html
+  commentId: T:AnthropicClient.Models.EphemeralCacheControl
+  fullName: AnthropicClient.Models.EphemeralCacheControl
+  nameWithType: EphemeralCacheControl
+- uid: AnthropicClient.Models.EphemeralCacheControl.#ctor
+  name: EphemeralCacheControl()
+  href: api/AnthropicClient.Models.EphemeralCacheControl.html#AnthropicClient_Models_EphemeralCacheControl__ctor
+  commentId: M:AnthropicClient.Models.EphemeralCacheControl.#ctor
+  name.vb: New()
+  fullName: AnthropicClient.Models.EphemeralCacheControl.EphemeralCacheControl()
+  fullName.vb: AnthropicClient.Models.EphemeralCacheControl.New()
+  nameWithType: EphemeralCacheControl.EphemeralCacheControl()
+  nameWithType.vb: EphemeralCacheControl.New()
+- uid: AnthropicClient.Models.EphemeralCacheControl.#ctor*
+  name: EphemeralCacheControl
+  href: api/AnthropicClient.Models.EphemeralCacheControl.html#AnthropicClient_Models_EphemeralCacheControl__ctor_
+  commentId: Overload:AnthropicClient.Models.EphemeralCacheControl.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: AnthropicClient.Models.EphemeralCacheControl.EphemeralCacheControl
+  fullName.vb: AnthropicClient.Models.EphemeralCacheControl.New
+  nameWithType: EphemeralCacheControl.EphemeralCacheControl
+  nameWithType.vb: EphemeralCacheControl.New
 - uid: AnthropicClient.Models.Error
   name: Error
   href: api/AnthropicClient.Models.Error.html
@@ -1356,6 +1479,15 @@ references:
   fullName.vb: AnthropicClient.Models.ImageContent.New(String, String)
   nameWithType: ImageContent.ImageContent(string, string)
   nameWithType.vb: ImageContent.New(String, String)
+- uid: AnthropicClient.Models.ImageContent.#ctor(System.String,System.String,AnthropicClient.Models.CacheControl)
+  name: ImageContent(string, string, CacheControl)
+  href: api/AnthropicClient.Models.ImageContent.html#AnthropicClient_Models_ImageContent__ctor_System_String_System_String_AnthropicClient_Models_CacheControl_
+  commentId: M:AnthropicClient.Models.ImageContent.#ctor(System.String,System.String,AnthropicClient.Models.CacheControl)
+  name.vb: New(String, String, CacheControl)
+  fullName: AnthropicClient.Models.ImageContent.ImageContent(string, string, AnthropicClient.Models.CacheControl)
+  fullName.vb: AnthropicClient.Models.ImageContent.New(String, String, AnthropicClient.Models.CacheControl)
+  nameWithType: ImageContent.ImageContent(string, string, CacheControl)
+  nameWithType.vb: ImageContent.New(String, String, CacheControl)
 - uid: AnthropicClient.Models.ImageContent.#ctor*
   name: ImageContent
   href: api/AnthropicClient.Models.ImageContent.html#AnthropicClient_Models_ImageContent__ctor_
@@ -1861,15 +1993,15 @@ references:
   commentId: T:AnthropicClient.Models.MessageRequest
   fullName: AnthropicClient.Models.MessageRequest
   nameWithType: MessageRequest
-- uid: AnthropicClient.Models.MessageRequest.#ctor(System.String,System.Collections.Generic.List{AnthropicClient.Models.Message},System.Int32,System.String,System.Collections.Generic.Dictionary{System.String,System.Object},System.Decimal,System.Nullable{System.Int32},System.Nullable{System.Decimal},AnthropicClient.Models.ToolChoice,System.Collections.Generic.List{AnthropicClient.Models.Tool},System.Collections.Generic.List{System.String})
-  name: MessageRequest(string, List<Message>, int, string?, Dictionary<string, object>?, decimal, int?, decimal?, ToolChoice?, List<Tool>?, List<string>?)
-  href: api/AnthropicClient.Models.MessageRequest.html#AnthropicClient_Models_MessageRequest__ctor_System_String_System_Collections_Generic_List_AnthropicClient_Models_Message__System_Int32_System_String_System_Collections_Generic_Dictionary_System_String_System_Object__System_Decimal_System_Nullable_System_Int32__System_Nullable_System_Decimal__AnthropicClient_Models_ToolChoice_System_Collections_Generic_List_AnthropicClient_Models_Tool__System_Collections_Generic_List_System_String__
-  commentId: M:AnthropicClient.Models.MessageRequest.#ctor(System.String,System.Collections.Generic.List{AnthropicClient.Models.Message},System.Int32,System.String,System.Collections.Generic.Dictionary{System.String,System.Object},System.Decimal,System.Nullable{System.Int32},System.Nullable{System.Decimal},AnthropicClient.Models.ToolChoice,System.Collections.Generic.List{AnthropicClient.Models.Tool},System.Collections.Generic.List{System.String})
-  name.vb: New(String, List(Of Message), Integer, String, Dictionary(Of String, Object), Decimal, Integer?, Decimal?, ToolChoice, List(Of Tool), List(Of String))
-  fullName: AnthropicClient.Models.MessageRequest.MessageRequest(string, System.Collections.Generic.List<AnthropicClient.Models.Message>, int, string?, System.Collections.Generic.Dictionary<string, object>?, decimal, int?, decimal?, AnthropicClient.Models.ToolChoice?, System.Collections.Generic.List<AnthropicClient.Models.Tool>?, System.Collections.Generic.List<string>?)
-  fullName.vb: AnthropicClient.Models.MessageRequest.New(String, System.Collections.Generic.List(Of AnthropicClient.Models.Message), Integer, String, System.Collections.Generic.Dictionary(Of String, Object), Decimal, Integer?, Decimal?, AnthropicClient.Models.ToolChoice, System.Collections.Generic.List(Of AnthropicClient.Models.Tool), System.Collections.Generic.List(Of String))
-  nameWithType: MessageRequest.MessageRequest(string, List<Message>, int, string?, Dictionary<string, object>?, decimal, int?, decimal?, ToolChoice?, List<Tool>?, List<string>?)
-  nameWithType.vb: MessageRequest.New(String, List(Of Message), Integer, String, Dictionary(Of String, Object), Decimal, Integer?, Decimal?, ToolChoice, List(Of Tool), List(Of String))
+- uid: AnthropicClient.Models.MessageRequest.#ctor(System.String,System.Collections.Generic.List{AnthropicClient.Models.Message},System.Int32,System.String,System.Collections.Generic.Dictionary{System.String,System.Object},System.Decimal,System.Nullable{System.Int32},System.Nullable{System.Decimal},AnthropicClient.Models.ToolChoice,System.Collections.Generic.List{AnthropicClient.Models.Tool},System.Collections.Generic.List{System.String},System.Collections.Generic.List{AnthropicClient.Models.TextContent})
+  name: MessageRequest(string, List<Message>, int, string?, Dictionary<string, object>?, decimal, int?, decimal?, ToolChoice?, List<Tool>?, List<string>?, List<TextContent>?)
+  href: api/AnthropicClient.Models.MessageRequest.html#AnthropicClient_Models_MessageRequest__ctor_System_String_System_Collections_Generic_List_AnthropicClient_Models_Message__System_Int32_System_String_System_Collections_Generic_Dictionary_System_String_System_Object__System_Decimal_System_Nullable_System_Int32__System_Nullable_System_Decimal__AnthropicClient_Models_ToolChoice_System_Collections_Generic_List_AnthropicClient_Models_Tool__System_Collections_Generic_List_System_String__System_Collections_Generic_List_AnthropicClient_Models_TextContent__
+  commentId: M:AnthropicClient.Models.MessageRequest.#ctor(System.String,System.Collections.Generic.List{AnthropicClient.Models.Message},System.Int32,System.String,System.Collections.Generic.Dictionary{System.String,System.Object},System.Decimal,System.Nullable{System.Int32},System.Nullable{System.Decimal},AnthropicClient.Models.ToolChoice,System.Collections.Generic.List{AnthropicClient.Models.Tool},System.Collections.Generic.List{System.String},System.Collections.Generic.List{AnthropicClient.Models.TextContent})
+  name.vb: New(String, List(Of Message), Integer, String, Dictionary(Of String, Object), Decimal, Integer?, Decimal?, ToolChoice, List(Of Tool), List(Of String), List(Of TextContent))
+  fullName: AnthropicClient.Models.MessageRequest.MessageRequest(string, System.Collections.Generic.List<AnthropicClient.Models.Message>, int, string?, System.Collections.Generic.Dictionary<string, object>?, decimal, int?, decimal?, AnthropicClient.Models.ToolChoice?, System.Collections.Generic.List<AnthropicClient.Models.Tool>?, System.Collections.Generic.List<string>?, System.Collections.Generic.List<AnthropicClient.Models.TextContent>?)
+  fullName.vb: AnthropicClient.Models.MessageRequest.New(String, System.Collections.Generic.List(Of AnthropicClient.Models.Message), Integer, String, System.Collections.Generic.Dictionary(Of String, Object), Decimal, Integer?, Decimal?, AnthropicClient.Models.ToolChoice, System.Collections.Generic.List(Of AnthropicClient.Models.Tool), System.Collections.Generic.List(Of String), System.Collections.Generic.List(Of AnthropicClient.Models.TextContent))
+  nameWithType: MessageRequest.MessageRequest(string, List<Message>, int, string?, Dictionary<string, object>?, decimal, int?, decimal?, ToolChoice?, List<Tool>?, List<string>?, List<TextContent>?)
+  nameWithType.vb: MessageRequest.New(String, List(Of Message), Integer, String, Dictionary(Of String, Object), Decimal, Integer?, Decimal?, ToolChoice, List(Of Tool), List(Of String), List(Of TextContent))
 - uid: AnthropicClient.Models.MessageRequest.#ctor*
   name: MessageRequest
   href: api/AnthropicClient.Models.MessageRequest.html#AnthropicClient_Models_MessageRequest__ctor_
@@ -2283,15 +2415,15 @@ references:
   commentId: T:AnthropicClient.Models.StreamMessageRequest
   fullName: AnthropicClient.Models.StreamMessageRequest
   nameWithType: StreamMessageRequest
-- uid: AnthropicClient.Models.StreamMessageRequest.#ctor(System.String,System.Collections.Generic.List{AnthropicClient.Models.Message},System.Int32,System.String,System.Collections.Generic.Dictionary{System.String,System.Object},System.Decimal,System.Nullable{System.Int32},System.Nullable{System.Decimal},AnthropicClient.Models.ToolChoice,System.Collections.Generic.List{AnthropicClient.Models.Tool},System.Collections.Generic.List{System.String})
-  name: StreamMessageRequest(string, List<Message>, int, string?, Dictionary<string, object>?, decimal, int?, decimal?, ToolChoice?, List<Tool>?, List<string>?)
-  href: api/AnthropicClient.Models.StreamMessageRequest.html#AnthropicClient_Models_StreamMessageRequest__ctor_System_String_System_Collections_Generic_List_AnthropicClient_Models_Message__System_Int32_System_String_System_Collections_Generic_Dictionary_System_String_System_Object__System_Decimal_System_Nullable_System_Int32__System_Nullable_System_Decimal__AnthropicClient_Models_ToolChoice_System_Collections_Generic_List_AnthropicClient_Models_Tool__System_Collections_Generic_List_System_String__
-  commentId: M:AnthropicClient.Models.StreamMessageRequest.#ctor(System.String,System.Collections.Generic.List{AnthropicClient.Models.Message},System.Int32,System.String,System.Collections.Generic.Dictionary{System.String,System.Object},System.Decimal,System.Nullable{System.Int32},System.Nullable{System.Decimal},AnthropicClient.Models.ToolChoice,System.Collections.Generic.List{AnthropicClient.Models.Tool},System.Collections.Generic.List{System.String})
-  name.vb: New(String, List(Of Message), Integer, String, Dictionary(Of String, Object), Decimal, Integer?, Decimal?, ToolChoice, List(Of Tool), List(Of String))
-  fullName: AnthropicClient.Models.StreamMessageRequest.StreamMessageRequest(string, System.Collections.Generic.List<AnthropicClient.Models.Message>, int, string?, System.Collections.Generic.Dictionary<string, object>?, decimal, int?, decimal?, AnthropicClient.Models.ToolChoice?, System.Collections.Generic.List<AnthropicClient.Models.Tool>?, System.Collections.Generic.List<string>?)
-  fullName.vb: AnthropicClient.Models.StreamMessageRequest.New(String, System.Collections.Generic.List(Of AnthropicClient.Models.Message), Integer, String, System.Collections.Generic.Dictionary(Of String, Object), Decimal, Integer?, Decimal?, AnthropicClient.Models.ToolChoice, System.Collections.Generic.List(Of AnthropicClient.Models.Tool), System.Collections.Generic.List(Of String))
-  nameWithType: StreamMessageRequest.StreamMessageRequest(string, List<Message>, int, string?, Dictionary<string, object>?, decimal, int?, decimal?, ToolChoice?, List<Tool>?, List<string>?)
-  nameWithType.vb: StreamMessageRequest.New(String, List(Of Message), Integer, String, Dictionary(Of String, Object), Decimal, Integer?, Decimal?, ToolChoice, List(Of Tool), List(Of String))
+- uid: AnthropicClient.Models.StreamMessageRequest.#ctor(System.String,System.Collections.Generic.List{AnthropicClient.Models.Message},System.Int32,System.String,System.Collections.Generic.Dictionary{System.String,System.Object},System.Decimal,System.Nullable{System.Int32},System.Nullable{System.Decimal},AnthropicClient.Models.ToolChoice,System.Collections.Generic.List{AnthropicClient.Models.Tool},System.Collections.Generic.List{System.String},System.Collections.Generic.List{AnthropicClient.Models.TextContent})
+  name: StreamMessageRequest(string, List<Message>, int, string?, Dictionary<string, object>?, decimal, int?, decimal?, ToolChoice?, List<Tool>?, List<string>?, List<TextContent>?)
+  href: api/AnthropicClient.Models.StreamMessageRequest.html#AnthropicClient_Models_StreamMessageRequest__ctor_System_String_System_Collections_Generic_List_AnthropicClient_Models_Message__System_Int32_System_String_System_Collections_Generic_Dictionary_System_String_System_Object__System_Decimal_System_Nullable_System_Int32__System_Nullable_System_Decimal__AnthropicClient_Models_ToolChoice_System_Collections_Generic_List_AnthropicClient_Models_Tool__System_Collections_Generic_List_System_String__System_Collections_Generic_List_AnthropicClient_Models_TextContent__
+  commentId: M:AnthropicClient.Models.StreamMessageRequest.#ctor(System.String,System.Collections.Generic.List{AnthropicClient.Models.Message},System.Int32,System.String,System.Collections.Generic.Dictionary{System.String,System.Object},System.Decimal,System.Nullable{System.Int32},System.Nullable{System.Decimal},AnthropicClient.Models.ToolChoice,System.Collections.Generic.List{AnthropicClient.Models.Tool},System.Collections.Generic.List{System.String},System.Collections.Generic.List{AnthropicClient.Models.TextContent})
+  name.vb: New(String, List(Of Message), Integer, String, Dictionary(Of String, Object), Decimal, Integer?, Decimal?, ToolChoice, List(Of Tool), List(Of String), List(Of TextContent))
+  fullName: AnthropicClient.Models.StreamMessageRequest.StreamMessageRequest(string, System.Collections.Generic.List<AnthropicClient.Models.Message>, int, string?, System.Collections.Generic.Dictionary<string, object>?, decimal, int?, decimal?, AnthropicClient.Models.ToolChoice?, System.Collections.Generic.List<AnthropicClient.Models.Tool>?, System.Collections.Generic.List<string>?, System.Collections.Generic.List<AnthropicClient.Models.TextContent>?)
+  fullName.vb: AnthropicClient.Models.StreamMessageRequest.New(String, System.Collections.Generic.List(Of AnthropicClient.Models.Message), Integer, String, System.Collections.Generic.Dictionary(Of String, Object), Decimal, Integer?, Decimal?, AnthropicClient.Models.ToolChoice, System.Collections.Generic.List(Of AnthropicClient.Models.Tool), System.Collections.Generic.List(Of String), System.Collections.Generic.List(Of AnthropicClient.Models.TextContent))
+  nameWithType: StreamMessageRequest.StreamMessageRequest(string, List<Message>, int, string?, Dictionary<string, object>?, decimal, int?, decimal?, ToolChoice?, List<Tool>?, List<string>?, List<TextContent>?)
+  nameWithType.vb: StreamMessageRequest.New(String, List(Of Message), Integer, String, Dictionary(Of String, Object), Decimal, Integer?, Decimal?, ToolChoice, List(Of Tool), List(Of String), List(Of TextContent))
 - uid: AnthropicClient.Models.StreamMessageRequest.#ctor*
   name: StreamMessageRequest
   href: api/AnthropicClient.Models.StreamMessageRequest.html#AnthropicClient_Models_StreamMessageRequest__ctor_
@@ -2317,6 +2449,15 @@ references:
   fullName.vb: AnthropicClient.Models.TextContent.New(String)
   nameWithType: TextContent.TextContent(string)
   nameWithType.vb: TextContent.New(String)
+- uid: AnthropicClient.Models.TextContent.#ctor(System.String,AnthropicClient.Models.CacheControl)
+  name: TextContent(string, CacheControl)
+  href: api/AnthropicClient.Models.TextContent.html#AnthropicClient_Models_TextContent__ctor_System_String_AnthropicClient_Models_CacheControl_
+  commentId: M:AnthropicClient.Models.TextContent.#ctor(System.String,AnthropicClient.Models.CacheControl)
+  name.vb: New(String, CacheControl)
+  fullName: AnthropicClient.Models.TextContent.TextContent(string, AnthropicClient.Models.CacheControl)
+  fullName.vb: AnthropicClient.Models.TextContent.New(String, AnthropicClient.Models.CacheControl)
+  nameWithType: TextContent.TextContent(string, CacheControl)
+  nameWithType.vb: TextContent.New(String, CacheControl)
 - uid: AnthropicClient.Models.TextContent.#ctor*
   name: TextContent
   href: api/AnthropicClient.Models.TextContent.html#AnthropicClient_Models_TextContent__ctor_
@@ -2384,6 +2525,19 @@ references:
   commentId: T:AnthropicClient.Models.Tool
   fullName: AnthropicClient.Models.Tool
   nameWithType: Tool
+- uid: AnthropicClient.Models.Tool.CacheControl
+  name: CacheControl
+  href: api/AnthropicClient.Models.Tool.html#AnthropicClient_Models_Tool_CacheControl
+  commentId: P:AnthropicClient.Models.Tool.CacheControl
+  fullName: AnthropicClient.Models.Tool.CacheControl
+  nameWithType: Tool.CacheControl
+- uid: AnthropicClient.Models.Tool.CacheControl*
+  name: CacheControl
+  href: api/AnthropicClient.Models.Tool.html#AnthropicClient_Models_Tool_CacheControl_
+  commentId: Overload:AnthropicClient.Models.Tool.CacheControl
+  isSpec: "True"
+  fullName: AnthropicClient.Models.Tool.CacheControl
+  nameWithType: Tool.CacheControl
 - uid: AnthropicClient.Models.Tool.CreateFromClass*
   name: CreateFromClass
   href: api/AnthropicClient.Models.Tool.html#AnthropicClient_Models_Tool_CreateFromClass_
@@ -2391,15 +2545,15 @@ references:
   isSpec: "True"
   fullName: AnthropicClient.Models.Tool.CreateFromClass
   nameWithType: Tool.CreateFromClass
-- uid: AnthropicClient.Models.Tool.CreateFromClass``1
-  name: CreateFromClass<T>()
-  href: api/AnthropicClient.Models.Tool.html#AnthropicClient_Models_Tool_CreateFromClass__1
-  commentId: M:AnthropicClient.Models.Tool.CreateFromClass``1
-  name.vb: CreateFromClass(Of T)()
-  fullName: AnthropicClient.Models.Tool.CreateFromClass<T>()
-  fullName.vb: AnthropicClient.Models.Tool.CreateFromClass(Of T)()
-  nameWithType: Tool.CreateFromClass<T>()
-  nameWithType.vb: Tool.CreateFromClass(Of T)()
+- uid: AnthropicClient.Models.Tool.CreateFromClass``1(AnthropicClient.Models.CacheControl)
+  name: CreateFromClass<T>(CacheControl?)
+  href: api/AnthropicClient.Models.Tool.html#AnthropicClient_Models_Tool_CreateFromClass__1_AnthropicClient_Models_CacheControl_
+  commentId: M:AnthropicClient.Models.Tool.CreateFromClass``1(AnthropicClient.Models.CacheControl)
+  name.vb: CreateFromClass(Of T)(CacheControl)
+  fullName: AnthropicClient.Models.Tool.CreateFromClass<T>(AnthropicClient.Models.CacheControl?)
+  fullName.vb: AnthropicClient.Models.Tool.CreateFromClass(Of T)(AnthropicClient.Models.CacheControl)
+  nameWithType: Tool.CreateFromClass<T>(CacheControl?)
+  nameWithType.vb: Tool.CreateFromClass(Of T)(CacheControl)
 - uid: AnthropicClient.Models.Tool.CreateFromFunction*
   name: CreateFromFunction
   href: api/AnthropicClient.Models.Tool.html#AnthropicClient_Models_Tool_CreateFromFunction_
@@ -2407,42 +2561,42 @@ references:
   isSpec: "True"
   fullName: AnthropicClient.Models.Tool.CreateFromFunction
   nameWithType: Tool.CreateFromFunction
-- uid: AnthropicClient.Models.Tool.CreateFromFunction``1(System.String,System.String,System.Func{``0})
-  name: CreateFromFunction<TResult>(string, string, Func<TResult>)
-  href: api/AnthropicClient.Models.Tool.html#AnthropicClient_Models_Tool_CreateFromFunction__1_System_String_System_String_System_Func___0__
-  commentId: M:AnthropicClient.Models.Tool.CreateFromFunction``1(System.String,System.String,System.Func{``0})
-  name.vb: CreateFromFunction(Of TResult)(String, String, Func(Of TResult))
-  fullName: AnthropicClient.Models.Tool.CreateFromFunction<TResult>(string, string, System.Func<TResult>)
-  fullName.vb: AnthropicClient.Models.Tool.CreateFromFunction(Of TResult)(String, String, System.Func(Of TResult))
-  nameWithType: Tool.CreateFromFunction<TResult>(string, string, Func<TResult>)
-  nameWithType.vb: Tool.CreateFromFunction(Of TResult)(String, String, Func(Of TResult))
-- uid: AnthropicClient.Models.Tool.CreateFromFunction``2(System.String,System.String,System.Func{``0,``1})
-  name: CreateFromFunction<T1, TResult>(string, string, Func<T1, TResult>)
-  href: api/AnthropicClient.Models.Tool.html#AnthropicClient_Models_Tool_CreateFromFunction__2_System_String_System_String_System_Func___0___1__
-  commentId: M:AnthropicClient.Models.Tool.CreateFromFunction``2(System.String,System.String,System.Func{``0,``1})
-  name.vb: CreateFromFunction(Of T1, TResult)(String, String, Func(Of T1, TResult))
-  fullName: AnthropicClient.Models.Tool.CreateFromFunction<T1, TResult>(string, string, System.Func<T1, TResult>)
-  fullName.vb: AnthropicClient.Models.Tool.CreateFromFunction(Of T1, TResult)(String, String, System.Func(Of T1, TResult))
-  nameWithType: Tool.CreateFromFunction<T1, TResult>(string, string, Func<T1, TResult>)
-  nameWithType.vb: Tool.CreateFromFunction(Of T1, TResult)(String, String, Func(Of T1, TResult))
-- uid: AnthropicClient.Models.Tool.CreateFromFunction``3(System.String,System.String,System.Func{``0,``1,``2})
-  name: CreateFromFunction<T1, T2, TResult>(string, string, Func<T1, T2, TResult>)
-  href: api/AnthropicClient.Models.Tool.html#AnthropicClient_Models_Tool_CreateFromFunction__3_System_String_System_String_System_Func___0___1___2__
-  commentId: M:AnthropicClient.Models.Tool.CreateFromFunction``3(System.String,System.String,System.Func{``0,``1,``2})
-  name.vb: CreateFromFunction(Of T1, T2, TResult)(String, String, Func(Of T1, T2, TResult))
-  fullName: AnthropicClient.Models.Tool.CreateFromFunction<T1, T2, TResult>(string, string, System.Func<T1, T2, TResult>)
-  fullName.vb: AnthropicClient.Models.Tool.CreateFromFunction(Of T1, T2, TResult)(String, String, System.Func(Of T1, T2, TResult))
-  nameWithType: Tool.CreateFromFunction<T1, T2, TResult>(string, string, Func<T1, T2, TResult>)
-  nameWithType.vb: Tool.CreateFromFunction(Of T1, T2, TResult)(String, String, Func(Of T1, T2, TResult))
-- uid: AnthropicClient.Models.Tool.CreateFromInstanceMethod(System.String,System.String,System.Object,System.String)
-  name: CreateFromInstanceMethod(string, string, object, string)
-  href: api/AnthropicClient.Models.Tool.html#AnthropicClient_Models_Tool_CreateFromInstanceMethod_System_String_System_String_System_Object_System_String_
-  commentId: M:AnthropicClient.Models.Tool.CreateFromInstanceMethod(System.String,System.String,System.Object,System.String)
-  name.vb: CreateFromInstanceMethod(String, String, Object, String)
-  fullName: AnthropicClient.Models.Tool.CreateFromInstanceMethod(string, string, object, string)
-  fullName.vb: AnthropicClient.Models.Tool.CreateFromInstanceMethod(String, String, Object, String)
-  nameWithType: Tool.CreateFromInstanceMethod(string, string, object, string)
-  nameWithType.vb: Tool.CreateFromInstanceMethod(String, String, Object, String)
+- uid: AnthropicClient.Models.Tool.CreateFromFunction``1(System.String,System.String,System.Func{``0},AnthropicClient.Models.CacheControl)
+  name: CreateFromFunction<TResult>(string, string, Func<TResult>, CacheControl?)
+  href: api/AnthropicClient.Models.Tool.html#AnthropicClient_Models_Tool_CreateFromFunction__1_System_String_System_String_System_Func___0__AnthropicClient_Models_CacheControl_
+  commentId: M:AnthropicClient.Models.Tool.CreateFromFunction``1(System.String,System.String,System.Func{``0},AnthropicClient.Models.CacheControl)
+  name.vb: CreateFromFunction(Of TResult)(String, String, Func(Of TResult), CacheControl)
+  fullName: AnthropicClient.Models.Tool.CreateFromFunction<TResult>(string, string, System.Func<TResult>, AnthropicClient.Models.CacheControl?)
+  fullName.vb: AnthropicClient.Models.Tool.CreateFromFunction(Of TResult)(String, String, System.Func(Of TResult), AnthropicClient.Models.CacheControl)
+  nameWithType: Tool.CreateFromFunction<TResult>(string, string, Func<TResult>, CacheControl?)
+  nameWithType.vb: Tool.CreateFromFunction(Of TResult)(String, String, Func(Of TResult), CacheControl)
+- uid: AnthropicClient.Models.Tool.CreateFromFunction``2(System.String,System.String,System.Func{``0,``1},AnthropicClient.Models.CacheControl)
+  name: CreateFromFunction<T1, TResult>(string, string, Func<T1, TResult>, CacheControl?)
+  href: api/AnthropicClient.Models.Tool.html#AnthropicClient_Models_Tool_CreateFromFunction__2_System_String_System_String_System_Func___0___1__AnthropicClient_Models_CacheControl_
+  commentId: M:AnthropicClient.Models.Tool.CreateFromFunction``2(System.String,System.String,System.Func{``0,``1},AnthropicClient.Models.CacheControl)
+  name.vb: CreateFromFunction(Of T1, TResult)(String, String, Func(Of T1, TResult), CacheControl)
+  fullName: AnthropicClient.Models.Tool.CreateFromFunction<T1, TResult>(string, string, System.Func<T1, TResult>, AnthropicClient.Models.CacheControl?)
+  fullName.vb: AnthropicClient.Models.Tool.CreateFromFunction(Of T1, TResult)(String, String, System.Func(Of T1, TResult), AnthropicClient.Models.CacheControl)
+  nameWithType: Tool.CreateFromFunction<T1, TResult>(string, string, Func<T1, TResult>, CacheControl?)
+  nameWithType.vb: Tool.CreateFromFunction(Of T1, TResult)(String, String, Func(Of T1, TResult), CacheControl)
+- uid: AnthropicClient.Models.Tool.CreateFromFunction``3(System.String,System.String,System.Func{``0,``1,``2},AnthropicClient.Models.CacheControl)
+  name: CreateFromFunction<T1, T2, TResult>(string, string, Func<T1, T2, TResult>, CacheControl?)
+  href: api/AnthropicClient.Models.Tool.html#AnthropicClient_Models_Tool_CreateFromFunction__3_System_String_System_String_System_Func___0___1___2__AnthropicClient_Models_CacheControl_
+  commentId: M:AnthropicClient.Models.Tool.CreateFromFunction``3(System.String,System.String,System.Func{``0,``1,``2},AnthropicClient.Models.CacheControl)
+  name.vb: CreateFromFunction(Of T1, T2, TResult)(String, String, Func(Of T1, T2, TResult), CacheControl)
+  fullName: AnthropicClient.Models.Tool.CreateFromFunction<T1, T2, TResult>(string, string, System.Func<T1, T2, TResult>, AnthropicClient.Models.CacheControl?)
+  fullName.vb: AnthropicClient.Models.Tool.CreateFromFunction(Of T1, T2, TResult)(String, String, System.Func(Of T1, T2, TResult), AnthropicClient.Models.CacheControl)
+  nameWithType: Tool.CreateFromFunction<T1, T2, TResult>(string, string, Func<T1, T2, TResult>, CacheControl?)
+  nameWithType.vb: Tool.CreateFromFunction(Of T1, T2, TResult)(String, String, Func(Of T1, T2, TResult), CacheControl)
+- uid: AnthropicClient.Models.Tool.CreateFromInstanceMethod(System.String,System.String,System.Object,System.String,AnthropicClient.Models.CacheControl)
+  name: CreateFromInstanceMethod(string, string, object, string, CacheControl?)
+  href: api/AnthropicClient.Models.Tool.html#AnthropicClient_Models_Tool_CreateFromInstanceMethod_System_String_System_String_System_Object_System_String_AnthropicClient_Models_CacheControl_
+  commentId: M:AnthropicClient.Models.Tool.CreateFromInstanceMethod(System.String,System.String,System.Object,System.String,AnthropicClient.Models.CacheControl)
+  name.vb: CreateFromInstanceMethod(String, String, Object, String, CacheControl)
+  fullName: AnthropicClient.Models.Tool.CreateFromInstanceMethod(string, string, object, string, AnthropicClient.Models.CacheControl?)
+  fullName.vb: AnthropicClient.Models.Tool.CreateFromInstanceMethod(String, String, Object, String, AnthropicClient.Models.CacheControl)
+  nameWithType: Tool.CreateFromInstanceMethod(string, string, object, string, CacheControl?)
+  nameWithType.vb: Tool.CreateFromInstanceMethod(String, String, Object, String, CacheControl)
 - uid: AnthropicClient.Models.Tool.CreateFromInstanceMethod*
   name: CreateFromInstanceMethod
   href: api/AnthropicClient.Models.Tool.html#AnthropicClient_Models_Tool_CreateFromInstanceMethod_
@@ -2450,15 +2604,15 @@ references:
   isSpec: "True"
   fullName: AnthropicClient.Models.Tool.CreateFromInstanceMethod
   nameWithType: Tool.CreateFromInstanceMethod
-- uid: AnthropicClient.Models.Tool.CreateFromStaticMethod(System.String,System.String,System.Type,System.String)
-  name: CreateFromStaticMethod(string, string, Type, string)
-  href: api/AnthropicClient.Models.Tool.html#AnthropicClient_Models_Tool_CreateFromStaticMethod_System_String_System_String_System_Type_System_String_
-  commentId: M:AnthropicClient.Models.Tool.CreateFromStaticMethod(System.String,System.String,System.Type,System.String)
-  name.vb: CreateFromStaticMethod(String, String, Type, String)
-  fullName: AnthropicClient.Models.Tool.CreateFromStaticMethod(string, string, System.Type, string)
-  fullName.vb: AnthropicClient.Models.Tool.CreateFromStaticMethod(String, String, System.Type, String)
-  nameWithType: Tool.CreateFromStaticMethod(string, string, Type, string)
-  nameWithType.vb: Tool.CreateFromStaticMethod(String, String, Type, String)
+- uid: AnthropicClient.Models.Tool.CreateFromStaticMethod(System.String,System.String,System.Type,System.String,AnthropicClient.Models.CacheControl)
+  name: CreateFromStaticMethod(string, string, Type, string, CacheControl?)
+  href: api/AnthropicClient.Models.Tool.html#AnthropicClient_Models_Tool_CreateFromStaticMethod_System_String_System_String_System_Type_System_String_AnthropicClient_Models_CacheControl_
+  commentId: M:AnthropicClient.Models.Tool.CreateFromStaticMethod(System.String,System.String,System.Type,System.String,AnthropicClient.Models.CacheControl)
+  name.vb: CreateFromStaticMethod(String, String, Type, String, CacheControl)
+  fullName: AnthropicClient.Models.Tool.CreateFromStaticMethod(string, string, System.Type, string, AnthropicClient.Models.CacheControl?)
+  fullName.vb: AnthropicClient.Models.Tool.CreateFromStaticMethod(String, String, System.Type, String, AnthropicClient.Models.CacheControl)
+  nameWithType: Tool.CreateFromStaticMethod(string, string, Type, string, CacheControl?)
+  nameWithType.vb: Tool.CreateFromStaticMethod(String, String, Type, String, CacheControl)
 - uid: AnthropicClient.Models.Tool.CreateFromStaticMethod*
   name: CreateFromStaticMethod
   href: api/AnthropicClient.Models.Tool.html#AnthropicClient_Models_Tool_CreateFromStaticMethod_
@@ -2812,6 +2966,15 @@ references:
   fullName.vb: AnthropicClient.Models.ToolResultContent.New(String, String)
   nameWithType: ToolResultContent.ToolResultContent(string, string)
   nameWithType.vb: ToolResultContent.New(String, String)
+- uid: AnthropicClient.Models.ToolResultContent.#ctor(System.String,System.String,AnthropicClient.Models.CacheControl)
+  name: ToolResultContent(string, string, CacheControl)
+  href: api/AnthropicClient.Models.ToolResultContent.html#AnthropicClient_Models_ToolResultContent__ctor_System_String_System_String_AnthropicClient_Models_CacheControl_
+  commentId: M:AnthropicClient.Models.ToolResultContent.#ctor(System.String,System.String,AnthropicClient.Models.CacheControl)
+  name.vb: New(String, String, CacheControl)
+  fullName: AnthropicClient.Models.ToolResultContent.ToolResultContent(string, string, AnthropicClient.Models.CacheControl)
+  fullName.vb: AnthropicClient.Models.ToolResultContent.New(String, String, AnthropicClient.Models.CacheControl)
+  nameWithType: ToolResultContent.ToolResultContent(string, string, CacheControl)
+  nameWithType.vb: ToolResultContent.New(String, String, CacheControl)
 - uid: AnthropicClient.Models.ToolResultContent.#ctor*
   name: ToolResultContent
   href: api/AnthropicClient.Models.ToolResultContent.html#AnthropicClient_Models_ToolResultContent__ctor_
@@ -2918,6 +3081,32 @@ references:
   commentId: T:AnthropicClient.Models.Usage
   fullName: AnthropicClient.Models.Usage
   nameWithType: Usage
+- uid: AnthropicClient.Models.Usage.CacheCreationInputTokens
+  name: CacheCreationInputTokens
+  href: api/AnthropicClient.Models.Usage.html#AnthropicClient_Models_Usage_CacheCreationInputTokens
+  commentId: P:AnthropicClient.Models.Usage.CacheCreationInputTokens
+  fullName: AnthropicClient.Models.Usage.CacheCreationInputTokens
+  nameWithType: Usage.CacheCreationInputTokens
+- uid: AnthropicClient.Models.Usage.CacheCreationInputTokens*
+  name: CacheCreationInputTokens
+  href: api/AnthropicClient.Models.Usage.html#AnthropicClient_Models_Usage_CacheCreationInputTokens_
+  commentId: Overload:AnthropicClient.Models.Usage.CacheCreationInputTokens
+  isSpec: "True"
+  fullName: AnthropicClient.Models.Usage.CacheCreationInputTokens
+  nameWithType: Usage.CacheCreationInputTokens
+- uid: AnthropicClient.Models.Usage.CacheReadInputTokens
+  name: CacheReadInputTokens
+  href: api/AnthropicClient.Models.Usage.html#AnthropicClient_Models_Usage_CacheReadInputTokens
+  commentId: P:AnthropicClient.Models.Usage.CacheReadInputTokens
+  fullName: AnthropicClient.Models.Usage.CacheReadInputTokens
+  nameWithType: Usage.CacheReadInputTokens
+- uid: AnthropicClient.Models.Usage.CacheReadInputTokens*
+  name: CacheReadInputTokens
+  href: api/AnthropicClient.Models.Usage.html#AnthropicClient_Models_Usage_CacheReadInputTokens_
+  commentId: Overload:AnthropicClient.Models.Usage.CacheReadInputTokens
+  isSpec: "True"
+  fullName: AnthropicClient.Models.Usage.CacheReadInputTokens
+  nameWithType: Usage.CacheReadInputTokens
 - uid: AnthropicClient.Models.Usage.InputTokens
   name: InputTokens
   href: api/AnthropicClient.Models.Usage.html#AnthropicClient_Models_Usage_InputTokens

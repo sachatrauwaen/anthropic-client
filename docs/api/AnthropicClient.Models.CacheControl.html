@@ -2,11 +2,11 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Class TextContent | AnthropicClient </title>
+      <title>Class CacheControl | AnthropicClient </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Class TextContent | AnthropicClient ">
+      <meta name="title" content="Class CacheControl | AnthropicClient ">
       
-      <meta name="description" content="Represents text content that is part of a message.">
+      <meta name="description" content="Represents the cache control to be used for content.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css">
@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/StevanFreeborn/anthropic-client/new/main/apiSpec/new?filename=AnthropicClient_Models_TextContent.md&amp;value=---%0Auid%3A%20AnthropicClient.Models.TextContent%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/StevanFreeborn/anthropic-client/new/main/apiSpec/new?filename=AnthropicClient_Models_CacheControl.md&amp;value=---%0Auid%3A%20AnthropicClient.Models.CacheControl%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -84,12 +84,12 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="AnthropicClient.Models.TextContent">
+        <article data-uid="AnthropicClient.Models.CacheControl">
 
 
 
-  <h1 id="AnthropicClient_Models_TextContent" data-uid="AnthropicClient.Models.TextContent" class="text-break">
-Class TextContent  <a class="header-action link-secondary" title="View source" href="https://github.com/StevanFreeborn/anthropic-client/blob/main/src/AnthropicClient/Models/TextContent.cs/#L10"><i class="bi bi-code-slash"></i></a>
+  <h1 id="AnthropicClient_Models_CacheControl" data-uid="AnthropicClient.Models.CacheControl" class="text-break">
+Class CacheControl  <a class="header-action link-secondary" title="View source" href="https://github.com/StevanFreeborn/anthropic-client/blob/main/src/AnthropicClient/Models/CacheControl.cs/#L8"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -97,12 +97,12 @@ Class TextContent  <a class="header-action link-secondary" title="View source" h
   <dl><dt>Assembly</dt><dd>AnthropicClient.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>Represents text content that is part of a message.</p>
+  <div class="markdown summary"><p>Represents the cache control to be used for content.</p>
 </div>
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class TextContent : Content</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class CacheControl</code></pre>
   </div>
 
 
@@ -112,22 +112,21 @@ Class TextContent  <a class="header-action link-secondary" title="View source" h
     <dt>Inheritance</dt>
     <dd>
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
-      <div><a class="xref" href="AnthropicClient.Models.Content.html">Content</a></div>
-      <div><span class="xref">TextContent</span></div>
+      <div><span class="xref">CacheControl</span></div>
     </dd>
   </dl>
 
 
+  <dl class="typelist derived">
+    <dt>Derived</dt>
+    <dd>
+      <div><a class="xref" href="AnthropicClient.Models.EphemeralCacheControl.html">EphemeralCacheControl</a></div>
+    </dd>
+  </dl>
 
   <dl class="typelist inheritedMembers">
     <dt>Inherited Members</dt>
     <dd>
-    <div>
-      <a class="xref" href="AnthropicClient.Models.Content.html#AnthropicClient_Models_Content_Type">Content.Type</a>
-    </div>
-    <div>
-      <a class="xref" href="AnthropicClient.Models.Content.html#AnthropicClient_Models_Content_CacheControl">Content.CacheControl</a>
-    </div>
     <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
@@ -160,25 +159,25 @@ Class TextContent  <a class="header-action link-secondary" title="View source" h
 </h2>
 
 
-  <a id="AnthropicClient_Models_TextContent__ctor_" data-uid="AnthropicClient.Models.TextContent.#ctor*"></a>
+  <a id="AnthropicClient_Models_CacheControl__ctor_" data-uid="AnthropicClient.Models.CacheControl.#ctor*"></a>
 
-  <h3 id="AnthropicClient_Models_TextContent__ctor_System_String_" data-uid="AnthropicClient.Models.TextContent.#ctor(System.String)">
-  TextContent(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/StevanFreeborn/anthropic-client/blob/main/src/AnthropicClient/Models/TextContent.cs/#L33"><i class="bi bi-code-slash"></i></a>
+  <h3 id="AnthropicClient_Models_CacheControl__ctor_System_String_" data-uid="AnthropicClient.Models.CacheControl.#ctor(System.String)">
+  CacheControl(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/StevanFreeborn/anthropic-client/blob/main/src/AnthropicClient/Models/CacheControl.cs/#L21"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="AnthropicClient.Models.TextContent.html">TextContent</a> class.</p>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="AnthropicClient.Models.CacheControl.html">CacheControl</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TextContent(string text)</code></pre>
+    <pre><code class="lang-csharp hljs">protected CacheControl(string type)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
-    <dt><code>text</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd><p>The text of the content.</p>
+    <dt><code>type</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The type of the cache control.</p>
 </dd>
   </dl>
 
@@ -192,50 +191,8 @@ Class TextContent  <a class="header-action link-secondary" title="View source" h
 
   <h4 class="section">Exceptions</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentnullexception">ArgumentNullException</a></dt>
-    <dd><p>Thrown when the text is null.</p>
-</dd>
-  </dl>
-
-
-
-  <a id="AnthropicClient_Models_TextContent__ctor_" data-uid="AnthropicClient.Models.TextContent.#ctor*"></a>
-
-  <h3 id="AnthropicClient_Models_TextContent__ctor_System_String_AnthropicClient_Models_CacheControl_" data-uid="AnthropicClient.Models.TextContent.#ctor(System.String,AnthropicClient.Models.CacheControl)">
-  TextContent(string, CacheControl)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/StevanFreeborn/anthropic-client/blob/main/src/AnthropicClient/Models/TextContent.cs/#L47"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="AnthropicClient.Models.TextContent.html">TextContent</a> class.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TextContent(string text, CacheControl cacheControl)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>text</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd><p>The text of the content.</p>
-</dd>
-    <dt><code>cacheControl</code> <a class="xref" href="AnthropicClient.Models.CacheControl.html">CacheControl</a></dt>
-    <dd><p>The cache control to be used for the content.</p>
-</dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-  <h4 class="section">Exceptions</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentnullexception">ArgumentNullException</a></dt>
-    <dd><p>Thrown when the text or cache control is null.</p>
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></dt>
+    <dd><p>Thrown when the type is null or whitespace.</p>
 </dd>
   </dl>
 
@@ -245,19 +202,19 @@ Class TextContent  <a class="header-action link-secondary" title="View source" h
 </h2>
 
 
-  <a id="AnthropicClient_Models_TextContent_Text_" data-uid="AnthropicClient.Models.TextContent.Text*"></a>
+  <a id="AnthropicClient_Models_CacheControl_Type_" data-uid="AnthropicClient.Models.CacheControl.Type*"></a>
 
-  <h3 id="AnthropicClient_Models_TextContent_Text" data-uid="AnthropicClient.Models.TextContent.Text">
-  Text
-  <a class="header-action link-secondary" title="View source" href="https://github.com/StevanFreeborn/anthropic-client/blob/main/src/AnthropicClient/Models/TextContent.cs/#L15"><i class="bi bi-code-slash"></i></a>
+  <h3 id="AnthropicClient_Models_CacheControl_Type" data-uid="AnthropicClient.Models.CacheControl.Type">
+  Type
+  <a class="header-action link-secondary" title="View source" href="https://github.com/StevanFreeborn/anthropic-client/blob/main/src/AnthropicClient/Models/CacheControl.cs/#L13"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Gets the text of the content.</p>
+  <div class="markdown level1 summary"><p>Gets the type of the cache control.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string Text { get; init; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string Type { get; init; }</code></pre>
   </div>
 
 
@@ -281,7 +238,7 @@ Class TextContent  <a class="header-action link-secondary" title="View source" h
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/StevanFreeborn/anthropic-client/blob/main/src/AnthropicClient/Models/TextContent.cs/#L10" class="edit-link">Edit this page</a>
+          <a href="https://github.com/StevanFreeborn/anthropic-client/blob/main/src/AnthropicClient/Models/CacheControl.cs/#L8" class="edit-link">Edit this page</a>
         </div>
 
 
