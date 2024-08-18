@@ -323,6 +323,137 @@ public class MessageRequestTests : SerializationTest
   }
 
   [Fact]
+  public void JsonSerialization_WhenSerializedAndSystemMessagesAndSystemAreNull_ItShouldNotHaveSystemProperty()
+  {
+    var messageRequest = new MessageRequest(
+      model: AnthropicModels.Claude3Haiku,
+      messages: [
+        new()
+        {
+          Role = MessageRole.User,
+          Content = [new TextContent("Hello!")]
+        }
+      ]
+    );
+
+    var expected = @"{
+      ""model"": ""claude-3-haiku-20240307"",
+      ""messages"": [
+        {
+          ""role"": ""user"",
+          ""content"": [
+            {
+              ""text"": ""Hello!"",
+              ""type"": ""text""
+            }
+          ]
+        }
+      ],
+      ""max_tokens"": 1024,
+      ""stop_sequences"": [],
+      ""temperature"": 0.0,
+      ""stream"": false
+    }";
+
+    var actual = Serialize(messageRequest);
+
+    JsonAssert.Equal(expected, actual);
+  }
+
+  [Fact]
+  public void JsonSerialization_WhenSerializedAndSystemMessagesAreProvided_ItShouldUseSystemMessagesForHaveSystemProperty()
+  {
+    var messageRequest = new MessageRequest(
+      model: AnthropicModels.Claude3Haiku,
+      messages: [
+        new()
+        {
+          Role = MessageRole.User,
+          Content = [new TextContent("Hello!")]
+        }
+      ],
+      systemMessages: [
+        new TextContent("You are a helpful assistant.")
+      ],
+      system: "test-system"
+    );
+
+    var expected = @"{
+      ""model"": ""claude-3-haiku-20240307"",
+      ""system"": [
+        {
+          ""text"": ""You are a helpful assistant."",
+          ""type"": ""text""
+        }
+      ],
+      ""messages"": [
+        {
+          ""role"": ""user"",
+          ""content"": [
+            {
+              ""text"": ""Hello!"",
+              ""type"": ""text""
+            }
+          ]
+        }
+      ],
+      ""max_tokens"": 1024,
+      ""stop_sequences"": [],
+      ""temperature"": 0.0,
+      ""stream"": false
+    }";
+
+    var actual = Serialize(messageRequest);
+
+    JsonAssert.Equal(expected, actual);
+  }
+
+    [Fact]
+  public void JsonSerialization_WhenSerializedAndSystemMessageIsProvided_ItShouldUseSystemMessageForHaveSystemProperty()
+  {
+    var messageRequest = new MessageRequest(
+      model: AnthropicModels.Claude3Haiku,
+      messages: [
+        new()
+        {
+          Role = MessageRole.User,
+          Content = [new TextContent("Hello!")]
+        }
+      ],
+      system: "test-system"
+    );
+
+    var expected = @"{
+      ""model"": ""claude-3-haiku-20240307"",
+      ""system"": [
+        {
+          ""text"": ""test-system"",
+          ""type"": ""text""
+        }
+      ],
+      ""messages"": [
+        {
+          ""role"": ""user"",
+          ""content"": [
+            {
+              ""text"": ""Hello!"",
+              ""type"": ""text""
+            }
+          ]
+        }
+      ],
+      ""max_tokens"": 1024,
+      ""stop_sequences"": [],
+      ""temperature"": 0.0,
+      ""stream"": false
+    }";
+
+    var actual = Serialize(messageRequest);
+
+    JsonAssert.Equal(expected, actual);
+  }
+
+  [Fact]
   public void JsonDeserialization_WhenDeserialized_ItShouldHaveExpectedShape()
   {
     var messageRequest = Deserialize<MessageRequest>(_testJson);
