@@ -70,6 +70,17 @@ public class ToolTests : SerializationTest
     tool.Name.Should().HaveLength(64);
   }
 
+  [Fact]
+  public void Constructor_WhenCalledAndGivenCacheControl_ItShouldInitializeCacheControl()
+  {
+    var method = () => true;
+    var function = new AnthropicFunction(method.Method);
+    var cacheControl = new EphemeralCacheControl();
+    var tool = new Tool("name", "description", function, cacheControl);
+
+    tool.CacheControl.Should().BeSameAs(cacheControl);
+  }
+
   [Theory]
   [InlineData(typeof(TestClass), null)]
   [InlineData(typeof(TestClass), "")]
@@ -117,6 +128,29 @@ public class ToolTests : SerializationTest
       expectedSchema,
       t => t.IgnoringCyclicReferences()
     );
+  }
+
+  [Fact]
+  public void CreateFromStaticMethod_WhenCalledWithCacheControl_ItShouldReturnTool()
+  {
+    var cacheControl = new EphemeralCacheControl();
+    var tool = Tool.CreateFromStaticMethod("test name", "description", typeof(TestClass), nameof(TestClass.TestStaticMethod), cacheControl);
+
+    var expectedSchema = new JsonObject()
+    {
+      ["type"] = "object",
+    };
+
+    tool.Name.Should().Be("test_name");
+    tool.DisplayName.Should().Be("test name");
+    tool.Description.Should().Be("description");
+    tool.Function.Method.Name.Should().Be(nameof(TestClass.TestStaticMethod));
+    tool.Function.Instance.Should().BeNull();
+    tool.InputSchema.Should().BeEquivalentTo(
+      expectedSchema,
+      t => t.IgnoringCyclicReferences()
+    );
+    tool.CacheControl.Should().BeSameAs(cacheControl);
   }
 
   [Theory]
@@ -178,6 +212,30 @@ public class ToolTests : SerializationTest
   }
 
   [Fact]
+  public void CreateFromInstanceMethod_WhenCalledWithCacheControl_ItShouldReturnTool()
+  {
+    var instance = new TestClass();
+    var cacheControl = new EphemeralCacheControl();
+    var tool = Tool.CreateFromInstanceMethod("test name", "description", instance, nameof(instance.TestInstanceMethod), cacheControl);
+
+    var expectedSchema = new JsonObject()
+    {
+      ["type"] = "object",
+    };
+
+    tool.Name.Should().Be("test_name");
+    tool.DisplayName.Should().Be("test name");
+    tool.Description.Should().Be("description");
+    tool.Function.Method.Name.Should().Be(nameof(TestClass.TestInstanceMethod));
+    tool.Function.Instance.Should().Be(instance);
+    tool.InputSchema.Should().BeEquivalentTo(
+      expectedSchema,
+      t => t.IgnoringCyclicReferences()
+    );
+    tool.CacheControl.Should().BeSameAs(cacheControl);
+  }
+
+  [Fact]
   public void CreateFromParameterlessFunction_WhenGivenNullFunction_ItShouldThrowArgumentNullException()
   {
     var action = () => Tool.CreateFromFunction<string>("name", "description", null!);
@@ -204,6 +262,29 @@ public class ToolTests : SerializationTest
       expectedSchema,
       t => t.IgnoringCyclicReferences()
     );
+  }
+
+  [Fact]
+  public void CreateFromParameterlessFunction_WhenCalledWithCacheControl_ItShouldReturnTool()
+  {
+    var func = () => true;
+    var cacheControl = new EphemeralCacheControl();
+    var tool = Tool.CreateFromFunction("test name", "description", func, cacheControl);
+
+    var expectedSchema = new JsonObject()
+    {
+      ["type"] = "object",
+    };
+
+    tool.Name.Should().Be("test_name");
+    tool.DisplayName.Should().Be("test name");
+    tool.Description.Should().Be("description");
+    tool.Function.Method.Should().BeSameAs(func.Method);
+    tool.InputSchema.Should().BeEquivalentTo(
+      expectedSchema,
+      t => t.IgnoringCyclicReferences()
+    );
+    tool.CacheControl.Should().BeSameAs(cacheControl);
   }
 
   [Fact]
@@ -244,6 +325,40 @@ public class ToolTests : SerializationTest
       expectedSchema,
       t => t.IgnoringCyclicReferences()
     );
+  }
+
+  [Fact]
+  public void CreateFromFunctionWithParameter_WhenCalledWithCacheControl_ItShouldReturnTool()
+  {
+    var func = (string s) => true;
+    var cacheControl = new EphemeralCacheControl();
+    var tool = Tool.CreateFromFunction("test name", "description", func, cacheControl);
+
+    var expectedSchema = new JsonObject()
+    {
+      ["type"] = "object",
+      ["properties"] = new JsonObject()
+      {
+        ["s"] = new JsonObject()
+        {
+          ["type"] = "string",
+        },
+      },
+      ["required"] = new JsonArray()
+      {
+        "s",
+      },
+    };
+
+    tool.Name.Should().Be("test_name");
+    tool.DisplayName.Should().Be("test name");
+    tool.Description.Should().Be("description");
+    tool.Function.Method.Should().BeSameAs(func.Method);
+    tool.InputSchema.Should().BeEquivalentTo(
+      expectedSchema,
+      t => t.IgnoringCyclicReferences()
+    );
+    tool.CacheControl.Should().BeSameAs(cacheControl);
   }
 
   [Fact]
@@ -305,6 +420,29 @@ public class ToolTests : SerializationTest
       expectedSchema,
       t => t.IgnoringCyclicReferences()
     );
+  }
+
+  [Fact]
+  public void CreateFromClass_WhenCalledWithProperToolAndCacheControl_ItShouldReturnTool()
+  {
+    var cacheControl = new EphemeralCacheControl();
+    var tool = Tool.CreateFromClass<ProperTool>(cacheControl);
+
+    var expectedSchema = new JsonObject()
+    {
+      ["type"] = "object",
+    };
+
+    tool.Name.Should().Be("Name");
+    tool.DisplayName.Should().Be("Name");
+    tool.Description.Should().Be("Description");
+    tool.Function.Method.Name.Should().Be(nameof(ProperTool.GetWeather));
+    tool.Function.Instance.Should().BeOfType<ProperTool>();
+    tool.InputSchema.Should().BeEquivalentTo(
+      expectedSchema,
+      t => t.IgnoringCyclicReferences()
+    );
+    tool.CacheControl.Should().BeSameAs(cacheControl);
   }
 }
 
