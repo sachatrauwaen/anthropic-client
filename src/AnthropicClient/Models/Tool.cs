@@ -182,7 +182,7 @@ public class Tool
       throw new ArgumentException($"Method '{methodName}' not found in type '{instance.GetType().FullName}'.", nameof(methodName));
     }
 
-    return new Tool(name, description, new AnthropicFunction(method, instance), null);
+    return new Tool(name, description, new AnthropicFunction(method, instance), cacheControl);
   }
 
   /// <summary>
