@@ -2,6 +2,7 @@
   "dotnet.defaultSolution": "AnthropicClient.sln",
   "cSpell.words": [
     "Browsable",
+    "haikus",
     "nameof",
     "Szalay",
     "typeof"

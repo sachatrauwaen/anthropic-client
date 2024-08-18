@@ -14,10 +14,45 @@ public abstract class BaseMessageRequest
   /// </summary>
   public string Model { get; init; } = string.Empty;
 
+  // TODO: I do not like this. I would prefer to have a single property that is a list of TextContent objects.
+  // This approach was taken to maintain compatibility with the API. As someone could be using the System property
+  // and changing it to a list of TextContent objects would break their code.
+  // However if an opportunity arises for a breaking change release, this should be changed.
+
   /// <summary>
-  /// Gets the system prompt to use for the request.
+  /// Gets the system message that will be used as the system prompt if no system messages are provided.
   /// </summary>
+  [JsonIgnore]
   public string? System { get; init; } = null;
+
+  /// <summary>
+  /// Gets the system messages to send to the model to be used as the system prompt.
+  /// </summary>
+  [JsonIgnore]
+  public List<TextContent>? SystemMessages { get; init; } = null;
+
+  /// <summary>
+  /// Gets the system prompt that will be used for the request. 
+  /// If will return the system messages if they are provided, otherwise it will return the system message.
+  /// If neither are provided, it will return null.
+  /// </summary>
+  [JsonPropertyName("system")]
+  public List<TextContent>? SystemPrompt => GetSystemPrompt();
+
+  private List<TextContent>? GetSystemPrompt()
+  {
+    if (SystemMessages is not null)
+    {
+      return SystemMessages;
+    }
+
+    if (System is not null)
+    {
+      return [new TextContent(System)];
+    }
+
+    return null;
+  }
 
   /// <summary>
   /// Gets the messages to send to the model.
@@ -81,7 +116,7 @@ public abstract class BaseMessageRequest
   /// <param name="model">The model ID to use for the request.</param>
   /// <param name="messages">The messages to send to the model.</param>
   /// <param name="maxTokens">The maximum number of tokens to generate.</param>
-  /// <param name="system">The system ID to use for the request.</param>
+  /// <param name="system">The system prompt to use for the request.</param>
   /// <param name="metadata">The metadata to include with the request.</param>
   /// <param name="temperature">The temperature to use for the request.</param>
   /// <param name="topK">The top-K value to use for the request.</param>
@@ -90,6 +125,7 @@ public abstract class BaseMessageRequest
   /// <param name="tools">The tools to use for the request.</param>
   /// <param name="stream">A value indicating whether the message should be streamed.</param>
   /// <param name="stopSequences">The prompt stop sequences.</param>
+  /// <param name="systemMessages">The system messages to use for the request.</param>
   /// <exception cref="ArgumentException">Thrown when the model ID is invalid.</exception>
   /// <exception cref="ArgumentNullException">Thrown when the model or messages is null.</exception>
   /// <exception cref="ArgumentException">Thrown when the messages contain no messages.</exception>
@@ -99,16 +135,17 @@ public abstract class BaseMessageRequest
   protected BaseMessageRequest(
     string model,
     List<Message> messages,
-    int maxTokens = 1024,
-    string? system = null,
-    Dictionary<string, object>? metadata = null,
-    decimal temperature = 0.0m,
-    int? topK = null,
-    decimal? topP = null,
-    ToolChoice? toolChoice = null,
-    List<Tool>? tools = null,
-    bool stream = false,
-    List<string>? stopSequences = null
+    int maxTokens,
+    string? system,
+    Dictionary<string, object>? metadata,
+    decimal temperature,
+    int? topK,
+    decimal? topP,
+    ToolChoice? toolChoice,
+    List<Tool>? tools,
+    bool stream,
+    List<string>? stopSequences,
+    List<TextContent>? systemMessages
   )
   {
     ArgumentValidator.ThrowIfNull(model, nameof(model));
@@ -138,6 +175,7 @@ public abstract class BaseMessageRequest
     Messages = messages;
     MaxTokens = maxTokens;
     System = system;
+    SystemMessages = systemMessages;
     Metadata = metadata;
     Temperature = temperature;
     TopK = topK;

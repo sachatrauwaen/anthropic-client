@@ -23,6 +23,26 @@ public class ToolUseContentTests : SerializationTest
   }
 
   [Fact]
+  public void CacheControl_WhenCalledToSetCacheControl_ItShouldSetCacheControl()
+  {
+    var id = Guid.NewGuid().ToString();
+    var name = "name";
+    var input = new Dictionary<string, object?> { { "name", "input" } };
+    var cacheControl = new EphemeralCacheControl();
+
+    var toolUseContent = new ToolUseContent()
+    {
+      Id = id,
+      Name = name,
+      Input = input
+    };
+
+    toolUseContent.CacheControl = cacheControl;
+
+    toolUseContent.CacheControl.Should().BeSameAs(cacheControl);
+  }
+
+  [Fact]
   public void JsonSerialization_WhenSerialized_ItShouldReturnJsonString()
   {
     var id = Guid.NewGuid().ToString();
@@ -41,6 +61,35 @@ public class ToolUseContentTests : SerializationTest
       Id = id,
       Name = name,
       Input = input
+    };
+
+    var actual = Serialize(toolUseContent);
+
+    JsonAssert.Equal(expectedJson, actual);
+  }
+
+  [Fact]
+  public void JsonSerialization_WhenSerializedWithCacheControl_ItShouldReturnJsonString()
+  {
+    var id = Guid.NewGuid().ToString();
+    var name = "name";
+    var input = new Dictionary<string, object?> { { "name", "input" } };
+    var cacheControl = new EphemeralCacheControl();
+
+    var expectedJson = @$"{{
+      ""id"": ""{id}"",
+      ""name"": ""{name}"",
+      ""input"": {{ ""name"": ""input"" }},
+      ""cache_control"": {{ ""type"": ""ephemeral"" }},
+      ""type"": ""tool_use""
+    }}";
+
+    var toolUseContent = new ToolUseContent()
+    {
+      Id = id,
+      Name = name,
+      Input = input,
+      CacheControl = cacheControl
     };
 
     var actual = Serialize(toolUseContent);

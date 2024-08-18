@@ -10,7 +10,9 @@ public class MessageDeltaEventDataTests : SerializationTest
     },
     ""usage"": {
       ""input_tokens"": 1,
-      ""output_tokens"": 1
+      ""output_tokens"": 1, 
+      ""cache_creation_input_tokens"": 1,
+      ""cache_read_input_tokens"": 1
     }
   }";
 
@@ -18,7 +20,13 @@ public class MessageDeltaEventDataTests : SerializationTest
   public void Constructor_WhenCalled_ItShouldInitializeProperties()
   {
     var expectedDelta = new MessageDelta("max_tokens", "max_tokens");
-    var expectedUsage = new Usage { InputTokens = 1, OutputTokens = 1 };
+    var expectedUsage = new Usage
+    {
+      InputTokens = 1,
+      OutputTokens = 1,
+      CacheCreationInputTokens = 1,
+      CacheReadInputTokens = 1,
+    };
 
     var messageDeltaEventData = new MessageDeltaEventData(expectedDelta, expectedUsage);
 
@@ -30,7 +38,13 @@ public class MessageDeltaEventDataTests : SerializationTest
   public void JsonSerialization_WhenSerialized_ItShouldHaveExpectedShape()
   {
     var expectedDelta = new MessageDelta("max_tokens", "max_tokens");
-    var expectedUsage = new Usage { InputTokens = 1, OutputTokens = 1 };
+    var expectedUsage = new Usage
+    {
+      InputTokens = 1,
+      OutputTokens = 1,
+      CacheCreationInputTokens = 1,
+      CacheReadInputTokens = 1,
+    };
 
     var messageDeltaEventData = new MessageDeltaEventData(expectedDelta, expectedUsage);
 
@@ -43,7 +57,13 @@ public class MessageDeltaEventDataTests : SerializationTest
   public void JsonDeserialization_WhenDeserialized_ItShouldHaveExpectedValues()
   {
     var expectedDelta = new MessageDelta("max_tokens", "max_tokens");
-    var expectedUsage = new Usage { InputTokens = 1, OutputTokens = 1 };
+    var expectedUsage = new Usage
+    {
+      InputTokens = 1,
+      OutputTokens = 1,
+      CacheCreationInputTokens = 1,
+      CacheReadInputTokens = 1,
+    };
 
     var messageDeltaEventData = Deserialize<MessageDeltaEventData>(_testJson);
 

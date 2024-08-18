@@ -11,6 +11,16 @@ public class ImageContentTests : SerializationTest
     ""type"": ""image""
   }";
 
+  private readonly string _testJsonWithCacheControl = @"{
+    ""source"": { 
+      ""media_type"": ""image/png"",
+      ""data"": ""data"",
+      ""type"": ""base64""
+    },
+    ""cache_control"": { ""type"": ""ephemeral"" },
+    ""type"": ""image""
+  }";
+
   [Fact]
   public void Constructor_WhenCalled_ItShouldInitializeSource()
   {
@@ -54,6 +64,41 @@ public class ImageContentTests : SerializationTest
   }
 
   [Fact]
+  public void Constructor_WhenCalledWithCacheControl_ItShouldInitializeSourceAndCacheControl()
+  {
+    var expectedMediaType = "image/png";
+    var expectedData = "data";
+    var cacheControl = new EphemeralCacheControl();
+
+    var result = new ImageContent(expectedMediaType, expectedData, cacheControl);
+
+    result.Source.Should().BeEquivalentTo(new ImageSource(expectedMediaType, expectedData));
+    result.CacheControl.Should().BeSameAs(cacheControl);
+  }
+
+  [Fact]
+  public void Constructor_WhenCalledWithCacheControlAndMediatTypeIsNull_ItShouldThrowArgumentNullException()
+  {
+    var expectedData = "data";
+    var cacheControl = new EphemeralCacheControl();
+
+    var action = () => new ImageContent(null!, expectedData, cacheControl);
+
+    action.Should().Throw<ArgumentNullException>();
+  }
+
+  [Fact]
+  public void Constructor_WhenCalledWithCacheControlAndDataIsNull_ItShouldThrowArgumentNullException()
+  {
+    var expectedMediaType = "image/png";
+    var cacheControl = new EphemeralCacheControl();
+
+    var action = () => new ImageContent(expectedMediaType, null!, cacheControl);
+
+    action.Should().Throw<ArgumentNullException>();
+  }
+
+  [Fact]
   public void JsonSerialization_WhenSerialized_ItShouldHaveExpectedShape()
   {
     var content = new ImageContent("image/png", "data");
@@ -61,6 +106,16 @@ public class ImageContentTests : SerializationTest
     var actual = Serialize(content);
 
     JsonAssert.Equal(_testJson, actual);
+  }
+
+  [Fact]
+  public void JsonSerialization_WhenSerializedWithCacheControl_ItShouldHaveExpectedShape()
+  {
+    var content = new ImageContent("image/png", "data", new EphemeralCacheControl());
+
+    var actual = Serialize(content);
+
+    JsonAssert.Equal(_testJsonWithCacheControl, actual);
   }
 
   [Fact]
