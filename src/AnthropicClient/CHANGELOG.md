@@ -2,6 +2,48 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="0.1.0"></a>
+## [0.1.0](https://www.github.com/StevanFreeborn/anthropic-client/releases/tag/v0.1.0) (2024-08-18)
+
+### Features
+
+* add constructor to allow setting cache control on tool result content ([a3c7e90](https://www.github.com/StevanFreeborn/anthropic-client/commit/a3c7e9073465a0db3a69927f0b8361e9b670266d))
+* add type for ephemeral cache control ([35adac9](https://www.github.com/StevanFreeborn/anthropic-client/commit/35adac9fa0f3156c07e1fc4324b8fb2c1b50acd8))
+* first take of adding caching support ([ed97ea9](https://www.github.com/StevanFreeborn/anthropic-client/commit/ed97ea95dc4a2f0bfb9fadd284aad6fed1d4b7e1))
+
+### Bug Fixes
+
+* give cache control proper json property name ([cc1d628](https://www.github.com/StevanFreeborn/anthropic-client/commit/cc1d628feb482655c0b2b1b4675f98fc47f5f584))
+* make cache control class abstract ([6431e2a](https://www.github.com/StevanFreeborn/anthropic-client/commit/6431e2a113b9a87a53c4a1ddd2c1ef49f5e3e50d))
+* make cache control setter public ([d458c9e](https://www.github.com/StevanFreeborn/anthropic-client/commit/d458c9ed23a4f575304d0c16db591c1081d6d118))
+* make sure to pass cache control to tool constructor ([539d735](https://www.github.com/StevanFreeborn/anthropic-client/commit/539d735e6b244715f1e30c67175bf8f2eb6f5729))
+* remove converter ([6600871](https://www.github.com/StevanFreeborn/anthropic-client/commit/66008717e1392f6667e2acc0d5016059adc2e491))
+* reuse validation logic in constructors ([987fbe9](https://www.github.com/StevanFreeborn/anthropic-client/commit/987fbe974236379f788df4fca2f0326901b2c094))
+* use additional constructor param with default value instead of overloaded constructor to avoid potentially breaking others code with that would then contain ambigious constructor calls. ([90e9b9f](https://www.github.com/StevanFreeborn/anthropic-client/commit/90e9b9f75eec1488277538fff5f90b817ded3b6b))
+
+### Other
+
+* Merge pull request #12 from StevanFreeborn/stevanfreeborn/tests/fix-image-test [skip ci] ([c0dec5f](https://www.github.com/StevanFreeborn/anthropic-client/commit/c0dec5f7de35977af52db86e1977cf8529e2f134))
+* Merge pull request #14 from StevanFreeborn/stevanfreeborn/feat/add-support-for-prompt-caching ([dc162aa](https://www.github.com/StevanFreeborn/anthropic-client/commit/dc162aa80beb3d2a7792b04311933002da82dcaf))
+* add method for creating client with customized http client ([eb0befe](https://www.github.com/StevanFreeborn/anthropic-client/commit/eb0befe62a1585c7fe26e0e1ff616e27b6dd52ff))
+* add test for cache control type static class ([364c910](https://www.github.com/StevanFreeborn/anthropic-client/commit/364c91080c463fcb2249dfee37745c8ff20c7586))
+* add test for serializing system property with correct expected value based on whether given system messages or just a system message. ([f6460e9](https://www.github.com/StevanFreeborn/anthropic-client/commit/f6460e99ee5195342b63b71e4e1a720eaaf4432e))
+* add test to make sure cache control can be set on tool use content objects ([e47095e](https://www.github.com/StevanFreeborn/anthropic-client/commit/e47095e03dc49d5a3954f37cc928b3eaced04779))
+* add tests for constructor using cache control ([0c160e9](https://www.github.com/StevanFreeborn/anthropic-client/commit/0c160e998a628af0f21883e592ddc8fb902f170f))
+* add tests for creating tools with cache control set ([42d6ee4](https://www.github.com/StevanFreeborn/anthropic-client/commit/42d6ee4d3443f7d8a3962a07fd5f7fc6b919e5ff))
+* add tests for ephemeral cache control model ([f2f1507](https://www.github.com/StevanFreeborn/anthropic-client/commit/f2f150791ec5ba4bced53094bafbc95e8f9ae087))
+* add tests for overloaded constructor ([0253794](https://www.github.com/StevanFreeborn/anthropic-client/commit/025379423527677d9fab77ca92a5ca4004ea1571))
+* add text greater than 2048 tokens for testing caching ([2e1c111](https://www.github.com/StevanFreeborn/anthropic-client/commit/2e1c1118c36878cedfde8fee7a645eadfa1ed418))
+* added end to end tests for cache control when caching system messages, user messages, or tools ([4524d7b](https://www.github.com/StevanFreeborn/anthropic-client/commit/4524d7be8880a3014656ccb0b6b91ec9b76c0c89))
+* documentation for v0.0.4 [skip ci] ([03ad94d](https://www.github.com/StevanFreeborn/anthropic-client/commit/03ad94d9f96035faae01c0ccba92bac985c1e832))
+* put request json in intermediate variable to make debugging better ([e04599b](https://www.github.com/StevanFreeborn/anthropic-client/commit/e04599bad9c930d8101ace78ee9c1d234f93e52e))
+* remove unused using statement ([07457c1](https://www.github.com/StevanFreeborn/anthropic-client/commit/07457c1808fc7b07bc28a5904a7dd6cfbc7053df))
+* run dotnet format ([afe70a9](https://www.github.com/StevanFreeborn/anthropic-client/commit/afe70a90125ab569e5c5b7dceeba2836807f84b3))
+* stop git from messing up image file ([051fa17](https://www.github.com/StevanFreeborn/anthropic-client/commit/051fa178aa7d464cc82db0dbcd919260a3f55368))
+* update README.md with documentation about using prompt caching with this library. ([c2fa796](https://www.github.com/StevanFreeborn/anthropic-client/commit/c2fa796bd013d55d42468980fb9d9ac98f025264))
+* update tests to account for serialization and deserialization changes with new/modified model properties to support caching ([900a7a3](https://www.github.com/StevanFreeborn/anthropic-client/commit/900a7a354941f6b5a1357cacbafb64cd8220d918))
+* whitelist word ([f1c02eb](https://www.github.com/StevanFreeborn/anthropic-client/commit/f1c02ebc8faf4804a464d27c2a5d4c663cb82015))
+
 <a name="0.0.4"></a>
 ## [0.0.4](https://www.github.com/StevanFreeborn/anthropic-client/releases/tag/v0.0.4) (2024-07-20)
 
