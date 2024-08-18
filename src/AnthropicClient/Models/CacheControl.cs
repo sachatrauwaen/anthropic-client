@@ -6,7 +6,7 @@ namespace AnthropicClient.Models;
 /// Represents the cache control to be used for content.
 /// </summary>
 public abstract class CacheControl
-{ 
+{
   /// <summary>
   /// Gets the type of the cache control.
   /// </summary>

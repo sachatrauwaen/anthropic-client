@@ -275,7 +275,7 @@ public class AnthropicApiClient : IAnthropicApiClient
   }
 
   private async Task<HttpResponseMessage> SendRequestAsync(BaseMessageRequest request)
-  { 
+  {
     var requestJson = Serialize(request);
     var requestContent = new StringContent(requestJson, Encoding.UTF8, JsonContentType);
     return await _httpClient.PostAsync(MessagesEndpoint, requestContent);

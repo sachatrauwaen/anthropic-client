@@ -44,7 +44,7 @@ public class ToolResultContent : Content
     Content = content;
   }
 
-    /// <summary>
+  /// <summary>
   /// Initializes a new instance of the <see cref="ToolResultContent"/> class.
   /// </summary>
   /// <param name="toolUseId">The tool use ID of the content.</param>

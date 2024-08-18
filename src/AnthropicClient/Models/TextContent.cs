@@ -47,7 +47,7 @@ public class TextContent : Content
   public TextContent(string text, CacheControl cacheControl) : base(ContentType.Text, cacheControl)
   {
     Validate(text);
-    
+
     Text = text;
   }
 }

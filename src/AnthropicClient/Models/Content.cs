@@ -11,7 +11,7 @@ public abstract class Content
   /// Gets the type of the content.
   /// </summary>
   public string Type { get; init; } = string.Empty;
-  
+
   /// <summary>
   /// Gets the cache control to be used for the content.
   /// </summary>

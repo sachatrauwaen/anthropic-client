@@ -408,7 +408,7 @@ public class MessageRequestTests : SerializationTest
     JsonAssert.Equal(expected, actual);
   }
 
-    [Fact]
+  [Fact]
   public void JsonSerialization_WhenSerializedAndSystemMessageIsProvided_ItShouldUseSystemMessageForHaveSystemProperty()
   {
     var messageRequest = new MessageRequest(

@@ -131,9 +131,9 @@ public class Tool
   /// <returns>The created tool as instance of <see cref="Tool"/>.</returns>
   /// <remarks>The name of the tool will be sanitized to conform to the Anthropic tool naming rules.</remarks>
   public static Tool CreateFromStaticMethod(
-    string name, 
-    string description, 
-    Type type, 
+    string name,
+    string description,
+    Type type,
     string methodName,
     CacheControl? cacheControl = null
   )
@@ -165,9 +165,9 @@ public class Tool
   /// <returns>The created tool as instance of <see cref="Tool"/>.</returns>
   /// <remarks>The name of the tool will be sanitized to conform to the Anthropic tool naming rules.</remarks>
   public static Tool CreateFromInstanceMethod(
-    string name, 
-    string description, 
-    object instance, 
+    string name,
+    string description,
+    object instance,
     string methodName,
     CacheControl? cacheControl = null
   )
@@ -197,8 +197,8 @@ public class Tool
   /// <returns>The created tool as instance of <see cref="Tool"/>.</returns>
   /// <remarks>The name of the tool will be sanitized to conform to the Anthropic tool naming rules.</remarks>
   public static Tool CreateFromFunction<TResult>(
-    string name, 
-    string description, 
+    string name,
+    string description,
     Func<TResult> func,
     CacheControl? cacheControl = null
   )
@@ -221,8 +221,8 @@ public class Tool
   /// <returns>The created tool as instance of <see cref="Tool"/>.</returns>
   /// <remarks>The name of the tool will be sanitized to conform to the Anthropic tool naming rules.</remarks>
   public static Tool CreateFromFunction<T1, TResult>(
-    string name, 
-    string description, 
+    string name,
+    string description,
     Func<T1, TResult> func,
     CacheControl? cacheControl = null
   )
@@ -246,8 +246,8 @@ public class Tool
   /// <returns>The created tool as instance of <see cref="Tool"/>.</returns>
   /// <remarks>The name of the tool will be sanitized to conform to the Anthropic tool naming rules.</remarks>
   public static Tool CreateFromFunction<T1, T2, TResult>(
-    string name, 
-    string description, 
+    string name,
+    string description,
     Func<T1, T2, TResult> func,
     CacheControl? cacheControl = null
   )

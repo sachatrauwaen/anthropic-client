@@ -109,7 +109,7 @@ public abstract class BaseMessageRequest
 
   [JsonConstructor]
   internal BaseMessageRequest() { }
-  
+
   /// <summary>
   /// Initializes a new instance of the <see cref="BaseMessageRequest"/> class.
   /// </summary>
