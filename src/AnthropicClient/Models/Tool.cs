@@ -58,6 +58,7 @@ public class Tool
   /// <summary>
   /// Gets or sets the cache control to be used for the tool.
   /// </summary>
+  [JsonPropertyName("cache_control")]
   public CacheControl? CacheControl { get; set; }
 
   /// <summary>
