@@ -127,9 +127,9 @@ var response = await client.CreateMessageAsync(new MessageRequest(
 
 if (response.IsSuccess is false)
 {
-  Console.WriteLine($"Failed to create message");
-  Console.WriteLine($"Error Type: {0}", response.Error.Error.Type);
-  Console.WriteLine($"Error Message: {0}", response.Error.Error.Message);
+  Console.WriteLine("Failed to create message");
+  Console.WriteLine("Error Type: {0}", response.Error.Error.Type);
+  Console.WriteLine("Error Message: {0}", response.Error.Error.Message);
   return;
 }
 
@@ -425,9 +425,9 @@ var response = await client.CreateMessageAsync(new MessageRequest(
 
 if (response.IsSuccess is false)
 {
-  Console.WriteLine($"Failed to create message");
-  Console.WriteLine($"Error Type: {0}", response.Error.Error.Type);
-  Console.WriteLine($"Error Message: {0}", response.Error.Error.Message);
+  Console.WriteLine("Failed to create message");
+  Console.WriteLine("Error Type: {0}", response.Error.Error.Type);
+  Console.WriteLine("Error Message: {0}", response.Error.Error.Message);
   return;
 }
 
@@ -484,9 +484,9 @@ var finalResponse = await client.CreateMessageAsync(new MessageRequest(
 
 if (finalResponse.IsSuccess is false)
 {
-  Console.WriteLine($"Failed to create message");
-  Console.WriteLine($"Error Type: {0}", finalResponse.Error.Error.Type);
-  Console.WriteLine($"Error Message: {0}", finalResponse.Error.Error.Message);
+  Console.WriteLine("Failed to create message");
+  Console.WriteLine("Error Type: {0}", finalResponse.Error.Error.Type);
+  Console.WriteLine("Error Message: {0}", finalResponse.Error.Error.Message);
   return;
 }
 
@@ -590,9 +590,9 @@ var finalResponse = await client.CreateMessageAsync(new MessageRequest(
 
 if (finalResponse.IsSuccess is false)
 {
-  Console.WriteLine($"Failed to create message");
-  Console.WriteLine($"Error Type: {0}", finalResponse.Error.Error.Type);
-  Console.WriteLine($"Error Message: {0}", finalResponse.Error.Error.Message);
+  Console.WriteLine("Failed to create message");
+  Console.WriteLine("Error Type: {0}", finalResponse.Error.Error.Type);
+  Console.WriteLine("Error Message: {0}", finalResponse.Error.Error.Message);
   return;
 }
 
@@ -634,9 +634,9 @@ var response = await client.CreateMessageAsync(new MessageRequest(
 
 if (response.IsSuccess is false)
 {
-  Console.WriteLine($"Failed to create message");
-  Console.WriteLine($"Error Type: {0}", response.Error.Error.Type);
-  Console.WriteLine($"Error Message: {0}", response.Error.Error.Message);
+  Console.WriteLine("Failed to create message");
+  Console.WriteLine("Error Type: {0}", response.Error.Error.Type);
+  Console.WriteLine("Error Message: {0}", response.Error.Error.Message);
   return;
 }
 
@@ -675,9 +675,9 @@ var response = await client.CreateMessageAsync(new MessageRequest(
 
 if (response.IsSuccess is false)
 {
-  Console.WriteLine($"Failed to create message");
-  Console.WriteLine($"Error Type: {0}", response.Error.Error.Type);
-  Console.WriteLine($"Error Message: {0}", response.Error.Error.Message);
+  Console.WriteLine("Failed to create message");
+  Console.WriteLine("Error Type: {0}", response.Error.Error.Type);
+  Console.WriteLine("Error Message: {0}", response.Error.Error.Message);
   return;
 }
 
@@ -737,9 +737,9 @@ var response = await client.CreateMessageAsync(new MessageRequest(
 
 if (response.IsSuccess is false)
 {
-  Console.WriteLine($"Failed to create message");
-  Console.WriteLine($"Error Type: {0}", response.Error.Error.Type);
-  Console.WriteLine($"Error Message: {0}", response.Error.Error.Message);
+  Console.WriteLine("Failed to create message");
+  Console.WriteLine("Error Type: {0}", response.Error.Error.Type);
+  Console.WriteLine("Error Message: {0}", response.Error.Error.Message);
   return;
 }
 
@@ -777,9 +777,9 @@ var response = await client.CreateMessageAsync(new MessageRequest(
 
 if (response.IsSuccess is false)
 {
-  Console.WriteLine($"Failed to create message");
-  Console.WriteLine($"Error Type: {0}", response.Error.Error.Type);
-  Console.WriteLine($"Error Message: {0}", response.Error.Error.Message);
+  Console.WriteLine("Failed to create message");
+  Console.WriteLine("Error Type: {0}", response.Error.Error.Type);
+  Console.WriteLine("Error Message: {0}", response.Error.Error.Message);
   return;
 }
 
@@ -828,9 +828,9 @@ var response = await client.CreateMessageAsync(new MessageRequest(
 
 if (response.IsSuccess is false)
 {
-  Console.WriteLine($"Failed to create message");
-  Console.WriteLine($"Error Type: {0}", response.Error.Error.Type);
-  Console.WriteLine($"Error Message: {0}", response.Error.Error.Message);
+  Console.WriteLine("Failed to create message");
+  Console.WriteLine("Error Type: {0}", response.Error.Error.Type);
+  Console.WriteLine("Error Message: {0}", response.Error.Error.Message);
   return;
 }
 
