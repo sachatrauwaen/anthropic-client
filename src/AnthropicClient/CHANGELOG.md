@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="0.1.1"></a>
+## [0.1.1](https://www.github.com/StevanFreeborn/anthropic-client/releases/tag/v0.1.1) (2024-11-19)
+
+### Bug Fixes
+
+* address vulnerabilities in dependencies ([24bd877](https://www.github.com/StevanFreeborn/anthropic-client/commit/24bd877c095c7e65fd1d90ad36cc263800dc54ea))
+
 <a name="0.1.0"></a>
 ## [0.1.0](https://www.github.com/StevanFreeborn/anthropic-client/releases/tag/v0.1.0) (2024-08-18)
 
