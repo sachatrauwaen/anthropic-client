@@ -8,11 +8,11 @@ public class ToolTests : SerializationTest
   [InlineData(null)]
   [InlineData("")]
   [InlineData(" ")]
-  public void Constructor_WhenGivenInvalidNameValue_ItShouldThrowArgumentException(string name)
+  public void Constructor_WhenGivenInvalidNameValue_ItShouldThrowArgumentException(string? name)
   {
     var method = () => true;
     var function = new AnthropicFunction(method.Method);
-    var action = () => new Tool(name, "description", function);
+    var action = () => new Tool(name!, "description", function);
 
     action.Should().Throw<ArgumentException>();
   }
@@ -21,11 +21,11 @@ public class ToolTests : SerializationTest
   [InlineData(null)]
   [InlineData("")]
   [InlineData(" ")]
-  public void Constructor_WhenGivenInvalidDescriptionValue_ItShouldThrowArgumentException(string description)
+  public void Constructor_WhenGivenInvalidDescriptionValue_ItShouldThrowArgumentException(string? description)
   {
     var method = () => true;
     var function = new AnthropicFunction(method.Method);
-    var action = () => new Tool("name", description, function);
+    var action = () => new Tool("name", description!, function);
 
     action.Should().Throw<ArgumentException>();
   }
@@ -86,9 +86,9 @@ public class ToolTests : SerializationTest
   [InlineData(typeof(TestClass), "")]
   [InlineData(typeof(TestClass), " ")]
   [InlineData(typeof(TestClass), "MadeUpMethod")]
-  public void CreateFromStaticMethod_WhenGivenInvalidMethodName_ItShouldThrowArgumentException(Type type, string methodName)
+  public void CreateFromStaticMethod_WhenGivenInvalidMethodName_ItShouldThrowArgumentException(Type type, string? methodName)
   {
-    var action = () => Tool.CreateFromStaticMethod("name", "description", type, methodName);
+    var action = () => Tool.CreateFromStaticMethod("name", "description", type, methodName!);
 
     action.Should().Throw<ArgumentException>();
   }
@@ -158,9 +158,9 @@ public class ToolTests : SerializationTest
   [InlineData("")]
   [InlineData(" ")]
   [InlineData("MadeUpMethod")]
-  public void CreateFromInstanceMethod_WhenGivenInvalidMethodName_ItShouldThrowArgumentException(string methodName)
+  public void CreateFromInstanceMethod_WhenGivenInvalidMethodName_ItShouldThrowArgumentException(string? methodName)
   {
-    var action = () => Tool.CreateFromInstanceMethod("name", "description", new TestClass(), methodName);
+    var action = () => Tool.CreateFromInstanceMethod("name", "description", new TestClass(), methodName!);
 
     action.Should().Throw<ArgumentException>();
   }
