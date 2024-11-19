@@ -25,7 +25,7 @@ jobs:
           git config --local user.name "Stevan Freeborn"
       - name: Run versionize
         id: versionize
-        run: versionize -i --exit-insignificant-commits --changelog-all --workingDir ./src/AnthropicClient --commit-suffix "[skip ci]"
+        run: versionize -i --exit-insignificant-commits --workingDir ./src/AnthropicClient --commit-suffix "[skip ci]"
         continue-on-error: true
       - name: Upload changelog
         if: steps.versionize.outcome == 'success'
