@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="0.2.0"></a>
+## [0.2.0](https://www.github.com/StevanFreeborn/anthropic-client/releases/tag/v0.2.0) (2024-11-21)
+
+### Features
+
+* add content type ([c4d4d8a](https://www.github.com/StevanFreeborn/anthropic-client/commit/c4d4d8a15bb690ae2b766a8f797b9e49f6965e60))
+* add model for DocumentContent and DocumentSource ([f3a7040](https://www.github.com/StevanFreeborn/anthropic-client/commit/f3a7040cb929ac55df2b8369a26bb1b1a8e29fc8))
+
 <a name="0.1.1"></a>
 ## [0.1.1](https://www.github.com/StevanFreeborn/anthropic-client/releases/tag/v0.1.1) (2024-11-19)
 
