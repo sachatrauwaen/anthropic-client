@@ -60,7 +60,7 @@ public class DocumentContentTests : SerializationTest
     var cacheControl = new EphemeralCacheControl();
 
     var result = new DocumentContent(expectedMediaType, expectedData, cacheControl);
-    
+
     result.Source.Should().BeEquivalentTo(new DocumentSource(expectedMediaType, expectedData));
     result.CacheControl.Should().BeSameAs(cacheControl);
   }

@@ -360,7 +360,7 @@ public class AnthropicApiClientTests : IntegrationTest
     ));
   }
 
-    [Fact]
+  [Fact]
   public async Task CreateMessageAsync_WhenCalledAndMessageCreatedWithDocumentContent_ItShouldReturnMessage()
   {
     _mockHttpMessageHandler
