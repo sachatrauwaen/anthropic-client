@@ -222,4 +222,81 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
     resultTwo.Value.Content.Should().NotBeNullOrEmpty();
     resultTwo.Value.Usage.CacheReadInputTokens.Should().BeGreaterThan(0);
   }
+
+  [Fact]
+  public async Task CreateMessageAsync_WhenProvidedWithPDF_ItShouldReturnResponse()
+  {
+    var pdfPath = GetTestFilePath("addendum.pdf");
+    var bytes = await File.ReadAllBytesAsync(pdfPath);
+    var base64Data = Convert.ToBase64String(bytes);
+
+    var request = new MessageRequest(
+      model: AnthropicModels.Claude35Sonnet,
+      messages: [
+        new(MessageRole.User, [new TextContent("What is the title of this paper?")]),
+        new(MessageRole.User, [new DocumentContent("application/pdf", base64Data)])
+      ]
+    );
+
+    var httpClient = new HttpClient();
+    httpClient.DefaultRequestHeaders.Add("anthropic-beta", "pdfs-2024-09-25");
+    var client = CreateClient(httpClient);
+
+    var result = await client.CreateMessageAsync(request);
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeOfType<MessageResponse>();
+    result.Value.Content.Should().NotBeNullOrEmpty();
+
+    var text = result.Value.Content.Aggregate("", (acc, content) =>
+    {
+      if (content is TextContent textContent)
+      {
+        acc += textContent.Text;
+      }
+
+      return acc;
+    });
+
+    text.Should().Contain("Model Card Addendum: Claude 3.5 Haiku and Upgraded Claude 3.5 Sonnet");
+  }
+
+  [Fact]
+  public async Task CreateMessageAsync_WhenProvidedWithPDFWithCacheControl_ItShouldUseCache()
+  {
+    var pdfPath = GetTestFilePath("addendum.pdf");
+    var bytes = await File.ReadAllBytesAsync(pdfPath);
+    var base64Data = Convert.ToBase64String(bytes);
+
+    var httpClient = new HttpClient();
+    httpClient.DefaultRequestHeaders.Add("anthropic-beta", "pdfs-2024-09-25, prompt-caching-2024-07-31");
+    var client = CreateClient(httpClient);
+
+    var request = new MessageRequest(
+      model: AnthropicModels.Claude35Sonnet,
+      messages: [
+        new(MessageRole.User, [
+          new DocumentContent("application/pdf", base64Data, new EphemeralCacheControl()),
+          new TextContent("What is the title of this paper?")
+        ]),
+      ]
+    );
+
+    var resultOne = await client.CreateMessageAsync(request);
+
+    resultOne.IsSuccess.Should().BeTrue();
+    resultOne.Value.Should().BeOfType<MessageResponse>();
+    resultOne.Value.Content.Should().NotBeNullOrEmpty();
+    resultOne.Value.Usage.Should().Match<Usage>(u => u.CacheCreationInputTokens > 0 || u.CacheReadInputTokens > 0);
+
+    request.Messages.Add(new(MessageRole.Assistant, resultOne.Value.Content));
+    request.Messages.Add(new(MessageRole.User, [new TextContent("What is the main theme of this paper?")]));
+
+    var resultTwo = await client.CreateMessageAsync(request);
+
+    resultTwo.IsSuccess.Should().BeTrue();
+    resultTwo.Value.Should().BeOfType<MessageResponse>();
+    resultTwo.Value.Content.Should().NotBeNullOrEmpty();
+    resultTwo.Value.Usage.CacheReadInputTokens.Should().BeGreaterThan(0);
+  }
 }
