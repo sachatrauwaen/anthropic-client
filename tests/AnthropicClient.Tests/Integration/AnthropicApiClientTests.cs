@@ -359,4 +359,63 @@ public class AnthropicApiClientTests : IntegrationTest
       )
     ));
   }
+
+  [Fact]
+  public async Task CreateMessageAsync_WhenCalledAndMessageCreatedWithDocumentContent_ItShouldReturnMessage()
+  {
+    _mockHttpMessageHandler
+      .WhenCreateMessageRequest()
+      .Respond(
+        HttpStatusCode.OK,
+        "application/json",
+        @"{
+            ""content"": [
+              {
+                ""text"": ""It is a PDF"",
+                ""type"": ""text""
+              }
+            ],
+            ""id"": ""msg_013Zva2CMHLNnXjNJJKqJ2EF"",
+            ""model"": ""claude-3-5-sonnet-20240620"",
+            ""role"": ""assistant"",
+            ""stop_reason"": ""end_turn"",
+            ""stop_sequence"": null,
+            ""type"": ""message"",
+            ""usage"": {
+              ""input_tokens"": 10,
+              ""output_tokens"": 25
+            }
+        }"
+      );
+
+    var request = new MessageRequest(
+      model: AnthropicModels.Claude35Sonnet,
+      messages: [
+        new(MessageRole.User, [new TextContent("What is this?")]),
+        new(MessageRole.User, [new DocumentContent("application/pdf", "data")])
+      ]
+    );
+
+    var result = await Client.CreateMessageAsync(request);
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeOfType<MessageResponse>();
+
+    var message = result.Value;
+    message.Id.Should().Be("msg_013Zva2CMHLNnXjNJJKqJ2EF");
+    message.Model.Should().Be("claude-3-5-sonnet-20240620");
+    message.Role.Should().Be("assistant");
+    message.StopReason.Should().Be("end_turn");
+    message.StopSequence.Should().BeNull();
+    message.Type.Should().Be("message");
+    message.Usage.InputTokens.Should().Be(10);
+    message.Usage.OutputTokens.Should().Be(25);
+    message.Content.Should().HaveCount(1);
+    message.ToolCall.Should().BeNull();
+
+    var textContent = message.Content[0];
+    textContent.Should().BeOfType<TextContent>();
+    textContent.As<TextContent>().Text.Should().Be("It is a PDF");
+    textContent.As<TextContent>().Type.Should().Be("text");
+  }
 }

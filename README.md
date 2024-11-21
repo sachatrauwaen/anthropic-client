@@ -847,3 +847,66 @@ foreach (var content in response.Value.Content)
   }
 }
 ```
+
+### PDF Support
+
+Anthropic has recently introduced a feature called [PDF Support](https://docs.anthropic.com/en/docs/build-with-claude/pdf-support) that allows Claude to support PDF input and understand both text and visual content within documents. . This feature is covered in depth in [Anthropic's API Documentation](https://docs.anthropic.com/en/docs/build-with-claude/pdf-support).
+
+> [!NOTE]
+> This feature is in beta and requires you to set an `anthropic-beta` header on your requests to use it.
+> The value of the header should be `pdfs-2024-09-25`.
+
+When using this library you can opt-in to PDF support by adding the required header to the `HttpClient` instance you provide to the `AnthropicApiClient` constructor.
+
+```csharp
+using AnthropicClient;
+
+var httpClient = new HttpClient();
+httpClient.DefaultRequestHeaders.Add("anthropic-beta", "pdfs-2024-09-25");
+
+var client = new AnthropicApiClient(apiKey, httpClient);
+```
+
+PDF support can be used to provide a PDF document as input to the model. This can be used to provide additional context to the model or to ask for additional information from the model. This library aims to make using PDF support convenient by allowing you to provide the PDF document you want Anthropic's models to consider for use when creating a message.
+
+#### PDF Document
+
+You can provide a PDF document by providing its base64 encoded content as a `DocumentContent` instance in the list of messages in the `MessageRequest` or `StreamMessageRequest` constructor.
+
+```csharp
+using AnthropicClient;
+using AnthropicClient.Models;
+
+var request = new MessageRequest(
+  model: AnthropicModels.Claude35Sonnet,
+  messages: [
+    new(MessageRole.User, [new TextContent("What is the title of this paper?")]),
+    new(MessageRole.User, [new DocumentContent("application/pdf", base64Data)])
+  ]
+);
+
+var httpClient = new HttpClient();
+httpClient.DefaultRequestHeaders.Add("anthropic-beta", "pdfs-2024-09-25");
+
+var client = new AnthropicApiClient(apiKey, httpClient);
+
+var response = await client.CreateMessageAsync(request);
+
+if (response.IsSuccess is false)
+{
+  Console.WriteLine("Failed to create message");
+  Console.WriteLine("Error Type: {0}", response.Error.Error.Type);
+  Console.WriteLine("Error Message: {0}", response.Error.Error.Message);
+  return;
+}
+
+foreach (var content in response.Value.Content)
+{
+  switch (content)
+  {
+    case TextContent textContent:
+      Console.WriteLine(textContent.Text);
+      break;
+  }
+}
+```

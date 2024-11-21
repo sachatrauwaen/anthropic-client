@@ -24,4 +24,9 @@ public static class ContentType
   /// Represents the tool result content type.
   /// </summary>
   public const string ToolResult = "tool_result";
+
+  /// <summary>
+  /// Represents the document content type.
+  /// </summary>
+  public const string Document = "document";
 }

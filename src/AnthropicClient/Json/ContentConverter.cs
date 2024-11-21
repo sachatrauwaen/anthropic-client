@@ -16,6 +16,7 @@ class ContentConverter : JsonConverter<Content>
     {
       ContentType.Text => JsonSerializer.Deserialize<TextContent>(root.GetRawText(), options)!,
       ContentType.Image => JsonSerializer.Deserialize<ImageContent>(root.GetRawText(), options)!,
+      ContentType.Document => JsonSerializer.Deserialize<DocumentContent>(root.GetRawText(), options)!,
       ContentType.ToolUse => JsonSerializer.Deserialize<ToolUseContent>(root.GetRawText(), options)!,
       ContentType.ToolResult => JsonSerializer.Deserialize<ToolResultContent>(root.GetRawText(), options)!,
       _ => throw new JsonException($"Unknown content type: {type}")
