@@ -994,6 +994,12 @@ references:
   commentId: T:AnthropicClient.Models.ContentType
   fullName: AnthropicClient.Models.ContentType
   nameWithType: ContentType
+- uid: AnthropicClient.Models.ContentType.Document
+  name: Document
+  href: api/AnthropicClient.Models.ContentType.html#AnthropicClient_Models_ContentType_Document
+  commentId: F:AnthropicClient.Models.ContentType.Document
+  fullName: AnthropicClient.Models.ContentType.Document
+  nameWithType: ContentType.Document
 - uid: AnthropicClient.Models.ContentType.Image
   name: Image
   href: api/AnthropicClient.Models.ContentType.html#AnthropicClient_Models_ContentType_Image
@@ -1018,6 +1024,117 @@ references:
   commentId: F:AnthropicClient.Models.ContentType.ToolUse
   fullName: AnthropicClient.Models.ContentType.ToolUse
   nameWithType: ContentType.ToolUse
+- uid: AnthropicClient.Models.DocumentContent
+  name: DocumentContent
+  href: api/AnthropicClient.Models.DocumentContent.html
+  commentId: T:AnthropicClient.Models.DocumentContent
+  fullName: AnthropicClient.Models.DocumentContent
+  nameWithType: DocumentContent
+- uid: AnthropicClient.Models.DocumentContent.#ctor(System.String,System.String)
+  name: DocumentContent(string, string)
+  href: api/AnthropicClient.Models.DocumentContent.html#AnthropicClient_Models_DocumentContent__ctor_System_String_System_String_
+  commentId: M:AnthropicClient.Models.DocumentContent.#ctor(System.String,System.String)
+  name.vb: New(String, String)
+  fullName: AnthropicClient.Models.DocumentContent.DocumentContent(string, string)
+  fullName.vb: AnthropicClient.Models.DocumentContent.New(String, String)
+  nameWithType: DocumentContent.DocumentContent(string, string)
+  nameWithType.vb: DocumentContent.New(String, String)
+- uid: AnthropicClient.Models.DocumentContent.#ctor(System.String,System.String,AnthropicClient.Models.CacheControl)
+  name: DocumentContent(string, string, CacheControl)
+  href: api/AnthropicClient.Models.DocumentContent.html#AnthropicClient_Models_DocumentContent__ctor_System_String_System_String_AnthropicClient_Models_CacheControl_
+  commentId: M:AnthropicClient.Models.DocumentContent.#ctor(System.String,System.String,AnthropicClient.Models.CacheControl)
+  name.vb: New(String, String, CacheControl)
+  fullName: AnthropicClient.Models.DocumentContent.DocumentContent(string, string, AnthropicClient.Models.CacheControl)
+  fullName.vb: AnthropicClient.Models.DocumentContent.New(String, String, AnthropicClient.Models.CacheControl)
+  nameWithType: DocumentContent.DocumentContent(string, string, CacheControl)
+  nameWithType.vb: DocumentContent.New(String, String, CacheControl)
+- uid: AnthropicClient.Models.DocumentContent.#ctor*
+  name: DocumentContent
+  href: api/AnthropicClient.Models.DocumentContent.html#AnthropicClient_Models_DocumentContent__ctor_
+  commentId: Overload:AnthropicClient.Models.DocumentContent.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: AnthropicClient.Models.DocumentContent.DocumentContent
+  fullName.vb: AnthropicClient.Models.DocumentContent.New
+  nameWithType: DocumentContent.DocumentContent
+  nameWithType.vb: DocumentContent.New
+- uid: AnthropicClient.Models.DocumentContent.Source
+  name: Source
+  href: api/AnthropicClient.Models.DocumentContent.html#AnthropicClient_Models_DocumentContent_Source
+  commentId: P:AnthropicClient.Models.DocumentContent.Source
+  fullName: AnthropicClient.Models.DocumentContent.Source
+  nameWithType: DocumentContent.Source
+- uid: AnthropicClient.Models.DocumentContent.Source*
+  name: Source
+  href: api/AnthropicClient.Models.DocumentContent.html#AnthropicClient_Models_DocumentContent_Source_
+  commentId: Overload:AnthropicClient.Models.DocumentContent.Source
+  isSpec: "True"
+  fullName: AnthropicClient.Models.DocumentContent.Source
+  nameWithType: DocumentContent.Source
+- uid: AnthropicClient.Models.DocumentSource
+  name: DocumentSource
+  href: api/AnthropicClient.Models.DocumentSource.html
+  commentId: T:AnthropicClient.Models.DocumentSource
+  fullName: AnthropicClient.Models.DocumentSource
+  nameWithType: DocumentSource
+- uid: AnthropicClient.Models.DocumentSource.#ctor(System.String,System.String)
+  name: DocumentSource(string, string)
+  href: api/AnthropicClient.Models.DocumentSource.html#AnthropicClient_Models_DocumentSource__ctor_System_String_System_String_
+  commentId: M:AnthropicClient.Models.DocumentSource.#ctor(System.String,System.String)
+  name.vb: New(String, String)
+  fullName: AnthropicClient.Models.DocumentSource.DocumentSource(string, string)
+  fullName.vb: AnthropicClient.Models.DocumentSource.New(String, String)
+  nameWithType: DocumentSource.DocumentSource(string, string)
+  nameWithType.vb: DocumentSource.New(String, String)
+- uid: AnthropicClient.Models.DocumentSource.#ctor*
+  name: DocumentSource
+  href: api/AnthropicClient.Models.DocumentSource.html#AnthropicClient_Models_DocumentSource__ctor_
+  commentId: Overload:AnthropicClient.Models.DocumentSource.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: AnthropicClient.Models.DocumentSource.DocumentSource
+  fullName.vb: AnthropicClient.Models.DocumentSource.New
+  nameWithType: DocumentSource.DocumentSource
+  nameWithType.vb: DocumentSource.New
+- uid: AnthropicClient.Models.DocumentSource.Data
+  name: Data
+  href: api/AnthropicClient.Models.DocumentSource.html#AnthropicClient_Models_DocumentSource_Data
+  commentId: P:AnthropicClient.Models.DocumentSource.Data
+  fullName: AnthropicClient.Models.DocumentSource.Data
+  nameWithType: DocumentSource.Data
+- uid: AnthropicClient.Models.DocumentSource.Data*
+  name: Data
+  href: api/AnthropicClient.Models.DocumentSource.html#AnthropicClient_Models_DocumentSource_Data_
+  commentId: Overload:AnthropicClient.Models.DocumentSource.Data
+  isSpec: "True"
+  fullName: AnthropicClient.Models.DocumentSource.Data
+  nameWithType: DocumentSource.Data
+- uid: AnthropicClient.Models.DocumentSource.MediaType
+  name: MediaType
+  href: api/AnthropicClient.Models.DocumentSource.html#AnthropicClient_Models_DocumentSource_MediaType
+  commentId: P:AnthropicClient.Models.DocumentSource.MediaType
+  fullName: AnthropicClient.Models.DocumentSource.MediaType
+  nameWithType: DocumentSource.MediaType
+- uid: AnthropicClient.Models.DocumentSource.MediaType*
+  name: MediaType
+  href: api/AnthropicClient.Models.DocumentSource.html#AnthropicClient_Models_DocumentSource_MediaType_
+  commentId: Overload:AnthropicClient.Models.DocumentSource.MediaType
+  isSpec: "True"
+  fullName: AnthropicClient.Models.DocumentSource.MediaType
+  nameWithType: DocumentSource.MediaType
+- uid: AnthropicClient.Models.DocumentSource.Type
+  name: Type
+  href: api/AnthropicClient.Models.DocumentSource.html#AnthropicClient_Models_DocumentSource_Type
+  commentId: P:AnthropicClient.Models.DocumentSource.Type
+  fullName: AnthropicClient.Models.DocumentSource.Type
+  nameWithType: DocumentSource.Type
+- uid: AnthropicClient.Models.DocumentSource.Type*
+  name: Type
+  href: api/AnthropicClient.Models.DocumentSource.html#AnthropicClient_Models_DocumentSource_Type_
+  commentId: Overload:AnthropicClient.Models.DocumentSource.Type
+  isSpec: "True"
+  fullName: AnthropicClient.Models.DocumentSource.Type
+  nameWithType: DocumentSource.Type
 - uid: AnthropicClient.Models.EphemeralCacheControl
   name: EphemeralCacheControl
   href: api/AnthropicClient.Models.EphemeralCacheControl.html

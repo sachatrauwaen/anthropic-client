@@ -222,6 +222,26 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.DocumentContent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.DocumentContent.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.DocumentSource.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.DocumentSource.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/AnthropicClient.Models.EphemeralCacheControl.yml",
       "output": {
         ".html": {

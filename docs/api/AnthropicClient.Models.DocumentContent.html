@@ -2,11 +2,11 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Class Content | AnthropicClient </title>
+      <title>Class DocumentContent | AnthropicClient </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Class Content | AnthropicClient ">
+      <meta name="title" content="Class DocumentContent | AnthropicClient ">
       
-      <meta name="description" content="Represents part of the content of a message.">
+      <meta name="description" content="Represents content from a document that is part of a message.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css">
@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/StevanFreeborn/anthropic-client/new/main/apiSpec/new?filename=AnthropicClient_Models_Content.md&amp;value=---%0Auid%3A%20AnthropicClient.Models.Content%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/StevanFreeborn/anthropic-client/new/main/apiSpec/new?filename=AnthropicClient_Models_DocumentContent.md&amp;value=---%0Auid%3A%20AnthropicClient.Models.DocumentContent%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -84,12 +84,12 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="AnthropicClient.Models.Content">
+        <article data-uid="AnthropicClient.Models.DocumentContent">
 
 
 
-  <h1 id="AnthropicClient_Models_Content" data-uid="AnthropicClient.Models.Content" class="text-break">
-Class Content  <a class="header-action link-secondary" title="View source" href="https://github.com/StevanFreeborn/anthropic-client/blob/main/src/AnthropicClient/Models/Content.cs/#L8"><i class="bi bi-code-slash"></i></a>
+  <h1 id="AnthropicClient_Models_DocumentContent" data-uid="AnthropicClient.Models.DocumentContent" class="text-break">
+Class DocumentContent  <a class="header-action link-secondary" title="View source" href="https://github.com/StevanFreeborn/anthropic-client/blob/main/src/AnthropicClient/Models/DocumentContent.cs/#L10"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -97,12 +97,12 @@ Class Content  <a class="header-action link-secondary" title="View source" href=
   <dl><dt>Assembly</dt><dd>AnthropicClient.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>Represents part of the content of a message.</p>
+  <div class="markdown summary"><p>Represents content from a document that is part of a message.</p>
 </div>
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class Content</code></pre>
+    <pre><code class="lang-csharp hljs">public class DocumentContent : Content</code></pre>
   </div>
 
 
@@ -112,25 +112,22 @@ Class Content  <a class="header-action link-secondary" title="View source" href=
     <dt>Inheritance</dt>
     <dd>
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
-      <div><span class="xref">Content</span></div>
+      <div><a class="xref" href="AnthropicClient.Models.Content.html">Content</a></div>
+      <div><span class="xref">DocumentContent</span></div>
     </dd>
   </dl>
 
 
-  <dl class="typelist derived">
-    <dt>Derived</dt>
-    <dd>
-      <div><a class="xref" href="AnthropicClient.Models.DocumentContent.html">DocumentContent</a></div>
-      <div><a class="xref" href="AnthropicClient.Models.ImageContent.html">ImageContent</a></div>
-      <div><a class="xref" href="AnthropicClient.Models.TextContent.html">TextContent</a></div>
-      <div><a class="xref" href="AnthropicClient.Models.ToolResultContent.html">ToolResultContent</a></div>
-      <div><a class="xref" href="AnthropicClient.Models.ToolUseContent.html">ToolUseContent</a></div>
-    </dd>
-  </dl>
 
   <dl class="typelist inheritedMembers">
     <dt>Inherited Members</dt>
     <dd>
+    <div>
+      <a class="xref" href="AnthropicClient.Models.Content.html#AnthropicClient_Models_Content_Type">Content.Type</a>
+    </div>
+    <div>
+      <a class="xref" href="AnthropicClient.Models.Content.html#AnthropicClient_Models_Content_CacheControl">Content.CacheControl</a>
+    </div>
     <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
@@ -163,25 +160,28 @@ Class Content  <a class="header-action link-secondary" title="View source" href=
 </h2>
 
 
-  <a id="AnthropicClient_Models_Content__ctor_" data-uid="AnthropicClient.Models.Content.#ctor*"></a>
+  <a id="AnthropicClient_Models_DocumentContent__ctor_" data-uid="AnthropicClient.Models.DocumentContent.#ctor*"></a>
 
-  <h3 id="AnthropicClient_Models_Content__ctor_System_String_" data-uid="AnthropicClient.Models.Content.#ctor(System.String)">
-  Content(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/StevanFreeborn/anthropic-client/blob/main/src/AnthropicClient/Models/Content.cs/#L31"><i class="bi bi-code-slash"></i></a>
+  <h3 id="AnthropicClient_Models_DocumentContent__ctor_System_String_System_String_" data-uid="AnthropicClient.Models.DocumentContent.#ctor(System.String,System.String)">
+  DocumentContent(string, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/StevanFreeborn/anthropic-client/blob/main/src/AnthropicClient/Models/DocumentContent.cs/#L35"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="AnthropicClient.Models.Content.html">Content</a> class.</p>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="AnthropicClient.Models.DocumentContent.html">DocumentContent</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected Content(string type)</code></pre>
+    <pre><code class="lang-csharp hljs">public DocumentContent(string mediaType, string data)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
-    <dt><code>type</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd><p>The type of the content.</p>
+    <dt><code>mediaType</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The media type of the document.</p>
+</dd>
+    <dt><code>data</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The data of the document.</p>
 </dd>
   </dl>
 
@@ -193,28 +193,37 @@ Class Content  <a class="header-action link-secondary" title="View source" href=
 
 
 
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentnullexception">ArgumentNullException</a></dt>
+    <dd><p>Thrown when the media type or data is null.</p>
+</dd>
+  </dl>
 
 
 
-  <a id="AnthropicClient_Models_Content__ctor_" data-uid="AnthropicClient.Models.Content.#ctor*"></a>
+  <a id="AnthropicClient_Models_DocumentContent__ctor_" data-uid="AnthropicClient.Models.DocumentContent.#ctor*"></a>
 
-  <h3 id="AnthropicClient_Models_Content__ctor_System_String_AnthropicClient_Models_CacheControl_" data-uid="AnthropicClient.Models.Content.#ctor(System.String,AnthropicClient.Models.CacheControl)">
-  Content(string, CacheControl)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/StevanFreeborn/anthropic-client/blob/main/src/AnthropicClient/Models/Content.cs/#L42"><i class="bi bi-code-slash"></i></a>
+  <h3 id="AnthropicClient_Models_DocumentContent__ctor_System_String_System_String_AnthropicClient_Models_CacheControl_" data-uid="AnthropicClient.Models.DocumentContent.#ctor(System.String,System.String,AnthropicClient.Models.CacheControl)">
+  DocumentContent(string, string, CacheControl)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/StevanFreeborn/anthropic-client/blob/main/src/AnthropicClient/Models/DocumentContent.cs/#L50"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="AnthropicClient.Models.Content.html">Content</a> class.</p>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="AnthropicClient.Models.DocumentContent.html">DocumentContent</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected Content(string type, CacheControl cacheControl)</code></pre>
+    <pre><code class="lang-csharp hljs">public DocumentContent(string mediaType, string data, CacheControl cacheControl)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
-    <dt><code>type</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd><p>The type of the content.</p>
+    <dt><code>mediaType</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The media type of the document.</p>
+</dd>
+    <dt><code>data</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The data of the document.</p>
 </dd>
     <dt><code>cacheControl</code> <a class="xref" href="AnthropicClient.Models.CacheControl.html">CacheControl</a></dt>
     <dd><p>The cache control to be used for the content.</p>
@@ -229,6 +238,12 @@ Class Content  <a class="header-action link-secondary" title="View source" href=
 
 
 
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentnullexception">ArgumentNullException</a></dt>
+    <dd><p>Thrown when the media type, data, or cache control is null.</p>
+</dd>
+  </dl>
 
 
 
@@ -236,20 +251,19 @@ Class Content  <a class="header-action link-secondary" title="View source" href=
 </h2>
 
 
-  <a id="AnthropicClient_Models_Content_CacheControl_" data-uid="AnthropicClient.Models.Content.CacheControl*"></a>
+  <a id="AnthropicClient_Models_DocumentContent_Source_" data-uid="AnthropicClient.Models.DocumentContent.Source*"></a>
 
-  <h3 id="AnthropicClient_Models_Content_CacheControl" data-uid="AnthropicClient.Models.Content.CacheControl">
-  CacheControl
-  <a class="header-action link-secondary" title="View source" href="https://github.com/StevanFreeborn/anthropic-client/blob/main/src/AnthropicClient/Models/Content.cs/#L18"><i class="bi bi-code-slash"></i></a>
+  <h3 id="AnthropicClient_Models_DocumentContent_Source" data-uid="AnthropicClient.Models.DocumentContent.Source">
+  Source
+  <a class="header-action link-secondary" title="View source" href="https://github.com/StevanFreeborn/anthropic-client/blob/main/src/AnthropicClient/Models/DocumentContent.cs/#L15"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Gets the cache control to be used for the content.</p>
+  <div class="markdown level1 summary"><p>Gets the source of the document.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[JsonPropertyName(&quot;cache_control&quot;)]
-public CacheControl? CacheControl { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public DocumentSource Source { get; init; }</code></pre>
   </div>
 
 
@@ -258,39 +272,7 @@ public CacheControl? CacheControl { get; set; }</code></pre>
 
   <h4 class="section">Property Value</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="AnthropicClient.Models.CacheControl.html">CacheControl</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-  <a id="AnthropicClient_Models_Content_Type_" data-uid="AnthropicClient.Models.Content.Type*"></a>
-
-  <h3 id="AnthropicClient_Models_Content_Type" data-uid="AnthropicClient.Models.Content.Type">
-  Type
-  <a class="header-action link-secondary" title="View source" href="https://github.com/StevanFreeborn/anthropic-client/blob/main/src/AnthropicClient/Models/Content.cs/#L13"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Gets the type of the content.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string Type { get; init; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dt><a class="xref" href="AnthropicClient.Models.DocumentSource.html">DocumentSource</a></dt>
     <dd></dd>
   </dl>
 
@@ -305,7 +287,7 @@ public CacheControl? CacheControl { get; set; }</code></pre>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/StevanFreeborn/anthropic-client/blob/main/src/AnthropicClient/Models/Content.cs/#L8" class="edit-link">Edit this page</a>
+          <a href="https://github.com/StevanFreeborn/anthropic-client/blob/main/src/AnthropicClient/Models/DocumentContent.cs/#L10" class="edit-link">Edit this page</a>
         </div>
 
 
