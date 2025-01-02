@@ -232,14 +232,14 @@ public class MessageRequestTests : SerializationTest
   }
 
   [Fact]
-  public void Constructor_WhenCalledAndModelIsInvalid_ItShouldThrowArgumentException()
+  public void Constructor_WhenCalledAndModelIsInvalid_ItShouldNotThrowException()
   {
     var action = () => new MessageRequest(
       model: "invalid-model",
       messages: [new()]
     );
 
-    action.Should().Throw<ArgumentException>();
+    action.Should().NotThrow();
   }
 
   [Fact]

@@ -126,7 +126,6 @@ public abstract class BaseMessageRequest
   /// <param name="stream">A value indicating whether the message should be streamed.</param>
   /// <param name="stopSequences">The prompt stop sequences.</param>
   /// <param name="systemMessages">The system messages to use for the request.</param>
-  /// <exception cref="ArgumentException">Thrown when the model ID is invalid.</exception>
   /// <exception cref="ArgumentNullException">Thrown when the model or messages is null.</exception>
   /// <exception cref="ArgumentException">Thrown when the messages contain no messages.</exception>
   /// <exception cref="ArgumentException">Thrown when the max tokens is less than one.</exception>
@@ -150,11 +149,6 @@ public abstract class BaseMessageRequest
   {
     ArgumentValidator.ThrowIfNull(model, nameof(model));
     ArgumentValidator.ThrowIfNull(messages, nameof(messages));
-
-    if (AnthropicModels.IsValidModel(model) is false)
-    {
-      throw new ArgumentException($"Invalid model ID: {model}");
-    }
 
     if (messages.Count < 1)
     {
