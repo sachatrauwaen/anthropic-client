@@ -299,4 +299,21 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
     resultTwo.Value.Content.Should().NotBeNullOrEmpty();
     resultTwo.Value.Usage.CacheReadInputTokens.Should().BeGreaterThan(0);
   }
+
+  [Fact]
+  public async Task CountMessageTokensAsync_WhenCalled_ItShouldReturnResponse()
+  {
+    var request = new CountMessageTokensRequest(
+      model: AnthropicModels.Claude3Haiku,
+      messages: [
+        new(MessageRole.User, [new TextContent("Hello!")])
+      ]
+    );
+
+    var result = await _client.CountMessageTokensAsync(request);
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeOfType<TokenCountResponse>();
+    result.Value.InputTokens.Should().BeGreaterThan(0);
+  }
 }

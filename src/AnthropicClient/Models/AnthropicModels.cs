@@ -69,21 +69,4 @@ public static class AnthropicModels
   /// The Claude 3.5 Haiku model.
   /// </summary>
   public const string Claude35HaikuLatest = "claude-3-5-haiku-latest";
-
-  internal static bool IsValidModel(string modelId) => modelId is
-    Claude3Opus or
-    Claude3Opus20241022 or
-    Claude3OpusLatest or
-
-    Claude3Sonnet or
-    Claude3Sonnet20240229 or
-    Claude35Sonnet or
-    Claude35Sonnet20240620 or
-    Claude35Sonnet20241022 or
-    Claude35SonnetLatest or
-
-    Claude3Haiku or
-    Claude3Haiku20240307 or
-    Claude35Haiku20241022 or
-    Claude35HaikuLatest;
 }
