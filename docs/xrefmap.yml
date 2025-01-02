@@ -351,30 +351,84 @@ references:
   commentId: T:AnthropicClient.Models.AnthropicModels
   fullName: AnthropicClient.Models.AnthropicModels
   nameWithType: AnthropicModels
+- uid: AnthropicClient.Models.AnthropicModels.Claude35Haiku20241022
+  name: Claude35Haiku20241022
+  href: api/AnthropicClient.Models.AnthropicModels.html#AnthropicClient_Models_AnthropicModels_Claude35Haiku20241022
+  commentId: F:AnthropicClient.Models.AnthropicModels.Claude35Haiku20241022
+  fullName: AnthropicClient.Models.AnthropicModels.Claude35Haiku20241022
+  nameWithType: AnthropicModels.Claude35Haiku20241022
+- uid: AnthropicClient.Models.AnthropicModels.Claude35HaikuLatest
+  name: Claude35HaikuLatest
+  href: api/AnthropicClient.Models.AnthropicModels.html#AnthropicClient_Models_AnthropicModels_Claude35HaikuLatest
+  commentId: F:AnthropicClient.Models.AnthropicModels.Claude35HaikuLatest
+  fullName: AnthropicClient.Models.AnthropicModels.Claude35HaikuLatest
+  nameWithType: AnthropicModels.Claude35HaikuLatest
 - uid: AnthropicClient.Models.AnthropicModels.Claude35Sonnet
   name: Claude35Sonnet
   href: api/AnthropicClient.Models.AnthropicModels.html#AnthropicClient_Models_AnthropicModels_Claude35Sonnet
   commentId: F:AnthropicClient.Models.AnthropicModels.Claude35Sonnet
   fullName: AnthropicClient.Models.AnthropicModels.Claude35Sonnet
   nameWithType: AnthropicModels.Claude35Sonnet
+- uid: AnthropicClient.Models.AnthropicModels.Claude35Sonnet20240620
+  name: Claude35Sonnet20240620
+  href: api/AnthropicClient.Models.AnthropicModels.html#AnthropicClient_Models_AnthropicModels_Claude35Sonnet20240620
+  commentId: F:AnthropicClient.Models.AnthropicModels.Claude35Sonnet20240620
+  fullName: AnthropicClient.Models.AnthropicModels.Claude35Sonnet20240620
+  nameWithType: AnthropicModels.Claude35Sonnet20240620
+- uid: AnthropicClient.Models.AnthropicModels.Claude35Sonnet20241022
+  name: Claude35Sonnet20241022
+  href: api/AnthropicClient.Models.AnthropicModels.html#AnthropicClient_Models_AnthropicModels_Claude35Sonnet20241022
+  commentId: F:AnthropicClient.Models.AnthropicModels.Claude35Sonnet20241022
+  fullName: AnthropicClient.Models.AnthropicModels.Claude35Sonnet20241022
+  nameWithType: AnthropicModels.Claude35Sonnet20241022
+- uid: AnthropicClient.Models.AnthropicModels.Claude35SonnetLatest
+  name: Claude35SonnetLatest
+  href: api/AnthropicClient.Models.AnthropicModels.html#AnthropicClient_Models_AnthropicModels_Claude35SonnetLatest
+  commentId: F:AnthropicClient.Models.AnthropicModels.Claude35SonnetLatest
+  fullName: AnthropicClient.Models.AnthropicModels.Claude35SonnetLatest
+  nameWithType: AnthropicModels.Claude35SonnetLatest
 - uid: AnthropicClient.Models.AnthropicModels.Claude3Haiku
   name: Claude3Haiku
   href: api/AnthropicClient.Models.AnthropicModels.html#AnthropicClient_Models_AnthropicModels_Claude3Haiku
   commentId: F:AnthropicClient.Models.AnthropicModels.Claude3Haiku
   fullName: AnthropicClient.Models.AnthropicModels.Claude3Haiku
   nameWithType: AnthropicModels.Claude3Haiku
+- uid: AnthropicClient.Models.AnthropicModels.Claude3Haiku20240307
+  name: Claude3Haiku20240307
+  href: api/AnthropicClient.Models.AnthropicModels.html#AnthropicClient_Models_AnthropicModels_Claude3Haiku20240307
+  commentId: F:AnthropicClient.Models.AnthropicModels.Claude3Haiku20240307
+  fullName: AnthropicClient.Models.AnthropicModels.Claude3Haiku20240307
+  nameWithType: AnthropicModels.Claude3Haiku20240307
 - uid: AnthropicClient.Models.AnthropicModels.Claude3Opus
   name: Claude3Opus
   href: api/AnthropicClient.Models.AnthropicModels.html#AnthropicClient_Models_AnthropicModels_Claude3Opus
   commentId: F:AnthropicClient.Models.AnthropicModels.Claude3Opus
   fullName: AnthropicClient.Models.AnthropicModels.Claude3Opus
   nameWithType: AnthropicModels.Claude3Opus
+- uid: AnthropicClient.Models.AnthropicModels.Claude3Opus20241022
+  name: Claude3Opus20241022
+  href: api/AnthropicClient.Models.AnthropicModels.html#AnthropicClient_Models_AnthropicModels_Claude3Opus20241022
+  commentId: F:AnthropicClient.Models.AnthropicModels.Claude3Opus20241022
+  fullName: AnthropicClient.Models.AnthropicModels.Claude3Opus20241022
+  nameWithType: AnthropicModels.Claude3Opus20241022
+- uid: AnthropicClient.Models.AnthropicModels.Claude3OpusLatest
+  name: Claude3OpusLatest
+  href: api/AnthropicClient.Models.AnthropicModels.html#AnthropicClient_Models_AnthropicModels_Claude3OpusLatest
+  commentId: F:AnthropicClient.Models.AnthropicModels.Claude3OpusLatest
+  fullName: AnthropicClient.Models.AnthropicModels.Claude3OpusLatest
+  nameWithType: AnthropicModels.Claude3OpusLatest
 - uid: AnthropicClient.Models.AnthropicModels.Claude3Sonnet
   name: Claude3Sonnet
   href: api/AnthropicClient.Models.AnthropicModels.html#AnthropicClient_Models_AnthropicModels_Claude3Sonnet
   commentId: F:AnthropicClient.Models.AnthropicModels.Claude3Sonnet
   fullName: AnthropicClient.Models.AnthropicModels.Claude3Sonnet
   nameWithType: AnthropicModels.Claude3Sonnet
+- uid: AnthropicClient.Models.AnthropicModels.Claude3Sonnet20240229
+  name: Claude3Sonnet20240229
+  href: api/AnthropicClient.Models.AnthropicModels.html#AnthropicClient_Models_AnthropicModels_Claude3Sonnet20240229
+  commentId: F:AnthropicClient.Models.AnthropicModels.Claude3Sonnet20240229
+  fullName: AnthropicClient.Models.AnthropicModels.Claude3Sonnet20240229
+  nameWithType: AnthropicModels.Claude3Sonnet20240229
 - uid: AnthropicClient.Models.AnyToolChoice
   name: AnyToolChoice
   href: api/AnthropicClient.Models.AnyToolChoice.html
