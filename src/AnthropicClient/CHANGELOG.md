@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="0.3.0"></a>
+## [0.3.0](https://www.github.com/StevanFreeborn/anthropic-client/releases/tag/v0.3.0) (2025-01-02)
+
+### Features
+
+* add missing model identifiers ([6e0c065](https://www.github.com/StevanFreeborn/anthropic-client/commit/6e0c0654af6a7daebac541995e4f082bae4a052e))
+
 <a name="0.2.0"></a>
 ## [0.2.0](https://www.github.com/StevanFreeborn/anthropic-client/releases/tag/v0.2.0) (2024-11-21)
 
