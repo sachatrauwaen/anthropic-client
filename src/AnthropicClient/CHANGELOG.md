@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="0.4.0"></a>
+## [0.4.0](https://www.github.com/StevanFreeborn/anthropic-client/releases/tag/v0.4.0) (2025-01-03)
+
+### Features
+
+* add support for count tokens endpoint ([9448220](https://www.github.com/StevanFreeborn/anthropic-client/commit/944822060cd297c5720d8a1dc366f08ca0ec79ec))
+
+### Bug Fixes
+
+* remove model id validation ([31a7097](https://www.github.com/StevanFreeborn/anthropic-client/commit/31a7097cdc9f9f60a7b6576b8bcee7a49a00552c))
+
 <a name="0.3.0"></a>
 ## [0.3.0](https://www.github.com/StevanFreeborn/anthropic-client/releases/tag/v0.3.0) (2025-01-02)
 
