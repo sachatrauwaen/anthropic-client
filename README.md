@@ -105,9 +105,38 @@ The primary use case for working with the Anthropic API is to create a message i
 > [!NOTE]
 > The following examples assume that you have already created an instance of the `AnthropicApiClient` class named `client`. You can also find these snippets in the examples directory.
 
+### Count Message Tokens
+
+The `AnthropicApiClient` exposes a method named `CountMessageTokensAsync` that can be used to count the number of tokens in a message. The method requires a `CountMessageTokensRequest` instance as a parameter.
+
+```csharp
+using AnthropicClient;
+using AnthropicClient.Models;
+
+var response = await client.CountMessageTokensAsync(new CountMessageTokensRequest(
+  AnthropicModels.Claude3Haiku,
+  [
+    new(
+      MessageRole.User, 
+      [new TextContent("Please write a haiku about the ocean.")]
+    )
+  ]
+));
+
+if (response.IsFailure)
+{
+  Console.WriteLine("Failed to count message tokens");
+  Console.WriteLine("Error Type: {0}", response.Error.Error.Type);
+  Console.WriteLine("Error Message: {0}", response.Error.Error.Message);
+  return;
+}
+
+Console.WriteLine("Token Count: {0}", response.Value.InputTokens);
+```
+
 ### Create a message
 
-The `AnthropicApiClient` exposes a single method named `CreateMessageAsync` that can be used to create a message. The method requires a `MessageRequest` or a `StreamMessageRequest` instance as a parameter. The `MessageRequest` class is used to create a message whose response is not streamed and the `StreamMessageRequest` class is used to create a message whose response is streamed. The `MessageRequest` instance's properties can be set to configure how the message is created.
+The `AnthropicApiClient` exposes a method named `CreateMessageAsync` that can be used to create a message. The method requires a `MessageRequest` or a `StreamMessageRequest` instance as a parameter. The `MessageRequest` class is used to create a message whose response is not streamed and the `StreamMessageRequest` class is used to create a message whose response is streamed. The `MessageRequest` instance's properties can be set to configure how the message is created.
 
 #### Non-Streaming
 
