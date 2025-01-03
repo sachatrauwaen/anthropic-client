@@ -694,22 +694,7 @@ foreach (var content in response.Value.Content)
 
 ### Prompt Caching
 
-Anthropic has recently introduced a feature called [Prompt Caching](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching) that allows you to cache all or part of the prompt you send to the model. This can be used to improve the performance of your application by reducing latency and token usage. This feature is covered in depth in [Anthropic's API Documentation](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching).
-
-> [!NOTE]
-> This feature is in beta and requires you to set an `anthropic-beta` header on your requests to use it.
-> The value of the header should be `prompt-caching-2024-07-31`.
-
-When using this library you can opt-in to prompt caching by adding the required header to the `HttpClient` instance you provide to the `AnthropicApiClient` constructor.
-
-```csharp
-using AnthropicClient;
-
-var httpClient = new HttpClient();
-httpClient.DefaultRequestHeaders.Add("anthropic-beta", "prompt-caching-2024-07-31");
-
-var client = new AnthropicApiClient(apiKey, httpClient);
-```
+Anthropic provides a feature called [Prompt Caching](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching) that allows you to cache all or part of the prompt you send to the model. This can be used to improve the performance of your application by reducing latency and token usage. This feature is covered in depth in [Anthropic's API Documentation](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching).
 
 Prompt caching can be used to cache all parts of the prompt including system messages, user messages, and tools. You should refer to the [Anthropic API Documentation](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching) for specifics on limitations and requirements for using prompt caching. This library aims to make using prompt caching convenient and give you complete control over what parts of the prompt are cached. Currently there is only one type of cache control available - `EphemeralCacheControl`.
 
@@ -850,22 +835,7 @@ foreach (var content in response.Value.Content)
 
 ### PDF Support
 
-Anthropic has recently introduced a feature called [PDF Support](https://docs.anthropic.com/en/docs/build-with-claude/pdf-support) that allows Claude to support PDF input and understand both text and visual content within documents. . This feature is covered in depth in [Anthropic's API Documentation](https://docs.anthropic.com/en/docs/build-with-claude/pdf-support).
-
-> [!NOTE]
-> This feature is in beta and requires you to set an `anthropic-beta` header on your requests to use it.
-> The value of the header should be `pdfs-2024-09-25`.
-
-When using this library you can opt-in to PDF support by adding the required header to the `HttpClient` instance you provide to the `AnthropicApiClient` constructor.
-
-```csharp
-using AnthropicClient;
-
-var httpClient = new HttpClient();
-httpClient.DefaultRequestHeaders.Add("anthropic-beta", "pdfs-2024-09-25");
-
-var client = new AnthropicApiClient(apiKey, httpClient);
-```
+Anthropic provides a feature called [PDF Support](https://docs.anthropic.com/en/docs/build-with-claude/pdf-support) that allows Claude to support PDF input and understand both text and visual content within documents. This feature is covered in depth in [Anthropic's API Documentation](https://docs.anthropic.com/en/docs/build-with-claude/pdf-support).
 
 PDF support can be used to provide a PDF document as input to the model. This can be used to provide additional context to the model or to ask for additional information from the model. This library aims to make using PDF support convenient by allowing you to provide the PDF document you want Anthropic's models to consider for use when creating a message.
 
@@ -884,11 +854,6 @@ var request = new MessageRequest(
     new(MessageRole.User, [new DocumentContent("application/pdf", base64Data)])
   ]
 );
-
-var httpClient = new HttpClient();
-httpClient.DefaultRequestHeaders.Add("anthropic-beta", "pdfs-2024-09-25");
-
-var client = new AnthropicApiClient(apiKey, httpClient);
 
 var response = await client.CreateMessageAsync(request);
 
