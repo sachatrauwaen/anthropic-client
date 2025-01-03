@@ -32,6 +32,19 @@ references:
   fullName.vb: AnthropicClient.AnthropicApiClient.New
   nameWithType: AnthropicApiClient.AnthropicApiClient
   nameWithType.vb: AnthropicApiClient.New
+- uid: AnthropicClient.AnthropicApiClient.CountMessageTokensAsync(AnthropicClient.Models.CountMessageTokensRequest)
+  name: CountMessageTokensAsync(CountMessageTokensRequest)
+  href: api/AnthropicClient.AnthropicApiClient.html#AnthropicClient_AnthropicApiClient_CountMessageTokensAsync_AnthropicClient_Models_CountMessageTokensRequest_
+  commentId: M:AnthropicClient.AnthropicApiClient.CountMessageTokensAsync(AnthropicClient.Models.CountMessageTokensRequest)
+  fullName: AnthropicClient.AnthropicApiClient.CountMessageTokensAsync(AnthropicClient.Models.CountMessageTokensRequest)
+  nameWithType: AnthropicApiClient.CountMessageTokensAsync(CountMessageTokensRequest)
+- uid: AnthropicClient.AnthropicApiClient.CountMessageTokensAsync*
+  name: CountMessageTokensAsync
+  href: api/AnthropicClient.AnthropicApiClient.html#AnthropicClient_AnthropicApiClient_CountMessageTokensAsync_
+  commentId: Overload:AnthropicClient.AnthropicApiClient.CountMessageTokensAsync
+  isSpec: "True"
+  fullName: AnthropicClient.AnthropicApiClient.CountMessageTokensAsync
+  nameWithType: AnthropicApiClient.CountMessageTokensAsync
 - uid: AnthropicClient.AnthropicApiClient.CreateMessageAsync(AnthropicClient.Models.MessageRequest)
   name: CreateMessageAsync(MessageRequest)
   href: api/AnthropicClient.AnthropicApiClient.html#AnthropicClient_AnthropicApiClient_CreateMessageAsync_AnthropicClient_Models_MessageRequest_
@@ -57,6 +70,19 @@ references:
   commentId: T:AnthropicClient.IAnthropicApiClient
   fullName: AnthropicClient.IAnthropicApiClient
   nameWithType: IAnthropicApiClient
+- uid: AnthropicClient.IAnthropicApiClient.CountMessageTokensAsync(AnthropicClient.Models.CountMessageTokensRequest)
+  name: CountMessageTokensAsync(CountMessageTokensRequest)
+  href: api/AnthropicClient.IAnthropicApiClient.html#AnthropicClient_IAnthropicApiClient_CountMessageTokensAsync_AnthropicClient_Models_CountMessageTokensRequest_
+  commentId: M:AnthropicClient.IAnthropicApiClient.CountMessageTokensAsync(AnthropicClient.Models.CountMessageTokensRequest)
+  fullName: AnthropicClient.IAnthropicApiClient.CountMessageTokensAsync(AnthropicClient.Models.CountMessageTokensRequest)
+  nameWithType: IAnthropicApiClient.CountMessageTokensAsync(CountMessageTokensRequest)
+- uid: AnthropicClient.IAnthropicApiClient.CountMessageTokensAsync*
+  name: CountMessageTokensAsync
+  href: api/AnthropicClient.IAnthropicApiClient.html#AnthropicClient_IAnthropicApiClient_CountMessageTokensAsync_
+  commentId: Overload:AnthropicClient.IAnthropicApiClient.CountMessageTokensAsync
+  isSpec: "True"
+  fullName: AnthropicClient.IAnthropicApiClient.CountMessageTokensAsync
+  nameWithType: IAnthropicApiClient.CountMessageTokensAsync
 - uid: AnthropicClient.IAnthropicApiClient.CreateMessageAsync(AnthropicClient.Models.MessageRequest)
   name: CreateMessageAsync(MessageRequest)
   href: api/AnthropicClient.IAnthropicApiClient.html#AnthropicClient_IAnthropicApiClient_CreateMessageAsync_AnthropicClient_Models_MessageRequest_
@@ -1078,6 +1104,96 @@ references:
   commentId: F:AnthropicClient.Models.ContentType.ToolUse
   fullName: AnthropicClient.Models.ContentType.ToolUse
   nameWithType: ContentType.ToolUse
+- uid: AnthropicClient.Models.CountMessageTokensRequest
+  name: CountMessageTokensRequest
+  href: api/AnthropicClient.Models.CountMessageTokensRequest.html
+  commentId: T:AnthropicClient.Models.CountMessageTokensRequest
+  fullName: AnthropicClient.Models.CountMessageTokensRequest
+  nameWithType: CountMessageTokensRequest
+- uid: AnthropicClient.Models.CountMessageTokensRequest.#ctor(System.String,System.Collections.Generic.List{AnthropicClient.Models.Message},AnthropicClient.Models.ToolChoice,System.Collections.Generic.List{AnthropicClient.Models.Tool},System.Collections.Generic.List{AnthropicClient.Models.TextContent})
+  name: CountMessageTokensRequest(string, List<Message>, ToolChoice?, List<Tool>?, List<TextContent>?)
+  href: api/AnthropicClient.Models.CountMessageTokensRequest.html#AnthropicClient_Models_CountMessageTokensRequest__ctor_System_String_System_Collections_Generic_List_AnthropicClient_Models_Message__AnthropicClient_Models_ToolChoice_System_Collections_Generic_List_AnthropicClient_Models_Tool__System_Collections_Generic_List_AnthropicClient_Models_TextContent__
+  commentId: M:AnthropicClient.Models.CountMessageTokensRequest.#ctor(System.String,System.Collections.Generic.List{AnthropicClient.Models.Message},AnthropicClient.Models.ToolChoice,System.Collections.Generic.List{AnthropicClient.Models.Tool},System.Collections.Generic.List{AnthropicClient.Models.TextContent})
+  name.vb: New(String, List(Of Message), ToolChoice, List(Of Tool), List(Of TextContent))
+  fullName: AnthropicClient.Models.CountMessageTokensRequest.CountMessageTokensRequest(string, System.Collections.Generic.List<AnthropicClient.Models.Message>, AnthropicClient.Models.ToolChoice?, System.Collections.Generic.List<AnthropicClient.Models.Tool>?, System.Collections.Generic.List<AnthropicClient.Models.TextContent>?)
+  fullName.vb: AnthropicClient.Models.CountMessageTokensRequest.New(String, System.Collections.Generic.List(Of AnthropicClient.Models.Message), AnthropicClient.Models.ToolChoice, System.Collections.Generic.List(Of AnthropicClient.Models.Tool), System.Collections.Generic.List(Of AnthropicClient.Models.TextContent))
+  nameWithType: CountMessageTokensRequest.CountMessageTokensRequest(string, List<Message>, ToolChoice?, List<Tool>?, List<TextContent>?)
+  nameWithType.vb: CountMessageTokensRequest.New(String, List(Of Message), ToolChoice, List(Of Tool), List(Of TextContent))
+- uid: AnthropicClient.Models.CountMessageTokensRequest.#ctor*
+  name: CountMessageTokensRequest
+  href: api/AnthropicClient.Models.CountMessageTokensRequest.html#AnthropicClient_Models_CountMessageTokensRequest__ctor_
+  commentId: Overload:AnthropicClient.Models.CountMessageTokensRequest.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: AnthropicClient.Models.CountMessageTokensRequest.CountMessageTokensRequest
+  fullName.vb: AnthropicClient.Models.CountMessageTokensRequest.New
+  nameWithType: CountMessageTokensRequest.CountMessageTokensRequest
+  nameWithType.vb: CountMessageTokensRequest.New
+- uid: AnthropicClient.Models.CountMessageTokensRequest.Messages
+  name: Messages
+  href: api/AnthropicClient.Models.CountMessageTokensRequest.html#AnthropicClient_Models_CountMessageTokensRequest_Messages
+  commentId: P:AnthropicClient.Models.CountMessageTokensRequest.Messages
+  fullName: AnthropicClient.Models.CountMessageTokensRequest.Messages
+  nameWithType: CountMessageTokensRequest.Messages
+- uid: AnthropicClient.Models.CountMessageTokensRequest.Messages*
+  name: Messages
+  href: api/AnthropicClient.Models.CountMessageTokensRequest.html#AnthropicClient_Models_CountMessageTokensRequest_Messages_
+  commentId: Overload:AnthropicClient.Models.CountMessageTokensRequest.Messages
+  isSpec: "True"
+  fullName: AnthropicClient.Models.CountMessageTokensRequest.Messages
+  nameWithType: CountMessageTokensRequest.Messages
+- uid: AnthropicClient.Models.CountMessageTokensRequest.Model
+  name: Model
+  href: api/AnthropicClient.Models.CountMessageTokensRequest.html#AnthropicClient_Models_CountMessageTokensRequest_Model
+  commentId: P:AnthropicClient.Models.CountMessageTokensRequest.Model
+  fullName: AnthropicClient.Models.CountMessageTokensRequest.Model
+  nameWithType: CountMessageTokensRequest.Model
+- uid: AnthropicClient.Models.CountMessageTokensRequest.Model*
+  name: Model
+  href: api/AnthropicClient.Models.CountMessageTokensRequest.html#AnthropicClient_Models_CountMessageTokensRequest_Model_
+  commentId: Overload:AnthropicClient.Models.CountMessageTokensRequest.Model
+  isSpec: "True"
+  fullName: AnthropicClient.Models.CountMessageTokensRequest.Model
+  nameWithType: CountMessageTokensRequest.Model
+- uid: AnthropicClient.Models.CountMessageTokensRequest.SystemPrompt
+  name: SystemPrompt
+  href: api/AnthropicClient.Models.CountMessageTokensRequest.html#AnthropicClient_Models_CountMessageTokensRequest_SystemPrompt
+  commentId: P:AnthropicClient.Models.CountMessageTokensRequest.SystemPrompt
+  fullName: AnthropicClient.Models.CountMessageTokensRequest.SystemPrompt
+  nameWithType: CountMessageTokensRequest.SystemPrompt
+- uid: AnthropicClient.Models.CountMessageTokensRequest.SystemPrompt*
+  name: SystemPrompt
+  href: api/AnthropicClient.Models.CountMessageTokensRequest.html#AnthropicClient_Models_CountMessageTokensRequest_SystemPrompt_
+  commentId: Overload:AnthropicClient.Models.CountMessageTokensRequest.SystemPrompt
+  isSpec: "True"
+  fullName: AnthropicClient.Models.CountMessageTokensRequest.SystemPrompt
+  nameWithType: CountMessageTokensRequest.SystemPrompt
+- uid: AnthropicClient.Models.CountMessageTokensRequest.ToolChoice
+  name: ToolChoice
+  href: api/AnthropicClient.Models.CountMessageTokensRequest.html#AnthropicClient_Models_CountMessageTokensRequest_ToolChoice
+  commentId: P:AnthropicClient.Models.CountMessageTokensRequest.ToolChoice
+  fullName: AnthropicClient.Models.CountMessageTokensRequest.ToolChoice
+  nameWithType: CountMessageTokensRequest.ToolChoice
+- uid: AnthropicClient.Models.CountMessageTokensRequest.ToolChoice*
+  name: ToolChoice
+  href: api/AnthropicClient.Models.CountMessageTokensRequest.html#AnthropicClient_Models_CountMessageTokensRequest_ToolChoice_
+  commentId: Overload:AnthropicClient.Models.CountMessageTokensRequest.ToolChoice
+  isSpec: "True"
+  fullName: AnthropicClient.Models.CountMessageTokensRequest.ToolChoice
+  nameWithType: CountMessageTokensRequest.ToolChoice
+- uid: AnthropicClient.Models.CountMessageTokensRequest.Tools
+  name: Tools
+  href: api/AnthropicClient.Models.CountMessageTokensRequest.html#AnthropicClient_Models_CountMessageTokensRequest_Tools
+  commentId: P:AnthropicClient.Models.CountMessageTokensRequest.Tools
+  fullName: AnthropicClient.Models.CountMessageTokensRequest.Tools
+  nameWithType: CountMessageTokensRequest.Tools
+- uid: AnthropicClient.Models.CountMessageTokensRequest.Tools*
+  name: Tools
+  href: api/AnthropicClient.Models.CountMessageTokensRequest.html#AnthropicClient_Models_CountMessageTokensRequest_Tools_
+  commentId: Overload:AnthropicClient.Models.CountMessageTokensRequest.Tools
+  isSpec: "True"
+  fullName: AnthropicClient.Models.CountMessageTokensRequest.Tools
+  nameWithType: CountMessageTokensRequest.Tools
 - uid: AnthropicClient.Models.DocumentContent
   name: DocumentContent
   href: api/AnthropicClient.Models.DocumentContent.html
@@ -2690,6 +2806,25 @@ references:
   isSpec: "True"
   fullName: AnthropicClient.Models.TextDelta.Text
   nameWithType: TextDelta.Text
+- uid: AnthropicClient.Models.TokenCountResponse
+  name: TokenCountResponse
+  href: api/AnthropicClient.Models.TokenCountResponse.html
+  commentId: T:AnthropicClient.Models.TokenCountResponse
+  fullName: AnthropicClient.Models.TokenCountResponse
+  nameWithType: TokenCountResponse
+- uid: AnthropicClient.Models.TokenCountResponse.InputTokens
+  name: InputTokens
+  href: api/AnthropicClient.Models.TokenCountResponse.html#AnthropicClient_Models_TokenCountResponse_InputTokens
+  commentId: P:AnthropicClient.Models.TokenCountResponse.InputTokens
+  fullName: AnthropicClient.Models.TokenCountResponse.InputTokens
+  nameWithType: TokenCountResponse.InputTokens
+- uid: AnthropicClient.Models.TokenCountResponse.InputTokens*
+  name: InputTokens
+  href: api/AnthropicClient.Models.TokenCountResponse.html#AnthropicClient_Models_TokenCountResponse_InputTokens_
+  commentId: Overload:AnthropicClient.Models.TokenCountResponse.InputTokens
+  isSpec: "True"
+  fullName: AnthropicClient.Models.TokenCountResponse.InputTokens
+  nameWithType: TokenCountResponse.InputTokens
 - uid: AnthropicClient.Models.Tool
   name: Tool
   href: api/AnthropicClient.Models.Tool.html

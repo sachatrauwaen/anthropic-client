@@ -121,6 +121,45 @@ Interface IAnthropicApiClient  <a class="header-action link-secondary" title="Vi
 </h2>
 
 
+  <a id="AnthropicClient_IAnthropicApiClient_CountMessageTokensAsync_" data-uid="AnthropicClient.IAnthropicApiClient.CountMessageTokensAsync*"></a>
+
+  <h3 id="AnthropicClient_IAnthropicApiClient_CountMessageTokensAsync_AnthropicClient_Models_CountMessageTokensRequest_" data-uid="AnthropicClient.IAnthropicApiClient.CountMessageTokensAsync(AnthropicClient.Models.CountMessageTokensRequest)">
+  CountMessageTokensAsync(CountMessageTokensRequest)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/StevanFreeborn/anthropic-client/blob/main/src/AnthropicClient/AnthropicApiClient.cs/#L35"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Counts the tokens in a message asynchronously.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;AnthropicResult&lt;TokenCountResponse&gt;&gt; CountMessageTokensAsync(CountMessageTokensRequest request)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>request</code> <a class="xref" href="AnthropicClient.Models.CountMessageTokensRequest.html">CountMessageTokensRequest</a></dt>
+    <dd><p>The count message tokens request.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="AnthropicResult-1.html">AnthropicResult</a>&lt;<a class="xref" href="AnthropicClient.Models.TokenCountResponse.html">TokenCountResponse</a>&gt;&gt;</dt>
+    <dd><p>A task that represents the asynchronous operation. The task result contains the response as an <a class="xref" href="AnthropicResult-1.html">AnthropicResult&lt;T&gt;</a> where T is <a class="xref" href="AnthropicClient.Models.TokenCountResponse.html">TokenCountResponse</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
   <a id="AnthropicClient_IAnthropicApiClient_CreateMessageAsync_" data-uid="AnthropicClient.IAnthropicApiClient.CreateMessageAsync*"></a>
 
   <h3 id="AnthropicClient_IAnthropicApiClient_CreateMessageAsync_AnthropicClient_Models_MessageRequest_" data-uid="AnthropicClient.IAnthropicApiClient.CreateMessageAsync(AnthropicClient.Models.MessageRequest)">

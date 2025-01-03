@@ -222,6 +222,16 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.CountMessageTokensRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.CountMessageTokensRequest.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/AnthropicClient.Models.DocumentContent.yml",
       "output": {
         ".html": {
@@ -586,6 +596,16 @@
       "output": {
         ".html": {
           "relative_path": "api/AnthropicClient.Models.TextDelta.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.TokenCountResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.TokenCountResponse.html"
         }
       },
       "version": ""
