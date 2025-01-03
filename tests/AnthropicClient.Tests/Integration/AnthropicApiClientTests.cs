@@ -418,4 +418,89 @@ public class AnthropicApiClientTests : IntegrationTest
     textContent.As<TextContent>().Text.Should().Be("It is a PDF");
     textContent.As<TextContent>().Type.Should().Be("text");
   }
+
+  [Fact]
+  public async Task CountMessageTokensAsync_WhenCalled_ItShouldReturnCountTokensResponse()
+  {
+    _mockHttpMessageHandler
+      .WhenCountMessageTokensRequest()
+      .Respond(
+        HttpStatusCode.OK,
+        "application/json",
+        @"{
+          ""input_tokens"": 10
+        }"
+      );
+
+    var request = new CountMessageTokensRequest(
+      model: AnthropicModels.Claude35Sonnet,
+      messages: [
+        new(MessageRole.User, [new TextContent("Hello!")]),
+      ]
+    );
+
+    var result = await Client.CountMessageTokensAsync(request);
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeOfType<TokenCountResponse>();
+    result.Value.InputTokens.Should().Be(10);
+  }
+
+  [Fact]
+  public async Task CountMessageTokensAsync_WhenCalledAndErrorReturned_ItShouldHandleError()
+  {
+    _mockHttpMessageHandler
+      .WhenCountMessageTokensRequest()
+      .Respond(
+        HttpStatusCode.BadRequest,
+        "application/json",
+        @"{
+          ""type"": ""error"",
+          ""error"": {
+            ""type"": ""invalid_request_error"",
+            ""message"": ""messages: roles must alternate between user and assistant, but found multiple user roles in a row""
+          }
+        }"
+      );
+
+    var request = new CountMessageTokensRequest(
+      model: AnthropicModels.Claude35Sonnet,
+      messages: [
+        new(MessageRole.User, [new TextContent("Hello!")]),
+        new(MessageRole.User, [new TextContent("Hello!")])
+      ]
+    );
+
+    var result = await Client.CountMessageTokensAsync(request);
+
+    result.IsSuccess.Should().BeFalse();
+    result.Error.Should().BeOfType<AnthropicError>();
+    result.Error.Error.Should().BeOfType<InvalidRequestError>();
+  }
+
+  [Fact]
+  public async Task CountMessageTokensAsync_WhenCalledRequestFailsAndCanNotSerializeError_ItShouldReturnUnknownError()
+  {
+    _mockHttpMessageHandler
+      .WhenCountMessageTokensRequest()
+      .Respond(
+        HttpStatusCode.BadRequest,
+        "application/json",
+        @"{}"
+      );
+
+    var request = new CountMessageTokensRequest(
+      model: AnthropicModels.Claude35Sonnet,
+      messages: [
+        new(MessageRole.User, [new TextContent("Hello!")]),
+        new(MessageRole.User, [new TextContent("Hello!")])
+      ]
+    );
+
+    var result = await Client.CountMessageTokensAsync(request);
+
+    result.IsSuccess.Should().BeFalse();
+    result.Error.Should().BeOfType<AnthropicError>();
+    result.Error.Error.Should().BeOfType<ApiError>();
+  }
 }
