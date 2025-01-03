@@ -13,10 +13,18 @@ public class IntegrationTest
 
 public static class MockHttpMessageHandlerExtensions
 {
-  private static MockedRequest SetupBaseRequest(this MockHttpMessageHandler mockHttpMessageHandler)
+  private const string BaseUrl = "https://api.anthropic.com/v1";
+  private static readonly string MessagesEndpoint = $"{BaseUrl}/messages";
+  private static readonly string CountTokensEndpoint = $"{BaseUrl}/messages/count_tokens";
+
+  private static MockedRequest SetupBaseRequest(
+    this MockHttpMessageHandler mockHttpMessageHandler,
+    HttpMethod method,
+    string url
+  )
   {
     return mockHttpMessageHandler
-      .When(HttpMethod.Post, "https://api.anthropic.com/v1/messages")
+      .When(method, url)
       .WithHeaders(new Dictionary<string, string>
       {
         { "anthropic-version", "2023-06-01" },
@@ -27,14 +35,20 @@ public static class MockHttpMessageHandlerExtensions
   public static MockedRequest WhenCreateMessageRequest(this MockHttpMessageHandler mockHttpMessageHandler)
   {
     return mockHttpMessageHandler
-      .SetupBaseRequest()
+      .SetupBaseRequest(HttpMethod.Post, MessagesEndpoint)
       .WithJsonContent<MessageRequest>(r => r.Stream == false, JsonSerializationOptions.DefaultOptions);
   }
 
   public static MockedRequest WhenCreateStreamMessageRequest(this MockHttpMessageHandler mockHttpMessageHandler)
   {
     return mockHttpMessageHandler
-      .SetupBaseRequest()
+      .SetupBaseRequest(HttpMethod.Post, MessagesEndpoint)
       .WithJsonContent<StreamMessageRequest>(r => r.Stream == true, JsonSerializationOptions.DefaultOptions);
+  }
+
+  public static MockedRequest WhenCountMessageTokensRequest(this MockHttpMessageHandler mockHttpMessageHandler)
+  {
+    return mockHttpMessageHandler
+      .SetupBaseRequest(HttpMethod.Post, CountTokensEndpoint);
   }
 }

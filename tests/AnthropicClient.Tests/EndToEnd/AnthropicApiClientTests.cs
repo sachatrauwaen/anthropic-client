@@ -100,10 +100,7 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
   [Fact]
   public async Task CreateMessageAsync_WhenSystemMessagesContainCacheControl_ItShouldUseCache()
   {
-    var httpClient = new HttpClient();
-    httpClient.DefaultRequestHeaders.Add("anthropic-beta", "prompt-caching-2024-07-31");
-
-    var client = CreateClient(httpClient);
+    var client = CreateClient(new HttpClient());
 
     var storyPath = GetTestFilePath("story.txt");
     var storyText = await File.ReadAllTextAsync(storyPath);
@@ -121,7 +118,7 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
       ]
     );
 
-    var resultOne = await client.CreateMessageAsync(request);
+    var resultOne = await _client.CreateMessageAsync(request);
 
     resultOne.IsSuccess.Should().BeTrue();
     resultOne.Value.Should().BeOfType<MessageResponse>();
@@ -142,10 +139,7 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
   [Fact]
   public async Task CreateMessageAsync_WhenMessagesContainCacheControl_ItShouldUseCache()
   {
-    var httpClient = new HttpClient();
-    httpClient.DefaultRequestHeaders.Add("anthropic-beta", "prompt-caching-2024-07-31");
-
-    var client = CreateClient(httpClient);
+    var client = CreateClient(new HttpClient());
 
     var storyPath = GetTestFilePath("story.txt");
     var storyText = await File.ReadAllTextAsync(storyPath);
@@ -181,10 +175,7 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
   [Fact]
   public async Task CreateMessageAsync_WhenToolsContainCacheControl_ItShouldUseCache()
   {
-    var httpClient = new HttpClient();
-    httpClient.DefaultRequestHeaders.Add("anthropic-beta", "prompt-caching-2024-07-31");
-
-    var client = CreateClient(httpClient);
+    var client = CreateClient(new HttpClient());
 
     var func = (string ticker) => ticker;
 
@@ -238,9 +229,7 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
       ]
     );
 
-    var httpClient = new HttpClient();
-    httpClient.DefaultRequestHeaders.Add("anthropic-beta", "pdfs-2024-09-25");
-    var client = CreateClient(httpClient);
+    var client = CreateClient(new HttpClient());
 
     var result = await client.CreateMessageAsync(request);
 
@@ -268,9 +257,7 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
     var bytes = await File.ReadAllBytesAsync(pdfPath);
     var base64Data = Convert.ToBase64String(bytes);
 
-    var httpClient = new HttpClient();
-    httpClient.DefaultRequestHeaders.Add("anthropic-beta", "pdfs-2024-09-25, prompt-caching-2024-07-31");
-    var client = CreateClient(httpClient);
+    var client = CreateClient(new HttpClient());
 
     var request = new MessageRequest(
       model: AnthropicModels.Claude35Sonnet,
@@ -298,5 +285,22 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
     resultTwo.Value.Should().BeOfType<MessageResponse>();
     resultTwo.Value.Content.Should().NotBeNullOrEmpty();
     resultTwo.Value.Usage.CacheReadInputTokens.Should().BeGreaterThan(0);
+  }
+
+  [Fact]
+  public async Task CountMessageTokensAsync_WhenCalled_ItShouldReturnResponse()
+  {
+    var request = new CountMessageTokensRequest(
+      model: AnthropicModels.Claude3Haiku,
+      messages: [
+        new(MessageRole.User, [new TextContent("Hello!")])
+      ]
+    );
+
+    var result = await _client.CountMessageTokensAsync(request);
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeOfType<TokenCountResponse>();
+    result.Value.InputTokens.Should().BeGreaterThan(0);
   }
 }

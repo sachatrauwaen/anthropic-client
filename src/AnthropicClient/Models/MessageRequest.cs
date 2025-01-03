@@ -25,7 +25,6 @@ public class MessageRequest : BaseMessageRequest
   /// <param name="tools">The tools to use for the request.</param>
   /// <param name="stopSequences">The prompt stop sequences.</param>
   /// <param name="systemMessages">The system messages to include with the request.</param>
-  /// <exception cref="ArgumentException">Thrown when the model ID is invalid.</exception>
   /// <exception cref="ArgumentNullException">Thrown when the model or messages is null.</exception>
   /// <exception cref="ArgumentException">Thrown when the messages contain no messages.</exception>
   /// <exception cref="ArgumentException">Thrown when the max tokens is less than one.</exception>

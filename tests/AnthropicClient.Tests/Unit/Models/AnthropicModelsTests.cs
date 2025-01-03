@@ -131,22 +131,4 @@ public class AnthropicModelsTests
 
     actual.Should().Be(expected);
   }
-
-  [Theory]
-  [InlineData("claude-3-opus-20240229", true)]
-  [InlineData("claude-3-opus-latest", true)]
-  [InlineData("claude-3-sonnet-20240229", true)]
-  [InlineData("claude-3-5-sonnet-20240620", true)]
-  [InlineData("claude-3-5-sonnet-20241022", true)]
-  [InlineData("claude-3-5-sonnet-latest", true)]
-  [InlineData("claude-3-haiku-20240307", true)]
-  [InlineData("claude-3-5-haiku-20241022", true)]
-  [InlineData("claude-3-5-haiku-latest", true)]
-  [InlineData("invalid", false)]
-  public void IsValidModel_WhenCalled_ItShouldReturnExpectedValue(string modelId, bool expected)
-  {
-    var actual = AnthropicModels.IsValidModel(modelId);
-
-    actual.Should().Be(expected);
-  }
 }

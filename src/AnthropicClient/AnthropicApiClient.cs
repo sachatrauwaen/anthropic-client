@@ -26,6 +26,13 @@ public interface IAnthropicApiClient
   /// <param name="request">The message request to create.</param>
   /// <returns>An asynchronous enumerable that yields the response event by event.</returns>
   IAsyncEnumerable<AnthropicEvent> CreateMessageAsync(StreamMessageRequest request);
+
+  /// <summary>
+  /// Counts the tokens in a message asynchronously.
+  /// </summary>
+  /// <param name="request">The count message tokens request.</param>
+  /// <returns>A task that represents the asynchronous operation. The task result contains the response as an <see cref="AnthropicResult{T}"/> where T is <see cref="TokenCountResponse"/>.</returns>
+  Task<AnthropicResult<TokenCountResponse>> CountMessageTokensAsync(CountMessageTokensRequest request);
 }
 
 /// <inheritdoc cref="IAnthropicApiClient"/>
@@ -34,6 +41,7 @@ public class AnthropicApiClient : IAnthropicApiClient
   private const string BaseUrl = "https://api.anthropic.com/v1/";
   private const string ApiKeyHeader = "x-api-key";
   private const string MessagesEndpoint = "messages";
+  private const string CountTokensEndpoint = "messages/count_tokens";
   private const string JsonContentType = "application/json";
   private const string EventPrefix = "event:";
   private const string DataPrefix = "data:";
@@ -71,7 +79,7 @@ public class AnthropicApiClient : IAnthropicApiClient
   /// <inheritdoc />
   public async Task<AnthropicResult<MessageResponse>> CreateMessageAsync(MessageRequest request)
   {
-    var response = await SendRequestAsync(request);
+    var response = await SendRequestAsync(MessagesEndpoint, request);
     var anthropicHeaders = new AnthropicHeaders(response.Headers);
     var responseContent = await response.Content.ReadAsStringAsync();
 
@@ -94,7 +102,7 @@ public class AnthropicApiClient : IAnthropicApiClient
   /// <inheritdoc />
   public async IAsyncEnumerable<AnthropicEvent> CreateMessageAsync(StreamMessageRequest request)
   {
-    var response = await SendRequestAsync(request);
+    var response = await SendRequestAsync(MessagesEndpoint, request);
 
     if (response.IsSuccessStatusCode is false)
     {
@@ -255,6 +263,24 @@ public class AnthropicApiClient : IAnthropicApiClient
     } while (true);
   }
 
+  /// <inheritdoc />
+  public async Task<AnthropicResult<TokenCountResponse>> CountMessageTokensAsync(CountMessageTokensRequest request)
+  {
+    var response = await SendRequestAsync(CountTokensEndpoint, request);
+    var anthropicHeaders = new AnthropicHeaders(response.Headers);
+    var responseContent = await response.Content.ReadAsStringAsync();
+
+    if (response.IsSuccessStatusCode is false)
+    {
+      var error = Deserialize<AnthropicError>(responseContent) ?? new AnthropicError();
+      return AnthropicResult<TokenCountResponse>.Failure(error, anthropicHeaders);
+    }
+
+    var msgResponse = Deserialize<TokenCountResponse>(responseContent) ?? new TokenCountResponse();
+
+    return AnthropicResult<TokenCountResponse>.Success(msgResponse, anthropicHeaders);
+  }
+
   private ToolCall? GetToolCall(MessageResponse response, List<Tool> tools)
   {
     var toolUse = response.Content.OfType<ToolUseContent>().FirstOrDefault();
@@ -274,11 +300,11 @@ public class AnthropicApiClient : IAnthropicApiClient
     return new ToolCall(tool, toolUse);
   }
 
-  private async Task<HttpResponseMessage> SendRequestAsync(BaseMessageRequest request)
+  private async Task<HttpResponseMessage> SendRequestAsync<T>(string endpoint, T request)
   {
     var requestJson = Serialize(request);
     var requestContent = new StringContent(requestJson, Encoding.UTF8, JsonContentType);
-    return await _httpClient.PostAsync(MessagesEndpoint, requestContent);
+    return await _httpClient.PostAsync(endpoint, requestContent);
   }
 
   private string Serialize<T>(T obj) => JsonSerializer.Serialize(obj, JsonSerializationOptions.DefaultOptions);
