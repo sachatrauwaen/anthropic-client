@@ -263,6 +263,24 @@ public class AnthropicApiClient : IAnthropicApiClient
     } while (true);
   }
 
+  /// <inheritdoc />
+  public async Task<AnthropicResult<TokenCountResponse>> CountMessageTokensAsync(CountMessageTokensRequest request)
+  {
+    var response = await SendRequestAsync(CountTokensEndpoint, request);
+    var anthropicHeaders = new AnthropicHeaders(response.Headers);
+    var responseContent = await response.Content.ReadAsStringAsync();
+
+    if (response.IsSuccessStatusCode is false)
+    {
+      var error = Deserialize<AnthropicError>(responseContent) ?? new AnthropicError();
+      return AnthropicResult<TokenCountResponse>.Failure(error, anthropicHeaders);
+    }
+
+    var msgResponse = Deserialize<TokenCountResponse>(responseContent) ?? new TokenCountResponse();
+
+    return AnthropicResult<TokenCountResponse>.Success(msgResponse, anthropicHeaders);
+  }
+
   private ToolCall? GetToolCall(MessageResponse response, List<Tool> tools)
   {
     var toolUse = response.Content.OfType<ToolUseContent>().FirstOrDefault();
@@ -280,24 +298,6 @@ public class AnthropicApiClient : IAnthropicApiClient
     }
 
     return new ToolCall(tool, toolUse);
-  }
-
-  /// <inheritdoc />
-  public async Task<AnthropicResult<TokenCountResponse>> CountMessageTokensAsync(CountMessageTokensRequest request)
-  {
-    var response = await SendRequestAsync(CountTokensEndpoint, request);
-    var anthropicHeaders = new AnthropicHeaders(response.Headers);
-    var responseContent = await response.Content.ReadAsStringAsync();
-
-    if (response.IsSuccessStatusCode is false)
-    {
-      var error = Deserialize<AnthropicError>(responseContent) ?? new AnthropicError();
-      return AnthropicResult<TokenCountResponse>.Failure(error, anthropicHeaders);
-    }
-
-    var msgResponse = Deserialize<TokenCountResponse>(responseContent) ?? new TokenCountResponse();
-
-    return AnthropicResult<TokenCountResponse>.Success(msgResponse, anthropicHeaders);
   }
 
   private async Task<HttpResponseMessage> SendRequestAsync<T>(string endpoint, T request)
