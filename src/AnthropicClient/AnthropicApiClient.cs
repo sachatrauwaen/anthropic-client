@@ -33,6 +33,21 @@ public interface IAnthropicApiClient
   /// <param name="request">The count message tokens request.</param>
   /// <returns>A task that represents the asynchronous operation. The task result contains the response as an <see cref="AnthropicResult{T}"/> where T is <see cref="TokenCountResponse"/>.</returns>
   Task<AnthropicResult<TokenCountResponse>> CountMessageTokensAsync(CountMessageTokensRequest request);
+
+  /// <summary>
+  /// Lists the models asynchronously.
+  /// </summary>
+  /// <param name="request">The paging request to use for listing the models.</param>
+  /// <returns>A task that represents the asynchronous operation. The task result contains the response as an <see cref="AnthropicResult{T}"/> where T is <see cref="Page{T}"/> where T is <see cref="AnthropicModel"/>.</returns>
+  Task<AnthropicResult<Page<AnthropicModel>>> ListModelsAsync(PagingRequest request);
+
+  /// <summary>
+  /// Lists the models asynchronously.
+  /// </summary>
+  /// <param name="limit">The maximum number of models to return in each page.</param>
+  /// <returns>An asynchronous enumerable that yields the response as an <see cref="AnthropicResult{T}"/> where T is <see cref="Page{T}"/> where T is <see cref="AnthropicModel"/>.</returns>
+  /// 
+  IAsyncEnumerable<AnthropicResult<Page<AnthropicModel>>> ListModelsAsync(int limit = 20);
 }
 
 /// <inheritdoc cref="IAnthropicApiClient"/>
@@ -76,7 +91,7 @@ public class AnthropicApiClient : IAnthropicApiClient
     }
   }
 
-  /// <inheritdoc />
+  /// <inheritdoc/>
   public async Task<AnthropicResult<MessageResponse>> CreateMessageAsync(MessageRequest request)
   {
     var response = await SendRequestAsync(MessagesEndpoint, request);
@@ -99,7 +114,7 @@ public class AnthropicApiClient : IAnthropicApiClient
     return AnthropicResult<MessageResponse>.Success(msgResponse, anthropicHeaders);
   }
 
-  /// <inheritdoc />
+  /// <inheritdoc/>
   public async IAsyncEnumerable<AnthropicEvent> CreateMessageAsync(StreamMessageRequest request)
   {
     var response = await SendRequestAsync(MessagesEndpoint, request);
@@ -263,7 +278,7 @@ public class AnthropicApiClient : IAnthropicApiClient
     } while (true);
   }
 
-  /// <inheritdoc />
+  /// <inheritdoc/>
   public async Task<AnthropicResult<TokenCountResponse>> CountMessageTokensAsync(CountMessageTokensRequest request)
   {
     var response = await SendRequestAsync(CountTokensEndpoint, request);
@@ -309,4 +324,16 @@ public class AnthropicApiClient : IAnthropicApiClient
 
   private string Serialize<T>(T obj) => JsonSerializer.Serialize(obj, JsonSerializationOptions.DefaultOptions);
   private T? Deserialize<T>(string json) => JsonSerializer.Deserialize<T>(json, JsonSerializationOptions.DefaultOptions);
+
+  /// <inheritdoc/>
+  public Task<AnthropicResult<Page<AnthropicModel>>> ListModelsAsync(PagingRequest request)
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <inheritdoc/>
+  public IAsyncEnumerable<AnthropicResult<Page<AnthropicModel>>> ListModelsAsync(int limit = 20)
+  {
+    throw new NotImplementedException();
+  }
 }
