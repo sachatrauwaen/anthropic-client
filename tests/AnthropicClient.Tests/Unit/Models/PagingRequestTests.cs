@@ -19,6 +19,14 @@ public class PagingRequestTests : SerializationTest
   }
 
   [Fact]
+  public void Constructor_WhenBothBeforeIdAndAfterIdAreSet_ItShouldThrowArgumentException()
+  {
+    var act = () => new PagingRequest(beforeId: "before-id", afterId: "after-id");
+
+    act.Should().Throw<ArgumentException>().WithMessage("Only one of beforeId or afterId can be set.");
+  }
+
+  [Fact]
   public void ToQueryParameters_WhenNoPropertiesSet_ItShouldReturnEmptyString()
   {
     var pagingRequest = new PagingRequest();
@@ -56,15 +64,5 @@ public class PagingRequestTests : SerializationTest
     var result = pagingRequest.ToQueryParameters();
 
     result.Should().Be("limit=10");
-  }
-
-  [Fact]
-  public void ToQueryParameters_WhenAllPropertiesAreSet_ItShouldReturnAllProperties()
-  {
-    var pagingRequest = new PagingRequest(beforeId: "before-id", afterId: "after-id", limit: 10);
-
-    var result = pagingRequest.ToQueryParameters();
-
-    result.Should().Be("before_id=before-id&after_id=after-id&limit=10");
   }
 }

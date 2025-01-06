@@ -549,13 +549,12 @@ public class AnthropicApiClientTests : IntegrationTest
   [Fact]
   public async Task ListModelsAsync_WhenCalledWithPagingRequestUsingCustomValues_ItShouldReturnListOfModels()
   {
-    var pagingRequest = new PagingRequest("prev_id", "next_id", 10);
+    var pagingRequest = new PagingRequest(afterId: "next_id", limit: 10);
 
     _mockHttpMessageHandler
       .WhenListModelsRequest()
       .WithQueryString(new Dictionary<string, string>
       {
-        { "before_id", pagingRequest.BeforeId },
         { "after_id", pagingRequest.AfterId },
         { "limit", pagingRequest.Limit.ToString() },
       })

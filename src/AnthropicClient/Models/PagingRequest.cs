@@ -34,6 +34,7 @@ public class PagingRequest
   /// <param name="beforeId">The ID of the item before which to start the page.</param>
   /// <param name="afterId">The ID of the item after which to start the page.</param>
   /// <param name="limit">The maximum number of items to return in the page.</param>
+  /// <exception cref="ArgumentException">Thrown when both <paramref name="beforeId"/> and <paramref name="afterId"/> are specified.</exception>
   /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="limit"/> is less than 1 or greater than 1000.</exception>
   /// <returns>A new instance of the <see cref="PagingRequest"/> class.</returns>
   public PagingRequest(
@@ -45,6 +46,11 @@ public class PagingRequest
     if (limit is < LimitMinimum or > LimitMaximum)
     {
       throw new ArgumentOutOfRangeException(nameof(limit), $"{nameof(limit)} must be between {LimitMinimum} and {LimitMaximum}.");
+    }
+
+    if (string.IsNullOrEmpty(beforeId) is false && string.IsNullOrEmpty(afterId) is false)
+    {
+      throw new ArgumentException($"Only one of {nameof(beforeId)} or {nameof(afterId)} can be set.");
     }
 
     BeforeId = beforeId;
