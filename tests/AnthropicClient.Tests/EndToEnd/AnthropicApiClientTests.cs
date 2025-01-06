@@ -303,4 +303,32 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
     result.Value.Should().BeOfType<TokenCountResponse>();
     result.Value.InputTokens.Should().BeGreaterThan(0);
   }
+
+  [Fact]
+  public async Task ListModelsAsync_WhenCalled_ItShouldReturnResponse()
+  {
+    var result = await _client.ListModelsAsync();
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeOfType<Page<AnthropicModel>>();
+    result.Value.Data.Should().HaveCountGreaterThan(0);
+  }
+
+  [Fact]
+  public async Task ListModelsAsync_WhenCalledWithPagination_ItShouldReturnResponse()
+  {
+    var result = await _client.ListModelsAsync(new PagingRequest(limit: 1));
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeOfType<Page<AnthropicModel>>();
+    result.Value.Data.Should().HaveCount(1);
+  }
+
+  [Fact]
+  public async Task ListAllModelsAsync_WhenCalled_ItShouldReturnResponse()
+  {
+    var responses = await _client.ListAllModelsAsync(limit: 1).ToListAsync();
+
+    responses.Should().HaveCountGreaterThan(0);
+  }
 }

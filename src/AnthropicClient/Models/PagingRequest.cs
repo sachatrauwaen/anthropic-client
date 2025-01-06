@@ -70,10 +70,7 @@ public class PagingRequest
       parameters.Add($"after_id={AfterId}");
     }
 
-    if (Limit is not DefaultLimit)
-    {
-      parameters.Add($"limit={Limit}");
-    }
+    parameters.Add($"limit={Limit}");
 
     return string.Join("&", parameters);
   }

@@ -11,13 +11,13 @@ public class Page
   /// The id of the first item in the page.
   /// </summary>
   [JsonPropertyName("first_id")]
-  public string FirstId { get; init; } = string.Empty;
+  public string? FirstId { get; init; } = string.Empty;
 
   /// <summary>
   /// The id of the last item in the page.
   /// </summary>
   [JsonPropertyName("last_id")]
-  public string LastId { get; init; } = string.Empty;
+  public string? LastId { get; init; } = string.Empty;
 
   /// <summary>
   /// Indicates whether there is more data to be retrieved.

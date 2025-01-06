@@ -25,7 +25,7 @@ public class PagingRequestTests : SerializationTest
 
     var result = pagingRequest.ToQueryParameters();
 
-    result.Should().BeEmpty();
+    result.Should().Be("limit=20");
   }
 
   [Fact]
@@ -35,7 +35,7 @@ public class PagingRequestTests : SerializationTest
 
     var result = pagingRequest.ToQueryParameters();
 
-    result.Should().Be("before_id=before-id");
+    result.Should().Be("before_id=before-id&limit=20");
   }
 
   [Fact]
@@ -45,7 +45,7 @@ public class PagingRequestTests : SerializationTest
 
     var result = pagingRequest.ToQueryParameters();
 
-    result.Should().Be("after_id=after-id");
+    result.Should().Be("after_id=after-id&limit=20");
   }
 
   [Fact]

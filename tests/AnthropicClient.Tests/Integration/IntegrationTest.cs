@@ -16,6 +16,7 @@ public static class MockHttpMessageHandlerExtensions
   private const string BaseUrl = "https://api.anthropic.com/v1";
   private static readonly string MessagesEndpoint = $"{BaseUrl}/messages";
   private static readonly string CountTokensEndpoint = $"{BaseUrl}/messages/count_tokens";
+  private static readonly string ModelsEndpoint = $"{BaseUrl}/models";
 
   private static MockedRequest SetupBaseRequest(
     this MockHttpMessageHandler mockHttpMessageHandler,
@@ -50,5 +51,11 @@ public static class MockHttpMessageHandlerExtensions
   {
     return mockHttpMessageHandler
       .SetupBaseRequest(HttpMethod.Post, CountTokensEndpoint);
+  }
+
+  public static MockedRequest WhenListModelsRequest(this MockHttpMessageHandler mockHttpMessageHandler)
+  {
+    return mockHttpMessageHandler
+      .SetupBaseRequest(HttpMethod.Get, ModelsEndpoint);
   }
 }
