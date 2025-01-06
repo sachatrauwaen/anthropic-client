@@ -976,7 +976,7 @@ public class AnthropicApiClientTests : IntegrationTest
 
     var result = await Client.GetModelAsync(modelId);
 
-    result.IsSuccess.Should().BeFalse();
-    result.Error.Should().BeOfType<AnthropicModel>();
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeOfType<AnthropicModel>();
   }
 }
