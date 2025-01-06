@@ -64,6 +64,54 @@ references:
   isSpec: "True"
   fullName: AnthropicClient.AnthropicApiClient.CreateMessageAsync
   nameWithType: AnthropicApiClient.CreateMessageAsync
+- uid: AnthropicClient.AnthropicApiClient.GetModelAsync(System.String)
+  name: GetModelAsync(string)
+  href: api/AnthropicClient.AnthropicApiClient.html#AnthropicClient_AnthropicApiClient_GetModelAsync_System_String_
+  commentId: M:AnthropicClient.AnthropicApiClient.GetModelAsync(System.String)
+  name.vb: GetModelAsync(String)
+  fullName: AnthropicClient.AnthropicApiClient.GetModelAsync(string)
+  fullName.vb: AnthropicClient.AnthropicApiClient.GetModelAsync(String)
+  nameWithType: AnthropicApiClient.GetModelAsync(string)
+  nameWithType.vb: AnthropicApiClient.GetModelAsync(String)
+- uid: AnthropicClient.AnthropicApiClient.GetModelAsync*
+  name: GetModelAsync
+  href: api/AnthropicClient.AnthropicApiClient.html#AnthropicClient_AnthropicApiClient_GetModelAsync_
+  commentId: Overload:AnthropicClient.AnthropicApiClient.GetModelAsync
+  isSpec: "True"
+  fullName: AnthropicClient.AnthropicApiClient.GetModelAsync
+  nameWithType: AnthropicApiClient.GetModelAsync
+- uid: AnthropicClient.AnthropicApiClient.ListAllModelsAsync(System.Int32)
+  name: ListAllModelsAsync(int)
+  href: api/AnthropicClient.AnthropicApiClient.html#AnthropicClient_AnthropicApiClient_ListAllModelsAsync_System_Int32_
+  commentId: M:AnthropicClient.AnthropicApiClient.ListAllModelsAsync(System.Int32)
+  name.vb: ListAllModelsAsync(Integer)
+  fullName: AnthropicClient.AnthropicApiClient.ListAllModelsAsync(int)
+  fullName.vb: AnthropicClient.AnthropicApiClient.ListAllModelsAsync(Integer)
+  nameWithType: AnthropicApiClient.ListAllModelsAsync(int)
+  nameWithType.vb: AnthropicApiClient.ListAllModelsAsync(Integer)
+- uid: AnthropicClient.AnthropicApiClient.ListAllModelsAsync*
+  name: ListAllModelsAsync
+  href: api/AnthropicClient.AnthropicApiClient.html#AnthropicClient_AnthropicApiClient_ListAllModelsAsync_
+  commentId: Overload:AnthropicClient.AnthropicApiClient.ListAllModelsAsync
+  isSpec: "True"
+  fullName: AnthropicClient.AnthropicApiClient.ListAllModelsAsync
+  nameWithType: AnthropicApiClient.ListAllModelsAsync
+- uid: AnthropicClient.AnthropicApiClient.ListModelsAsync(AnthropicClient.Models.PagingRequest)
+  name: ListModelsAsync(PagingRequest?)
+  href: api/AnthropicClient.AnthropicApiClient.html#AnthropicClient_AnthropicApiClient_ListModelsAsync_AnthropicClient_Models_PagingRequest_
+  commentId: M:AnthropicClient.AnthropicApiClient.ListModelsAsync(AnthropicClient.Models.PagingRequest)
+  name.vb: ListModelsAsync(PagingRequest)
+  fullName: AnthropicClient.AnthropicApiClient.ListModelsAsync(AnthropicClient.Models.PagingRequest?)
+  fullName.vb: AnthropicClient.AnthropicApiClient.ListModelsAsync(AnthropicClient.Models.PagingRequest)
+  nameWithType: AnthropicApiClient.ListModelsAsync(PagingRequest?)
+  nameWithType.vb: AnthropicApiClient.ListModelsAsync(PagingRequest)
+- uid: AnthropicClient.AnthropicApiClient.ListModelsAsync*
+  name: ListModelsAsync
+  href: api/AnthropicClient.AnthropicApiClient.html#AnthropicClient_AnthropicApiClient_ListModelsAsync_
+  commentId: Overload:AnthropicClient.AnthropicApiClient.ListModelsAsync
+  isSpec: "True"
+  fullName: AnthropicClient.AnthropicApiClient.ListModelsAsync
+  nameWithType: AnthropicApiClient.ListModelsAsync
 - uid: AnthropicClient.IAnthropicApiClient
   name: IAnthropicApiClient
   href: api/AnthropicClient.IAnthropicApiClient.html
@@ -102,6 +150,54 @@ references:
   isSpec: "True"
   fullName: AnthropicClient.IAnthropicApiClient.CreateMessageAsync
   nameWithType: IAnthropicApiClient.CreateMessageAsync
+- uid: AnthropicClient.IAnthropicApiClient.GetModelAsync(System.String)
+  name: GetModelAsync(string)
+  href: api/AnthropicClient.IAnthropicApiClient.html#AnthropicClient_IAnthropicApiClient_GetModelAsync_System_String_
+  commentId: M:AnthropicClient.IAnthropicApiClient.GetModelAsync(System.String)
+  name.vb: GetModelAsync(String)
+  fullName: AnthropicClient.IAnthropicApiClient.GetModelAsync(string)
+  fullName.vb: AnthropicClient.IAnthropicApiClient.GetModelAsync(String)
+  nameWithType: IAnthropicApiClient.GetModelAsync(string)
+  nameWithType.vb: IAnthropicApiClient.GetModelAsync(String)
+- uid: AnthropicClient.IAnthropicApiClient.GetModelAsync*
+  name: GetModelAsync
+  href: api/AnthropicClient.IAnthropicApiClient.html#AnthropicClient_IAnthropicApiClient_GetModelAsync_
+  commentId: Overload:AnthropicClient.IAnthropicApiClient.GetModelAsync
+  isSpec: "True"
+  fullName: AnthropicClient.IAnthropicApiClient.GetModelAsync
+  nameWithType: IAnthropicApiClient.GetModelAsync
+- uid: AnthropicClient.IAnthropicApiClient.ListAllModelsAsync(System.Int32)
+  name: ListAllModelsAsync(int)
+  href: api/AnthropicClient.IAnthropicApiClient.html#AnthropicClient_IAnthropicApiClient_ListAllModelsAsync_System_Int32_
+  commentId: M:AnthropicClient.IAnthropicApiClient.ListAllModelsAsync(System.Int32)
+  name.vb: ListAllModelsAsync(Integer)
+  fullName: AnthropicClient.IAnthropicApiClient.ListAllModelsAsync(int)
+  fullName.vb: AnthropicClient.IAnthropicApiClient.ListAllModelsAsync(Integer)
+  nameWithType: IAnthropicApiClient.ListAllModelsAsync(int)
+  nameWithType.vb: IAnthropicApiClient.ListAllModelsAsync(Integer)
+- uid: AnthropicClient.IAnthropicApiClient.ListAllModelsAsync*
+  name: ListAllModelsAsync
+  href: api/AnthropicClient.IAnthropicApiClient.html#AnthropicClient_IAnthropicApiClient_ListAllModelsAsync_
+  commentId: Overload:AnthropicClient.IAnthropicApiClient.ListAllModelsAsync
+  isSpec: "True"
+  fullName: AnthropicClient.IAnthropicApiClient.ListAllModelsAsync
+  nameWithType: IAnthropicApiClient.ListAllModelsAsync
+- uid: AnthropicClient.IAnthropicApiClient.ListModelsAsync(AnthropicClient.Models.PagingRequest)
+  name: ListModelsAsync(PagingRequest?)
+  href: api/AnthropicClient.IAnthropicApiClient.html#AnthropicClient_IAnthropicApiClient_ListModelsAsync_AnthropicClient_Models_PagingRequest_
+  commentId: M:AnthropicClient.IAnthropicApiClient.ListModelsAsync(AnthropicClient.Models.PagingRequest)
+  name.vb: ListModelsAsync(PagingRequest)
+  fullName: AnthropicClient.IAnthropicApiClient.ListModelsAsync(AnthropicClient.Models.PagingRequest?)
+  fullName.vb: AnthropicClient.IAnthropicApiClient.ListModelsAsync(AnthropicClient.Models.PagingRequest)
+  nameWithType: IAnthropicApiClient.ListModelsAsync(PagingRequest?)
+  nameWithType.vb: IAnthropicApiClient.ListModelsAsync(PagingRequest)
+- uid: AnthropicClient.IAnthropicApiClient.ListModelsAsync*
+  name: ListModelsAsync
+  href: api/AnthropicClient.IAnthropicApiClient.html#AnthropicClient_IAnthropicApiClient_ListModelsAsync_
+  commentId: Overload:AnthropicClient.IAnthropicApiClient.ListModelsAsync
+  isSpec: "True"
+  fullName: AnthropicClient.IAnthropicApiClient.ListModelsAsync
+  nameWithType: IAnthropicApiClient.ListModelsAsync
 - uid: AnthropicClient.Models
   name: AnthropicClient.Models
   href: api/AnthropicClient.Models.html
@@ -371,6 +467,64 @@ references:
   isSpec: "True"
   fullName: AnthropicClient.Models.AnthropicHeaders.RetryAfter
   nameWithType: AnthropicHeaders.RetryAfter
+- uid: AnthropicClient.Models.AnthropicModel
+  name: AnthropicModel
+  href: api/AnthropicClient.Models.AnthropicModel.html
+  commentId: T:AnthropicClient.Models.AnthropicModel
+  fullName: AnthropicClient.Models.AnthropicModel
+  nameWithType: AnthropicModel
+- uid: AnthropicClient.Models.AnthropicModel.CreatedAt
+  name: CreatedAt
+  href: api/AnthropicClient.Models.AnthropicModel.html#AnthropicClient_Models_AnthropicModel_CreatedAt
+  commentId: P:AnthropicClient.Models.AnthropicModel.CreatedAt
+  fullName: AnthropicClient.Models.AnthropicModel.CreatedAt
+  nameWithType: AnthropicModel.CreatedAt
+- uid: AnthropicClient.Models.AnthropicModel.CreatedAt*
+  name: CreatedAt
+  href: api/AnthropicClient.Models.AnthropicModel.html#AnthropicClient_Models_AnthropicModel_CreatedAt_
+  commentId: Overload:AnthropicClient.Models.AnthropicModel.CreatedAt
+  isSpec: "True"
+  fullName: AnthropicClient.Models.AnthropicModel.CreatedAt
+  nameWithType: AnthropicModel.CreatedAt
+- uid: AnthropicClient.Models.AnthropicModel.DisplayName
+  name: DisplayName
+  href: api/AnthropicClient.Models.AnthropicModel.html#AnthropicClient_Models_AnthropicModel_DisplayName
+  commentId: P:AnthropicClient.Models.AnthropicModel.DisplayName
+  fullName: AnthropicClient.Models.AnthropicModel.DisplayName
+  nameWithType: AnthropicModel.DisplayName
+- uid: AnthropicClient.Models.AnthropicModel.DisplayName*
+  name: DisplayName
+  href: api/AnthropicClient.Models.AnthropicModel.html#AnthropicClient_Models_AnthropicModel_DisplayName_
+  commentId: Overload:AnthropicClient.Models.AnthropicModel.DisplayName
+  isSpec: "True"
+  fullName: AnthropicClient.Models.AnthropicModel.DisplayName
+  nameWithType: AnthropicModel.DisplayName
+- uid: AnthropicClient.Models.AnthropicModel.Id
+  name: Id
+  href: api/AnthropicClient.Models.AnthropicModel.html#AnthropicClient_Models_AnthropicModel_Id
+  commentId: P:AnthropicClient.Models.AnthropicModel.Id
+  fullName: AnthropicClient.Models.AnthropicModel.Id
+  nameWithType: AnthropicModel.Id
+- uid: AnthropicClient.Models.AnthropicModel.Id*
+  name: Id
+  href: api/AnthropicClient.Models.AnthropicModel.html#AnthropicClient_Models_AnthropicModel_Id_
+  commentId: Overload:AnthropicClient.Models.AnthropicModel.Id
+  isSpec: "True"
+  fullName: AnthropicClient.Models.AnthropicModel.Id
+  nameWithType: AnthropicModel.Id
+- uid: AnthropicClient.Models.AnthropicModel.Type
+  name: Type
+  href: api/AnthropicClient.Models.AnthropicModel.html#AnthropicClient_Models_AnthropicModel_Type
+  commentId: P:AnthropicClient.Models.AnthropicModel.Type
+  fullName: AnthropicClient.Models.AnthropicModel.Type
+  nameWithType: AnthropicModel.Type
+- uid: AnthropicClient.Models.AnthropicModel.Type*
+  name: Type
+  href: api/AnthropicClient.Models.AnthropicModel.html#AnthropicClient_Models_AnthropicModel_Type_
+  commentId: Overload:AnthropicClient.Models.AnthropicModel.Type
+  isSpec: "True"
+  fullName: AnthropicClient.Models.AnthropicModel.Type
+  nameWithType: AnthropicModel.Type
 - uid: AnthropicClient.Models.AnthropicModels
   name: AnthropicModels
   href: api/AnthropicClient.Models.AnthropicModels.html
@@ -2553,6 +2707,154 @@ references:
   fullName.vb: AnthropicClient.Models.OverloadedError.New
   nameWithType: OverloadedError.OverloadedError
   nameWithType.vb: OverloadedError.New
+- uid: AnthropicClient.Models.Page
+  name: Page
+  href: api/AnthropicClient.Models.Page.html
+  commentId: T:AnthropicClient.Models.Page
+  fullName: AnthropicClient.Models.Page
+  nameWithType: Page
+- uid: AnthropicClient.Models.Page.FirstId
+  name: FirstId
+  href: api/AnthropicClient.Models.Page.html#AnthropicClient_Models_Page_FirstId
+  commentId: P:AnthropicClient.Models.Page.FirstId
+  fullName: AnthropicClient.Models.Page.FirstId
+  nameWithType: Page.FirstId
+- uid: AnthropicClient.Models.Page.FirstId*
+  name: FirstId
+  href: api/AnthropicClient.Models.Page.html#AnthropicClient_Models_Page_FirstId_
+  commentId: Overload:AnthropicClient.Models.Page.FirstId
+  isSpec: "True"
+  fullName: AnthropicClient.Models.Page.FirstId
+  nameWithType: Page.FirstId
+- uid: AnthropicClient.Models.Page.HasMore
+  name: HasMore
+  href: api/AnthropicClient.Models.Page.html#AnthropicClient_Models_Page_HasMore
+  commentId: P:AnthropicClient.Models.Page.HasMore
+  fullName: AnthropicClient.Models.Page.HasMore
+  nameWithType: Page.HasMore
+- uid: AnthropicClient.Models.Page.HasMore*
+  name: HasMore
+  href: api/AnthropicClient.Models.Page.html#AnthropicClient_Models_Page_HasMore_
+  commentId: Overload:AnthropicClient.Models.Page.HasMore
+  isSpec: "True"
+  fullName: AnthropicClient.Models.Page.HasMore
+  nameWithType: Page.HasMore
+- uid: AnthropicClient.Models.Page.LastId
+  name: LastId
+  href: api/AnthropicClient.Models.Page.html#AnthropicClient_Models_Page_LastId
+  commentId: P:AnthropicClient.Models.Page.LastId
+  fullName: AnthropicClient.Models.Page.LastId
+  nameWithType: Page.LastId
+- uid: AnthropicClient.Models.Page.LastId*
+  name: LastId
+  href: api/AnthropicClient.Models.Page.html#AnthropicClient_Models_Page_LastId_
+  commentId: Overload:AnthropicClient.Models.Page.LastId
+  isSpec: "True"
+  fullName: AnthropicClient.Models.Page.LastId
+  nameWithType: Page.LastId
+- uid: AnthropicClient.Models.Page`1
+  name: Page<T>
+  href: api/AnthropicClient.Models.Page-1.html
+  commentId: T:AnthropicClient.Models.Page`1
+  name.vb: Page(Of T)
+  fullName: AnthropicClient.Models.Page<T>
+  fullName.vb: AnthropicClient.Models.Page(Of T)
+  nameWithType: Page<T>
+  nameWithType.vb: Page(Of T)
+- uid: AnthropicClient.Models.Page`1.Data
+  name: Data
+  href: api/AnthropicClient.Models.Page-1.html#AnthropicClient_Models_Page_1_Data
+  commentId: P:AnthropicClient.Models.Page`1.Data
+  fullName: AnthropicClient.Models.Page<T>.Data
+  fullName.vb: AnthropicClient.Models.Page(Of T).Data
+  nameWithType: Page<T>.Data
+  nameWithType.vb: Page(Of T).Data
+- uid: AnthropicClient.Models.Page`1.Data*
+  name: Data
+  href: api/AnthropicClient.Models.Page-1.html#AnthropicClient_Models_Page_1_Data_
+  commentId: Overload:AnthropicClient.Models.Page`1.Data
+  isSpec: "True"
+  fullName: AnthropicClient.Models.Page<T>.Data
+  fullName.vb: AnthropicClient.Models.Page(Of T).Data
+  nameWithType: Page<T>.Data
+  nameWithType.vb: Page(Of T).Data
+- uid: AnthropicClient.Models.PagingRequest
+  name: PagingRequest
+  href: api/AnthropicClient.Models.PagingRequest.html
+  commentId: T:AnthropicClient.Models.PagingRequest
+  fullName: AnthropicClient.Models.PagingRequest
+  nameWithType: PagingRequest
+- uid: AnthropicClient.Models.PagingRequest.#ctor(System.String,System.String,System.Int32)
+  name: PagingRequest(string, string, int)
+  href: api/AnthropicClient.Models.PagingRequest.html#AnthropicClient_Models_PagingRequest__ctor_System_String_System_String_System_Int32_
+  commentId: M:AnthropicClient.Models.PagingRequest.#ctor(System.String,System.String,System.Int32)
+  name.vb: New(String, String, Integer)
+  fullName: AnthropicClient.Models.PagingRequest.PagingRequest(string, string, int)
+  fullName.vb: AnthropicClient.Models.PagingRequest.New(String, String, Integer)
+  nameWithType: PagingRequest.PagingRequest(string, string, int)
+  nameWithType.vb: PagingRequest.New(String, String, Integer)
+- uid: AnthropicClient.Models.PagingRequest.#ctor*
+  name: PagingRequest
+  href: api/AnthropicClient.Models.PagingRequest.html#AnthropicClient_Models_PagingRequest__ctor_
+  commentId: Overload:AnthropicClient.Models.PagingRequest.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: AnthropicClient.Models.PagingRequest.PagingRequest
+  fullName.vb: AnthropicClient.Models.PagingRequest.New
+  nameWithType: PagingRequest.PagingRequest
+  nameWithType.vb: PagingRequest.New
+- uid: AnthropicClient.Models.PagingRequest.AfterId
+  name: AfterId
+  href: api/AnthropicClient.Models.PagingRequest.html#AnthropicClient_Models_PagingRequest_AfterId
+  commentId: P:AnthropicClient.Models.PagingRequest.AfterId
+  fullName: AnthropicClient.Models.PagingRequest.AfterId
+  nameWithType: PagingRequest.AfterId
+- uid: AnthropicClient.Models.PagingRequest.AfterId*
+  name: AfterId
+  href: api/AnthropicClient.Models.PagingRequest.html#AnthropicClient_Models_PagingRequest_AfterId_
+  commentId: Overload:AnthropicClient.Models.PagingRequest.AfterId
+  isSpec: "True"
+  fullName: AnthropicClient.Models.PagingRequest.AfterId
+  nameWithType: PagingRequest.AfterId
+- uid: AnthropicClient.Models.PagingRequest.BeforeId
+  name: BeforeId
+  href: api/AnthropicClient.Models.PagingRequest.html#AnthropicClient_Models_PagingRequest_BeforeId
+  commentId: P:AnthropicClient.Models.PagingRequest.BeforeId
+  fullName: AnthropicClient.Models.PagingRequest.BeforeId
+  nameWithType: PagingRequest.BeforeId
+- uid: AnthropicClient.Models.PagingRequest.BeforeId*
+  name: BeforeId
+  href: api/AnthropicClient.Models.PagingRequest.html#AnthropicClient_Models_PagingRequest_BeforeId_
+  commentId: Overload:AnthropicClient.Models.PagingRequest.BeforeId
+  isSpec: "True"
+  fullName: AnthropicClient.Models.PagingRequest.BeforeId
+  nameWithType: PagingRequest.BeforeId
+- uid: AnthropicClient.Models.PagingRequest.Limit
+  name: Limit
+  href: api/AnthropicClient.Models.PagingRequest.html#AnthropicClient_Models_PagingRequest_Limit
+  commentId: P:AnthropicClient.Models.PagingRequest.Limit
+  fullName: AnthropicClient.Models.PagingRequest.Limit
+  nameWithType: PagingRequest.Limit
+- uid: AnthropicClient.Models.PagingRequest.Limit*
+  name: Limit
+  href: api/AnthropicClient.Models.PagingRequest.html#AnthropicClient_Models_PagingRequest_Limit_
+  commentId: Overload:AnthropicClient.Models.PagingRequest.Limit
+  isSpec: "True"
+  fullName: AnthropicClient.Models.PagingRequest.Limit
+  nameWithType: PagingRequest.Limit
+- uid: AnthropicClient.Models.PagingRequest.ToQueryParameters
+  name: ToQueryParameters()
+  href: api/AnthropicClient.Models.PagingRequest.html#AnthropicClient_Models_PagingRequest_ToQueryParameters
+  commentId: M:AnthropicClient.Models.PagingRequest.ToQueryParameters
+  fullName: AnthropicClient.Models.PagingRequest.ToQueryParameters()
+  nameWithType: PagingRequest.ToQueryParameters()
+- uid: AnthropicClient.Models.PagingRequest.ToQueryParameters*
+  name: ToQueryParameters
+  href: api/AnthropicClient.Models.PagingRequest.html#AnthropicClient_Models_PagingRequest_ToQueryParameters_
+  commentId: Overload:AnthropicClient.Models.PagingRequest.ToQueryParameters
+  isSpec: "True"
+  fullName: AnthropicClient.Models.PagingRequest.ToQueryParameters
+  nameWithType: PagingRequest.ToQueryParameters
 - uid: AnthropicClient.Models.PermissionError
   name: PermissionError
   href: api/AnthropicClient.Models.PermissionError.html

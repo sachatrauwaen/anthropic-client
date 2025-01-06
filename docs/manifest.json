@@ -72,6 +72,16 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.AnthropicModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.AnthropicModel.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/AnthropicClient.Models.AnthropicModels.yml",
       "output": {
         ".html": {
@@ -516,6 +526,36 @@
       "output": {
         ".html": {
           "relative_path": "api/AnthropicClient.Models.OverloadedError.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.Page-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.Page-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.Page.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.Page.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.PagingRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.PagingRequest.html"
         }
       },
       "version": ""

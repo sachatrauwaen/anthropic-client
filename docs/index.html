@@ -171,6 +171,62 @@ if (response.IsFailure)
 
 Console.WriteLine(&quot;Token Count: {0}&quot;, response.Value.InputTokens);
 </code></pre>
+<h3 id="list-models">List Models</h3>
+<p>The <code>AnthropicApiClient</code> exposes a method named <code>ListModelsAsync</code> that can be used to list the available models. The method takes an optional <code>PagingRequest</code> instance as a parameter.</p>
+<pre><code class="lang-csharp">using AnthropicClient;
+
+var response = await client.ListModelsAsync();
+
+if (response.IsFailure)
+{
+  Console.WriteLine(&quot;Failed to list models&quot;);
+  Console.WriteLine(&quot;Error Type: {0}&quot;, response.Error.Error.Type);
+  Console.WriteLine(&quot;Error Message: {0}&quot;, response.Error.Error.Message);
+  return;
+}
+
+foreach (var model in response.Value.Data)
+{
+  Console.WriteLine(&quot;Model Id: {0}&quot;, model.Id);
+  Console.WriteLine(&quot;Model Name: {0}&quot;, model.DisplayName);
+}
+</code></pre>
+<p>Using the <code>PagingRequest</code> instance allows you to specify the number of models to return and the page of models to return.</p>
+<pre><code class="lang-csharp">using AnthropicClient;
+using AnthropicClient.Models;
+
+var response = await client.ListModelsAsync(new PagingRequest(afterId: &quot;claude-3-5-sonnet-20241022&quot;, limit: 2));
+
+if (response.IsFailure)
+{
+  Console.WriteLine(&quot;Failed to list models&quot;);
+  Console.WriteLine(&quot;Error Type: {0}&quot;, response.Error.Error.Type);
+  Console.WriteLine(&quot;Error Message: {0}&quot;, response.Error.Error.Message);
+  return;
+}
+
+foreach (var model in response.Value.Data)
+{
+  Console.WriteLine(&quot;Model Id: {0}&quot;, model.Id);
+  Console.WriteLine(&quot;Model Name: {0}&quot;, model.DisplayName);
+}
+</code></pre>
+<h3 id="get-model">Get Model</h3>
+<p>The <code>AnthropicApiClient</code> exposes a method named <code>GetModelAsync</code> that can be used to get a model by its id.</p>
+<pre><code class="lang-csharp">using AnthropicClient;
+
+var response = await client.GetModelAsync(&quot;claude-3-5-sonnet-20241022&quot;);
+
+if (response.IsFailure)
+{
+  Console.WriteLine(&quot;Failed to get model&quot;);
+  Console.WriteLine(&quot;Error Type: {0}&quot;, response.Error.Error.Type);
+  Console.WriteLine(&quot;Error Message: {0}&quot;, response.Error.Error.Message);
+  return;
+}
+
+Console.WriteLine(&quot;Model Id: {0}&quot;, response.Value.Id);
+</code></pre>
 <h3 id="create-a-message">Create a message</h3>
 <p>The <code>AnthropicApiClient</code> exposes a method named <code>CreateMessageAsync</code> that can be used to create a message. The method requires a <code>MessageRequest</code> or a <code>StreamMessageRequest</code> instance as a parameter. The <code>MessageRequest</code> class is used to create a message whose response is not streamed and the <code>StreamMessageRequest</code> class is used to create a message whose response is streamed. The <code>MessageRequest</code> instance's properties can be set to configure how the message is created.</p>
 <h4 id="non-streaming">Non-Streaming</h4>
