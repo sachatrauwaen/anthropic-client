@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="0.5.0"></a>
+## [0.5.0](https://www.github.com/StevanFreeborn/anthropic-client/releases/tag/v0.5.0) (2025-01-06)
+
+### Features
+
+* add classes to model response to get model list endpoint ([28b7bf6](https://www.github.com/StevanFreeborn/anthropic-client/commit/28b7bf6a897cf3b2e2aad7df767b0f4428bec7a4))
+* add model to represent paged request ([df75cd2](https://www.github.com/StevanFreeborn/anthropic-client/commit/df75cd25e0a1beb55be97d5fcb8a718806793f51))
+* implement GetModelAsync method ([8bbd4bb](https://www.github.com/StevanFreeborn/anthropic-client/commit/8bbd4bb7c8c3f4e6fdd6d85d68d728794b85831f))
+* implement ListAllModelsAsync and ListModelsAsync ([8e0443a](https://www.github.com/StevanFreeborn/anthropic-client/commit/8e0443a6bb4736207d5ddf173f8ec966d03cec46))
+
+### Bug Fixes
+
+* only allow afterId or beforeId to be set. not both at same time. ([3fe75f5](https://www.github.com/StevanFreeborn/anthropic-client/commit/3fe75f511d6c6adae7971b6402353c7408b6d513))
+
 <a name="0.4.0"></a>
 ## [0.4.0](https://www.github.com/StevanFreeborn/anthropic-client/releases/tag/v0.4.0) (2025-01-03)
 
