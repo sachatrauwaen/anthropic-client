@@ -331,4 +331,14 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
 
     responses.Should().HaveCountGreaterThan(0);
   }
+
+  [Fact]
+  public async Task GetModelAsync_WhenCalled_ItShouldReturnResponse()
+  {
+    var result = await _client.GetModelAsync(AnthropicModels.Claude3Haiku);
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeOfType<AnthropicModel>();
+    result.Value.Id.Should().Be(AnthropicModels.Claude3Haiku);
+  }
 }

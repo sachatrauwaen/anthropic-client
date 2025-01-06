@@ -58,4 +58,10 @@ public static class MockHttpMessageHandlerExtensions
     return mockHttpMessageHandler
       .SetupBaseRequest(HttpMethod.Get, ModelsEndpoint);
   }
+
+  public static MockedRequest WhenGetModelRequest(this MockHttpMessageHandler mockHttpMessageHandler, string modelId)
+  {
+    return mockHttpMessageHandler
+      .SetupBaseRequest(HttpMethod.Get, $"{ModelsEndpoint}/{modelId}");
+  }
 }

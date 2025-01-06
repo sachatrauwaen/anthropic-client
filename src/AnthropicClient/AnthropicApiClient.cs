@@ -49,6 +49,13 @@ public interface IAnthropicApiClient
   /// <returns>An asynchronous enumerable that yields the response as an <see cref="AnthropicResult{T}"/> where T is <see cref="Page{T}"/> where T is <see cref="AnthropicModel"/>.</returns>
   /// 
   IAsyncEnumerable<AnthropicResult<Page<AnthropicModel>>> ListAllModelsAsync(int limit = 20);
+
+  /// <summary>
+  /// Gets a model by its ID asynchronously.
+  /// </summary>
+  /// <param name="modelId">The ID of the model to get.</param>
+  /// <returns>A task that represents the asynchronous operation. The task result contains the response as an <see cref="AnthropicResult{T}"/> where T is <see cref="AnthropicModel"/>.</returns>
+  Task<AnthropicResult<AnthropicModel>> GetModelAsync(string modelId);
 }
 
 /// <inheritdoc cref="IAnthropicApiClient"/>
@@ -350,6 +357,24 @@ public class AnthropicApiClient : IAnthropicApiClient
 
       yield return AnthropicResult<Page<AnthropicModel>>.Success(page, anthropicHeaders);
     } while (hasMore);
+  }
+
+  /// <inheritdoc/>
+  public async Task<AnthropicResult<AnthropicModel>> GetModelAsync(string modelId)
+  {
+    var endpoint = $"{ModelsEndpoint}/{modelId}";
+    var response = await SendRequestAsync(endpoint);
+    var anthropicHeaders = new AnthropicHeaders(response.Headers);
+    var responseContent = await response.Content.ReadAsStringAsync();
+
+    if (response.IsSuccessStatusCode is false)
+    {
+      var error = Deserialize<AnthropicError>(responseContent) ?? new AnthropicError();
+      return AnthropicResult<AnthropicModel>.Failure(error, anthropicHeaders);
+    }
+
+    var model = Deserialize<AnthropicModel>(responseContent) ?? new AnthropicModel();
+    return AnthropicResult<AnthropicModel>.Success(model, anthropicHeaders);
   }
 
   private ToolCall? GetToolCall(MessageResponse response, List<Tool> tools)

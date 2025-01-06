@@ -479,7 +479,7 @@ public class AnthropicApiClientTests : IntegrationTest
   }
 
   [Fact]
-  public async Task CountMessageTokensAsync_WhenCalledRequestFailsAndCanNotSerializeError_ItShouldReturnUnknownError()
+  public async Task CountMessageTokensAsync_WhenCalledRequestFailsAndCanNotDeserializeError_ItShouldReturnUnknownError()
   {
     _mockHttpMessageHandler
       .WhenCountMessageTokensRequest()
@@ -647,7 +647,7 @@ public class AnthropicApiClientTests : IntegrationTest
   }
 
   [Fact]
-  public async Task ListModelsAsync_WhenCalledRequestFailsAndCanNotSerializeError_ItShouldReturnUnknownError()
+  public async Task ListModelsAsync_WhenCalledRequestFailsAndCanNotDeserializeError_ItShouldReturnUnknownError()
   {
     _mockHttpMessageHandler
       .WhenListModelsRequest()
@@ -794,7 +794,7 @@ public class AnthropicApiClientTests : IntegrationTest
   }
 
   [Fact]
-  public async Task ListAllModelsAsync_WhenCalledRequestFailsAndCanNotSerializeError_ItShouldReturnUnknownError()
+  public async Task ListAllModelsAsync_WhenCalledRequestFailsAndCanNotDeserializeError_ItShouldReturnUnknownError()
   {
     _mockHttpMessageHandler
       .WhenListModelsRequest()
@@ -885,5 +885,98 @@ public class AnthropicApiClientTests : IntegrationTest
     }
 
     count.Should().Be(2);
+  }
+
+  [Fact]
+  public async Task GetModelAsync_WhenCalled_ItShouldReturnModel()
+  {
+    var modelId = "claude-3-5-sonnet-20241022";
+
+    _mockHttpMessageHandler
+      .WhenGetModelRequest(modelId)
+      .Respond(
+        HttpStatusCode.OK,
+        "application/json",
+        @"{
+            ""type"": ""model"",
+            ""id"": ""claude-3-5-sonnet-20241022"",
+            ""display_name"": ""Claude 3.5 Sonnet (New)"",
+            ""created_at"": ""2024-10-22T00:00:00Z""
+          }"
+      );
+
+    var result = await Client.GetModelAsync(modelId);
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeOfType<AnthropicModel>();
+    result.Value.Type.Should().Be("model");
+    result.Value.Id.Should().Be("claude-3-5-sonnet-20241022");
+    result.Value.DisplayName.Should().Be("Claude 3.5 Sonnet (New)");
+    result.Value.CreatedAt.Should().Be(DateTimeOffset.Parse("2024-10-22T00:00:00Z"));
+  }
+
+  [Fact]
+  public async Task GetModelAsync_WhenCalledAndErrorReturned_ItShouldHandleError()
+  {
+    var modelId = "claude-3-5-sonnet-20241022";
+
+    _mockHttpMessageHandler
+      .WhenGetModelRequest(modelId)
+      .Respond(
+        HttpStatusCode.BadRequest,
+        "application/json",
+        @"{
+            ""type"": ""error"",
+            ""error"": {
+              ""type"": ""invalid_request_error"",
+              ""message"": ""messages: roles must alternate between user and assistant, but found multiple user roles in a row""
+            }
+          }"
+      );
+
+    var result = await Client.GetModelAsync(modelId);
+
+    result.IsSuccess.Should().BeFalse();
+    result.Error.Should().BeOfType<AnthropicError>();
+    result.Error.Error.Should().BeOfType<InvalidRequestError>();
+  }
+
+  [Fact]
+  public async Task GetModelAsync_WhenCalledRequestFailsAndCanNotDeserializeError_ItShouldReturnUnknownError()
+  {
+    var modelId = "claude-3-5-sonnet-20241022";
+
+    _mockHttpMessageHandler
+      .WhenGetModelRequest(modelId)
+      .Respond(
+        HttpStatusCode.BadRequest,
+        "application/json",
+        @"{}"
+      );
+
+    var result = await Client.GetModelAsync(modelId);
+
+    result.IsSuccess.Should().BeFalse();
+    result.Error.Should().BeOfType<AnthropicError>();
+    result.Error.Error.Should().BeOfType<ApiError>();
+  }
+
+  [Fact]
+  public async Task GetModelAsync_WhenCalledAndCanNotDeserializeModel_ItShouldReturnEmptyModel()
+  {
+    var modelId = "claude-3-5-sonnet-20241022";
+
+    _mockHttpMessageHandler
+      .WhenGetModelRequest(modelId)
+      .Respond(
+        HttpStatusCode.OK,
+        "application/json",
+        @"{}"
+      );
+
+    var result = await Client.GetModelAsync(modelId);
+
+    result.IsSuccess.Should().BeFalse();
+    result.Error.Should().BeOfType<AnthropicModel>();
   }
 }
