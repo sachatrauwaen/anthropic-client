@@ -57,7 +57,7 @@ public class AnthropicApiClientTests : IntegrationTest
               ""input_tokens"": 10,
               ""output_tokens"": 25
             }
-        }"
+          }"
       );
 
     var request = new MessageRequest(
@@ -115,7 +115,7 @@ public class AnthropicApiClientTests : IntegrationTest
               ""input_tokens"": 10,
               ""output_tokens"": 25
             }
-        }"
+          }"
       );
 
     var func = (string ticker) => ticker;
@@ -191,7 +191,7 @@ public class AnthropicApiClientTests : IntegrationTest
               ""input_tokens"": 10,
               ""output_tokens"": 25
             }
-        }"
+          }"
       );
 
     var request = new MessageRequest(
@@ -331,12 +331,12 @@ public class AnthropicApiClientTests : IntegrationTest
         HttpStatusCode.BadRequest,
         "application/json",
         @"{
-          ""type"": ""error"",
-          ""error"": {
-            ""type"": ""invalid_request_error"",
-            ""message"": ""messages: roles must alternate between user and assistant, but found multiple user roles in a row""
-          }
-        }"
+            ""type"": ""error"",
+            ""error"": {
+              ""type"": ""invalid_request_error"",
+              ""message"": ""messages: roles must alternate between user and assistant, but found multiple user roles in a row""
+            }
+          }"
       );
 
     var request = new StreamMessageRequest(
@@ -385,7 +385,7 @@ public class AnthropicApiClientTests : IntegrationTest
               ""input_tokens"": 10,
               ""output_tokens"": 25
             }
-        }"
+          }"
       );
 
     var request = new MessageRequest(
@@ -428,8 +428,8 @@ public class AnthropicApiClientTests : IntegrationTest
         HttpStatusCode.OK,
         "application/json",
         @"{
-          ""input_tokens"": 10
-        }"
+            ""input_tokens"": 10
+          }"
       );
 
     var request = new CountMessageTokensRequest(
@@ -455,12 +455,12 @@ public class AnthropicApiClientTests : IntegrationTest
         HttpStatusCode.BadRequest,
         "application/json",
         @"{
-          ""type"": ""error"",
-          ""error"": {
-            ""type"": ""invalid_request_error"",
-            ""message"": ""messages: roles must alternate between user and assistant, but found multiple user roles in a row""
-          }
-        }"
+            ""type"": ""error"",
+            ""error"": {
+              ""type"": ""invalid_request_error"",
+              ""message"": ""messages: roles must alternate between user and assistant, but found multiple user roles in a row""
+            }
+          }"
       );
 
     var request = new CountMessageTokensRequest(
@@ -479,7 +479,7 @@ public class AnthropicApiClientTests : IntegrationTest
   }
 
   [Fact]
-  public async Task CountMessageTokensAsync_WhenCalledRequestFailsAndCanNotSerializeError_ItShouldReturnUnknownError()
+  public async Task CountMessageTokensAsync_WhenCalledRequestFailsAndCanNotDeserializeError_ItShouldReturnUnknownError()
   {
     _mockHttpMessageHandler
       .WhenCountMessageTokensRequest()
@@ -502,5 +502,480 @@ public class AnthropicApiClientTests : IntegrationTest
     result.IsSuccess.Should().BeFalse();
     result.Error.Should().BeOfType<AnthropicError>();
     result.Error.Error.Should().BeOfType<ApiError>();
+  }
+
+  [Fact]
+  public async Task ListModelsAsync_WhenCalledWithPagingRequestUsingDefaultValues_ItShouldReturnListOfModels()
+  {
+    _mockHttpMessageHandler
+      .WhenListModelsRequest()
+      .Respond(
+        HttpStatusCode.OK,
+        "application/json",
+        @"{
+            ""data"": [
+              {
+                ""type"": ""model"",
+                ""id"": ""claude-3-5-sonnet-20241022"",
+                ""display_name"": ""Claude 3.5 Sonnet (New)"",
+                ""created_at"": ""2024-10-22T00:00:00Z""
+              }
+            ],
+            ""has_more"": true,
+            ""first_id"": ""first_id"",
+            ""last_id"": ""last_id""
+          }"
+      );
+
+    var result = await Client.ListModelsAsync();
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeOfType<Page<AnthropicModel>>();
+    result.Value.HasMore.Should().BeTrue();
+    result.Value.FirstId.Should().Be("first_id");
+    result.Value.LastId.Should().Be("last_id");
+    result.Value.Data.Should().BeEquivalentTo(new AnthropicModel[]
+    {
+      new()
+      {
+        Type = "model",
+        Id = "claude-3-5-sonnet-20241022",
+        DisplayName = "Claude 3.5 Sonnet (New)",
+        CreatedAt = DateTimeOffset.Parse("2024-10-22T00:00:00Z")
+      }
+    });
+  }
+
+  [Fact]
+  public async Task ListModelsAsync_WhenCalledWithPagingRequestUsingCustomValues_ItShouldReturnListOfModels()
+  {
+    var pagingRequest = new PagingRequest(afterId: "next_id", limit: 10);
+
+    _mockHttpMessageHandler
+      .WhenListModelsRequest()
+      .WithQueryString(new Dictionary<string, string>
+      {
+        { "after_id", pagingRequest.AfterId },
+        { "limit", pagingRequest.Limit.ToString() },
+      })
+      .Respond(
+        HttpStatusCode.OK,
+        "application/json",
+        @"{
+            ""data"": [
+              {
+                ""type"": ""model"",
+                ""id"": ""claude-3-5-sonnet-20241022"",
+                ""display_name"": ""Claude 3.5 Sonnet (New)"",
+                ""created_at"": ""2024-10-22T00:00:00Z""
+              }
+            ],
+            ""has_more"": true,
+            ""first_id"": ""first_id"",
+            ""last_id"": ""last_id""
+          }"
+      );
+
+    var result = await Client.ListModelsAsync(pagingRequest);
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeOfType<Page<AnthropicModel>>();
+    result.Value.HasMore.Should().BeTrue();
+    result.Value.FirstId.Should().Be("first_id");
+    result.Value.LastId.Should().Be("last_id");
+    result.Value.Data.Should().BeEquivalentTo(new AnthropicModel[]
+    {
+      new()
+      {
+        Type = "model",
+        Id = "claude-3-5-sonnet-20241022",
+        DisplayName = "Claude 3.5 Sonnet (New)",
+        CreatedAt = DateTimeOffset.Parse("2024-10-22T00:00:00Z")
+      }
+    });
+  }
+
+  [Fact]
+  public async Task ListModelsAsync_WhenCalledAndNoModelsReturned_ItShouldReturnEmptyList()
+  {
+    _mockHttpMessageHandler
+      .WhenListModelsRequest()
+      .Respond(
+        HttpStatusCode.OK,
+        "application/json",
+        @"{
+            ""data"": [],
+            ""has_more"": false,
+            ""first_id"": null,
+            ""last_id"": null
+          }"
+      );
+
+    var result = await Client.ListModelsAsync();
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeOfType<Page<AnthropicModel>>();
+    result.Value.HasMore.Should().BeFalse();
+    result.Value.FirstId.Should().BeNull();
+    result.Value.LastId.Should().BeNull();
+    result.Value.Data.Should().BeEmpty();
+  }
+
+  [Fact]
+  public async Task ListModelsAsync_WhenCalledAndErrorReturned_ItShouldHandleError()
+  {
+    _mockHttpMessageHandler
+      .WhenListModelsRequest()
+      .Respond(
+        HttpStatusCode.BadRequest,
+        "application/json",
+        @"{
+            ""type"": ""error"",
+            ""error"": {
+              ""type"": ""invalid_request_error"",
+              ""message"": ""messages: roles must alternate between user and assistant, but found multiple user roles in a row""
+            }
+          }"
+      );
+
+    var result = await Client.ListModelsAsync();
+
+    result.IsSuccess.Should().BeFalse();
+    result.Error.Should().BeOfType<AnthropicError>();
+    result.Error.Error.Should().BeOfType<InvalidRequestError>();
+  }
+
+  [Fact]
+  public async Task ListModelsAsync_WhenCalledRequestFailsAndCanNotDeserializeError_ItShouldReturnUnknownError()
+  {
+    _mockHttpMessageHandler
+      .WhenListModelsRequest()
+      .Respond(
+        HttpStatusCode.BadRequest,
+        "application/json",
+        @"{}"
+      );
+
+    var result = await Client.ListModelsAsync();
+
+    result.IsSuccess.Should().BeFalse();
+    result.Error.Should().BeOfType<AnthropicError>();
+    result.Error.Error.Should().BeOfType<ApiError>();
+  }
+
+  [Fact]
+  public async Task ListAllModelsAsync_WhenCalled_ItShouldReturnAllModels()
+  {
+    _mockHttpMessageHandler
+      .WhenListModelsRequest()
+      .WithExactQueryString(new Dictionary<string, string>()
+      {
+        { "limit", "20" },
+      })
+      .Respond(
+        HttpStatusCode.OK,
+        "application/json",
+        @"{
+            ""data"": [
+              {
+                ""type"": ""model"",
+                ""id"": ""claude-3-5-sonnet-20241022"",
+                ""display_name"": ""Claude 3.5 Sonnet (New)"",
+                ""created_at"": ""2024-10-22T00:00:00Z""
+              }
+            ],
+            ""has_more"": true,
+            ""first_id"": ""1"",
+            ""last_id"": ""1""
+          }"
+      );
+
+    _mockHttpMessageHandler
+      .WhenListModelsRequest()
+      .WithExactQueryString(new Dictionary<string, string>()
+      {
+        { "after_id", "1" },
+        { "limit", "20" },
+      })
+      .Respond(
+        HttpStatusCode.OK,
+        "application/json",
+        @"{
+            ""data"": [
+              {
+                ""type"": ""model"",
+                ""id"": ""claude-3-5-sonnet-20241023"",
+                ""display_name"": ""Claude 3.5 Sonnet (New)"",
+                ""created_at"": ""2024-10-23T00:00:00Z""
+              }
+            ],
+            ""has_more"": false,
+            ""first_id"": ""2"",
+            ""last_id"": ""2""
+          }"
+      );
+
+    var pageResponses = Client.ListAllModelsAsync();
+    var collectedPages = new List<Page<AnthropicModel>>();
+
+    await foreach (var response in pageResponses)
+    {
+      response.IsSuccess.Should().BeTrue();
+      response.Value.Should().BeOfType<Page<AnthropicModel>>();
+      collectedPages.Add(response.Value);
+    }
+
+    collectedPages.Should().HaveCount(2);
+    collectedPages.Should().BeEquivalentTo(new Page<AnthropicModel>[]
+    {
+      new()
+      {
+        HasMore = true,
+        FirstId = "1",
+        LastId = "1",
+        Data = [
+          new()
+          {
+            Type = "model",
+            Id = "claude-3-5-sonnet-20241022",
+            DisplayName = "Claude 3.5 Sonnet (New)",
+            CreatedAt = DateTimeOffset.Parse("2024-10-22T00:00:00Z")
+          }
+        ]
+      },
+      new()
+      {
+        HasMore = false,
+        FirstId = "2",
+        LastId = "2",
+        Data = [
+          new()
+          {
+            Type = "model",
+            Id = "claude-3-5-sonnet-20241023",
+            DisplayName = "Claude 3.5 Sonnet (New)",
+            CreatedAt = DateTimeOffset.Parse("2024-10-23T00:00:00Z")
+          }
+        ]
+      }
+    });
+  }
+
+  [Fact]
+  public async Task ListAllModelsAsync_WhenCalledAndErrorReturned_ItShouldHandleError()
+  {
+    _mockHttpMessageHandler
+      .WhenListModelsRequest()
+      .Respond(
+        HttpStatusCode.BadRequest,
+        "application/json",
+        @"{
+            ""type"": ""error"",
+            ""error"": {
+              ""type"": ""invalid_request_error"",
+              ""message"": ""messages: roles must alternate between user and assistant, but found multiple user roles in a row""
+            }
+          }"
+      );
+
+    var responses = Client.ListAllModelsAsync();
+    var count = 0;
+
+    await foreach (var page in responses)
+    {
+      count++;
+      page.IsSuccess.Should().BeFalse();
+      page.Error.Should().BeOfType<AnthropicError>();
+      page.Error.Error.Should().BeOfType<InvalidRequestError>();
+    }
+
+    count.Should().Be(1);
+  }
+
+  [Fact]
+  public async Task ListAllModelsAsync_WhenCalledRequestFailsAndCanNotDeserializeError_ItShouldReturnUnknownError()
+  {
+    _mockHttpMessageHandler
+      .WhenListModelsRequest()
+      .Respond(
+        HttpStatusCode.BadRequest,
+        "application/json",
+        @"{}"
+      );
+
+    var responses = Client.ListAllModelsAsync();
+    var count = 0;
+
+    await foreach (var page in responses)
+    {
+      count++;
+      page.IsSuccess.Should().BeFalse();
+      page.Error.Should().BeOfType<AnthropicError>();
+      page.Error.Error.Should().BeOfType<ApiError>();
+    }
+
+    count.Should().Be(1);
+  }
+
+  [Fact]
+  public async Task ListAllModelsAsync_WhenFirstPageSucceedsAndSecondPageFails_ItShouldReturnFirstPageAndError()
+  {
+    _mockHttpMessageHandler
+      .WhenListModelsRequest()
+      .WithExactQueryString(new Dictionary<string, string>
+      {
+        { "limit", "20" },
+      })
+      .Respond(
+        HttpStatusCode.OK,
+        "application/json",
+        @"{
+            ""data"": [
+              {
+                ""type"": ""model"",
+                ""id"": ""claude-3-5-sonnet-20241022"",
+                ""display_name"": ""Claude 3.5 Sonnet (New)"",
+                ""created_at"": ""2024-10-22T00:00:00Z""
+              }
+            ],
+            ""has_more"": true,
+            ""first_id"": ""1"",
+            ""last_id"": ""1""
+          }"
+      );
+
+    _mockHttpMessageHandler
+      .WhenListModelsRequest()
+      .WithExactQueryString(new Dictionary<string, string>
+      {
+        { "after_id", "1" },
+        { "limit", "20" },
+      })
+      .Respond(
+        HttpStatusCode.BadRequest,
+        "application/json",
+        @"{
+            ""type"": ""error"",
+            ""error"": {
+              ""type"": ""invalid_request_error"",
+              ""message"": ""messages: roles must alternate between user and assistant, but found multiple user roles in a row""
+            }
+          }"
+      );
+
+    var responses = Client.ListAllModelsAsync();
+    var count = 0;
+
+    await foreach (var page in responses)
+    {
+      count++;
+
+      if (count == 1)
+      {
+        page.IsSuccess.Should().BeTrue();
+        page.Value.Should().BeOfType<Page<AnthropicModel>>();
+      }
+      else
+      {
+        page.IsSuccess.Should().BeFalse();
+        page.Error.Should().BeOfType<AnthropicError>();
+        page.Error.Error.Should().BeOfType<InvalidRequestError>();
+      }
+    }
+
+    count.Should().Be(2);
+  }
+
+  [Fact]
+  public async Task GetModelAsync_WhenCalled_ItShouldReturnModel()
+  {
+    var modelId = "claude-3-5-sonnet-20241022";
+
+    _mockHttpMessageHandler
+      .WhenGetModelRequest(modelId)
+      .Respond(
+        HttpStatusCode.OK,
+        "application/json",
+        @"{
+            ""type"": ""model"",
+            ""id"": ""claude-3-5-sonnet-20241022"",
+            ""display_name"": ""Claude 3.5 Sonnet (New)"",
+            ""created_at"": ""2024-10-22T00:00:00Z""
+          }"
+      );
+
+    var result = await Client.GetModelAsync(modelId);
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeOfType<AnthropicModel>();
+    result.Value.Type.Should().Be("model");
+    result.Value.Id.Should().Be("claude-3-5-sonnet-20241022");
+    result.Value.DisplayName.Should().Be("Claude 3.5 Sonnet (New)");
+    result.Value.CreatedAt.Should().Be(DateTimeOffset.Parse("2024-10-22T00:00:00Z"));
+  }
+
+  [Fact]
+  public async Task GetModelAsync_WhenCalledAndErrorReturned_ItShouldHandleError()
+  {
+    var modelId = "claude-3-5-sonnet-20241022";
+
+    _mockHttpMessageHandler
+      .WhenGetModelRequest(modelId)
+      .Respond(
+        HttpStatusCode.BadRequest,
+        "application/json",
+        @"{
+            ""type"": ""error"",
+            ""error"": {
+              ""type"": ""invalid_request_error"",
+              ""message"": ""messages: roles must alternate between user and assistant, but found multiple user roles in a row""
+            }
+          }"
+      );
+
+    var result = await Client.GetModelAsync(modelId);
+
+    result.IsSuccess.Should().BeFalse();
+    result.Error.Should().BeOfType<AnthropicError>();
+    result.Error.Error.Should().BeOfType<InvalidRequestError>();
+  }
+
+  [Fact]
+  public async Task GetModelAsync_WhenCalledRequestFailsAndCanNotDeserializeError_ItShouldReturnUnknownError()
+  {
+    var modelId = "claude-3-5-sonnet-20241022";
+
+    _mockHttpMessageHandler
+      .WhenGetModelRequest(modelId)
+      .Respond(
+        HttpStatusCode.BadRequest,
+        "application/json",
+        @"{}"
+      );
+
+    var result = await Client.GetModelAsync(modelId);
+
+    result.IsSuccess.Should().BeFalse();
+    result.Error.Should().BeOfType<AnthropicError>();
+    result.Error.Error.Should().BeOfType<ApiError>();
+  }
+
+  [Fact]
+  public async Task GetModelAsync_WhenCalledAndCanNotDeserializeModel_ItShouldReturnEmptyModel()
+  {
+    var modelId = "claude-3-5-sonnet-20241022";
+
+    _mockHttpMessageHandler
+      .WhenGetModelRequest(modelId)
+      .Respond(
+        HttpStatusCode.OK,
+        "application/json",
+        @"{}"
+      );
+
+    var result = await Client.GetModelAsync(modelId);
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeOfType<AnthropicModel>();
   }
 }

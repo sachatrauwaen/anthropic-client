@@ -134,6 +134,73 @@ if (response.IsFailure)
 Console.WriteLine("Token Count: {0}", response.Value.InputTokens);
 ```
 
+### List Models
+
+The `AnthropicApiClient` exposes a method named `ListModelsAsync` that can be used to list the available models. The method takes an optional `PagingRequest` instance as a parameter.
+
+```csharp
+using AnthropicClient;
+
+var response = await client.ListModelsAsync();
+
+if (response.IsFailure)
+{
+  Console.WriteLine("Failed to list models");
+  Console.WriteLine("Error Type: {0}", response.Error.Error.Type);
+  Console.WriteLine("Error Message: {0}", response.Error.Error.Message);
+  return;
+}
+
+foreach (var model in response.Value.Data)
+{
+  Console.WriteLine("Model Id: {0}", model.Id);
+  Console.WriteLine("Model Name: {0}", model.DisplayName);
+}
+```
+
+Using the `PagingRequest` instance allows you to specify the number of models to return and the page of models to return.
+
+```csharp
+using AnthropicClient;
+using AnthropicClient.Models;
+
+var response = await client.ListModelsAsync(new PagingRequest(afterId: "claude-3-5-sonnet-20241022", limit: 2));
+
+if (response.IsFailure)
+{
+  Console.WriteLine("Failed to list models");
+  Console.WriteLine("Error Type: {0}", response.Error.Error.Type);
+  Console.WriteLine("Error Message: {0}", response.Error.Error.Message);
+  return;
+}
+
+foreach (var model in response.Value.Data)
+{
+  Console.WriteLine("Model Id: {0}", model.Id);
+  Console.WriteLine("Model Name: {0}", model.DisplayName);
+}
+```
+
+### Get Model
+
+The `AnthropicApiClient` exposes a method named `GetModelAsync` that can be used to get a model by its id.
+
+```csharp
+using AnthropicClient;
+
+var response = await client.GetModelAsync("claude-3-5-sonnet-20241022");
+
+if (response.IsFailure)
+{
+  Console.WriteLine("Failed to get model");
+  Console.WriteLine("Error Type: {0}", response.Error.Error.Type);
+  Console.WriteLine("Error Message: {0}", response.Error.Error.Message);
+  return;
+}
+
+Console.WriteLine("Model Id: {0}", response.Value.Id);
+```
+
 ### Create a message
 
 The `AnthropicApiClient` exposes a method named `CreateMessageAsync` that can be used to create a message. The method requires a `MessageRequest` or a `StreamMessageRequest` instance as a parameter. The `MessageRequest` class is used to create a message whose response is not streamed and the `StreamMessageRequest` class is used to create a message whose response is streamed. The `MessageRequest` instance's properties can be set to configure how the message is created.
