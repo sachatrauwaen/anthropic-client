@@ -341,4 +341,24 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
     result.Value.Should().BeOfType<AnthropicModel>();
     result.Value.Id.Should().Be(AnthropicModels.Claude3Haiku);
   }
+
+  [Fact]
+  public async Task CreateMessageBatchAsync_WhenCalled_ItShouldReturnResponse()
+  {
+    var request = new MessageBatchRequest([
+      new(
+        Guid.NewGuid().ToString(),
+        new(
+          model: AnthropicModels.Claude3Haiku,
+          messages: [new(MessageRole.User, [new TextContent("Hello!")])]
+        )
+      ),
+    ]);
+    
+    var result = await _client.CreateMessageBatchAsync(request);
+    
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeOfType<MessageBatchResponse>();
+    result.Value.Id.Should().NotBeNullOrEmpty();
+  }
 }
