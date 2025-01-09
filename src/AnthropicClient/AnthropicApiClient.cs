@@ -71,7 +71,7 @@ public class AnthropicApiClient : IAnthropicApiClient
   private const string BaseUrl = "https://api.anthropic.com/v1/";
   private const string ApiKeyHeader = "x-api-key";
   private const string MessagesEndpoint = "messages";
-  private string CountTokensEndpoint => $"{MessagesEndpoint}/count-tokens";
+  private string CountTokensEndpoint => $"{MessagesEndpoint}/count_tokens";
   private string MessageBatchesEndpoint => $"{MessagesEndpoint}/batches";
   private const string ModelsEndpoint = "models";
   private const string JsonContentType = "application/json";
