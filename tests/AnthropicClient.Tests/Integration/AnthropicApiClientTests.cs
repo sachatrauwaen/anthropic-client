@@ -1032,4 +1032,70 @@ public class AnthropicApiClientTests : IntegrationTest
     result.Value.CancelInitiatedAt.Should().Be(DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"));
     result.Value.ResultsUrl.Should().Be("https://api.anthropic.com/v1/messages/batches/msgbatch_013Zva2CMHLNnXjNJJKqJ2EF/results");
   }
+  
+  [Fact]
+  public async Task CreateMessageBatchAsync_WhenCalledAndErrorReturned_ItShouldHandleError()
+  {
+    _mockHttpMessageHandler
+      .WhenCreateMessageBatchRequest()
+      .Respond(
+        HttpStatusCode.BadRequest,
+        "application/json",
+        @"{
+            ""type"": ""error"",
+            ""error"": {
+              ""type"": ""invalid_request_error"",
+              ""message"": ""messages: roles must alternate between user and assistant, but found multiple user roles in a row""
+            }
+          }"
+      );
+
+    var request = new MessageBatchRequest([new("custom_id", new())]);
+
+    var result = await Client.CreateMessageBatchAsync(request);
+
+    result.IsSuccess.Should().BeFalse();
+    result.Error.Should().BeOfType<AnthropicError>();
+    result.Error.Error.Should().BeOfType<InvalidRequestError>();
+  }
+  
+  [Fact]
+  public async Task CreateMessageBatchAsync_WhenCalledRequestFailsAndErrorCanNotBeDeserialized_ItShouldReturnUnknownError()
+  {
+    _mockHttpMessageHandler
+      .WhenCreateMessageBatchRequest()
+      .Respond(
+        HttpStatusCode.BadRequest,
+        "application/json",
+        @"{}"
+      );
+
+    var request = new MessageBatchRequest([new("custom_id", new())]);
+
+    var result = await Client.CreateMessageBatchAsync(request);
+
+    result.IsSuccess.Should().BeFalse();
+    result.Error.Should().BeOfType<AnthropicError>();
+    result.Error.Error.Should().BeOfType<ApiError>();
+  }
+  
+  [Fact]
+  public async Task CreateMessageBatchAsync_WhenCalledRequestSucceedsAndCanNotDeserializeResponse_ItShouldReturnEmptyResponse()
+  {
+    _mockHttpMessageHandler
+      .WhenCreateMessageBatchRequest()
+      .Respond(
+        HttpStatusCode.OK,
+        "application/json",
+        @"{}"
+      );
+
+    var request = new MessageBatchRequest([new("custom_id", new())]);
+
+    var result = await Client.CreateMessageBatchAsync(request);
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeOfType<MessageBatchResponse>();
+    result.Value.Should().BeEquivalentTo(new MessageBatchResponse());
+  }
 }
