@@ -29,6 +29,13 @@ public interface IAnthropicApiClient
   IAsyncEnumerable<AnthropicEvent> CreateMessageAsync(StreamMessageRequest request);
 
   /// <summary>
+  /// Creates a batch of messages asynchronously.
+  /// </summary>
+  /// <param name="request">The message batch request to create.</param>
+  /// <returns>A task that represents the asynchronous operation. The task result contains the response as an <see cref="AnthropicResult{T}"/> where T is <see cref="MessageBatchResponse"/>.</returns>
+  Task<AnthropicResult<MessageBatchResponse>> CreateMessageBatchAsync(MessageBatchRequest request);
+
+  /// <summary>
   /// Counts the tokens in a message asynchronously.
   /// </summary>
   /// <param name="request">The count message tokens request.</param>
@@ -64,7 +71,8 @@ public class AnthropicApiClient : IAnthropicApiClient
   private const string BaseUrl = "https://api.anthropic.com/v1/";
   private const string ApiKeyHeader = "x-api-key";
   private const string MessagesEndpoint = "messages";
-  private const string CountTokensEndpoint = "messages/count_tokens";
+  private string CountTokensEndpoint => $"{MessagesEndpoint}/count-tokens";
+  private string MessageBatchesEndpoint => $"{MessagesEndpoint}/batches";
   private const string ModelsEndpoint = "models";
   private const string JsonContentType = "application/json";
   private const string EventPrefix = "event:";
@@ -285,6 +293,23 @@ public class AnthropicApiClient : IAnthropicApiClient
         continue;
       }
     } while (true);
+  }
+
+  /// <inheritdoc/>
+  public async Task<AnthropicResult<MessageBatchResponse>> CreateMessageBatchAsync(MessageBatchRequest request)
+  {
+    var response = await SendRequestAsync(MessageBatchesEndpoint, request);
+    var anthropicHeaders = new AnthropicHeaders(response.Headers);
+    var responseContent = await response.Content.ReadAsStringAsync();
+
+    if (response.IsSuccessStatusCode is false)
+    {
+      var error = Deserialize<AnthropicError>(responseContent) ?? new AnthropicError();
+      return AnthropicResult<MessageBatchResponse>.Failure(error, anthropicHeaders);
+    }
+
+    var msgBatchResponse = Deserialize<MessageBatchResponse>(responseContent) ?? new MessageBatchResponse();
+    return AnthropicResult<MessageBatchResponse>.Success(msgBatchResponse, anthropicHeaders);
   }
 
   /// <inheritdoc/>
