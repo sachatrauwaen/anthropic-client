@@ -33,7 +33,7 @@ public class MessageBatchResponse
   /// Gets the date and time when the batch ended.
   /// </summary>
   [JsonPropertyName("ended_at")]
-  public DateTimeOffset EndedAt { get; init; }
+  public DateTimeOffset? EndedAt { get; init; }
 
   /// <summary>
   /// Gets the date and time when the batch was created.
@@ -51,19 +51,19 @@ public class MessageBatchResponse
   /// Gets the date and time when the batch was archived.
   /// </summary>
   [JsonPropertyName("archived_at")]
-  public DateTimeOffset ArchivedAt { get; init; }
+  public DateTimeOffset? ArchivedAt { get; init; }
 
   /// <summary>
   /// Gets the date and time when the batch cancellation was initiated.
   /// </summary>
   [JsonPropertyName("cancel_initiated_at")]
-  public DateTimeOffset CancelInitiatedAt { get; init; }
+  public DateTimeOffset? CancelInitiatedAt { get; init; }
 
   /// <summary>
   /// Gets the URL to the results of the batch.
   /// </summary>
   [JsonPropertyName("results_url")]
-  public string ResultsUrl { get; init; } = string.Empty;
+  public string? ResultsUrl { get; init; } = string.Empty;
 }
 
 /// <summary>
