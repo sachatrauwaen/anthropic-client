@@ -50,7 +50,7 @@ public class MessageBatchResponseTests : SerializationTest
       Id = "msgbatch_013Zva2CMHLNnXjNJJKqJ2EF",
       Type = "message_batch",
       ProcessingStatus = "in_progress",
-      RequestCounts = new MessageBatchRequestCounts
+      RequestCounts = new()
       {
         Processing = 100,
         Succeeded = 50,
@@ -94,7 +94,7 @@ public class MessageBatchResponseTests : SerializationTest
       Id = "msgbatch_013Zva2CMHLNnXjNJJKqJ2EF",
       Type = "message_batch",
       ProcessingStatus = "in_progress",
-      RequestCounts = new MessageBatchRequestCounts
+      RequestCounts = new()
       {
         Processing = 100,
         Succeeded = 50,
