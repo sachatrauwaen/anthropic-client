@@ -71,4 +71,10 @@ public static class MockHttpMessageHandlerExtensions
     return mockHttpMessageHandler
       .SetupBaseRequest(HttpMethod.Post, MessageBatchesEndpoint);
   }
+  
+  public static MockedRequest WhenGetMessageBatchRequest(this MockHttpMessageHandler mockHttpMessageHandler, string batchId)
+  {
+    return mockHttpMessageHandler
+      .SetupBaseRequest(HttpMethod.Get, $"{MessageBatchesEndpoint}/{batchId}");
+  }
 }

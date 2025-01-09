@@ -1098,4 +1098,124 @@ public class AnthropicApiClientTests : IntegrationTest
     result.Value.Should().BeOfType<MessageBatchResponse>();
     result.Value.Should().BeEquivalentTo(new MessageBatchResponse());
   }
+
+  [Fact]
+  public async Task GetMessageBatchAsync_WhenCalled_ItShouldReturnBatch()
+  {
+    var batchId = "msgbatch_013Zva2CMHLNnXjNJJKqJ2EF";
+
+    _mockHttpMessageHandler
+      .WhenGetMessageBatchRequest(batchId)
+      .Respond(
+        HttpStatusCode.OK,
+        "application/json",
+        @"{
+            ""id"": ""msgbatch_013Zva2CMHLNnXjNJJKqJ2EF"",
+            ""type"": ""message_batch"",
+            ""processing_status"": ""in_progress"",
+            ""request_counts"": {
+              ""processing"": 100,
+              ""succeeded"": 50,
+              ""errored"": 30,
+              ""canceled"": 10,
+              ""expired"": 10
+            },
+            ""ended_at"": ""2024-08-20T18:37:24.100435Z"",
+            ""created_at"": ""2024-08-20T18:37:24.100435Z"",
+            ""expires_at"": ""2024-08-20T18:37:24.100435Z"",
+            ""archived_at"": ""2024-08-20T18:37:24.100435Z"",
+            ""cancel_initiated_at"": ""2024-08-20T18:37:24.100435Z"",
+            ""results_url"": ""https://api.anthropic.com/v1/messages/batches/msgbatch_013Zva2CMHLNnXjNJJKqJ2EF/results""
+          }"
+      );
+
+    var result = await Client.GetMessageBatchAsync(batchId);
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeOfType<MessageBatchResponse>();
+    result.Value.Id.Should().Be("msgbatch_013Zva2CMHLNnXjNJJKqJ2EF");
+    result.Value.Type.Should().Be("message_batch");
+    result.Value.ProcessingStatus.Should().Be("in_progress");
+    result.Value.RequestCounts.Should().BeEquivalentTo(new MessageBatchRequestCounts
+    {
+      Processing = 100,
+      Succeeded = 50,
+      Errored = 30,
+      Canceled = 10,
+      Expired = 10
+    });
+
+    result.Value.EndedAt.Should().Be(DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"));
+    result.Value.CreatedAt.Should().Be(DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"));
+    result.Value.ExpiresAt.Should().Be(DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"));
+    result.Value.ArchivedAt.Should().Be(DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"));
+    result.Value.CancelInitiatedAt.Should().Be(DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"));
+    result.Value.ResultsUrl.Should()
+      .Be("https://api.anthropic.com/v1/messages/batches/msgbatch_013Zva2CMHLNnXjNJJKqJ2EF/results");
+  }
+  
+  [Fact]
+  public async Task GetMessageBatchAsync_WhenCalledAndErrorReturned_ItShouldHandleError()
+  {
+    var batchId = "msgbatch_013Zva2CMHLNnXjNJJKqJ2EF";
+
+    _mockHttpMessageHandler
+      .WhenGetMessageBatchRequest(batchId)
+      .Respond(
+        HttpStatusCode.BadRequest,
+        "application/json",
+        @"{
+            ""type"": ""error"",
+            ""error"": {
+              ""type"": ""invalid_request_error"",
+              ""message"": ""messages: roles must alternate between user and assistant, but found multiple user roles in a row""
+            }
+          }"
+      );
+
+    var result = await Client.GetMessageBatchAsync(batchId);
+
+    result.IsSuccess.Should().BeFalse();
+    result.Error.Should().BeOfType<AnthropicError>();
+    result.Error.Error.Should().BeOfType<InvalidRequestError>();
+  }
+  
+  [Fact]
+  public async Task GetMessageBatchAsync_WhenCalledRequestFailsAndErrorCanNotBeDeserialized_ItShouldReturnUnknownError()
+  {
+    var batchId = "msgbatch_013Zva2CMHLNnXjNJJKqJ2EF";
+
+    _mockHttpMessageHandler
+      .WhenGetMessageBatchRequest(batchId)
+      .Respond(
+        HttpStatusCode.BadRequest,
+        "application/json",
+        @"{}"
+      );
+
+    var result = await Client.GetMessageBatchAsync(batchId);
+
+    result.IsSuccess.Should().BeFalse();
+    result.Error.Should().BeOfType<AnthropicError>();
+    result.Error.Error.Should().BeOfType<ApiError>();
+  }
+  
+  [Fact]
+  public async Task GetMessageBatchAsync_WhenCalledAndCanNotDeserializeResponse_ItShouldReturnEmptyResponse()
+  {
+    var batchId = "msgbatch_013Zva2CMHLNnXjNJJKqJ2EF";
+
+    _mockHttpMessageHandler
+      .WhenGetMessageBatchRequest(batchId)
+      .Respond(
+        HttpStatusCode.OK,
+        "application/json",
+        @"{}"
+      );
+
+    var result = await Client.GetMessageBatchAsync(batchId);
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeOfType<MessageBatchResponse>();
+  }
 }

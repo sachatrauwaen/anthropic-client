@@ -361,4 +361,25 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
     result.Value.Should().BeOfType<MessageBatchResponse>();
     result.Value.Id.Should().NotBeNullOrEmpty();
   }
+
+  [Fact]
+  public async Task GetMessageBatchAsync_WhenCalled_ItShouldReturnResponse()
+  {
+    var request = new MessageBatchRequest([
+      new(
+        Guid.NewGuid().ToString(),
+        new(
+          model: AnthropicModels.Claude3Haiku,
+          messages: [new(MessageRole.User, [new TextContent("Hello!")])]
+        )
+      ),
+    ]);
+    
+    var createResult = await _client.CreateMessageBatchAsync(request);
+    var getResult = await _client.GetMessageBatchAsync(createResult.Value.Id);
+
+    getResult.IsSuccess.Should().BeTrue();
+    getResult.Value.Should().BeOfType<MessageBatchResponse>();
+    getResult.Value.Id.Should().Be(createResult.Value.Id);
+  }
 }

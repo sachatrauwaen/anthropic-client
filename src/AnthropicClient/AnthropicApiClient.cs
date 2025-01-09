@@ -34,7 +34,14 @@ public interface IAnthropicApiClient
   /// <param name="request">The message batch request to create.</param>
   /// <returns>A task that represents the asynchronous operation. The task result contains the response as an <see cref="AnthropicResult{T}"/> where T is <see cref="MessageBatchResponse"/>.</returns>
   Task<AnthropicResult<MessageBatchResponse>> CreateMessageBatchAsync(MessageBatchRequest request);
-
+  
+  /// <summary>
+  /// Gets a message batch asynchronously.
+  /// </summary>
+  /// <param name="batchId">The ID of the message batch to get.</param>
+  /// <returns>A task that represents the asynchronous operation. The task result contains the response as an <see cref="AnthropicResult{T}"/> where T is <see cref="MessageBatchResponse"/>.</returns>
+  Task<AnthropicResult<MessageBatchResponse>> GetMessageBatchAsync(string batchId);
+  
   /// <summary>
   /// Counts the tokens in a message asynchronously.
   /// </summary>
@@ -308,6 +315,23 @@ public class AnthropicApiClient : IAnthropicApiClient
       return AnthropicResult<MessageBatchResponse>.Failure(error, anthropicHeaders);
     }
 
+    var msgBatchResponse = Deserialize<MessageBatchResponse>(responseContent) ?? new MessageBatchResponse();
+    return AnthropicResult<MessageBatchResponse>.Success(msgBatchResponse, anthropicHeaders);
+  }
+
+  /// <inheritdoc/>
+  public async Task<AnthropicResult<MessageBatchResponse>> GetMessageBatchAsync(string batchId)
+  {
+    var response = await SendRequestAsync($"{MessageBatchesEndpoint}/{batchId}");
+    var anthropicHeaders = new AnthropicHeaders(response.Headers);
+    var responseContent = await response.Content.ReadAsStringAsync();
+    
+    if (response.IsSuccessStatusCode is false)
+    {
+      var error = Deserialize<AnthropicError>(responseContent) ?? new AnthropicError();
+      return AnthropicResult<MessageBatchResponse>.Failure(error, anthropicHeaders);
+    }
+    
     var msgBatchResponse = Deserialize<MessageBatchResponse>(responseContent) ?? new MessageBatchResponse();
     return AnthropicResult<MessageBatchResponse>.Success(msgBatchResponse, anthropicHeaders);
   }
