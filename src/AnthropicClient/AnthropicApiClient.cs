@@ -34,14 +34,21 @@ public interface IAnthropicApiClient
   /// <param name="request">The message batch request to create.</param>
   /// <returns>A task that represents the asynchronous operation. The task result contains the response as an <see cref="AnthropicResult{T}"/> where T is <see cref="MessageBatchResponse"/>.</returns>
   Task<AnthropicResult<MessageBatchResponse>> CreateMessageBatchAsync(MessageBatchRequest request);
-  
+
   /// <summary>
   /// Gets a message batch asynchronously.
   /// </summary>
   /// <param name="batchId">The ID of the message batch to get.</param>
   /// <returns>A task that represents the asynchronous operation. The task result contains the response as an <see cref="AnthropicResult{T}"/> where T is <see cref="MessageBatchResponse"/>.</returns>
   Task<AnthropicResult<MessageBatchResponse>> GetMessageBatchAsync(string batchId);
-  
+
+  /// <summary>
+  /// Gets the results of a message batch asynchronously.
+  /// </summary>
+  /// <param name="batchId">The ID of the message batch to get the results for.</param>
+  /// <returns>A task that represents the asynchronous operation. The task result contains the response as an <see cref="AnthropicResult{T}"/> where T is <see cref="IAsyncEnumerable{T}"/> where T is <see cref="MessageBatchResultItem"/>.</returns>
+  Task<AnthropicResult<IAsyncEnumerable<MessageBatchResultItem>>> GetMessageBatchResultsAsync(string batchId);
+
   /// <summary>
   /// Counts the tokens in a message asynchronously.
   /// </summary>
@@ -325,15 +332,47 @@ public class AnthropicApiClient : IAnthropicApiClient
     var response = await SendRequestAsync($"{MessageBatchesEndpoint}/{batchId}");
     var anthropicHeaders = new AnthropicHeaders(response.Headers);
     var responseContent = await response.Content.ReadAsStringAsync();
-    
+
     if (response.IsSuccessStatusCode is false)
     {
       var error = Deserialize<AnthropicError>(responseContent) ?? new AnthropicError();
       return AnthropicResult<MessageBatchResponse>.Failure(error, anthropicHeaders);
     }
-    
+
     var msgBatchResponse = Deserialize<MessageBatchResponse>(responseContent) ?? new MessageBatchResponse();
     return AnthropicResult<MessageBatchResponse>.Success(msgBatchResponse, anthropicHeaders);
+  }
+
+  /// <inheritdoc/>
+  public async Task<AnthropicResult<IAsyncEnumerable<MessageBatchResultItem>>> GetMessageBatchResultsAsync(string batchId)
+  {
+    var response = await SendRequestAsync($"{MessageBatchesEndpoint}/{batchId}/results");
+    var anthropicHeaders = new AnthropicHeaders(response.Headers);
+
+    if (response.IsSuccessStatusCode is false)
+    {
+      var content = await response.Content.ReadAsStringAsync();
+      var error = Deserialize<AnthropicError>(content) ?? new AnthropicError();
+      return AnthropicResult<IAsyncEnumerable<MessageBatchResultItem>>.Failure(error, anthropicHeaders);
+    }
+
+    async IAsyncEnumerable<MessageBatchResultItem> ReadResults()
+    {
+      using var responseContent = await response.Content.ReadAsStreamAsync();
+      using var streamReader = new StreamReader(responseContent);
+
+      var line = await streamReader.ReadLineAsync();
+
+      while (line is not null)
+      {
+        var resultItem = Deserialize<MessageBatchResultItem>(line) ?? new MessageBatchResultItem();
+        yield return resultItem;
+
+        line = await streamReader.ReadLineAsync();
+      }
+    }
+
+    return AnthropicResult<IAsyncEnumerable<MessageBatchResultItem>>.Success(ReadResults(), anthropicHeaders);
   }
 
   /// <inheritdoc/>

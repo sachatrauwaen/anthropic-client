@@ -1,3 +1,6 @@
+using AnthropicClient.Tests.Files;
+using AnthropicClient.Tests.Unit;
+
 namespace AnthropicClient.Tests.Integration;
 
 public class AnthropicApiClientTests : IntegrationTest
@@ -1032,7 +1035,7 @@ public class AnthropicApiClientTests : IntegrationTest
     result.Value.CancelInitiatedAt.Should().Be(DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"));
     result.Value.ResultsUrl.Should().Be("https://api.anthropic.com/v1/messages/batches/msgbatch_013Zva2CMHLNnXjNJJKqJ2EF/results");
   }
-  
+
   [Fact]
   public async Task CreateMessageBatchAsync_WhenCalledAndErrorReturned_ItShouldHandleError()
   {
@@ -1058,7 +1061,7 @@ public class AnthropicApiClientTests : IntegrationTest
     result.Error.Should().BeOfType<AnthropicError>();
     result.Error.Error.Should().BeOfType<InvalidRequestError>();
   }
-  
+
   [Fact]
   public async Task CreateMessageBatchAsync_WhenCalledRequestFailsAndErrorCanNotBeDeserialized_ItShouldReturnUnknownError()
   {
@@ -1078,7 +1081,7 @@ public class AnthropicApiClientTests : IntegrationTest
     result.Error.Should().BeOfType<AnthropicError>();
     result.Error.Error.Should().BeOfType<ApiError>();
   }
-  
+
   [Fact]
   public async Task CreateMessageBatchAsync_WhenCalledRequestSucceedsAndCanNotDeserializeResponse_ItShouldReturnEmptyResponse()
   {
@@ -1153,7 +1156,7 @@ public class AnthropicApiClientTests : IntegrationTest
     result.Value.ResultsUrl.Should()
       .Be("https://api.anthropic.com/v1/messages/batches/msgbatch_013Zva2CMHLNnXjNJJKqJ2EF/results");
   }
-  
+
   [Fact]
   public async Task GetMessageBatchAsync_WhenCalledAndErrorReturned_ItShouldHandleError()
   {
@@ -1179,7 +1182,7 @@ public class AnthropicApiClientTests : IntegrationTest
     result.Error.Should().BeOfType<AnthropicError>();
     result.Error.Error.Should().BeOfType<InvalidRequestError>();
   }
-  
+
   [Fact]
   public async Task GetMessageBatchAsync_WhenCalledRequestFailsAndErrorCanNotBeDeserialized_ItShouldReturnUnknownError()
   {
@@ -1199,7 +1202,7 @@ public class AnthropicApiClientTests : IntegrationTest
     result.Error.Should().BeOfType<AnthropicError>();
     result.Error.Error.Should().BeOfType<ApiError>();
   }
-  
+
   [Fact]
   public async Task GetMessageBatchAsync_WhenCalledAndCanNotDeserializeResponse_ItShouldReturnEmptyResponse()
   {
@@ -1217,5 +1220,31 @@ public class AnthropicApiClientTests : IntegrationTest
 
     result.IsSuccess.Should().BeTrue();
     result.Value.Should().BeOfType<MessageBatchResponse>();
+  }
+
+  [Fact]
+  public async Task GetMessageBatchResultsAsync_WhenCalledAndSuccessful_ItShouldReturnAllBatchResults()
+  {
+    var batchId = "msgbatch_013Zva2CMHLNnXjNJJKqJ2EF";
+    var batchResultsPath = TestFileHelper.GetTestFilePath("batch_results.jsonl");
+    var batchResultsText = await File.ReadAllTextAsync(batchResultsPath);
+    var batchResults = batchResultsText.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+    var expectedResults = batchResults.Select(Deserialize<MessageBatchResultItem>);
+
+    _mockHttpMessageHandler
+      .WhenGetMessageBatchResultsRequest(batchId)
+      .Respond(
+        HttpStatusCode.OK,
+        "application/x-jsonl",
+        batchResultsText
+      );
+
+    var result = await Client.GetMessageBatchResultsAsync(batchId);
+
+    result.IsSuccess.Should().BeTrue();
+
+    var actualResults = await result.Value.ToListAsync();
+
+    actualResults.Should().BeEquivalentTo(expectedResults);
   }
 }

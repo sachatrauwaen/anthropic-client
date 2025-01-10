@@ -1,10 +1,9 @@
+using AnthropicClient.Tests.Files;
+
 namespace AnthropicClient.Tests.EndToEnd;
 
 public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(configFixture)
 {
-  private string GetTestFilePath(string fileName) =>
-    Path.Combine(Directory.GetCurrentDirectory(), "Files", fileName);
-
   [Fact]
   public async Task CreateMessageAsync_WhenCalled_ItShouldReturnResponse()
   {
@@ -63,7 +62,7 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
   [Fact]
   public async Task CreateMessageAsync_WhenImageIsSent_ItShouldReturnResponse()
   {
-    var imagePath = GetTestFilePath("elephant.jpg");
+    var imagePath = TestFileHelper.GetTestFilePath("elephant.jpg");
     var mediaType = "image/jpeg";
     var bytes = await File.ReadAllBytesAsync(imagePath);
     var base64Data = Convert.ToBase64String(bytes);
@@ -102,7 +101,7 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
   {
     var client = CreateClient(new HttpClient());
 
-    var storyPath = GetTestFilePath("story.txt");
+    var storyPath = TestFileHelper.GetTestFilePath("story.txt");
     var storyText = await File.ReadAllTextAsync(storyPath);
 
     var request = new MessageRequest(
@@ -141,7 +140,7 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
   {
     var client = CreateClient(new HttpClient());
 
-    var storyPath = GetTestFilePath("story.txt");
+    var storyPath = TestFileHelper.GetTestFilePath("story.txt");
     var storyText = await File.ReadAllTextAsync(storyPath);
 
     var request = new MessageRequest(
@@ -217,7 +216,7 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
   [Fact]
   public async Task CreateMessageAsync_WhenProvidedWithPDF_ItShouldReturnResponse()
   {
-    var pdfPath = GetTestFilePath("addendum.pdf");
+    var pdfPath = TestFileHelper.GetTestFilePath("addendum.pdf");
     var bytes = await File.ReadAllBytesAsync(pdfPath);
     var base64Data = Convert.ToBase64String(bytes);
 
@@ -253,7 +252,7 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
   [Fact]
   public async Task CreateMessageAsync_WhenProvidedWithPDFWithCacheControl_ItShouldUseCache()
   {
-    var pdfPath = GetTestFilePath("addendum.pdf");
+    var pdfPath = TestFileHelper.GetTestFilePath("addendum.pdf");
     var bytes = await File.ReadAllBytesAsync(pdfPath);
     var base64Data = Convert.ToBase64String(bytes);
 
@@ -354,9 +353,9 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
         )
       ),
     ]);
-    
+
     var result = await _client.CreateMessageBatchAsync(request);
-    
+
     result.IsSuccess.Should().BeTrue();
     result.Value.Should().BeOfType<MessageBatchResponse>();
     result.Value.Id.Should().NotBeNullOrEmpty();
@@ -374,7 +373,7 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
         )
       ),
     ]);
-    
+
     var createResult = await _client.CreateMessageBatchAsync(request);
     var getResult = await _client.GetMessageBatchAsync(createResult.Value.Id);
 

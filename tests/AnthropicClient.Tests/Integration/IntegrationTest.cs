@@ -1,6 +1,8 @@
+using AnthropicClient.Tests.Unit;
+
 namespace AnthropicClient.Tests.Integration;
 
-public class IntegrationTest
+public class IntegrationTest : SerializationTest
 {
   protected readonly MockHttpMessageHandler _mockHttpMessageHandler = new();
   protected AnthropicApiClient Client => CreateClient();
@@ -71,10 +73,16 @@ public static class MockHttpMessageHandlerExtensions
     return mockHttpMessageHandler
       .SetupBaseRequest(HttpMethod.Post, MessageBatchesEndpoint);
   }
-  
+
   public static MockedRequest WhenGetMessageBatchRequest(this MockHttpMessageHandler mockHttpMessageHandler, string batchId)
   {
     return mockHttpMessageHandler
       .SetupBaseRequest(HttpMethod.Get, $"{MessageBatchesEndpoint}/{batchId}");
+  }
+
+  public static MockedRequest WhenGetMessageBatchResultsRequest(this MockHttpMessageHandler mockHttpMessageHandler, string batchId)
+  {
+    return mockHttpMessageHandler
+      .SetupBaseRequest(HttpMethod.Get, $"{MessageBatchesEndpoint}/{batchId}/results");
   }
 }
