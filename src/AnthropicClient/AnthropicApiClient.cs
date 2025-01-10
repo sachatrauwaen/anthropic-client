@@ -356,7 +356,9 @@ public class AnthropicApiClient : IAnthropicApiClient
       return AnthropicResult<IAsyncEnumerable<MessageBatchResultItem>>.Failure(error, anthropicHeaders);
     }
 
-    async IAsyncEnumerable<MessageBatchResultItem> ReadResults()
+    return AnthropicResult<IAsyncEnumerable<MessageBatchResultItem>>.Success(ReadResultsAsync(), anthropicHeaders);
+
+    async IAsyncEnumerable<MessageBatchResultItem> ReadResultsAsync()
     {
       using var responseContent = await response.Content.ReadAsStreamAsync();
       using var streamReader = new StreamReader(responseContent);
@@ -371,8 +373,6 @@ public class AnthropicApiClient : IAnthropicApiClient
         line = await streamReader.ReadLineAsync();
       }
     }
-
-    return AnthropicResult<IAsyncEnumerable<MessageBatchResultItem>>.Success(ReadResults(), anthropicHeaders);
   }
 
   /// <inheritdoc/>
