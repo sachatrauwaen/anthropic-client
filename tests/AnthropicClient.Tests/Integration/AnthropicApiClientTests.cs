@@ -1466,4 +1466,234 @@ public class AnthropicApiClientTests : IntegrationTest
     result.Error.Should().BeOfType<AnthropicError>();
     result.Error.Error.Should().BeOfType<ApiError>();
   }
+
+  [Fact]
+  public async Task ListMessageBatchesAsync_WhenCalledAndSuccessful_ItShouldReturnPageOfBatches()
+  {
+    _mockHttpMessageHandler
+      .WhenListMessageBatchesRequest()
+      .Respond(
+        HttpStatusCode.OK,
+        "application/json",
+        @"{
+            ""data"": [
+              {
+                ""id"": ""msgbatch_013Zva2CMHLNnXjNJJKqJ2EF"",
+                ""type"": ""message_batch"",
+                ""processing_status"": ""in_progress"",
+                ""request_counts"": {
+                  ""processing"": 100,
+                  ""succeeded"": 50,
+                  ""errored"": 30,
+                  ""canceled"": 10,
+                  ""expired"": 10
+                },
+                ""ended_at"": ""2024-08-20T18:37:24.100435Z"",
+                ""created_at"": ""2024-08-20T18:37:24.100435Z"",
+                ""expires_at"": ""2024-08-20T18:37:24.100435Z"",
+                ""archived_at"": ""2024-08-20T18:37:24.100435Z"",
+                ""cancel_initiated_at"": ""2024-08-20T18:37:24.100435Z"",
+                ""results_url"": ""https://api.anthropic.com/v1/messages/batches/msgbatch_013Zva2CMHLNnXjNJJKqJ2EF/results""
+              }
+            ],
+            ""has_more"": true,
+            ""first_id"": ""1"",
+            ""last_id"": ""1""
+          }"
+      );
+
+    var result = await Client.ListMessageBatchesAsync();
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeOfType<Page<MessageBatchResponse>>();
+    result.Value.HasMore.Should().BeTrue();
+    result.Value.FirstId.Should().Be("1");
+    result.Value.LastId.Should().Be("1");
+    result.Value.Data.Should().BeEquivalentTo(new MessageBatchResponse[]
+    {
+      new()
+      {
+        Id = "msgbatch_013Zva2CMHLNnXjNJJKqJ2EF",
+        Type = "message_batch",
+        ProcessingStatus = "in_progress",
+        RequestCounts = new MessageBatchRequestCounts
+        {
+          Processing = 100,
+          Succeeded = 50,
+          Errored = 30,
+          Canceled = 10,
+          Expired = 10
+        },
+        EndedAt = DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"),
+        CreatedAt = DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"),
+        ExpiresAt = DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"),
+        ArchivedAt = DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"),
+        CancelInitiatedAt = DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"),
+        ResultsUrl = "https://api.anthropic.com/v1/messages/batches/msgbatch_013Zva2CMHLNnXjNJJKqJ2EF/results"
+      }
+    });
+  }
+
+  [Fact]
+  public async Task ListMessageBatchesAsync_WhenCalledWithPagingRequestAndSuccessful_ItShouldReturnPageOfBatches()
+  {
+    var pagingRequest = new PagingRequest(afterId: "next_id", limit: 10);
+
+    _mockHttpMessageHandler
+      .WhenListMessageBatchesRequest()
+      .WithQueryString(new Dictionary<string, string>
+      {
+        { "after_id", pagingRequest.AfterId },
+        { "limit", pagingRequest.Limit.ToString() },
+      })
+      .Respond(
+        HttpStatusCode.OK,
+        "application/json",
+        @"{
+            ""data"": [
+              {
+                ""id"": ""msgbatch_013Zva2CMHLNnXjNJJKqJ2EF"",
+                ""type"": ""message_batch"",
+                ""processing_status"": ""in_progress"",
+                ""request_counts"": {
+                  ""processing"": 100,
+                  ""succeeded"": 50,
+                  ""errored"": 30,
+                  ""canceled"": 10,
+                  ""expired"": 10
+                },
+                ""ended_at"": ""2024-08-20T18:37:24.100435Z"",
+                ""created_at"": ""2024-08-20T18:37:24.100435Z"",
+                ""expires_at"": ""2024-08-20T18:37:24.100435Z"",
+                ""archived_at"": ""2024-08-20T18:37:24.100435Z"",
+                ""cancel_initiated_at"": ""2024-08-20T18:37:24.100435Z"",
+                ""results_url"": ""https://api.anthropic.com/v1/messages/batches/msgbatch_013Zva2CMHLNnXjNJJKqJ2EF/results""
+              }
+            ],
+            ""has_more"": true,
+            ""first_id"": ""1"",
+            ""last_id"": ""1""
+          }"
+      );
+
+    var result = await Client.ListMessageBatchesAsync(pagingRequest);
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeOfType<Page<MessageBatchResponse>>();
+    result.Value.HasMore.Should().BeTrue();
+    result.Value.FirstId.Should().Be("1");
+    result.Value.LastId.Should().Be("1");
+    result.Value.Data.Should().BeEquivalentTo(new MessageBatchResponse[]
+    {
+      new()
+      {
+        Id = "msgbatch_013Zva2CMHLNnXjNJJKqJ2EF",
+        Type = "message_batch",
+        ProcessingStatus = "in_progress",
+        RequestCounts = new MessageBatchRequestCounts
+        {
+          Processing = 100,
+          Succeeded = 50,
+          Errored = 30,
+          Canceled = 10,
+          Expired = 10
+        },
+        EndedAt = DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"),
+        CreatedAt = DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"),
+        ExpiresAt = DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"),
+        ArchivedAt = DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"),
+        CancelInitiatedAt = DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"),
+        ResultsUrl = "https://api.anthropic.com/v1/messages/batches/msgbatch_013Zva2CMHLNnXjNJJKqJ2EF/results"
+      }
+    });
+  }
+
+  [Fact]
+  public async Task ListMessageBatchesAsync_WhenCalledAndNoBatchesReturned_ItShouldReturnEmptyList()
+  {
+    _mockHttpMessageHandler
+      .WhenListMessageBatchesRequest()
+      .Respond(
+        HttpStatusCode.OK,
+        "application/json",
+        @"{
+            ""data"": [],
+            ""has_more"": false,
+            ""first_id"": null,
+            ""last_id"": null
+          }"
+      );
+
+    var result = await Client.ListMessageBatchesAsync();
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeOfType<Page<MessageBatchResponse>>();
+    result.Value.HasMore.Should().BeFalse();
+    result.Value.FirstId.Should().BeNull();
+    result.Value.LastId.Should().BeNull();
+    result.Value.Data.Should().BeEmpty();
+  }
+
+  [Fact]
+  public async Task ListMessageBatchesAsync_WhenCalledAndErrorReturned_ItShouldHandleError()
+  {
+    _mockHttpMessageHandler
+      .WhenListMessageBatchesRequest()
+      .Respond(
+        HttpStatusCode.BadRequest,
+        "application/json",
+        @"{
+            ""type"": ""error"",
+            ""error"": {
+              ""type"": ""invalid_request_error"",
+              ""message"": ""messages: roles must alternate between user and assistant, but found multiple user roles in a row""
+            }
+          }"
+      );
+
+    var result = await Client.ListMessageBatchesAsync();
+
+    result.IsSuccess.Should().BeFalse();
+    result.Error.Should().BeOfType<AnthropicError>();
+    result.Error.Error.Should().BeOfType<InvalidRequestError>();
+  }
+
+  [Fact]
+  public async Task ListMessageBatchesAsync_WhenCalledRequestFailsAndCanNotDeserializeError_ItShouldReturnUnknownError()
+  {
+    _mockHttpMessageHandler
+      .WhenListMessageBatchesRequest()
+      .Respond(
+        HttpStatusCode.BadRequest,
+        "application/json",
+        @"null"
+      );
+
+    var result = await Client.ListMessageBatchesAsync();
+
+    result.IsSuccess.Should().BeFalse();
+    result.Error.Should().BeOfType<AnthropicError>();
+    result.Error.Error.Should().BeOfType<ApiError>();
+  }
+
+  [Fact]
+  public async Task ListMessageBatchesAsync_WhenCalledRequestSucceedsAndCanNotDeserializeResponse_ItShouldReturnEmptyPage()
+  {
+    _mockHttpMessageHandler
+      .WhenListMessageBatchesRequest()
+      .Respond(
+        HttpStatusCode.OK,
+        "application/json",
+        @"null"
+      );
+
+    var result = await Client.ListMessageBatchesAsync();
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeOfType<Page<MessageBatchResponse>>();
+    result.Value.HasMore.Should().BeFalse();
+    result.Value.FirstId.Should().BeEmpty();
+    result.Value.LastId.Should().BeEmpty();
+    result.Value.Data.Should().BeEmpty();
+  }
 }

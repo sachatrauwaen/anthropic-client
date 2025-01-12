@@ -2,7 +2,7 @@ using AnthropicClient.Tests.Files;
 
 namespace AnthropicClient.Tests.EndToEnd;
 
-public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(configFixture)
+public class AnthropicApiClientTests(ConfigurationFixture configFixture) : EndToEndTest(configFixture)
 {
   [Fact]
   public async Task CreateMessageAsync_WhenCalled_ItShouldReturnResponse()
@@ -380,5 +380,27 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
     getResult.IsSuccess.Should().BeTrue();
     getResult.Value.Should().BeOfType<MessageBatchResponse>();
     getResult.Value.Id.Should().Be(createResult.Value.Id);
+  }
+
+  [Fact]
+  public async Task ListMessageBatchesAsync_WhenCalled_ItShouldReturnResponse()
+  {
+    var request = new MessageBatchRequest([
+      new(
+        Guid.NewGuid().ToString(),
+        new(
+          model: AnthropicModels.Claude3Haiku,
+          messages: [new(MessageRole.User, [new TextContent("Hello!")])]
+        )
+      ),
+    ]);
+
+    var createResult = await _client.CreateMessageBatchAsync(request);
+    var result = await _client.ListMessageBatchesAsync();
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeOfType<Page<MessageBatchResponse>>();
+    result.Value.Data.Should().HaveCountGreaterThan(0);
+    result.Value.Data.Should().ContainSingle(b => b.Id == createResult.Value.Id);
   }
 }

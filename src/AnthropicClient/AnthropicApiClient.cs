@@ -42,6 +42,13 @@ public interface IAnthropicApiClient
   Task<AnthropicResult<MessageBatchResponse>> GetMessageBatchAsync(string batchId);
 
   /// <summary>
+  /// Lists the message batches asynchronously.
+  /// </summary>
+  /// <param name="request">The paging request to use for listing the message batches.</param>
+  /// <returns>A task that represents the asynchronous operation. The task result contains the response as an <see cref="AnthropicResult{T}"/> where T is <see cref="Page{T}"/> where T is <see cref="MessageBatchResponse"/>.</returns>
+  Task<AnthropicResult<Page<MessageBatchResponse>>> ListMessageBatchesAsync(PagingRequest? request = null);
+
+  /// <summary>
   /// Gets the results of a message batch asynchronously.
   /// </summary>
   /// <param name="batchId">The ID of the message batch to get the results for.</param>
@@ -340,6 +347,25 @@ public class AnthropicApiClient : IAnthropicApiClient
 
     var msgBatchResponse = Deserialize<MessageBatchResponse>(responseContent) ?? new MessageBatchResponse();
     return AnthropicResult<MessageBatchResponse>.Success(msgBatchResponse, anthropicHeaders);
+  }
+
+  /// <inheritdoc/>
+  public async Task<AnthropicResult<Page<MessageBatchResponse>>> ListMessageBatchesAsync(PagingRequest? request = null)
+  {
+    var pagingRequest = request ?? new PagingRequest();
+    var endpoint = $"{MessageBatchesEndpoint}?{pagingRequest.ToQueryParameters()}";
+    var response = await SendRequestAsync(endpoint);
+    var anthropicHeaders = new AnthropicHeaders(response.Headers);
+    var responseContent = await response.Content.ReadAsStringAsync();
+
+    if (response.IsSuccessStatusCode is false)
+    {
+      var error = Deserialize<AnthropicError>(responseContent) ?? new AnthropicError();
+      return AnthropicResult<Page<MessageBatchResponse>>.Failure(error, anthropicHeaders);
+    }
+
+    var page = Deserialize<Page<MessageBatchResponse>>(responseContent) ?? new Page<MessageBatchResponse>();
+    return AnthropicResult<Page<MessageBatchResponse>>.Success(page, anthropicHeaders);
   }
 
   /// <inheritdoc/>
