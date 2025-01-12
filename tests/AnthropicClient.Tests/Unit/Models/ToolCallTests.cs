@@ -1,5 +1,3 @@
-using System.Text.Json.Nodes;
-
 namespace AnthropicClient.Tests.Unit.Models;
 
 public class ToolCallTests : SerializationTest

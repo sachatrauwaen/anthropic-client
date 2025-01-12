@@ -1,5 +1,4 @@
 using AnthropicClient.Tests.Files;
-using AnthropicClient.Tests.Unit;
 
 namespace AnthropicClient.Tests.Integration;
 
@@ -33,6 +32,51 @@ public class AnthropicApiClientTests : IntegrationTest
 
     var actualErrorType = result.Error.Error!.GetType();
     actualErrorType.Should().Be(errorType);
+  }
+
+  [Fact]
+  public async Task CreateMessageAsync_WhenCalledRequestFailsAndCanNotDeserializeError_ItShouldReturnUnknownError()
+  {
+    _mockHttpMessageHandler
+      .WhenCreateMessageRequest()
+      .Respond(
+        HttpStatusCode.BadRequest,
+        "application/json",
+        @"null"
+      );
+
+    var request = new MessageRequest(
+      model: AnthropicModels.Claude3Haiku,
+      messages: [new(MessageRole.User, [new TextContent("Hello!")])]
+    );
+
+    var result = await Client.CreateMessageAsync(request);
+
+    result.IsSuccess.Should().BeFalse();
+    result.Error.Should().BeOfType<AnthropicError>();
+    result.Error.Error.Should().BeOfType<ApiError>();
+  }
+
+  [Fact]
+  public async Task CreateMessageAsync_WhenCalledRequestSucceedsAndCanNotDeserializeResponse_ItShouldReturnEmptyResponse()
+  {
+    _mockHttpMessageHandler
+      .WhenCreateMessageRequest()
+      .Respond(
+        HttpStatusCode.OK,
+        "application/json",
+        @"null"
+      );
+
+    var request = new MessageRequest(
+      model: AnthropicModels.Claude3Haiku,
+      messages: [new(MessageRole.User, [new TextContent("Hello!")])]
+    );
+
+    var result = await Client.CreateMessageAsync(request);
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeEquivalentTo(new MessageResponse());
   }
 
   [Fact]
@@ -364,6 +408,34 @@ public class AnthropicApiClientTests : IntegrationTest
   }
 
   [Fact]
+  public async Task CreateMessageAsync_WhenCalledMessageIsStreamedRequestFailsAndCanNotDeserializeError_ItShouldReturnUnknownErrorEvent()
+  {
+    _mockHttpMessageHandler
+      .WhenCreateStreamMessageRequest()
+      .Respond(
+        HttpStatusCode.BadRequest,
+        "application/json",
+        @"null"
+      );
+
+    var request = new StreamMessageRequest(
+      model: AnthropicModels.Claude35Sonnet,
+      messages: [
+        new(MessageRole.User, [new TextContent("Hello!")]),
+        new(MessageRole.User, [new TextContent("Hello!")])
+      ]
+    );
+
+    var result = Client.CreateMessageAsync(request);
+    var events = await result.ToListAsync();
+
+    events.Should().HaveCount(1);
+    events[0].Type.Should().Be(EventType.Error);
+    events[0].Data.Should().BeOfType<ErrorEventData>();
+    events[0].Data.Should().BeEquivalentTo(new ErrorEventData(new ApiError()));
+  }
+
+  [Fact]
   public async Task CreateMessageAsync_WhenCalledAndMessageCreatedWithDocumentContent_ItShouldReturnMessage()
   {
     _mockHttpMessageHandler
@@ -489,7 +561,7 @@ public class AnthropicApiClientTests : IntegrationTest
       .Respond(
         HttpStatusCode.BadRequest,
         "application/json",
-        @"{}"
+        @"null"
       );
 
     var request = new CountMessageTokensRequest(
@@ -505,6 +577,31 @@ public class AnthropicApiClientTests : IntegrationTest
     result.IsSuccess.Should().BeFalse();
     result.Error.Should().BeOfType<AnthropicError>();
     result.Error.Error.Should().BeOfType<ApiError>();
+  }
+
+  [Fact]
+  public async Task CountMessageTokensAsync_WhenCalledAndResponseCanNotBeDeserialized_ItShouldReturnEmptyResponse()
+  {
+    _mockHttpMessageHandler
+      .WhenCountMessageTokensRequest()
+      .Respond(
+        HttpStatusCode.OK,
+        "application/json",
+        @"null"
+      );
+
+    var request = new CountMessageTokensRequest(
+      model: AnthropicModels.Claude35Sonnet,
+      messages: [
+        new(MessageRole.User, [new TextContent("Hello!")]),
+      ]
+    );
+
+    var result = await Client.CountMessageTokensAsync(request);
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeOfType<TokenCountResponse>();
+    result.Value.InputTokens.Should().Be(0);
   }
 
   [Fact]
@@ -656,7 +753,7 @@ public class AnthropicApiClientTests : IntegrationTest
       .Respond(
         HttpStatusCode.BadRequest,
         "application/json",
-        @"{}"
+        @"null"
       );
 
     var result = await Client.ListModelsAsync();
@@ -664,6 +761,27 @@ public class AnthropicApiClientTests : IntegrationTest
     result.IsSuccess.Should().BeFalse();
     result.Error.Should().BeOfType<AnthropicError>();
     result.Error.Error.Should().BeOfType<ApiError>();
+  }
+
+  [Fact]
+  public async Task ListModelAsync_WhenCalledRequestSucceedsAndCanNotDeserializeResponse_ItShouldReturnEmptyPage()
+  {
+    _mockHttpMessageHandler
+      .WhenListModelsRequest()
+      .Respond(
+        HttpStatusCode.OK,
+        "application/json",
+        @"null"
+      );
+
+    var result = await Client.ListModelsAsync();
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeOfType<Page<AnthropicModel>>();
+    result.Value.HasMore.Should().BeFalse();
+    result.Value.FirstId.Should().BeEmpty();
+    result.Value.LastId.Should().BeEmpty();
+    result.Value.Data.Should().BeEmpty();
   }
 
   [Fact]
@@ -803,7 +921,7 @@ public class AnthropicApiClientTests : IntegrationTest
       .Respond(
         HttpStatusCode.BadRequest,
         "application/json",
-        @"{}"
+        @"null"
       );
 
     var responses = Client.ListAllModelsAsync();
@@ -890,6 +1008,35 @@ public class AnthropicApiClientTests : IntegrationTest
   }
 
   [Fact]
+  public async Task ListAllModelsAsync_WhenFirstPageSucceedsButResponseCanNotBeDeserialized_ItShouldReturnEmptyPage()
+  {
+    _mockHttpMessageHandler
+      .WhenListModelsRequest()
+      .WithExactQueryString(new Dictionary<string, string>
+      {
+        { "limit", "20" },
+      })
+      .Respond(
+        HttpStatusCode.OK,
+        "application/json",
+        @"null"
+      );
+
+    var responses = Client.ListAllModelsAsync();
+    var count = 0;
+
+    await foreach (var page in responses)
+    {
+      count++;
+      page.IsSuccess.Should().BeTrue();
+      page.Value.Should().BeOfType<Page<AnthropicModel>>();
+      page.Value.Data.Should().BeEmpty();
+    }
+
+    count.Should().Be(1);
+  }
+
+  [Fact]
   public async Task GetModelAsync_WhenCalled_ItShouldReturnModel()
   {
     var modelId = "claude-3-5-sonnet-20241022";
@@ -953,7 +1100,7 @@ public class AnthropicApiClientTests : IntegrationTest
       .Respond(
         HttpStatusCode.BadRequest,
         "application/json",
-        @"{}"
+        @"null"
       );
 
     var result = await Client.GetModelAsync(modelId);
@@ -973,7 +1120,7 @@ public class AnthropicApiClientTests : IntegrationTest
       .Respond(
         HttpStatusCode.OK,
         "application/json",
-        @"{}"
+        @"null"
       );
 
     var result = await Client.GetModelAsync(modelId);
@@ -1070,7 +1217,7 @@ public class AnthropicApiClientTests : IntegrationTest
       .Respond(
         HttpStatusCode.BadRequest,
         "application/json",
-        @"{}"
+        @"null"
       );
 
     var request = new MessageBatchRequest([new("custom_id", new())]);
@@ -1090,7 +1237,7 @@ public class AnthropicApiClientTests : IntegrationTest
       .Respond(
         HttpStatusCode.OK,
         "application/json",
-        @"{}"
+        @"null"
       );
 
     var request = new MessageBatchRequest([new("custom_id", new())]);
@@ -1193,7 +1340,7 @@ public class AnthropicApiClientTests : IntegrationTest
       .Respond(
         HttpStatusCode.BadRequest,
         "application/json",
-        @"{}"
+        @"null"
       );
 
     var result = await Client.GetMessageBatchAsync(batchId);
@@ -1213,7 +1360,7 @@ public class AnthropicApiClientTests : IntegrationTest
       .Respond(
         HttpStatusCode.OK,
         "application/json",
-        @"{}"
+        @"null"
       );
 
     var result = await Client.GetMessageBatchAsync(batchId);
@@ -1246,5 +1393,77 @@ public class AnthropicApiClientTests : IntegrationTest
     var actualResults = await result.Value.ToListAsync();
 
     actualResults.Should().BeEquivalentTo(expectedResults);
+  }
+
+  [Fact]
+  public async Task GetMessageBatchResultsAsync_WhenCalledSuccessfulAndResultCanNotBeDeserialized_ItShouldReturnEmptyResults()
+  {
+    var batchId = "msgbatch_013Zva2CMHLNnXjNJJKqJ2EF";
+    var expectedResults = new List<MessageBatchResultItem>()
+    {
+      new(),
+    };
+
+    _mockHttpMessageHandler
+      .WhenGetMessageBatchResultsRequest(batchId)
+      .Respond(
+        HttpStatusCode.OK,
+        "application/x-jsonl",
+        "null"
+      );
+
+    var result = await Client.GetMessageBatchResultsAsync(batchId);
+
+    result.IsSuccess.Should().BeTrue();
+
+    var actualResults = await result.Value.ToListAsync();
+
+    actualResults.Should().BeEquivalentTo(expectedResults);
+  }
+
+  [Fact]
+  public async Task GetMessageBatchResultsAsync_WhenCalledAndRequestFails_ItShouldReturnError()
+  {
+    var batchId = "msgbatch_013Zva2CMHLNnXjNJJKqJ2EF";
+
+    _mockHttpMessageHandler
+      .WhenGetMessageBatchResultsRequest(batchId)
+      .Respond(
+        HttpStatusCode.BadRequest,
+        "application/json",
+        @"{
+            ""type"": ""error"",
+            ""error"": {
+              ""type"": ""invalid_request_error"",
+              ""message"": ""messages: roles must alternate between user and assistant, but found multiple user roles in a row""
+            }
+          }"
+      );
+
+    var result = await Client.GetMessageBatchResultsAsync(batchId);
+
+    result.IsSuccess.Should().BeFalse();
+    result.Error.Should().BeOfType<AnthropicError>();
+    result.Error.Error.Should().BeOfType<InvalidRequestError>();
+  }
+
+  [Fact]
+  public async Task GetMessageBatchResultsAsync_WhenCalledRequestFailsAndCanNotDeserializeError_ItShouldReturnUnknownError()
+  {
+    var batchId = "msgbatch_013Zva2CMHLNnXjNJJKqJ2EF";
+
+    _mockHttpMessageHandler
+      .WhenGetMessageBatchResultsRequest(batchId)
+      .Respond(
+        HttpStatusCode.BadRequest,
+        "application/json",
+        @"null"
+      );
+
+    var result = await Client.GetMessageBatchResultsAsync(batchId);
+
+    result.IsSuccess.Should().BeFalse();
+    result.Error.Should().BeOfType<AnthropicError>();
+    result.Error.Error.Should().BeOfType<ApiError>();
   }
 }
