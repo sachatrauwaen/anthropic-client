@@ -1282,26 +1282,26 @@ public class AnthropicApiClientTests : IntegrationTest
     var result = await Client.GetMessageBatchAsync(batchId);
 
     result.IsSuccess.Should().BeTrue();
-    result.Value.Should().BeOfType<MessageBatchResponse>();
-    result.Value.Id.Should().Be("msgbatch_013Zva2CMHLNnXjNJJKqJ2EF");
-    result.Value.Type.Should().Be("message_batch");
-    result.Value.ProcessingStatus.Should().Be("in_progress");
-    result.Value.RequestCounts.Should().BeEquivalentTo(new MessageBatchRequestCounts
+    result.Value.Should().BeEquivalentTo(new MessageBatchResponse()
     {
-      Processing = 100,
-      Succeeded = 50,
-      Errored = 30,
-      Canceled = 10,
-      Expired = 10
+      Id = "msgbatch_013Zva2CMHLNnXjNJJKqJ2EF",
+      Type = "message_batch",
+      ProcessingStatus = "in_progress",
+      RequestCounts = new MessageBatchRequestCounts
+      {
+        Processing = 100,
+        Succeeded = 50,
+        Errored = 30,
+        Canceled = 10,
+        Expired = 10
+      },
+      EndedAt = DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"),
+      CreatedAt = DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"),
+      ExpiresAt = DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"),
+      ArchivedAt = DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"),
+      CancelInitiatedAt = DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"),
+      ResultsUrl = "https://api.anthropic.com/v1/messages/batches/msgbatch_013Zva2CMHLNnXjNJJKqJ2EF/results"
     });
-
-    result.Value.EndedAt.Should().Be(DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"));
-    result.Value.CreatedAt.Should().Be(DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"));
-    result.Value.ExpiresAt.Should().Be(DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"));
-    result.Value.ArchivedAt.Should().Be(DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"));
-    result.Value.CancelInitiatedAt.Should().Be(DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"));
-    result.Value.ResultsUrl.Should()
-      .Be("https://api.anthropic.com/v1/messages/batches/msgbatch_013Zva2CMHLNnXjNJJKqJ2EF/results");
   }
 
   [Fact]
@@ -1822,5 +1822,86 @@ public class AnthropicApiClientTests : IntegrationTest
         HasMore = false
       }
     });
+  }
+
+  [Fact]
+  public async Task CancelMessageBatchAsync_WhenCalled_ItShouldReturnBatch()
+  {
+    var batchId = "msgbatch_013Zva2CMHLNnXjNJJKqJ2EF";
+
+    _mockHttpMessageHandler
+      .WhenCancelMessageBatchRequest(batchId)
+      .Respond(
+        HttpStatusCode.OK,
+        "application/json",
+        @"{
+            ""id"": ""msgbatch_013Zva2CMHLNnXjNJJKqJ2EF"",
+            ""type"": ""message_batch"",
+            ""processing_status"": ""in_progress"",
+            ""request_counts"": {
+              ""processing"": 100,
+              ""succeeded"": 50,
+              ""errored"": 30,
+              ""canceled"": 10,
+              ""expired"": 10
+            },
+            ""ended_at"": ""2024-08-20T18:37:24.100435Z"",
+            ""created_at"": ""2024-08-20T18:37:24.100435Z"",
+            ""expires_at"": ""2024-08-20T18:37:24.100435Z"",
+            ""archived_at"": ""2024-08-20T18:37:24.100435Z"",
+            ""cancel_initiated_at"": ""2024-08-20T18:37:24.100435Z"",
+            ""results_url"": ""https://api.anthropic.com/v1/messages/batches/msgbatch_013Zva2CMHLNnXjNJJKqJ2EF/results""
+          }"
+      );
+
+    var result = await Client.CancelMessageBatchAsync(batchId);
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeEquivalentTo(new MessageBatchResponse()
+    {
+      Id = "msgbatch_013Zva2CMHLNnXjNJJKqJ2EF",
+      Type = "message_batch",
+      ProcessingStatus = "in_progress",
+      RequestCounts = new MessageBatchRequestCounts
+      {
+        Processing = 100,
+        Succeeded = 50,
+        Errored = 30,
+        Canceled = 10,
+        Expired = 10
+      },
+      EndedAt = DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"),
+      CreatedAt = DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"),
+      ExpiresAt = DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"),
+      ArchivedAt = DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"),
+      CancelInitiatedAt = DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"),
+      ResultsUrl = "https://api.anthropic.com/v1/messages/batches/msgbatch_013Zva2CMHLNnXjNJJKqJ2EF/results"
+    });
+  }
+
+  [Fact]
+  public async Task CancelMessageBatchAsync_WhenCalledAndFails_ItShouldReturnError()
+  {
+    var batchId = "msgbatch_013Zva2CMHLNnXjNJJKqJ2EF";
+
+    _mockHttpMessageHandler
+      .WhenCancelMessageBatchRequest(batchId)
+      .Respond(
+        HttpStatusCode.BadRequest,
+        "application/json",
+        @"{
+            ""type"": ""error"",
+            ""error"": {
+              ""type"": ""invalid_request_error"",
+              ""message"": ""batch: batch not found""
+            }
+          }"
+      );
+
+    var result = await Client.CancelMessageBatchAsync(batchId);
+
+    result.IsSuccess.Should().BeFalse();
+    result.Error.Should().BeOfType<AnthropicError>();
+    result.Error.Error.Should().BeOfType<InvalidRequestError>();
   }
 }

@@ -56,6 +56,13 @@ public interface IAnthropicApiClient
   IAsyncEnumerable<AnthropicResult<Page<MessageBatchResponse>>> ListAllMessageBatchesAsync(int limit = 20);
 
   /// <summary>
+  /// Cancels a message batch asynchronously.
+  /// </summary>
+  /// <param name="batchId">The ID of the message batch to cancel.</param>
+  /// <returns>A task that represents the asynchronous operation. The task result contains the response as an <see cref="AnthropicResult{T}"/> where T is <see cref="MessageBatchResponse"/>.</returns>
+  Task<AnthropicResult<MessageBatchResponse>> CancelMessageBatchAsync(string batchId);
+
+  /// <summary>
   /// Gets the results of a message batch asynchronously.
   /// </summary>
   /// <param name="batchId">The ID of the message batch to get the results for.</param>
@@ -385,6 +392,24 @@ public class AnthropicApiClient : IAnthropicApiClient
   }
 
   /// <inheritdoc/>
+  public async Task<AnthropicResult<MessageBatchResponse>> CancelMessageBatchAsync(string batchId)
+  {
+    var endpoint = $"{MessageBatchesEndpoint}/{batchId}/cancel";
+    var response = await SendRequestAsync(endpoint, HttpMethod.Post);
+    var anthropicHeaders = new AnthropicHeaders(response.Headers);
+    var responseContent = await response.Content.ReadAsStringAsync();
+
+    if (response.IsSuccessStatusCode is false)
+    {
+      var error = Deserialize<AnthropicError>(responseContent) ?? new AnthropicError();
+      return AnthropicResult<MessageBatchResponse>.Failure(error, anthropicHeaders);
+    }
+
+    var msgBatchResponse = Deserialize<MessageBatchResponse>(responseContent) ?? new MessageBatchResponse();
+    return AnthropicResult<MessageBatchResponse>.Success(msgBatchResponse, anthropicHeaders);
+  }
+
+  /// <inheritdoc/>
   public async Task<AnthropicResult<IAsyncEnumerable<MessageBatchResultItem>>> GetMessageBatchResultsAsync(string batchId)
   {
     var response = await SendRequestAsync($"{MessageBatchesEndpoint}/{batchId}/results");
@@ -533,9 +558,10 @@ public class AnthropicApiClient : IAnthropicApiClient
     return new ToolCall(tool, toolUse);
   }
 
-  private async Task<HttpResponseMessage> SendRequestAsync(string endpoint)
+  private async Task<HttpResponseMessage> SendRequestAsync(string endpoint, HttpMethod? method = null)
   {
-    return await _httpClient.GetAsync(endpoint);
+    var request = new HttpRequestMessage(method ?? HttpMethod.Get, endpoint);
+    return await _httpClient.SendAsync(request);
   }
 
   private async Task<HttpResponseMessage> SendRequestAsync<T>(string endpoint, T request)
