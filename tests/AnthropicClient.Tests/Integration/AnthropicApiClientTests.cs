@@ -1696,4 +1696,131 @@ public class AnthropicApiClientTests : IntegrationTest
     result.Value.LastId.Should().BeEmpty();
     result.Value.Data.Should().BeEmpty();
   }
+
+  [Fact]
+  public async Task ListAllMessageBatchesAsync_WhenCalled_ItShouldReturnAllBatches()
+  {
+    _mockHttpMessageHandler
+      .WhenListMessageBatchesRequest()
+      .WithExactQueryString(new Dictionary<string, string>()
+      {
+        { "limit", "20" },
+      })
+      .Respond(
+        HttpStatusCode.OK,
+        "application/json",
+        @"{
+            ""data"": [
+              {
+                ""id"": ""msgbatch_013Zva2CMHLNnXjNJJKqJ2EF"",
+                ""type"": ""message_batch"",
+                ""processing_status"": ""in_progress"",
+                ""request_counts"": {
+                  ""processing"": 100,
+                  ""succeeded"": 50,
+                  ""errored"": 30,
+                  ""canceled"": 10,
+                  ""expired"": 10
+                },
+                ""ended_at"": ""2024-08-20T18:37:24.100435Z"",
+                ""created_at"": ""2024-08-20T18:37:24.100435Z"",
+                ""expires_at"": ""2024-08-20T18:37:24.100435Z"",
+                ""archived_at"": ""2024-08-20T18:37:24.100435Z"",
+                ""cancel_initiated_at"": ""2024-08-20T18:37:24.100435Z"",
+                ""results_url"": ""https://api.anthropic.com/v1/messages/batches/msgbatch_013Zva2CMHLNnXjNJJKqJ2EF/results""
+              }
+            ],
+            ""has_more"": true,
+            ""first_id"": ""1"",
+            ""last_id"": ""1""
+          }"
+      );
+
+    _mockHttpMessageHandler
+      .WhenListMessageBatchesRequest()
+      .WithExactQueryString(new Dictionary<string, string>()
+      {
+        { "after_id", "1" },
+        { "limit", "20" },
+      })
+      .Respond(
+        HttpStatusCode.OK,
+        "application/json",
+        @"{
+            ""data"": [
+              {
+                ""id"": ""msgbatch_013Zva2CMHLNnXjNJJKqJ2EF"",
+                ""type"": ""message_batch"",
+                ""processing_status"": ""in_progress"",
+                ""request_counts"": {
+                  ""processing"": 100,
+                  ""succeeded"": 50,
+                  ""errored"": 30,
+                  ""canceled"": 10,
+                  ""expired"": 10
+                },
+                ""ended_at"": ""2024-08-20T18:37:24.100435Z"",
+                ""created_at"": ""2024-08-20T18:37:24.100435Z"",
+                ""expires_at"": ""2024-08-20T18:37:24.100435Z"",
+                ""archived_at"": ""2024-08-20T18:37:24.100435Z"",
+                ""cancel_initiated_at"": ""2024-08-20T18:37:24.100435Z"",
+                ""results_url"": ""https://api.anthropic.com/v1/messages/batches/msgbatch_013Zva2CMHLNnXjNJJKqJ2EF/results""
+              }
+            ],
+            ""has_more"": false,
+            ""first_id"": ""2"",
+            ""last_id"": ""2""
+          }"
+      );
+
+    var pageResponses = Client.ListAllMessageBatchesAsync();
+    var collectedPages = new List<Page<MessageBatchResponse>>();
+
+    await foreach (var response in pageResponses)
+    {
+      response.IsSuccess.Should().BeTrue();
+      response.Value.Should().BeOfType<Page<MessageBatchResponse>>();
+      collectedPages.Add(response.Value);
+    }
+
+    var expectedMessageBatchResponse = new MessageBatchResponse()
+    {
+      Id = "msgbatch_013Zva2CMHLNnXjNJJKqJ2EF",
+      Type = "message_batch",
+      ProcessingStatus = "in_progress",
+      RequestCounts = new MessageBatchRequestCounts
+      {
+        Processing = 100,
+        Succeeded = 50,
+        Errored = 30,
+        Canceled = 10,
+        Expired = 10
+      },
+      EndedAt = DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"),
+      CreatedAt = DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"),
+      ExpiresAt = DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"),
+      ArchivedAt = DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"),
+      CancelInitiatedAt = DateTimeOffset.Parse("2024-08-20T18:37:24.100435Z"),
+      ResultsUrl = "https://api.anthropic.com/v1/messages/batches/msgbatch_013Zva2CMHLNnXjNJJKqJ2EF/results"
+    };
+
+    collectedPages.Should().HaveCount(2);
+    collectedPages.Should().BeEquivalentTo(new List<Page<MessageBatchResponse>>()
+    {
+      new()
+      {
+        Data = [expectedMessageBatchResponse],
+        FirstId = "1",
+        LastId = "1",
+        HasMore = true
+      },
+      new()
+      {
+        Data = [expectedMessageBatchResponse],
+        FirstId = "2",
+        LastId = "2",
+        HasMore = false
+      }
+    });
+  }
 }

@@ -49,6 +49,13 @@ public interface IAnthropicApiClient
   Task<AnthropicResult<Page<MessageBatchResponse>>> ListMessageBatchesAsync(PagingRequest? request = null);
 
   /// <summary>
+  /// Lists all message batches asynchronously.
+  /// </summary>
+  /// <param name="limit">The maximum number of message batches to return in each page.</param>
+  /// <returns>An asynchronous enumerable that yields the response as an <see cref="AnthropicResult{T}"/> where T is <see cref="Page{T}"/> where T is <see cref="MessageBatchResponse"/>.</returns>
+  IAsyncEnumerable<AnthropicResult<Page<MessageBatchResponse>>> ListAllMessageBatchesAsync(int limit = 20);
+
+  /// <summary>
   /// Gets the results of a message batch asynchronously.
   /// </summary>
   /// <param name="batchId">The ID of the message batch to get the results for.</param>
@@ -369,6 +376,15 @@ public class AnthropicApiClient : IAnthropicApiClient
   }
 
   /// <inheritdoc/>
+  public async IAsyncEnumerable<AnthropicResult<Page<MessageBatchResponse>>> ListAllMessageBatchesAsync(int limit = 20)
+  {
+    await foreach (var result in GetAllPagesAsync<MessageBatchResponse>(MessageBatchesEndpoint, limit))
+    {
+      yield return result;
+    }
+  }
+
+  /// <inheritdoc/>
   public async Task<AnthropicResult<IAsyncEnumerable<MessageBatchResultItem>>> GetMessageBatchResultsAsync(string batchId)
   {
     var response = await SendRequestAsync($"{MessageBatchesEndpoint}/{batchId}/results");
@@ -439,37 +455,10 @@ public class AnthropicApiClient : IAnthropicApiClient
   /// <inheritdoc/>
   public async IAsyncEnumerable<AnthropicResult<Page<AnthropicModel>>> ListAllModelsAsync(int limit = 20)
   {
-    var pagingRequest = new PagingRequest(limit: limit);
-    string Endpoint() => $"{ModelsEndpoint}?{pagingRequest.ToQueryParameters()}";
-    bool hasMore;
-
-    do
+    await foreach (var result in GetAllPagesAsync<AnthropicModel>(ModelsEndpoint, limit))
     {
-      var response = await SendRequestAsync(Endpoint());
-      var anthropicHeaders = new AnthropicHeaders(response.Headers);
-      var responseContent = await response.Content.ReadAsStringAsync();
-
-      if (response.IsSuccessStatusCode is false)
-      {
-        var error = Deserialize<AnthropicError>(responseContent) ?? new AnthropicError();
-        yield return AnthropicResult<Page<AnthropicModel>>.Failure(error, anthropicHeaders);
-        yield break;
-      }
-
-      var page = Deserialize<Page<AnthropicModel>>(responseContent) ?? new Page<AnthropicModel>();
-
-      if (page.HasMore && page.LastId is not null)
-      {
-        hasMore = true;
-        pagingRequest = new PagingRequest(limit: limit, afterId: page.LastId);
-      }
-      else
-      {
-        hasMore = false;
-      }
-
-      yield return AnthropicResult<Page<AnthropicModel>>.Success(page, anthropicHeaders);
-    } while (hasMore);
+      yield return result;
+    }
   }
 
   /// <inheritdoc/>
@@ -488,6 +477,41 @@ public class AnthropicApiClient : IAnthropicApiClient
 
     var model = Deserialize<AnthropicModel>(responseContent) ?? new AnthropicModel();
     return AnthropicResult<AnthropicModel>.Success(model, anthropicHeaders);
+  }
+
+  private async IAsyncEnumerable<AnthropicResult<Page<T>>> GetAllPagesAsync<T>(string endpoint, int limit = 20)
+  {
+    var pagingRequest = new PagingRequest(limit: limit);
+    string Endpoint() => $"{endpoint}?{pagingRequest.ToQueryParameters()}";
+    bool hasMore;
+
+    do
+    {
+      var response = await SendRequestAsync(Endpoint());
+      var anthropicHeaders = new AnthropicHeaders(response.Headers);
+      var responseContent = await response.Content.ReadAsStringAsync();
+
+      if (response.IsSuccessStatusCode is false)
+      {
+        var error = Deserialize<AnthropicError>(responseContent) ?? new AnthropicError();
+        yield return AnthropicResult<Page<T>>.Failure(error, anthropicHeaders);
+        yield break;
+      }
+
+      var page = Deserialize<Page<T>>(responseContent) ?? new Page<T>();
+
+      if (page.HasMore && page.LastId is not null)
+      {
+        hasMore = true;
+        pagingRequest = new PagingRequest(limit: limit, afterId: page.LastId);
+      }
+      else
+      {
+        hasMore = false;
+      }
+
+      yield return AnthropicResult<Page<T>>.Success(page, anthropicHeaders);
+    } while (hasMore);
   }
 
   private ToolCall? GetToolCall(MessageResponse response, List<Tool> tools)

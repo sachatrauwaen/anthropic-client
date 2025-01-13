@@ -403,4 +403,36 @@ public class AnthropicApiClientTests(ConfigurationFixture configFixture) : EndTo
     result.Value.Data.Should().HaveCountGreaterThan(0);
     result.Value.Data.Should().ContainSingle(b => b.Id == createResult.Value.Id);
   }
+
+  [Fact]
+  public async Task ListAllMessageBatchesAsync_WhenCalled_ItShouldReturnResponse()
+  {
+    var createRequest = (string id) => new MessageBatchRequest([
+      new(
+        id,
+        new(
+          model: AnthropicModels.Claude3Haiku,
+          messages: [new(MessageRole.User, [new TextContent("Hello!")])]
+        )
+      ),
+    ]);
+
+    var requestNumberOne = createRequest(Guid.NewGuid().ToString());
+    var requestNumberTwo = createRequest(Guid.NewGuid().ToString());
+
+    var createResultOne = await _client.CreateMessageBatchAsync(requestNumberOne);
+    var createResultTwo = await _client.CreateMessageBatchAsync(requestNumberTwo);
+
+    var responses = await _client.ListAllMessageBatchesAsync(limit: 1).ToListAsync();
+
+    responses.Should().HaveCountGreaterThan(2);
+
+    var batches = responses
+      .Where(r => r.IsSuccess)
+      .Select(r => r.Value)
+      .SelectMany(r => r.Data);
+
+    batches.Should().ContainSingle(b => b.Id == createResultOne.Value.Id);
+    batches.Should().ContainSingle(b => b.Id == createResultTwo.Value.Id);
+  }
 }
