@@ -1904,4 +1904,28 @@ public class AnthropicApiClientTests : IntegrationTest
     result.Error.Should().BeOfType<AnthropicError>();
     result.Error.Error.Should().BeOfType<InvalidRequestError>();
   }
+
+  [Fact]
+  public async Task DeleteMessageBatchAsync_WhenCalled_ItShouldReturnDeletionResponse()
+  {
+    var batchId = "msgbatch_013Zva2CMHLNnXjNJJKqJ2EF";
+
+    _mockHttpMessageHandler
+      .WhenDeleteMessageBatchRequest(batchId)
+      .Respond(
+        HttpStatusCode.OK,
+        "application/json",
+        @"{
+            ""id"": ""msgbatch_013Zva2CMHLNnXjNJJKqJ2EF"",
+            ""type"": ""message_batch_deleted""
+          }"
+      );
+
+    var result = await Client.DeleteMessageBatchAsync(batchId);
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeOfType<MessageBatchDeleteResponse>();
+    result.Value.Id.Should().Be(batchId);
+    result.Value.Type.Should().Be("message_batch_deleted");
+  }
 }

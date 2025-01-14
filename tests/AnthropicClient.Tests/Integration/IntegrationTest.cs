@@ -97,4 +97,10 @@ public static class MockHttpMessageHandlerExtensions
     return mockHttpMessageHandler
       .SetupBaseRequest(HttpMethod.Post, $"{MessageBatchesEndpoint}/{batchId}/cancel");
   }
+
+  public static MockedRequest WhenDeleteMessageBatchRequest(this MockHttpMessageHandler mockHttpMessageHandler, string batchId)
+  {
+    return mockHttpMessageHandler
+      .SetupBaseRequest(HttpMethod.Delete, $"{MessageBatchesEndpoint}/{batchId}");
+  }
 }
