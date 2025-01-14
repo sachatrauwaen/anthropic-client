@@ -333,34 +333,14 @@ public class AnthropicApiClient : IAnthropicApiClient
   public async Task<AnthropicResult<MessageBatchResponse>> CreateMessageBatchAsync(MessageBatchRequest request)
   {
     var response = await SendRequestAsync(MessageBatchesEndpoint, request);
-    var anthropicHeaders = new AnthropicHeaders(response.Headers);
-    var responseContent = await response.Content.ReadAsStringAsync();
-
-    if (response.IsSuccessStatusCode is false)
-    {
-      var error = Deserialize<AnthropicError>(responseContent) ?? new AnthropicError();
-      return AnthropicResult<MessageBatchResponse>.Failure(error, anthropicHeaders);
-    }
-
-    var msgBatchResponse = Deserialize<MessageBatchResponse>(responseContent) ?? new MessageBatchResponse();
-    return AnthropicResult<MessageBatchResponse>.Success(msgBatchResponse, anthropicHeaders);
+    return await CreateResultAsync<MessageBatchResponse>(response);
   }
 
   /// <inheritdoc/>
   public async Task<AnthropicResult<MessageBatchResponse>> GetMessageBatchAsync(string batchId)
   {
     var response = await SendRequestAsync($"{MessageBatchesEndpoint}/{batchId}");
-    var anthropicHeaders = new AnthropicHeaders(response.Headers);
-    var responseContent = await response.Content.ReadAsStringAsync();
-
-    if (response.IsSuccessStatusCode is false)
-    {
-      var error = Deserialize<AnthropicError>(responseContent) ?? new AnthropicError();
-      return AnthropicResult<MessageBatchResponse>.Failure(error, anthropicHeaders);
-    }
-
-    var msgBatchResponse = Deserialize<MessageBatchResponse>(responseContent) ?? new MessageBatchResponse();
-    return AnthropicResult<MessageBatchResponse>.Success(msgBatchResponse, anthropicHeaders);
+    return await CreateResultAsync<MessageBatchResponse>(response);
   }
 
   /// <inheritdoc/>
@@ -369,17 +349,7 @@ public class AnthropicApiClient : IAnthropicApiClient
     var pagingRequest = request ?? new PagingRequest();
     var endpoint = $"{MessageBatchesEndpoint}?{pagingRequest.ToQueryParameters()}";
     var response = await SendRequestAsync(endpoint);
-    var anthropicHeaders = new AnthropicHeaders(response.Headers);
-    var responseContent = await response.Content.ReadAsStringAsync();
-
-    if (response.IsSuccessStatusCode is false)
-    {
-      var error = Deserialize<AnthropicError>(responseContent) ?? new AnthropicError();
-      return AnthropicResult<Page<MessageBatchResponse>>.Failure(error, anthropicHeaders);
-    }
-
-    var page = Deserialize<Page<MessageBatchResponse>>(responseContent) ?? new Page<MessageBatchResponse>();
-    return AnthropicResult<Page<MessageBatchResponse>>.Success(page, anthropicHeaders);
+    return await CreateResultAsync<Page<MessageBatchResponse>>(response);
   }
 
   /// <inheritdoc/>
@@ -396,17 +366,7 @@ public class AnthropicApiClient : IAnthropicApiClient
   {
     var endpoint = $"{MessageBatchesEndpoint}/{batchId}/cancel";
     var response = await SendRequestAsync(endpoint, HttpMethod.Post);
-    var anthropicHeaders = new AnthropicHeaders(response.Headers);
-    var responseContent = await response.Content.ReadAsStringAsync();
-
-    if (response.IsSuccessStatusCode is false)
-    {
-      var error = Deserialize<AnthropicError>(responseContent) ?? new AnthropicError();
-      return AnthropicResult<MessageBatchResponse>.Failure(error, anthropicHeaders);
-    }
-
-    var msgBatchResponse = Deserialize<MessageBatchResponse>(responseContent) ?? new MessageBatchResponse();
-    return AnthropicResult<MessageBatchResponse>.Success(msgBatchResponse, anthropicHeaders);
+    return await CreateResultAsync<MessageBatchResponse>(response);
   }
 
   /// <inheritdoc/>
@@ -445,17 +405,7 @@ public class AnthropicApiClient : IAnthropicApiClient
   public async Task<AnthropicResult<TokenCountResponse>> CountMessageTokensAsync(CountMessageTokensRequest request)
   {
     var response = await SendRequestAsync(CountTokensEndpoint, request);
-    var anthropicHeaders = new AnthropicHeaders(response.Headers);
-    var responseContent = await response.Content.ReadAsStringAsync();
-
-    if (response.IsSuccessStatusCode is false)
-    {
-      var error = Deserialize<AnthropicError>(responseContent) ?? new AnthropicError();
-      return AnthropicResult<TokenCountResponse>.Failure(error, anthropicHeaders);
-    }
-
-    var msgResponse = Deserialize<TokenCountResponse>(responseContent) ?? new TokenCountResponse();
-    return AnthropicResult<TokenCountResponse>.Success(msgResponse, anthropicHeaders);
+    return await CreateResultAsync<TokenCountResponse>(response);
   }
 
   /// <inheritdoc/>
@@ -464,17 +414,7 @@ public class AnthropicApiClient : IAnthropicApiClient
     var pagingRequest = request ?? new PagingRequest();
     var endpoint = $"{ModelsEndpoint}?{pagingRequest.ToQueryParameters()}";
     var response = await SendRequestAsync(endpoint);
-    var anthropicHeaders = new AnthropicHeaders(response.Headers);
-    var responseContent = await response.Content.ReadAsStringAsync();
-
-    if (response.IsSuccessStatusCode is false)
-    {
-      var error = Deserialize<AnthropicError>(responseContent) ?? new AnthropicError();
-      return AnthropicResult<Page<AnthropicModel>>.Failure(error, anthropicHeaders);
-    }
-
-    var page = Deserialize<Page<AnthropicModel>>(responseContent) ?? new Page<AnthropicModel>();
-    return AnthropicResult<Page<AnthropicModel>>.Success(page, anthropicHeaders);
+    return await CreateResultAsync<Page<AnthropicModel>>(response);
   }
 
   /// <inheritdoc/>
@@ -491,17 +431,7 @@ public class AnthropicApiClient : IAnthropicApiClient
   {
     var endpoint = $"{ModelsEndpoint}/{modelId}";
     var response = await SendRequestAsync(endpoint);
-    var anthropicHeaders = new AnthropicHeaders(response.Headers);
-    var responseContent = await response.Content.ReadAsStringAsync();
-
-    if (response.IsSuccessStatusCode is false)
-    {
-      var error = Deserialize<AnthropicError>(responseContent) ?? new AnthropicError();
-      return AnthropicResult<AnthropicModel>.Failure(error, anthropicHeaders);
-    }
-
-    var model = Deserialize<AnthropicModel>(responseContent) ?? new AnthropicModel();
-    return AnthropicResult<AnthropicModel>.Success(model, anthropicHeaders);
+    return await CreateResultAsync<AnthropicModel>(response);
   }
 
   private async IAsyncEnumerable<AnthropicResult<Page<T>>> GetAllPagesAsync<T>(string endpoint, int limit = 20)
@@ -556,6 +486,21 @@ public class AnthropicApiClient : IAnthropicApiClient
     }
 
     return new ToolCall(tool, toolUse);
+  }
+
+  private async Task<AnthropicResult<T>> CreateResultAsync<T>(HttpResponseMessage response) where T : new()
+  {
+    var anthropicHeaders = new AnthropicHeaders(response.Headers);
+    var responseContent = await response.Content.ReadAsStringAsync();
+
+    if (response.IsSuccessStatusCode is false)
+    {
+      var error = Deserialize<AnthropicError>(responseContent) ?? new AnthropicError();
+      return AnthropicResult<T>.Failure(error, anthropicHeaders);
+    }
+
+    var model = Deserialize<T>(responseContent) ?? new T();
+    return AnthropicResult<T>.Success(model, anthropicHeaders);
   }
 
   private async Task<HttpResponseMessage> SendRequestAsync(string endpoint, HttpMethod? method = null)
