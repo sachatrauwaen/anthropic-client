@@ -971,3 +971,37 @@ foreach (var content in response.Value.Content)
   }
 }
 ```
+
+### Message Batches
+
+Anthropic provides a feature called [Message Batches](https://docs.anthropic.com/en/docs/build-with-claude/message-batches) that allows you to send multiple messages in a single request. This feature is covered in depth in [Anthropic's API Documentation](https://docs.anthropic.com/en/docs/build-with-claude/message-batches).
+
+#### Create a message batch
+
+```csharp
+```
+
+#### Get a message batch
+
+```csharp
+```
+
+#### Get a message batch results
+
+```csharp
+```
+
+#### List message batches
+
+```csharp
+```
+
+#### Cancel a message batch
+
+```csharp
+```
+
+#### Delete a message batch
+
+```csharp
+```
