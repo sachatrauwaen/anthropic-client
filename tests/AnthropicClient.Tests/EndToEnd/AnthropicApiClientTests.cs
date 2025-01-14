@@ -435,4 +435,26 @@ public class AnthropicApiClientTests(ConfigurationFixture configFixture) : EndTo
     batches.Should().ContainSingle(b => b.Id == createResultOne.Value.Id);
     batches.Should().ContainSingle(b => b.Id == createResultTwo.Value.Id);
   }
+
+  [Fact]
+  public async Task CancelMessageBatchAsync_WhenCalled_ItShouldReturnResponse()
+  {
+    var request = new MessageBatchRequest([
+      new(
+        Guid.NewGuid().ToString(),
+        new(
+          model: AnthropicModels.Claude3Haiku,
+          messages: [new(MessageRole.User, [new TextContent("Hello!")])]
+        )
+      ),
+    ]);
+
+    var createResult = await _client.CreateMessageBatchAsync(request);
+    var result = await _client.CancelMessageBatchAsync(createResult.Value.Id);
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeOfType<MessageBatchResponse>();
+    result.Value.Id.Should().Be(createResult.Value.Id);
+    result.Value.ProcessingStatus.Should().Be(MessageBatchStatus.Canceling);
+  }
 }
