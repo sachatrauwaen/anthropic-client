@@ -1100,7 +1100,7 @@ You can also retrieve all the pages of message batches without having to impleme
 using AnthropicClient;
 using AnthropicClient.Models;
 
-var pageResponses = await client.ListAllMessageBatchesAsync();
+var pageResponses = client.ListAllMessageBatchesAsync();
 
 await foreach (var response in pageResponses)
 {
