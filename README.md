@@ -971,3 +971,193 @@ foreach (var content in response.Value.Content)
   }
 }
 ```
+
+### Message Batches
+
+Anthropic provides a feature called [Message Batches](https://docs.anthropic.com/en/docs/build-with-claude/message-batches) that allows you to send multiple messages in a single request. This feature is covered in depth in [Anthropic's API Documentation](https://docs.anthropic.com/en/docs/build-with-claude/message-batches).
+
+#### Create a message batch
+
+You can create a message batch that will consist of one or more requests to create messages.
+
+```csharp
+using AnthropicClient;
+using AnthropicClient.Models;
+
+var request = new MessageBatchRequest([
+  new(
+    Guid.NewGuid().ToString(),
+    new(
+      model: AnthropicModels.Claude3Haiku,
+      messages: [new(MessageRole.User, [new TextContent("Hello!")])]
+    )
+  ),
+]);
+
+var response = await client.CreateMessageBatchAsync(request);
+
+if (response.IsFailure)
+{
+  Console.WriteLine("Failed to create message batch");
+  Console.WriteLine("Error Type: {0}", response.Error.Error.Type);
+  Console.WriteLine("Error Message: {0}", response.Error.Error.Message);
+  return;
+}
+
+Console.WriteLine("Message Batch Id: {0}", response.Value.Id);
+```
+
+#### Get a message batch
+
+You can retrieve a message batch by its id.
+
+```csharp
+using AnthropicClient;
+using AnthropicClient.Models;
+
+var response = await client.GetMessageBatchAsync("batch-id");
+
+if (response.IsFailure)
+{
+  Console.WriteLine("Failed to get message batch");
+  Console.WriteLine("Error Type: {0}", response.Error.Error.Type);
+  Console.WriteLine("Error Message: {0}", response.Error.Error.Message);
+  return;
+}
+
+Console.WriteLine("Message Batch Id: {0}", response.Value.Id);
+```
+
+#### Get a message batch results
+
+You can retrieve the results of a message batch by its id. The results are returned as an `IAsyncEnumerable` collection so that they can be streamed and processed as they are received.
+
+```csharp
+using AnthropicClient;
+using AnthropicClient.Models;
+
+var response = await client.GetMessageBatchResultsAsync("batch-id");
+
+if (response.IsFailure)
+{
+  Console.WriteLine("Failed to get message batch results");
+  Console.WriteLine("Error Type: {0}", response.Error.Error.Type);
+  Console.WriteLine("Error Message: {0}", response.Error.Error.Message);
+  return;
+}
+
+await foreach (var item in response.Value)
+{
+  Console.WriteLine("Item Custom Id: {0}", result.CustomId);
+  
+  switch (item.Result)
+  {
+    case SucceededMessageBatchResult successResult:
+      foreach (var content in successResult.Message.Content)
+      {
+        if (content is TextContent textContent)
+        {
+          Console.WriteLine("Message Batch Result: {0}", textContent.Text);
+        }
+      }
+      break;
+    default:
+      Console.WriteLine("Message Batch Result: {0}", item.Result.Type);
+      break;
+  }
+}
+```
+
+#### List message batches
+
+You can retrieve a page of message batches.
+
+```csharp
+using AnthropicClient;
+using AnthropicClient.Models;
+
+var response = await client.ListMessageBatchesAsync();
+
+if (response.IsFailure)
+{
+  Console.WriteLine("Failed to list message batches");
+  Console.WriteLine("Error Type: {0}", response.Error.Error.Type);
+  Console.WriteLine("Error Message: {0}", response.Error.Error.Message);
+  return;
+}
+
+foreach (var batch in response.Value.Data)
+{
+  Console.WriteLine("Message Batch Id: {0}", batch.Id);
+}
+```
+
+#### List all message batches
+
+You can also retrieve all the pages of message batches without having to implement pagination yourself. This is done by returning an `IAsyncEnumerable` collection that can be streamed and processed as the pages are received.
+
+```csharp
+using AnthropicClient;
+using AnthropicClient.Models;
+
+var pageResponses = client.ListAllMessageBatchesAsync();
+
+await foreach (var response in pageResponses)
+{
+  if (response.IsFailure)
+  {
+    Console.WriteLine("Failed to list message batches");
+    Console.WriteLine("Error Type: {0}", response.Error.Error.Type);
+    Console.WriteLine("Error Message: {0}", response.Error.Error.Message);
+    return;
+  }
+
+  foreach (var batch in response.Value.Data)
+  {
+    Console.WriteLine("Message Batch Id: {0}", batch.Id);
+  }
+}
+```
+
+#### Cancel a message batch
+
+You can cancel a message batch by its id.
+
+```csharp
+using AnthropicClient;
+using AnthropicClient.Models;
+
+var response = await client.CancelMessageBatchAsync("batch-id");
+
+if (response.IsFailure)
+{
+  Console.WriteLine("Failed to cancel message batch");
+  Console.WriteLine("Error Type: {0}", response.Error.Error.Type);
+  Console.WriteLine("Error Message: {0}", response.Error.Error.Message);
+  return;
+}
+
+Console.WriteLine("Message Batch Id: {0}", response.Value.Id);
+Console.WriteLine("Message Batch Status: {0}", response.Value.ProcessingStatus);
+```
+
+#### Delete a message batch
+
+You can delete a message batch that is no longer being processed by its id.
+
+```csharp
+using AnthropicClient;
+using AnthropicClient.Models;
+
+var response = await client.DeleteMessageBatchAsync("batch-id");
+
+if (response.IsFailure)
+{
+  Console.WriteLine("Failed to delete message batch");
+  Console.WriteLine("Error Type: {0}", response.Error.Error.Type);
+  Console.WriteLine("Error Message: {0}", response.Error.Error.Message);
+  return;
+}
+
+Console.WriteLine("Message Batch Id: {0}", response.Value.Id);
+```

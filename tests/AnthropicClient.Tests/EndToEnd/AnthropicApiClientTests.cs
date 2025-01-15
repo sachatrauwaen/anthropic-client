@@ -1,10 +1,9 @@
+using AnthropicClient.Tests.Files;
+
 namespace AnthropicClient.Tests.EndToEnd;
 
-public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(configFixture)
+public class AnthropicApiClientTests(ConfigurationFixture configFixture) : EndToEndTest(configFixture)
 {
-  private string GetTestFilePath(string fileName) =>
-    Path.Combine(Directory.GetCurrentDirectory(), "Files", fileName);
-
   [Fact]
   public async Task CreateMessageAsync_WhenCalled_ItShouldReturnResponse()
   {
@@ -63,7 +62,7 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
   [Fact]
   public async Task CreateMessageAsync_WhenImageIsSent_ItShouldReturnResponse()
   {
-    var imagePath = GetTestFilePath("elephant.jpg");
+    var imagePath = TestFileHelper.GetTestFilePath("elephant.jpg");
     var mediaType = "image/jpeg";
     var bytes = await File.ReadAllBytesAsync(imagePath);
     var base64Data = Convert.ToBase64String(bytes);
@@ -102,7 +101,7 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
   {
     var client = CreateClient(new HttpClient());
 
-    var storyPath = GetTestFilePath("story.txt");
+    var storyPath = TestFileHelper.GetTestFilePath("story.txt");
     var storyText = await File.ReadAllTextAsync(storyPath);
 
     var request = new MessageRequest(
@@ -141,7 +140,7 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
   {
     var client = CreateClient(new HttpClient());
 
-    var storyPath = GetTestFilePath("story.txt");
+    var storyPath = TestFileHelper.GetTestFilePath("story.txt");
     var storyText = await File.ReadAllTextAsync(storyPath);
 
     var request = new MessageRequest(
@@ -217,7 +216,7 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
   [Fact]
   public async Task CreateMessageAsync_WhenProvidedWithPDF_ItShouldReturnResponse()
   {
-    var pdfPath = GetTestFilePath("addendum.pdf");
+    var pdfPath = TestFileHelper.GetTestFilePath("addendum.pdf");
     var bytes = await File.ReadAllBytesAsync(pdfPath);
     var base64Data = Convert.ToBase64String(bytes);
 
@@ -253,7 +252,7 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
   [Fact]
   public async Task CreateMessageAsync_WhenProvidedWithPDFWithCacheControl_ItShouldUseCache()
   {
-    var pdfPath = GetTestFilePath("addendum.pdf");
+    var pdfPath = TestFileHelper.GetTestFilePath("addendum.pdf");
     var bytes = await File.ReadAllBytesAsync(pdfPath);
     var base64Data = Convert.ToBase64String(bytes);
 
@@ -340,5 +339,122 @@ public class ClientTests(ConfigurationFixture configFixture) : EndToEndTest(conf
     result.IsSuccess.Should().BeTrue();
     result.Value.Should().BeOfType<AnthropicModel>();
     result.Value.Id.Should().Be(AnthropicModels.Claude3Haiku);
+  }
+
+  [Fact]
+  public async Task CreateMessageBatchAsync_WhenCalled_ItShouldReturnResponse()
+  {
+    var request = new MessageBatchRequest([
+      new(
+        Guid.NewGuid().ToString(),
+        new(
+          model: AnthropicModels.Claude3Haiku,
+          messages: [new(MessageRole.User, [new TextContent("Hello!")])]
+        )
+      ),
+    ]);
+
+    var result = await _client.CreateMessageBatchAsync(request);
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeOfType<MessageBatchResponse>();
+    result.Value.Id.Should().NotBeNullOrEmpty();
+  }
+
+  [Fact]
+  public async Task GetMessageBatchAsync_WhenCalled_ItShouldReturnResponse()
+  {
+    var request = new MessageBatchRequest([
+      new(
+        Guid.NewGuid().ToString(),
+        new(
+          model: AnthropicModels.Claude3Haiku,
+          messages: [new(MessageRole.User, [new TextContent("Hello!")])]
+        )
+      ),
+    ]);
+
+    var createResult = await _client.CreateMessageBatchAsync(request);
+    var getResult = await _client.GetMessageBatchAsync(createResult.Value.Id);
+
+    getResult.IsSuccess.Should().BeTrue();
+    getResult.Value.Should().BeOfType<MessageBatchResponse>();
+    getResult.Value.Id.Should().Be(createResult.Value.Id);
+  }
+
+  [Fact]
+  public async Task ListMessageBatchesAsync_WhenCalled_ItShouldReturnResponse()
+  {
+    var request = new MessageBatchRequest([
+      new(
+        Guid.NewGuid().ToString(),
+        new(
+          model: AnthropicModels.Claude3Haiku,
+          messages: [new(MessageRole.User, [new TextContent("Hello!")])]
+        )
+      ),
+    ]);
+
+    var createResult = await _client.CreateMessageBatchAsync(request);
+    var result = await _client.ListMessageBatchesAsync();
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeOfType<Page<MessageBatchResponse>>();
+    result.Value.Data.Should().HaveCountGreaterThan(0);
+    result.Value.Data.Should().ContainSingle(b => b.Id == createResult.Value.Id);
+  }
+
+  [Fact]
+  public async Task ListAllMessageBatchesAsync_WhenCalled_ItShouldReturnResponse()
+  {
+    var createRequest = (string id) => new MessageBatchRequest([
+      new(
+        id,
+        new(
+          model: AnthropicModels.Claude3Haiku,
+          messages: [new(MessageRole.User, [new TextContent("Hello!")])]
+        )
+      ),
+    ]);
+
+    var requestNumberOne = createRequest(Guid.NewGuid().ToString());
+    var requestNumberTwo = createRequest(Guid.NewGuid().ToString());
+
+    var createResultOne = await _client.CreateMessageBatchAsync(requestNumberOne);
+    var createResultTwo = await _client.CreateMessageBatchAsync(requestNumberTwo);
+
+    var responses = await _client.ListAllMessageBatchesAsync(limit: 1).ToListAsync();
+
+    responses.Should().HaveCountGreaterThan(2);
+
+    var batches = responses
+      .Where(r => r.IsSuccess)
+      .Select(r => r.Value)
+      .SelectMany(r => r.Data);
+
+    batches.Should().ContainSingle(b => b.Id == createResultOne.Value.Id);
+    batches.Should().ContainSingle(b => b.Id == createResultTwo.Value.Id);
+  }
+
+  [Fact]
+  public async Task CancelMessageBatchAsync_WhenCalled_ItShouldReturnResponse()
+  {
+    var request = new MessageBatchRequest([
+      new(
+        Guid.NewGuid().ToString(),
+        new(
+          model: AnthropicModels.Claude3Haiku,
+          messages: [new(MessageRole.User, [new TextContent("Hello!")])]
+        )
+      ),
+    ]);
+
+    var createResult = await _client.CreateMessageBatchAsync(request);
+    var result = await _client.CancelMessageBatchAsync(createResult.Value.Id);
+
+    result.IsSuccess.Should().BeTrue();
+    result.Value.Should().BeOfType<MessageBatchResponse>();
+    result.Value.Id.Should().Be(createResult.Value.Id);
+    result.Value.ProcessingStatus.Should().Be(MessageBatchStatus.Canceling);
   }
 }

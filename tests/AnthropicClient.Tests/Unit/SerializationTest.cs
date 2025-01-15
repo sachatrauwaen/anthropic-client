@@ -1,5 +1,3 @@
-using AnthropicClient.Json;
-
 namespace AnthropicClient.Tests.Unit;
 
 public class SerializationTest
