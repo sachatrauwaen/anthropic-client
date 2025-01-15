@@ -162,6 +162,16 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.CanceledMessageBatchResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.CanceledMessageBatchResult.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/AnthropicClient.Models.Content.yml",
       "output": {
         ".html": {
@@ -302,6 +312,16 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.ErroredMessageBatchResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.ErroredMessageBatchResult.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/AnthropicClient.Models.EventData.yml",
       "output": {
         ".html": {
@@ -316,6 +336,16 @@
       "output": {
         ".html": {
           "relative_path": "api/AnthropicClient.Models.EventType.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.ExpiredMessageBatchResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.ExpiredMessageBatchResult.html"
         }
       },
       "version": ""
@@ -426,6 +456,96 @@
       "output": {
         ".html": {
           "relative_path": "api/AnthropicClient.Models.Message.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.MessageBatchDeleteResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.MessageBatchDeleteResponse.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.MessageBatchRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.MessageBatchRequest.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.MessageBatchRequestCounts.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.MessageBatchRequestCounts.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.MessageBatchRequestItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.MessageBatchRequestItem.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.MessageBatchResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.MessageBatchResponse.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.MessageBatchResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.MessageBatchResult.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.MessageBatchResultItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.MessageBatchResultItem.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.MessageBatchResultType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.MessageBatchResultType.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.MessageBatchStatus.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.MessageBatchStatus.html"
         }
       },
       "version": ""
@@ -616,6 +736,16 @@
       "output": {
         ".html": {
           "relative_path": "api/AnthropicClient.Models.StreamMessageRequest.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/AnthropicClient.Models.SucceededMessageBatchResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/AnthropicClient.Models.SucceededMessageBatchResult.html"
         }
       },
       "version": ""
