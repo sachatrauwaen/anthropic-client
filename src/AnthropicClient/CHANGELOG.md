@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="0.6.0"></a>
+## [0.6.0](https://www.github.com/StevanFreeborn/anthropic-client/releases/tag/v0.6.0) (2025-01-15)
+
+### Features
+
+* add CancelMessageBatchAsync method and corresponding tests ([c11600c](https://www.github.com/StevanFreeborn/anthropic-client/commit/c11600c77040eebfab4df1153d07774357d87ce2))
+* add class for representing batch statuses ([f8e01bf](https://www.github.com/StevanFreeborn/anthropic-client/commit/f8e01bf4878e07f823d524408ed59a2232960a7b))
+* add DeleteMessageBatchAsync method and MessageBatchDeleteResponse model with tests ([56b3a53](https://www.github.com/StevanFreeborn/anthropic-client/commit/56b3a53a2a31070693351525379b6a675b068496))
+* add ListAllMessageBatchesAsync method and corresponding tests ([180a090](https://www.github.com/StevanFreeborn/anthropic-client/commit/180a0901959b88b27981f063b0be7a267a141802))
+* implement CreateMessageBatchAsync method ([9548754](https://www.github.com/StevanFreeborn/anthropic-client/commit/9548754d6cab73d21c7b7a28264374e79dcb8bab))
+* implement GetMessageBatchAsync method ([c5f3c5e](https://www.github.com/StevanFreeborn/anthropic-client/commit/c5f3c5eca549a89ac6b8197b833767c0ca4465c5))
+* implement GetMessageBatchResultsAsync method ([c56adf3](https://www.github.com/StevanFreeborn/anthropic-client/commit/c56adf394c62aca10c89f1d8650635cefe248d50))
+* implement ListMessageBatchesAsync method ([ca2ecdc](https://www.github.com/StevanFreeborn/anthropic-client/commit/ca2ecdcfc79a5ff96c22eb564e7fc8be22e82a6f))
+
+### Bug Fixes
+
+* default nullable properties to actually datetimeoffset min value when new'd up ([0a6d89b](https://www.github.com/StevanFreeborn/anthropic-client/commit/0a6d89bd77e165a0ae63dacd9f854bd49ba817ce))
+* make correct properties nullable ([15f5ad4](https://www.github.com/StevanFreeborn/anthropic-client/commit/15f5ad49e7f41215c3b089cdfe3873182223ce2d))
+* use proper count tokens endpoint ([5e247a3](https://www.github.com/StevanFreeborn/anthropic-client/commit/5e247a3c3afb9a3dad954eaa5890de106ae2edb9))
+
 <a name="0.5.0"></a>
 ## [0.5.0](https://www.github.com/StevanFreeborn/anthropic-client/releases/tag/v0.5.0) (2025-01-06)
 
