@@ -7,13 +7,13 @@ public class MessageBatchStatusTests
   {
     MessageBatchStatus.Canceling.Should().Be("canceling");
   }
-  
+
   [Fact]
   public void InProgress_WhenCalled_ItShouldReturnCancelingStatus()
   {
     MessageBatchStatus.InProgress.Should().Be("in_progress");
   }
-  
+
   [Fact]
   public void Ended_WhenCalled_ItShouldReturnCancelingStatus()
   {
