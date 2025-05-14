@@ -1,5 +1,6 @@
 using System.Reflection;
-using System.Text.Json;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 using AnthropicClient.Json;
 
@@ -106,8 +107,8 @@ public class ToolCall
       {
         arguments[i] = value is string s && parameter.ParameterType.IsEnum
           ? Enum.Parse(parameter.ParameterType, s, true)
-          : value is JsonElement element
-            ? JsonSerializer.Deserialize(element.GetRawText(), parameter.ParameterType, JsonSerializationOptions.DefaultOptions)
+          : value is JToken jToken
+            ? jToken.ToObject(parameter.ParameterType, JsonSerializer.CreateDefault(JsonSerializationOptions.DefaultOptions))
             : value;
       }
       else
@@ -121,3 +122,5 @@ public class ToolCall
     return arguments;
   }
 }
+
+

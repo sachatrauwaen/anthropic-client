@@ -1,4 +1,4 @@
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 using AnthropicClient.Utils;
 
@@ -54,3 +54,5 @@ public class DocumentContent : Content
     Source = new(mediaType, data);
   }
 }
+
+

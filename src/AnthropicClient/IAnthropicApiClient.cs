@@ -99,3 +99,5 @@ public interface IAnthropicApiClient
   /// <returns>A task that represents the asynchronous operation. The task result contains the response as an <see cref="AnthropicResult{T}"/> where T is <see cref="AnthropicModel"/>.</returns>
   Task<AnthropicResult<AnthropicModel>> GetModelAsync(string modelId);
 }
+
+

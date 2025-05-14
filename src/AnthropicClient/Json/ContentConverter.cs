@@ -1,30 +1,37 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 using AnthropicClient.Models;
 
 namespace AnthropicClient.Json;
 
-class ContentConverter : JsonConverter<Content>
+class ContentConverter : JsonConverter
 {
-  public override Content Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+  public override bool CanConvert(Type objectType)
   {
-    using var jsonDocument = JsonDocument.ParseValue(ref reader);
-    var root = jsonDocument.RootElement;
-    var type = root.GetProperty("type").GetString();
+    return objectType == typeof(Content);
+  }
+
+  public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+  {
+    JObject jObject = JObject.Load(reader);
+    var type = jObject["type"]?.ToString();
+
     return type switch
     {
-      ContentType.Text => JsonSerializer.Deserialize<TextContent>(root.GetRawText(), options)!,
-      ContentType.Image => JsonSerializer.Deserialize<ImageContent>(root.GetRawText(), options)!,
-      ContentType.Document => JsonSerializer.Deserialize<DocumentContent>(root.GetRawText(), options)!,
-      ContentType.ToolUse => JsonSerializer.Deserialize<ToolUseContent>(root.GetRawText(), options)!,
-      ContentType.ToolResult => JsonSerializer.Deserialize<ToolResultContent>(root.GetRawText(), options)!,
-      _ => throw new JsonException($"Unknown content type: {type}")
+      ContentType.Text => jObject.ToObject<TextContent>(serializer),
+      ContentType.Image => jObject.ToObject<ImageContent>(serializer),
+      ContentType.Document => jObject.ToObject<DocumentContent>(serializer),
+      ContentType.ToolUse => jObject.ToObject<ToolUseContent>(serializer),
+      ContentType.ToolResult => jObject.ToObject<ToolResultContent>(serializer),
+      _ => throw new JsonSerializationException($"Unknown content type: {type}")
     };
   }
 
-  public override void Write(Utf8JsonWriter writer, Content value, JsonSerializerOptions options)
+  public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
   {
-    JsonSerializer.Serialize(writer, value, value.GetType(), options);
+    serializer.Serialize(writer, value);
   }
 }
+
+

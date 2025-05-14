@@ -17,3 +17,5 @@ public static class MessageRole
 
   internal static bool IsValidRole(string role) => role is User or Assistant;
 }
+
+

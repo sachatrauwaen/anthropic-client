@@ -11,3 +11,5 @@ public class EphemeralCacheControl : CacheControl
   /// <returns>A new instance of the <see cref="EphemeralCacheControl"/> class.</returns>
   public EphemeralCacheControl() : base(CacheControlType.Ephemeral) { }
 }
+
+

@@ -1,4 +1,4 @@
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace AnthropicClient.Models;
 
@@ -25,13 +25,13 @@ public class MessageResponse
   /// <summary>
   /// Gets the stop reason of the response.
   /// </summary>
-  [JsonPropertyName("stop_reason")]
+  [JsonProperty("stop_reason")]
   public string? StopReason { get; init; }
 
   /// <summary>
   /// Gets the stop sequence of the response.
   /// </summary>
-  [JsonPropertyName("stop_sequence")]
+  [JsonProperty("stop_sequence")]
   public string? StopSequence { get; init; }
 
   /// <summary>
@@ -55,3 +55,5 @@ public class MessageResponse
   [JsonIgnore]
   public ToolCall? ToolCall { get; set; } = null;
 }
+
+

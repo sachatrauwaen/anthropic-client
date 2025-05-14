@@ -20,3 +20,5 @@ public abstract class EventData
     Type = type;
   }
 }
+
+

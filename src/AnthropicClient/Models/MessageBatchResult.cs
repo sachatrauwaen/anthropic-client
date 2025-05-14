@@ -24,3 +24,5 @@ public abstract class MessageBatchResult
     Type = type;
   }
 }
+
+

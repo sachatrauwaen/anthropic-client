@@ -1,4 +1,4 @@
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace AnthropicClient.Models;
 
@@ -10,6 +10,8 @@ public class TokenCountResponse
   /// <summary>
   ///  The number of input tokens counted.
   /// </summary>
-  [JsonPropertyName("input_tokens")]
+  [JsonProperty("input_tokens")]
   public int InputTokens { get; init; }
 }
+
+

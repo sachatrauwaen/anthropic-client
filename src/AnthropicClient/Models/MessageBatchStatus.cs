@@ -1,4 +1,4 @@
-﻿namespace AnthropicClient.Models;
+namespace AnthropicClient.Models;
 
 /// <summary>
 /// Represents the status of a message batch.
@@ -20,3 +20,5 @@ public static class MessageBatchStatus
   /// </summary>
   public const string Ended = "ended";
 }
+
+

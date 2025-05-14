@@ -1,14 +1,15 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 
 namespace AnthropicClient.Json;
 
 static class JsonSerializationOptions
 {
-  public static JsonSerializerOptions DefaultOptions => new()
+  public static JsonSerializerSettings DefaultOptions => new()
   {
-    PropertyNameCaseInsensitive = true,
-    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+    NullValueHandling = NullValueHandling.Ignore,
+    ContractResolver = new CamelCasePropertyNamesContractResolver(),
     Converters =
     {
       new ContentConverter(),
@@ -16,9 +17,10 @@ static class JsonSerializationOptions
       new ErrorConverter(),
       new EventDataConverter(),
       new ContentDeltaConverter(),
-      new JsonStringEnumConverter(),
+      new StringEnumConverter(),
       new MessageBatchResultConverter(),
-    },
-    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+    }
   };
 }
+
+

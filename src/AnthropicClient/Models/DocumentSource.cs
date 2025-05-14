@@ -1,4 +1,4 @@
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 using AnthropicClient.Utils;
 
@@ -12,7 +12,7 @@ public class DocumentSource
   /// <summary>
   /// Gets the media type of the document.
   /// </summary>
-  [JsonPropertyName("media_type")]
+  [JsonProperty("media_type")]
   public string MediaType { get; init; } = string.Empty;
 
   /// <summary>
@@ -47,3 +47,5 @@ public class DocumentSource
     Data = data;
   }
 }
+
+

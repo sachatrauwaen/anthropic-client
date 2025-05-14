@@ -1,4 +1,4 @@
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace AnthropicClient.Models;
 
@@ -14,13 +14,13 @@ public class PagingRequest
   /// <summary>
   /// The ID of the item before which to start the page.
   /// </summary>
-  [JsonPropertyName("before_id")]
+  [JsonProperty("before_id")]
   public string BeforeId { get; init; }
 
   /// <summary>
   /// The ID of the item after which to start the page.
   /// </summary>
-  [JsonPropertyName("after_id")]
+  [JsonProperty("after_id")]
   public string AfterId { get; init; }
 
   /// <summary>
@@ -81,3 +81,5 @@ public class PagingRequest
     return string.Join("&", parameters);
   }
 }
+
+

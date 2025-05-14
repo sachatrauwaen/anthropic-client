@@ -1,4 +1,4 @@
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace AnthropicClient.Models;
 
@@ -22,3 +22,5 @@ public class OverloadedError : Error
     Message = message;
   }
 }
+
+

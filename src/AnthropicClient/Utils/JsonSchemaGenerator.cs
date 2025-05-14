@@ -1,6 +1,6 @@
 using System.Reflection;
-using System.Text.Json;
-using System.Text.Json.Nodes;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 using AnthropicClient.Json;
 using AnthropicClient.Models;
@@ -22,10 +22,10 @@ static class JsonSchemaGenerator
   private const string StringType = "string";
   private const string ArrayType = "array";
 
-  internal static JsonObject GenerateInputSchema(AnthropicFunction function)
+  internal static JObject GenerateInputSchema(AnthropicFunction function)
   {
     var parameters = function.Method.GetParameters();
-    var inputSchema = new JsonObject()
+    var inputSchema = new JObject()
     {
       [TypeKey] = ObjectType
     };
@@ -35,8 +35,8 @@ static class JsonSchemaGenerator
       return inputSchema;
     }
 
-    var properties = new JsonObject();
-    var requiredProperties = new JsonArray();
+    var properties = new JObject();
+    var requiredProperties = new JArray();
 
     foreach (var parameter in parameters)
     {
@@ -71,16 +71,16 @@ static class JsonSchemaGenerator
     return inputSchema;
   }
 
-  private static JsonObject GenerateParameterTypeSchema(Type type, JsonObject inputSchema)
+  private static JObject GenerateParameterTypeSchema(Type type, JObject inputSchema)
   {
-    var definitions = inputSchema[DefinitionsKey] ?? new JsonObject();
+    var definitions = inputSchema[DefinitionsKey] as JObject ?? new JObject();
 
     // Check if a definition for the type already exists
     // If it does, return a reference to the definition
     // no need to evaluate the type further
-    if (definitions.AsObject().ContainsKey(type.FullName))
+    if (definitions.ContainsKey(type.FullName))
     {
-      return new JsonObject()
+      return new JObject()
       {
         [RefKey] = GetDefinitionPath(type)
       };
@@ -88,7 +88,7 @@ static class JsonSchemaGenerator
 
     var paramSchema = type switch
     {
-      var t when t == typeof(string) || t == typeof(char) => new JsonObject()
+      var t when t == typeof(string) || t == typeof(char) => new JObject()
       {
         [TypeKey] = StringType
       },
@@ -100,48 +100,48 @@ static class JsonSchemaGenerator
         t == typeof(short) ||
         t == typeof(ushort) ||
         t == typeof(byte) ||
-        t == typeof(sbyte) => new JsonObject()
+        t == typeof(sbyte) => new JObject()
         {
           [TypeKey] = "integer"
         },
-      var t when t == typeof(bool) => new JsonObject()
+      var t when t == typeof(bool) => new JObject()
       {
         [TypeKey] = "boolean"
       },
       var t when
         t == typeof(double) ||
         t == typeof(float) ||
-        t == typeof(decimal) => new JsonObject()
+        t == typeof(decimal) => new JObject()
         {
           [TypeKey] = "number"
         },
-      var t when t == typeof(DateTime) || t == typeof(DateTimeOffset) => new JsonObject()
+      var t when t == typeof(DateTime) || t == typeof(DateTimeOffset) => new JObject()
       {
         [TypeKey] = StringType,
         [FormatKey] = "date-time"
       },
-      var t when t == typeof(Guid) => new JsonObject()
+      var t when t == typeof(Guid) => new JObject()
       {
         [TypeKey] = StringType,
         [FormatKey] = "uuid"
       },
-      var t when t.IsEnum => new JsonObject()
+      var t when t.IsEnum => new JObject()
       {
         [TypeKey] = StringType,
         [EnumKey] = Enum.GetNames(t).Aggregate(
-          new JsonArray(), (acc, name) =>
+          new JArray(), (acc, name) =>
           {
             acc.Add(name);
             return acc;
           }
         )
       },
-      var t when t.IsArray => new JsonObject()
+      var t when t.IsArray => new JObject()
       {
         [TypeKey] = ArrayType,
         [ItemsKey] = GenerateParameterTypeSchema(t.GetElementType()!, inputSchema)
       },
-      var t when t.IsGenericType && t.GetGenericTypeDefinition() == typeof(List<>) => new JsonObject()
+      var t when t.IsGenericType && t.GetGenericTypeDefinition() == typeof(List<>) => new JObject()
       {
         [TypeKey] = ArrayType,
         [ItemsKey] = GenerateParameterTypeSchema(t.GetGenericArguments()[0], inputSchema)
@@ -152,12 +152,12 @@ static class JsonSchemaGenerator
     return paramSchema;
   }
 
-  private static JsonObject GenerateTypeDefinitionSchema(Type type, JsonObject inputSchema)
+  private static JObject GenerateTypeDefinitionSchema(Type type, JObject inputSchema)
   {
-    var definitions = inputSchema[DefinitionsKey] ?? new JsonObject();
+    var definitions = inputSchema[DefinitionsKey] as JObject ?? new JObject();
     inputSchema[DefinitionsKey] = definitions;
 
-    var typeSchema = new JsonObject()
+    var typeSchema = new JObject()
     {
       [TypeKey] = ObjectType
     };
@@ -167,12 +167,12 @@ static class JsonSchemaGenerator
     members.AddRange(type.GetProperties(bindingFlags));
     members.AddRange(type.GetFields(bindingFlags));
 
-    var memberProperties = new JsonObject();
-    var memberRequiredProperties = new JsonArray();
+    var memberProperties = new JObject();
+    var memberRequiredProperties = new JArray();
 
     foreach (var member in members)
     {
-      JsonObject memberProperty;
+      JObject memberProperty;
 
       var memberType = member switch
       {
@@ -187,8 +187,8 @@ static class JsonSchemaGenerator
       var memberDescription = attribute?.Description ?? string.Empty;
       var memberRequired = attribute?.Required ?? Nullable.GetUnderlyingType(memberType) is null;
 
-      memberProperty = definitions.AsObject().ContainsKey(memberType.FullName)
-        ? new JsonObject()
+      memberProperty = definitions.ContainsKey(memberType.FullName)
+        ? new JObject()
         {
           [RefKey] = GetDefinitionPath(memberType)
         }
@@ -199,33 +199,33 @@ static class JsonSchemaGenerator
         memberRequiredProperties.Add(memberPropertyName);
       }
 
-      JsonNode? defaultValue = null;
+      JToken? defaultValue = null;
 
       if (attribute?.DefaultValue is not null)
       {
-        defaultValue = JsonNode.Parse(JsonSerializer.Serialize(attribute.DefaultValue, JsonSerializationOptions.DefaultOptions));
+        defaultValue = JToken.Parse(JsonConvert.SerializeObject(attribute.DefaultValue, JsonSerializationOptions.DefaultOptions));
         memberProperty["default"] = defaultValue;
       }
 
       if (attribute?.PossibleValues is { Length: > 0 })
       {
-        var enumValues = new JsonArray();
+        var enumValues = new JArray();
 
         foreach (var value in attribute.PossibleValues)
         {
-          var enumValue = JsonNode.Parse(JsonSerializer.Serialize(value, JsonSerializationOptions.DefaultOptions));
+          var enumValue = JToken.Parse(JsonConvert.SerializeObject(value, JsonSerializationOptions.DefaultOptions));
 
-          if (defaultValue is null || JsonNode.DeepEquals(enumValue, defaultValue) is false)
+          if (defaultValue is null || !JToken.DeepEquals(enumValue, defaultValue))
           {
             enumValues.Add(enumValue);
           }
         }
 
-        var containsDefaultValue = enumValues.Where(value => JsonNode.DeepEquals(value, defaultValue)).Any();
+        var containsDefaultValue = enumValues.Any(value => JToken.DeepEquals(value, defaultValue));
 
         if (defaultValue is not null && containsDefaultValue is false)
         {
-          enumValues.Add(JsonNode.Parse(defaultValue.ToJsonString(JsonSerializationOptions.DefaultOptions)));
+          enumValues.Add(JToken.Parse(JsonConvert.SerializeObject(defaultValue, JsonSerializationOptions.DefaultOptions)));
         }
 
         memberProperty[EnumKey] = enumValues;
@@ -239,7 +239,7 @@ static class JsonSchemaGenerator
     typeSchema[RequiredPropertiesKey] = memberRequiredProperties;
     definitions[type.FullName] = typeSchema;
     inputSchema[DefinitionsKey] = definitions;
-    return new JsonObject()
+    return new JObject()
     {
       [RefKey] = GetDefinitionPath(type)
     };
@@ -247,3 +247,5 @@ static class JsonSchemaGenerator
 
   private static string GetDefinitionPath(Type type) => $"#/definitions/{type.FullName}";
 }
+
+

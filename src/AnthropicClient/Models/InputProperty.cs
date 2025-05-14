@@ -1,4 +1,4 @@
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 using AnthropicClient.Utils;
 
@@ -40,3 +40,5 @@ public class InputProperty
     Description = description;
   }
 }
+
+

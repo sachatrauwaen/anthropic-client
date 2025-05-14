@@ -1,4 +1,4 @@
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace AnthropicClient.Models;
 
@@ -15,7 +15,7 @@ public class ContentStartEventData : EventData
   /// <summary>
   /// Gets the content block.
   /// </summary>
-  [JsonPropertyName("content_block")]
+  [JsonProperty("content_block")]
   public Content ContentBlock { get; init; } = default!;
 
   [JsonConstructor]
@@ -35,3 +35,5 @@ public class ContentStartEventData : EventData
     ContentBlock = contentBlock;
   }
 }
+
+

@@ -1,4 +1,4 @@
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace AnthropicClient.Models;
 
@@ -20,12 +20,14 @@ public class AnthropicModel
   /// <summary>
   /// The display name of the model.
   /// </summary>
-  [JsonPropertyName("display_name")]
+  [JsonProperty("display_name")]
   public string DisplayName { get; init; } = string.Empty;
 
   /// <summary>
   /// The created date of the model.
   /// </summary>
-  [JsonPropertyName("created_at")]
+  [JsonProperty("created_at")]
   public DateTimeOffset CreatedAt { get; init; }
 }
+
+

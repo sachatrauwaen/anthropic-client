@@ -1,6 +1,6 @@
 using System.Reflection;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Text.RegularExpressions;
 
 using AnthropicClient.Utils;
@@ -46,8 +46,8 @@ public class Tool
   /// <summary>
   /// Gets the input schema of the tool.
   /// </summary>
-  [JsonPropertyName("input_schema")]
-  public JsonObject InputSchema { get; }
+  [JsonProperty("input_schema")]
+  public JObject InputSchema { get; }
 
   /// <summary>
   /// Gets the function of the tool.
@@ -58,7 +58,7 @@ public class Tool
   /// <summary>
   /// Gets or sets the cache control to be used for the tool.
   /// </summary>
-  [JsonPropertyName("cache_control")]
+  [JsonProperty("cache_control")]
   public CacheControl? CacheControl { get; set; }
 
   /// <summary>
@@ -272,3 +272,5 @@ public class Tool
     return sanitizedName;
   }
 }
+
+

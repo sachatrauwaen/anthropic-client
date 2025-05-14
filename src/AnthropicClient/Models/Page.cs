@@ -1,4 +1,4 @@
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace AnthropicClient.Models;
 
@@ -10,19 +10,19 @@ public class Page
   /// <summary>
   /// The id of the first item in the page.
   /// </summary>
-  [JsonPropertyName("first_id")]
+  [JsonProperty("first_id")]
   public string? FirstId { get; init; } = string.Empty;
 
   /// <summary>
   /// The id of the last item in the page.
   /// </summary>
-  [JsonPropertyName("last_id")]
+  [JsonProperty("last_id")]
   public string? LastId { get; init; } = string.Empty;
 
   /// <summary>
   /// Indicates whether there is more data to be retrieved.
   /// </summary>
-  [JsonPropertyName("has_more")]
+  [JsonProperty("has_more")]
   public bool HasMore { get; init; }
 }
 
@@ -36,3 +36,5 @@ public class Page<T> : Page
   /// </summary>
   public T[] Data { get; init; } = [];
 }
+
+

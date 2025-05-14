@@ -22,3 +22,5 @@ public class ToolChoiceType
 
   internal static bool IsValidType(string type) => type is Auto or Any or Tool;
 }
+
+

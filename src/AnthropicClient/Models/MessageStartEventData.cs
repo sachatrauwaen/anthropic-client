@@ -1,4 +1,4 @@
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace AnthropicClient.Models;
 
@@ -27,3 +27,5 @@ public class MessageStartEventData : EventData
     Message = message;
   }
 }
+
+

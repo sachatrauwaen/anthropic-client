@@ -11,3 +11,5 @@ public class AnyToolChoice : ToolChoice
   /// <returns>A new instance of the <see cref="AnyToolChoice"/> class.</returns>
   public AnyToolChoice() : base(ToolChoiceType.Any) { }
 }
+
+

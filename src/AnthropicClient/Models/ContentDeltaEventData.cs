@@ -1,4 +1,4 @@
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace AnthropicClient.Models;
 
@@ -34,3 +34,5 @@ public class ContentDeltaEventData : EventData
     Delta = delta;
   }
 }
+
+

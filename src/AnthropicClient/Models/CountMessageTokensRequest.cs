@@ -1,4 +1,4 @@
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 using AnthropicClient.Utils;
 
@@ -22,7 +22,7 @@ public class CountMessageTokensRequest
   /// <summary>
   /// Gets the tool choice mode to use for the request.
   /// </summary>
-  [JsonPropertyName("tool_choice")]
+  [JsonProperty("tool_choice")]
   public ToolChoice? ToolChoice { get; init; } = null;
 
   /// <summary>
@@ -33,7 +33,7 @@ public class CountMessageTokensRequest
   /// <summary>
   /// Gets the system prompt to use for the request.
   /// </summary>
-  [JsonPropertyName("system")]
+  [JsonProperty("system")]
   public List<TextContent>? SystemPrompt { get; init; } = null;
 
   /// <summary>
@@ -70,3 +70,5 @@ public class CountMessageTokensRequest
     SystemPrompt = systemPrompt;
   }
 }
+
+

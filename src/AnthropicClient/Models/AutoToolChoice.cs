@@ -11,3 +11,5 @@ public class AutoToolChoice : ToolChoice
   /// <returns>A new instance of the <see cref="AutoToolChoice"/> class.</returns>
   public AutoToolChoice() : base(ToolChoiceType.Auto) { }
 }
+
+

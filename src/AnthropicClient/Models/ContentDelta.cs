@@ -20,3 +20,5 @@ public abstract class ContentDelta
     Type = type;
   }
 }
+
+

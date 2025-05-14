@@ -1,4 +1,4 @@
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace AnthropicClient.Models;
 
@@ -10,7 +10,7 @@ public class MessageBatchResultItem
   /// <summary>
   /// Gets the custom ID of the message batch result item.
   /// </summary>
-  [JsonPropertyName("custom_id")]
+  [JsonProperty("custom_id")]
   public string CustomId { get; init; } = string.Empty;
 
   /// <summary>
@@ -18,3 +18,5 @@ public class MessageBatchResultItem
   /// </summary>
   public MessageBatchResult Result { get; init; } = default!;
 }
+
+

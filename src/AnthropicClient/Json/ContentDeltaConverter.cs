@@ -1,27 +1,34 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 using AnthropicClient.Models;
 
 namespace AnthropicClient.Json;
 
-class ContentDeltaConverter : JsonConverter<ContentDelta>
+class ContentDeltaConverter : JsonConverter
 {
-  public override ContentDelta Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+  public override bool CanConvert(Type objectType)
   {
-    using var jsonDocument = JsonDocument.ParseValue(ref reader);
-    var root = jsonDocument.RootElement;
-    var type = root.GetProperty("type").GetString();
+    return objectType == typeof(ContentDelta);
+  }
+
+  public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+  {
+    JObject jObject = JObject.Load(reader);
+    var type = jObject["type"]?.ToString();
+
     return type switch
     {
-      ContentDeltaType.TextDelta => JsonSerializer.Deserialize<TextDelta>(root.GetRawText(), options)!,
-      ContentDeltaType.JsonDelta => JsonSerializer.Deserialize<JsonDelta>(root.GetRawText(), options)!,
-      _ => throw new JsonException($"Unknown content type: {type}")
+      ContentDeltaType.TextDelta => jObject.ToObject<TextDelta>(serializer),
+      ContentDeltaType.JsonDelta => jObject.ToObject<JsonDelta>(serializer),
+      _ => throw new JsonSerializationException($"Unknown content type: {type}")
     };
   }
 
-  public override void Write(Utf8JsonWriter writer, ContentDelta value, JsonSerializerOptions options)
+  public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
   {
-    JsonSerializer.Serialize(writer, value, value.GetType(), options);
+    serializer.Serialize(writer, value);
   }
 }
+
+

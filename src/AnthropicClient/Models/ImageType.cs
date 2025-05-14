@@ -27,3 +27,5 @@ public static class ImageType
 
   internal static bool IsValidImageType(string imageType) => imageType is Jpg or Png or Gif or Webp;
 }
+
+

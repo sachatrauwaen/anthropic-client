@@ -1,4 +1,4 @@
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 using AnthropicClient.Utils;
 
@@ -12,7 +12,7 @@ public class ToolResultContent : Content
   /// <summary>
   /// Gets the tool use ID of the content.
   /// </summary>
-  [JsonPropertyName("tool_use_id")]
+  [JsonProperty("tool_use_id")]
   public string ToolUseId { get; init; } = string.Empty;
 
   /// <summary>
@@ -61,3 +61,5 @@ public class ToolResultContent : Content
     CacheControl = cacheControl;
   }
 }
+
+

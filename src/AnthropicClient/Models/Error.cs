@@ -25,3 +25,5 @@ public abstract class Error
     Type = type;
   }
 }
+
+

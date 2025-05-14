@@ -15,3 +15,5 @@ public static class ContentDeltaType
   /// </summary>
   public const string JsonDelta = "input_json_delta";
 }
+
+

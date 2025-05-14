@@ -1,8 +1,12 @@
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
 namespace AnthropicClient.Models;
 
 /// <summary>
-/// Represents the content type.
+/// The type of content.
 /// </summary>
+[JsonConverter(typeof(StringEnumConverter))]
 public static class ContentType
 {
   /// <summary>
@@ -30,3 +34,5 @@ public static class ContentType
   /// </summary>
   public const string Document = "document";
 }
+
+

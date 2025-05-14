@@ -1,33 +1,39 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 using AnthropicClient.Models;
 
 namespace AnthropicClient.Json;
 
-class ErrorConverter : JsonConverter<Error>
+class ErrorConverter : JsonConverter
 {
-  public override Error Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+  public override bool CanConvert(Type objectType)
   {
-    using var jsonDocument = JsonDocument.ParseValue(ref reader);
-    var root = jsonDocument.RootElement;
-    var type = root.GetProperty("type").GetString();
+    return objectType == typeof(Error);
+  }
+
+  public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+  {
+    JObject jObject = JObject.Load(reader);
+    var type = jObject["type"]?.ToString();
 
     return type switch
     {
-      ErrorType.InvalidRequestError => JsonSerializer.Deserialize<InvalidRequestError>(root.GetRawText(), options)!,
-      ErrorType.AuthenticationError => JsonSerializer.Deserialize<AuthenticationError>(root.GetRawText(), options)!,
-      ErrorType.PermissionError => JsonSerializer.Deserialize<PermissionError>(root.GetRawText(), options)!,
-      ErrorType.NotFoundError => JsonSerializer.Deserialize<NotFoundError>(root.GetRawText(), options)!,
-      ErrorType.RateLimitError => JsonSerializer.Deserialize<RateLimitError>(root.GetRawText(), options)!,
-      ErrorType.ApiError => JsonSerializer.Deserialize<ApiError>(root.GetRawText(), options)!,
-      ErrorType.OverloadedError => JsonSerializer.Deserialize<OverloadedError>(root.GetRawText(), options)!,
-      _ => throw new JsonException($"Unknown error type: {type}")
+      ErrorType.InvalidRequestError => jObject.ToObject<InvalidRequestError>(serializer),
+      ErrorType.AuthenticationError => jObject.ToObject<AuthenticationError>(serializer),
+      ErrorType.PermissionError => jObject.ToObject<PermissionError>(serializer),
+      ErrorType.NotFoundError => jObject.ToObject<NotFoundError>(serializer),
+      ErrorType.RateLimitError => jObject.ToObject<RateLimitError>(serializer),
+      ErrorType.ApiError => jObject.ToObject<ApiError>(serializer),
+      ErrorType.OverloadedError => jObject.ToObject<OverloadedError>(serializer),
+      _ => throw new JsonSerializationException($"Unknown error type: {type}")
     };
   }
 
-  public override void Write(Utf8JsonWriter writer, Error value, JsonSerializerOptions options)
+  public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
   {
-    JsonSerializer.Serialize(writer, value, value.GetType(), options);
+    serializer.Serialize(writer, value);
   }
 }
+
+

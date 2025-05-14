@@ -1,33 +1,40 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 using AnthropicClient.Models;
 
 namespace AnthropicClient.Json;
 
-class EventDataConverter : JsonConverter<EventData>
+class EventDataConverter : JsonConverter
 {
-  public override EventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+  public override bool CanConvert(Type objectType)
   {
-    using var jsonDocument = JsonDocument.ParseValue(ref reader);
-    var root = jsonDocument.RootElement;
-    var type = root.GetProperty("type").GetString();
+    return objectType == typeof(EventData);
+  }
+
+  public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+  {
+    JObject jObject = JObject.Load(reader);
+    var type = jObject["type"]?.ToString();
+
     return type switch
     {
-      EventType.Ping => JsonSerializer.Deserialize<PingEventData>(root.GetRawText(), options)!,
-      EventType.Error => JsonSerializer.Deserialize<ErrorEventData>(root.GetRawText(), options)!,
-      EventType.MessageStart => JsonSerializer.Deserialize<MessageStartEventData>(root.GetRawText(), options)!,
-      EventType.MessageDelta => JsonSerializer.Deserialize<MessageDeltaEventData>(root.GetRawText(), options)!,
-      EventType.MessageStop => JsonSerializer.Deserialize<MessageStopEventData>(root.GetRawText(), options)!,
-      EventType.ContentBlockStart => JsonSerializer.Deserialize<ContentStartEventData>(root.GetRawText(), options)!,
-      EventType.ContentBlockDelta => JsonSerializer.Deserialize<ContentDeltaEventData>(root.GetRawText(), options)!,
-      EventType.ContentBlockStop => JsonSerializer.Deserialize<ContentStopEventData>(root.GetRawText(), options)!,
-      _ => throw new JsonException($"Unknown content type: {type}")
+      EventType.Ping => jObject.ToObject<PingEventData>(serializer),
+      EventType.Error => jObject.ToObject<ErrorEventData>(serializer),
+      EventType.MessageStart => jObject.ToObject<MessageStartEventData>(serializer),
+      EventType.MessageDelta => jObject.ToObject<MessageDeltaEventData>(serializer),
+      EventType.MessageStop => jObject.ToObject<MessageStopEventData>(serializer),
+      EventType.ContentBlockStart => jObject.ToObject<ContentStartEventData>(serializer),
+      EventType.ContentBlockDelta => jObject.ToObject<ContentDeltaEventData>(serializer),
+      EventType.ContentBlockStop => jObject.ToObject<ContentStopEventData>(serializer),
+      _ => throw new JsonSerializationException($"Unknown content type: {type}")
     };
   }
 
-  public override void Write(Utf8JsonWriter writer, EventData value, JsonSerializerOptions options)
+  public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
   {
-    JsonSerializer.Serialize(writer, value, value.GetType(), options);
+    serializer.Serialize(writer, value);
   }
 }
+
+

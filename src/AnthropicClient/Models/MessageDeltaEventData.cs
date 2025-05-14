@@ -1,4 +1,4 @@
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace AnthropicClient.Models;
 
@@ -43,13 +43,13 @@ public class MessageDelta
   /// <summary>
   /// Gets the stop reason.
   /// </summary>
-  [JsonPropertyName("stop_reason")]
+  [JsonProperty("stop_reason")]
   public string StopReason { get; init; } = string.Empty;
 
   /// <summary>
   /// Gets the stop sequence.
   /// </summary>
-  [JsonPropertyName("stop_sequence")]
+  [JsonProperty("stop_sequence")]
   public string? StopSequence { get; init; }
 
   [JsonConstructor]
@@ -69,3 +69,5 @@ public class MessageDelta
     StopSequence = stopSequence;
   }
 }
+
+

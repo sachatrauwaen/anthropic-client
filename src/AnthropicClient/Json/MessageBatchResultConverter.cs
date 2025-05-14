@@ -1,29 +1,36 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 using AnthropicClient.Models;
 
 namespace AnthropicClient.Json;
 
-class MessageBatchResultConverter : JsonConverter<MessageBatchResult>
+class MessageBatchResultConverter : JsonConverter
 {
-  public override MessageBatchResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+  public override bool CanConvert(Type objectType)
   {
-    using var jsonDocument = JsonDocument.ParseValue(ref reader);
-    var root = jsonDocument.RootElement;
-    var type = root.GetProperty("type").GetString();
+    return objectType == typeof(MessageBatchResult);
+  }
+
+  public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+  {
+    JObject jObject = JObject.Load(reader);
+    var type = jObject["type"]?.ToString();
+
     return type switch
     {
-      MessageBatchResultType.Succeeded => JsonSerializer.Deserialize<SucceededMessageBatchResult>(root.GetRawText(), options)!,
-      MessageBatchResultType.Errored => JsonSerializer.Deserialize<ErroredMessageBatchResult>(root.GetRawText(), options)!,
-      MessageBatchResultType.Canceled => JsonSerializer.Deserialize<CanceledMessageBatchResult>(root.GetRawText(), options)!,
-      MessageBatchResultType.Expired => JsonSerializer.Deserialize<ExpiredMessageBatchResult>(root.GetRawText(), options)!,
-      _ => throw new JsonException($"Unknown message batch result type: {type}")
+      MessageBatchResultType.Succeeded => jObject.ToObject<SucceededMessageBatchResult>(serializer),
+      MessageBatchResultType.Errored => jObject.ToObject<ErroredMessageBatchResult>(serializer),
+      MessageBatchResultType.Canceled => jObject.ToObject<CanceledMessageBatchResult>(serializer),
+      MessageBatchResultType.Expired => jObject.ToObject<ExpiredMessageBatchResult>(serializer),
+      _ => throw new JsonSerializationException($"Unknown message batch result type: {type}")
     };
   }
 
-  public override void Write(Utf8JsonWriter writer, MessageBatchResult value, JsonSerializerOptions options)
+  public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
   {
-    JsonSerializer.Serialize(writer, value, value.GetType(), options);
+    serializer.Serialize(writer, value);
   }
 }
+
+

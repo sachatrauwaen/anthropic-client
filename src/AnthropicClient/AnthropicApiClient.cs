@@ -1,6 +1,6 @@
 using System.Net.Http.Headers;
 using System.Text;
-using System.Text.Json;
+using Newtonsoft.Json;
 
 using AnthropicClient.Json;
 using AnthropicClient.Models;
@@ -433,6 +433,8 @@ public class AnthropicApiClient : IAnthropicApiClient
     return await _httpClient.PostAsync(endpoint, requestContent);
   }
 
-  private string Serialize<T>(T obj) => JsonSerializer.Serialize(obj, JsonSerializationOptions.DefaultOptions);
-  private T? Deserialize<T>(string json) => JsonSerializer.Deserialize<T>(json, JsonSerializationOptions.DefaultOptions);
+  private string Serialize<T>(T obj) => JsonConvert.SerializeObject(obj, JsonSerializationOptions.DefaultOptions);
+  private T? Deserialize<T>(string json) => JsonConvert.DeserializeObject<T>(json, JsonSerializationOptions.DefaultOptions);
 }
+
+

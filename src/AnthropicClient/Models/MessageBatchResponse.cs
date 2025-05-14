@@ -1,4 +1,4 @@
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace AnthropicClient.Models;
 
@@ -20,49 +20,49 @@ public class MessageBatchResponse
   /// <summary>
   /// Gets the processing status of the batch.
   /// </summary>
-  [JsonPropertyName("processing_status")]
+  [JsonProperty("processing_status")]
   public string ProcessingStatus { get; init; } = string.Empty;
 
   /// <summary>
   /// Gets the counts of requests in the batch.
   /// </summary>
-  [JsonPropertyName("request_counts")]
+  [JsonProperty("request_counts")]
   public MessageBatchRequestCounts RequestCounts { get; init; } = new();
 
   /// <summary>
   /// Gets the date and time when the batch ended.
   /// </summary>
-  [JsonPropertyName("ended_at")]
+  [JsonProperty("ended_at")]
   public DateTimeOffset? EndedAt { get; init; } = DateTimeOffset.MinValue;
 
   /// <summary>
   /// Gets the date and time when the batch was created.
   /// </summary>
-  [JsonPropertyName("created_at")]
+  [JsonProperty("created_at")]
   public DateTimeOffset CreatedAt { get; init; }
 
   /// <summary>
   /// Gets the date and time when the batch expires.
   /// </summary>
-  [JsonPropertyName("expires_at")]
+  [JsonProperty("expires_at")]
   public DateTimeOffset ExpiresAt { get; init; }
 
   /// <summary>
   /// Gets the date and time when the batch was archived.
   /// </summary>
-  [JsonPropertyName("archived_at")]
+  [JsonProperty("archived_at")]
   public DateTimeOffset? ArchivedAt { get; init; } = DateTimeOffset.MinValue;
 
   /// <summary>
   /// Gets the date and time when the batch cancellation was initiated.
   /// </summary>
-  [JsonPropertyName("cancel_initiated_at")]
+  [JsonProperty("cancel_initiated_at")]
   public DateTimeOffset? CancelInitiatedAt { get; init; } = DateTimeOffset.MinValue;
 
   /// <summary>
   /// Gets the URL to the results of the batch.
   /// </summary>
-  [JsonPropertyName("results_url")]
+  [JsonProperty("results_url")]
   public string? ResultsUrl { get; init; } = string.Empty;
 }
 
@@ -96,3 +96,5 @@ public class MessageBatchRequestCounts
   /// </summary>
   public int Expired { get; init; }
 }
+
+

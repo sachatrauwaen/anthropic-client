@@ -1,4 +1,4 @@
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace AnthropicClient.Models;
 
@@ -15,7 +15,7 @@ public abstract class Content
   /// <summary>
   /// Gets the cache control to be used for the content.
   /// </summary>
-  [JsonPropertyName("cache_control")]
+  [JsonProperty("cache_control")]
   public CacheControl? CacheControl { get; set; }
 
   [JsonConstructor]
@@ -45,3 +45,5 @@ public abstract class Content
     CacheControl = cacheControl;
   }
 }
+
+

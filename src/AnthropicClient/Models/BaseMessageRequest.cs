@@ -1,4 +1,4 @@
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 using AnthropicClient.Utils;
 
@@ -36,7 +36,7 @@ public abstract class BaseMessageRequest
   /// If will return the system messages if they are provided, otherwise it will return the system message.
   /// If neither are provided, it will return null.
   /// </summary>
-  [JsonPropertyName("system")]
+  [JsonProperty("system")]
   public List<TextContent>? SystemPrompt => GetSystemPrompt();
 
   private List<TextContent>? GetSystemPrompt()
@@ -62,7 +62,7 @@ public abstract class BaseMessageRequest
   /// <summary>
   /// Gets the maximum number of tokens to generate.
   /// </summary>
-  [JsonPropertyName("max_tokens")]
+  [JsonProperty("max_tokens")]
   public int MaxTokens { get; init; } = 1024;
 
   /// <summary>
@@ -73,7 +73,7 @@ public abstract class BaseMessageRequest
   /// <summary>
   /// Gets the prompt stop sequences.
   /// </summary>
-  [JsonPropertyName("stop_sequences")]
+  [JsonProperty("stop_sequences")]
   public List<string> StopSequences { get; init; } = [];
 
   /// <summary>
@@ -94,7 +94,7 @@ public abstract class BaseMessageRequest
   /// <summary>
   /// Gets the tool choice mode to use for the request.
   /// </summary>
-  [JsonPropertyName("tool_choice")]
+  [JsonProperty("tool_choice")]
   public ToolChoice? ToolChoice { get; init; } = null;
 
   /// <summary>
@@ -180,3 +180,5 @@ public abstract class BaseMessageRequest
     StopSequences = stopSequences ?? [];
   }
 }
+
+

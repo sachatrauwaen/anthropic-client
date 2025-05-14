@@ -1,4 +1,4 @@
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 using AnthropicClient.Utils;
 
@@ -12,7 +12,7 @@ public class MessageBatchRequestItem
   /// <summary>
   /// Gets the custom identifier for the message.
   /// </summary>
-  [JsonPropertyName("custom_id")]
+  [JsonProperty("custom_id")]
   public string CustomId { get; init; }
 
   /// <summary>
@@ -37,3 +37,5 @@ public class MessageBatchRequestItem
     Params = messageRequest;
   }
 }
+
+

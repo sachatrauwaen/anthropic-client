@@ -87,3 +87,5 @@ public class ToolCallResult<T>
     return new ToolCallResult<T>(default!, error, false);
   }
 }
+
+

@@ -1,4 +1,4 @@
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace AnthropicClient.Models;
 
@@ -10,7 +10,7 @@ public class JsonDelta : ContentDelta
   /// <summary>
   /// Gets the partial JSON.
   /// </summary>
-  [JsonPropertyName("partial_json")]
+  [JsonProperty("partial_json")]
   public string PartialJson { get; init; } = string.Empty;
 
   [JsonConstructor]
@@ -28,3 +28,5 @@ public class JsonDelta : ContentDelta
     PartialJson = partialJson;
   }
 }
+
+

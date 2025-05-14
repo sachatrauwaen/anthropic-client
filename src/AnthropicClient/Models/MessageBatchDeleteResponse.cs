@@ -15,3 +15,5 @@ public class MessageBatchDeleteResponse
   /// </summary>
   public string Type { get; init; } = string.Empty;
 }
+
+

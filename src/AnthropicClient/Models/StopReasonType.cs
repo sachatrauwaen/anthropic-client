@@ -25,3 +25,5 @@ public static class StopReasonType
   /// </summary>
   public const string ToolUse = "tool_use";
 }
+
+

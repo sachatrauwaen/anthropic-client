@@ -1,28 +1,35 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 using AnthropicClient.Models;
 
 namespace AnthropicClient.Json;
 
-class ToolChoiceConverter : JsonConverter<ToolChoice>
+class ToolChoiceConverter : JsonConverter
 {
-  public override ToolChoice Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+  public override bool CanConvert(Type objectType)
   {
-    using var jsonDocument = JsonDocument.ParseValue(ref reader);
-    var root = jsonDocument.RootElement;
-    var type = root.GetProperty("type").GetString();
+    return objectType == typeof(ToolChoice);
+  }
+
+  public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+  {
+    JObject jObject = JObject.Load(reader);
+    var type = jObject["type"]?.ToString();
+
     return type switch
     {
-      ToolChoiceType.Auto => JsonSerializer.Deserialize<AutoToolChoice>(root.GetRawText(), options)!,
-      ToolChoiceType.Any => JsonSerializer.Deserialize<AnyToolChoice>(root.GetRawText(), options)!,
-      ToolChoiceType.Tool => JsonSerializer.Deserialize<SpecificToolChoice>(root.GetRawText(), options)!,
-      _ => throw new JsonException($"Unknown tool choice type: {type}")
+      ToolChoiceType.Auto => jObject.ToObject<AutoToolChoice>(serializer),
+      ToolChoiceType.Any => jObject.ToObject<AnyToolChoice>(serializer),
+      ToolChoiceType.Tool => jObject.ToObject<SpecificToolChoice>(serializer),
+      _ => throw new JsonSerializationException($"Unknown tool choice type: {type}")
     };
   }
 
-  public override void Write(Utf8JsonWriter writer, ToolChoice value, JsonSerializerOptions options)
+  public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
   {
-    JsonSerializer.Serialize(writer, value, value.GetType(), options);
+    serializer.Serialize(writer, value);
   }
 }
+
+
