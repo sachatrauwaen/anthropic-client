@@ -8,17 +8,17 @@ public class ToolUseContent : Content
   /// <summary>
   /// Gets the ID of the tool use.
   /// </summary>
-  public string Id { get; init; } = string.Empty;
+  public string Id { get; set; } = string.Empty;
 
   /// <summary>
   /// Gets the name of the tool.
   /// </summary>
-  public string Name { get; init; } = string.Empty;
+  public string Name { get; set; } = string.Empty;
 
   /// <summary>
   /// Gets the input of the tool.
   /// </summary>
-  public Dictionary<string, object?> Input { get; init; } = [];
+  public Dictionary<string, object?> Input { get; set; } = [];
 
   /// <summary>
   /// Initializes a new instance of the <see cref="ToolUseContent"/> class.
