@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+
 namespace AnthropicClient.Tests.Unit.Models;
 
 public class MessageRequestTests : SerializationTest
@@ -530,7 +532,7 @@ public class MessageRequestTests : SerializationTest
 
     var action = () => Deserialize<MessageRequest>(json);
 
-    action.Should().Throw<JsonException>();
+    action.Should().Throw<JsonSerializationException>();
   }
 
   [Fact]
@@ -627,6 +629,6 @@ public class MessageRequestTests : SerializationTest
   {
     var action = () => Deserialize<MessageRequest>(_testJsonWithUnknownContent);
 
-    action.Should().Throw<JsonException>();
+    action.Should().Throw<JsonSerializationException>();
   }
 }

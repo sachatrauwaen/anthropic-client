@@ -1,3 +1,6 @@
+
+using Newtonsoft.Json.Linq;
+
 namespace AnthropicClient.Tests.Unit.Utils;
 
 public class JsonSchemaGeneratorTests
@@ -14,7 +17,7 @@ public class JsonSchemaGeneratorTests
 
     var schema = JsonSchemaGenerator.GenerateInputSchema(function);
 
-    JsonAssert.Equal(expectedSchema, schema);
+    JsonAssertEqual(expectedSchema, schema);
   }
 
   [Fact]
@@ -39,7 +42,12 @@ public class JsonSchemaGeneratorTests
 
     var schema = JsonSchemaGenerator.GenerateInputSchema(function);
 
-    JsonAssert.Equal(expectedSchema, schema);
+    JsonAssertEqual(expectedSchema, schema);
+  }
+
+  private void JsonAssertEqual(JsonObject expectedSchema, JObject schema)
+  {
+    JsonAssert.Equal(expectedSchema.ToJsonString(), schema.ToString());
   }
 
   [Fact]
@@ -67,7 +75,7 @@ public class JsonSchemaGeneratorTests
 
     var schema = JsonSchemaGenerator.GenerateInputSchema(function);
 
-    JsonAssert.Equal(expectedSchema, schema);
+    JsonAssertEqual(expectedSchema, schema);
   }
 
   [Fact]
@@ -95,7 +103,7 @@ public class JsonSchemaGeneratorTests
 
     var schema = JsonSchemaGenerator.GenerateInputSchema(function);
 
-    JsonAssert.Equal(expectedSchema, schema);
+    JsonAssertEqual(expectedSchema, schema);
   }
 
   [Fact]
@@ -113,7 +121,7 @@ public class JsonSchemaGeneratorTests
 
     var schema = JsonSchemaGenerator.GenerateInputSchema(function);
 
-    JsonAssert.Equal(expectedSchema, schema);
+    JsonAssertEqual(expectedSchema, schema);
   }
 
   [Theory]
@@ -121,6 +129,6 @@ public class JsonSchemaGeneratorTests
   public void GenerateInputSchema_GivenFunction_ItShouldReturnExpectedSchema(Tool tool, JsonObject expectedSchema)
   {
     var schema = JsonSchemaGenerator.GenerateInputSchema(tool.Function);
-    JsonAssert.Equal(expectedSchema, schema);
+    JsonAssertEqual(expectedSchema, schema);
   }
 }

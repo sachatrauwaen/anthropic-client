@@ -1,10 +1,12 @@
+using Newtonsoft.Json;
+
 namespace AnthropicClient.Tests.Unit;
 
 public class SerializationTest
 {
-  private readonly JsonSerializerOptions _jsonSerializerOptions = JsonSerializationOptions.DefaultOptions;
+  private readonly JsonSerializerSettings _jsonSerializerOptions = JsonSerializationOptions.DefaultOptions;
 
-  protected string Serialize<T>(T obj) => JsonSerializer.Serialize(obj, _jsonSerializerOptions);
+  protected string Serialize<T>(T obj) => JsonConvert.SerializeObject(obj, _jsonSerializerOptions);
 
-  protected T? Deserialize<T>(string json) => JsonSerializer.Deserialize<T>(json, _jsonSerializerOptions);
+  protected T? Deserialize<T>(string json) => JsonConvert.DeserializeObject<T>(json, _jsonSerializerOptions);
 }

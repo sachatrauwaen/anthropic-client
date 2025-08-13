@@ -18,8 +18,8 @@ public interface IAnthropicApiClient
   /// Creates a message asynchronously and streams the response.
   /// </summary>
   /// <param name="request">The message request to create.</param>
-  /// <returns>An asynchronous enumerable that yields the response event by event.</returns>
-  IAsyncEnumerable<AnthropicEvent> CreateMessageAsync(StreamMessageRequest request);
+  /// <returns>A task that represents the asynchronous operation. The task result contains an enumerable that yields the response event by event.</returns>
+  Task<IEnumerable<AnthropicEvent>> CreateMessageAsync(StreamMessageRequest request);
 
   /// <summary>
   /// Creates a batch of messages asynchronously.
@@ -46,8 +46,8 @@ public interface IAnthropicApiClient
   /// Lists all message batches asynchronously.
   /// </summary>
   /// <param name="limit">The maximum number of message batches to return in each page.</param>
-  /// <returns>An asynchronous enumerable that yields the response as an <see cref="AnthropicResult{T}"/> where T is <see cref="Page{T}"/> where T is <see cref="MessageBatchResponse"/>.</returns>
-  IAsyncEnumerable<AnthropicResult<Page<MessageBatchResponse>>> ListAllMessageBatchesAsync(int limit = 20);
+  /// <returns>A task that represents the asynchronous operation. The task result contains an enumerable that yields the response as an <see cref="AnthropicResult{T}"/> where T is <see cref="Page{T}"/> where T is <see cref="MessageBatchResponse"/>.</returns>
+  Task<IEnumerable<AnthropicResult<Page<MessageBatchResponse>>>> ListAllMessageBatchesAsync(int limit = 20);
 
   /// <summary>
   /// Cancels a message batch asynchronously.
@@ -67,8 +67,8 @@ public interface IAnthropicApiClient
   /// Gets the results of a message batch asynchronously.
   /// </summary>
   /// <param name="batchId">The ID of the message batch to get the results for.</param>
-  /// <returns>A task that represents the asynchronous operation. The task result contains the response as an <see cref="AnthropicResult{T}"/> where T is <see cref="IAsyncEnumerable{T}"/> where T is <see cref="MessageBatchResultItem"/>.</returns>
-  Task<AnthropicResult<IAsyncEnumerable<MessageBatchResultItem>>> GetMessageBatchResultsAsync(string batchId);
+  /// <returns>A task that represents the asynchronous operation. The task result contains the response as an <see cref="AnthropicResult{T}"/> where T is <see cref="IEnumerable{T}"/> where T is <see cref="MessageBatchResultItem"/>.</returns>
+  Task<AnthropicResult<IEnumerable<MessageBatchResultItem>>> GetMessageBatchResultsAsync(string batchId);
 
   /// <summary>
   /// Counts the tokens in a message asynchronously.
@@ -88,9 +88,9 @@ public interface IAnthropicApiClient
   /// Lists the models asynchronously
   /// </summary>
   /// <param name="limit">The maximum number of models to return in each page.</param>
-  /// <returns>An asynchronous enumerable that yields the response as an <see cref="AnthropicResult{T}"/> where T is <see cref="Page{T}"/> where T is <see cref="AnthropicModel"/>.</returns>
+  /// <returns>A task that represents the asynchronous operation. The task result contains an enumerable that yields the response as an <see cref="AnthropicResult{T}"/> where T is <see cref="Page{T}"/> where T is <see cref="AnthropicModel"/>.</returns>
   /// 
-  IAsyncEnumerable<AnthropicResult<Page<AnthropicModel>>> ListAllModelsAsync(int limit = 20);
+  Task<IEnumerable<AnthropicResult<Page<AnthropicModel>>>> ListAllModelsAsync(int limit = 20);
 
   /// <summary>
   /// Gets a model by its ID asynchronously.

@@ -58,7 +58,7 @@ public class Examples(ConfigurationFixture config, ITestOutputHelper console) : 
 
     var msgBuilder = new StringBuilder();
 
-    await foreach (var e in events)
+    foreach (var e in await events)
     {
       switch (e.Data)
       {
@@ -79,7 +79,7 @@ public class Examples(ConfigurationFixture config, ITestOutputHelper console) : 
   [Example]
   public async Task CreateStreamMessageAndGetCompleteMessageResponse()
   {
-    var events = _client.CreateMessageAsync(new StreamMessageRequest(
+    var events = await _client.CreateMessageAsync(new StreamMessageRequest(
       AnthropicModels.Claude3Haiku,
       [
         new(
@@ -91,7 +91,7 @@ public class Examples(ConfigurationFixture config, ITestOutputHelper console) : 
 
     MessageResponse? response = null;
 
-    await foreach (var e in events)
+    foreach (var e in events)
     {
       switch (e.Data)
       {
@@ -492,7 +492,7 @@ public class Examples(ConfigurationFixture config, ITestOutputHelper console) : 
 
     MessageResponse? response = null;
 
-    await foreach (var e in events)
+    foreach (var e in await events)
     {
       switch (e.Data)
       {

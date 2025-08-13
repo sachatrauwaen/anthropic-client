@@ -296,8 +296,8 @@ public class AnthropicApiClientTests : IntegrationTest
       ]
     );
 
-    var result = Client.CreateMessageAsync(request);
-    var e = await result.FirstOrDefaultAsync();
+    var result = await Client.CreateMessageAsync(request);
+    var e =  result.FirstOrDefault();
 
     e.Should().BeEquivalentTo(anthropicEvent);
   }
@@ -323,9 +323,9 @@ public class AnthropicApiClientTests : IntegrationTest
       ]
     );
 
-    var result = Client.CreateMessageAsync(request);
+    var result = await Client.CreateMessageAsync(request);
 
-    var actualEvents = await result.ToListAsync();
+    var actualEvents = result.ToList();
 
     actualEvents.Should().BeEquivalentTo(events);
   }
@@ -355,10 +355,10 @@ public class AnthropicApiClientTests : IntegrationTest
       ]
     );
 
-    var result = Client.CreateMessageAsync(request);
-    var msgCompleteEvent = await result
+    var result = await Client.CreateMessageAsync(request);
+    var msgCompleteEvent = result
       .Where(e => e.Type is EventType.MessageComplete)
-      .FirstAsync();
+      .First();
 
     msgCompleteEvent.Data.Should().BeOfType<MessageCompleteEventData>();
 
@@ -394,8 +394,8 @@ public class AnthropicApiClientTests : IntegrationTest
       ]
     );
 
-    var result = Client.CreateMessageAsync(request);
-    var events = await result.ToListAsync();
+    var result = await Client.CreateMessageAsync(request);
+    var events = result.ToList();
 
     events.Should().HaveCount(1);
     events[0].Type.Should().Be(EventType.Error);
@@ -426,8 +426,8 @@ public class AnthropicApiClientTests : IntegrationTest
       ]
     );
 
-    var result = Client.CreateMessageAsync(request);
-    var events = await result.ToListAsync();
+    var result = await Client.CreateMessageAsync(request);
+    var events = result.ToList();
 
     events.Should().HaveCount(1);
     events[0].Type.Should().Be(EventType.Error);
@@ -839,7 +839,7 @@ public class AnthropicApiClientTests : IntegrationTest
     var pageResponses = Client.ListAllModelsAsync();
     var collectedPages = new List<Page<AnthropicModel>>();
 
-    await foreach (var response in pageResponses)
+    foreach (var response in await pageResponses)
     {
       response.IsSuccess.Should().BeTrue();
       response.Value.Should().BeOfType<Page<AnthropicModel>>();
@@ -902,7 +902,7 @@ public class AnthropicApiClientTests : IntegrationTest
     var responses = Client.ListAllModelsAsync();
     var count = 0;
 
-    await foreach (var page in responses)
+    foreach (var page in await responses)
     {
       count++;
       page.IsSuccess.Should().BeFalse();
@@ -927,7 +927,7 @@ public class AnthropicApiClientTests : IntegrationTest
     var responses = Client.ListAllModelsAsync();
     var count = 0;
 
-    await foreach (var page in responses)
+    foreach (var page in await responses)
     {
       count++;
       page.IsSuccess.Should().BeFalse();
@@ -987,7 +987,7 @@ public class AnthropicApiClientTests : IntegrationTest
     var responses = Client.ListAllModelsAsync();
     var count = 0;
 
-    await foreach (var page in responses)
+    foreach (var page in await responses)
     {
       count++;
 
@@ -1025,7 +1025,7 @@ public class AnthropicApiClientTests : IntegrationTest
     var responses = Client.ListAllModelsAsync();
     var count = 0;
 
-    await foreach (var page in responses)
+    foreach (var page in await responses)
     {
       count++;
       page.IsSuccess.Should().BeTrue();
@@ -1390,7 +1390,7 @@ public class AnthropicApiClientTests : IntegrationTest
 
     result.IsSuccess.Should().BeTrue();
 
-    var actualResults = await result.Value.ToListAsync();
+    var actualResults = result.Value.ToList();
 
     actualResults.Should().BeEquivalentTo(expectedResults);
   }
@@ -1416,7 +1416,7 @@ public class AnthropicApiClientTests : IntegrationTest
 
     result.IsSuccess.Should().BeTrue();
 
-    var actualResults = await result.Value.ToListAsync();
+    var actualResults = result.Value.ToList();
 
     actualResults.Should().BeEquivalentTo(expectedResults);
   }
@@ -1776,7 +1776,7 @@ public class AnthropicApiClientTests : IntegrationTest
     var pageResponses = Client.ListAllMessageBatchesAsync();
     var collectedPages = new List<Page<MessageBatchResponse>>();
 
-    await foreach (var response in pageResponses)
+    foreach (var response in await pageResponses)
     {
       response.IsSuccess.Should().BeTrue();
       response.Value.Should().BeOfType<Page<MessageBatchResponse>>();

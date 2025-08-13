@@ -75,15 +75,16 @@ public class AnthropicApiClient : IAnthropicApiClient
   }
 
   /// <inheritdoc/>
-  public async IAsyncEnumerable<AnthropicEvent> CreateMessageAsync(StreamMessageRequest request)
+  public async Task<IEnumerable<AnthropicEvent>> CreateMessageAsync(StreamMessageRequest request)
   {
     var response = await SendRequestAsync(MessagesEndpoint, request);
+    var events = new List<AnthropicEvent>();
 
     if (response.IsSuccessStatusCode is false)
     {
       var error = Deserialize<AnthropicError>(await response.Content.ReadAsStringAsync()) ?? new AnthropicError();
-      yield return new AnthropicEvent(EventType.Error, new ErrorEventData(error.Error));
-      yield break;
+      events.Add(new AnthropicEvent(EventType.Error, new ErrorEventData(error.Error)));
+      return events;
     }
 
     var anthropicHeaders = new AnthropicHeaders(response.Headers);
@@ -200,7 +201,7 @@ public class AnthropicApiClient : IAnthropicApiClient
       if (currentEvent.Type is EventType.MessageStop && msgResponse is not null)
       {
         var eventData = new MessageCompleteEventData(msgResponse, anthropicHeaders);
-        yield return new AnthropicEvent(EventType.MessageComplete, eventData);
+        events.Add(new AnthropicEvent(EventType.MessageComplete, eventData));
         msgResponse = null;
       }
 
@@ -208,7 +209,7 @@ public class AnthropicApiClient : IAnthropicApiClient
       {
         if (string.IsNullOrWhiteSpace(currentEvent.Type) is false)
         {
-          yield return currentEvent;
+          events.Add(currentEvent);
           currentEvent = new AnthropicEvent();
         }
 
@@ -217,7 +218,7 @@ public class AnthropicApiClient : IAnthropicApiClient
 
       if (line == string.Empty)
       {
-        yield return currentEvent;
+        events.Add(currentEvent);
         currentEvent = new AnthropicEvent();
       }
 
@@ -236,6 +237,8 @@ public class AnthropicApiClient : IAnthropicApiClient
         continue;
       }
     } while (true);
+
+    return events;
   }
 
   /// <inheritdoc/>
@@ -262,12 +265,9 @@ public class AnthropicApiClient : IAnthropicApiClient
   }
 
   /// <inheritdoc/>
-  public async IAsyncEnumerable<AnthropicResult<Page<MessageBatchResponse>>> ListAllMessageBatchesAsync(int limit = 20)
+  public async Task<IEnumerable<AnthropicResult<Page<MessageBatchResponse>>>> ListAllMessageBatchesAsync(int limit = 20)
   {
-    await foreach (var result in GetAllPagesAsync<MessageBatchResponse>(MessageBatchesEndpoint, limit))
-    {
-      yield return result;
-    }
+    return await GetAllPagesListAsync<MessageBatchResponse>(MessageBatchesEndpoint, limit);
   }
 
   /// <inheritdoc/>
@@ -287,7 +287,7 @@ public class AnthropicApiClient : IAnthropicApiClient
   }
 
   /// <inheritdoc/>
-  public async Task<AnthropicResult<IAsyncEnumerable<MessageBatchResultItem>>> GetMessageBatchResultsAsync(string batchId)
+  public async Task<AnthropicResult<IEnumerable<MessageBatchResultItem>>> GetMessageBatchResultsAsync(string batchId)
   {
     var response = await SendRequestAsync($"{MessageBatchesEndpoint}/{batchId}/results");
     var anthropicHeaders = new AnthropicHeaders(response.Headers);
@@ -296,26 +296,12 @@ public class AnthropicApiClient : IAnthropicApiClient
     {
       var content = await response.Content.ReadAsStringAsync();
       var error = Deserialize<AnthropicError>(content) ?? new AnthropicError();
-      return AnthropicResult<IAsyncEnumerable<MessageBatchResultItem>>.Failure(error, anthropicHeaders);
+      return AnthropicResult<IEnumerable<MessageBatchResultItem>>.Failure(error, anthropicHeaders);
     }
 
-    return AnthropicResult<IAsyncEnumerable<MessageBatchResultItem>>.Success(ReadResultsAsync(), anthropicHeaders);
+    return AnthropicResult<IEnumerable<MessageBatchResultItem>>.Success(await ReadResultsListAsync(batchId), anthropicHeaders);
 
-    async IAsyncEnumerable<MessageBatchResultItem> ReadResultsAsync()
-    {
-      using var responseContent = await response.Content.ReadAsStreamAsync();
-      using var streamReader = new StreamReader(responseContent);
 
-      var line = await streamReader.ReadLineAsync();
-
-      while (line is not null)
-      {
-        var resultItem = Deserialize<MessageBatchResultItem>(line) ?? new MessageBatchResultItem();
-        yield return resultItem;
-
-        line = await streamReader.ReadLineAsync();
-      }
-    }
   }
 
   /// <inheritdoc/>
@@ -335,12 +321,9 @@ public class AnthropicApiClient : IAnthropicApiClient
   }
 
   /// <inheritdoc/>
-  public async IAsyncEnumerable<AnthropicResult<Page<AnthropicModel>>> ListAllModelsAsync(int limit = 20)
+  public async Task<IEnumerable<AnthropicResult<Page<AnthropicModel>>>> ListAllModelsAsync(int limit = 20)
   {
-    await foreach (var result in GetAllPagesAsync<AnthropicModel>(ModelsEndpoint, limit))
-    {
-      yield return result;
-    }
+    return await GetAllPagesListAsync<AnthropicModel>(ModelsEndpoint, limit);
   }
 
   /// <inheritdoc/>
@@ -351,8 +334,9 @@ public class AnthropicApiClient : IAnthropicApiClient
     return await CreateResultAsync<AnthropicModel>(response);
   }
 
-  private async IAsyncEnumerable<AnthropicResult<Page<T>>> GetAllPagesAsync<T>(string endpoint, int limit = 20)
+  private async Task<List<AnthropicResult<Page<T>>>> GetAllPagesListAsync<T>(string endpoint, int limit = 20)
   {
+    var results = new List<AnthropicResult<Page<T>>>();
     var pagingRequest = new PagingRequest(limit: limit);
     string Endpoint() => $"{endpoint}?{pagingRequest.ToQueryParameters()}";
     bool hasMore;
@@ -366,8 +350,8 @@ public class AnthropicApiClient : IAnthropicApiClient
       if (response.IsSuccessStatusCode is false)
       {
         var error = Deserialize<AnthropicError>(responseContent) ?? new AnthropicError();
-        yield return AnthropicResult<Page<T>>.Failure(error, anthropicHeaders);
-        yield break;
+        results.Add(AnthropicResult<Page<T>>.Failure(error, anthropicHeaders));
+        break;
       }
 
       var page = Deserialize<Page<T>>(responseContent) ?? new Page<T>();
@@ -382,8 +366,31 @@ public class AnthropicApiClient : IAnthropicApiClient
         hasMore = false;
       }
 
-      yield return AnthropicResult<Page<T>>.Success(page, anthropicHeaders);
+      results.Add(AnthropicResult<Page<T>>.Success(page, anthropicHeaders));
     } while (hasMore);
+
+    return results;
+  }
+
+  private async Task<List<MessageBatchResultItem>> ReadResultsListAsync(string batchId)
+  {
+    var results = new List<MessageBatchResultItem>();
+    var response = await SendRequestAsync($"{MessageBatchesEndpoint}/{batchId}/results");
+
+    using var responseContent = await response.Content.ReadAsStreamAsync();
+    using var streamReader = new StreamReader(responseContent);
+
+    var line = await streamReader.ReadLineAsync();
+
+    while (line is not null)
+    {
+      var resultItem = Deserialize<MessageBatchResultItem>(line) ?? new MessageBatchResultItem();
+      results.Add(resultItem);
+
+      line = await streamReader.ReadLineAsync();
+    }
+
+    return results;
   }
 
   private ToolCall? GetToolCall(MessageResponse response, List<Tool> tools)

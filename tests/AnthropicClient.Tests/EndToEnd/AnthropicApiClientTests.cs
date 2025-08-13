@@ -31,7 +31,7 @@ public class AnthropicApiClientTests(ConfigurationFixture configFixture) : EndTo
 
     var events = new List<AnthropicEvent>();
 
-    await foreach (var e in response)
+    foreach (var e in await response)
     {
       events.Add(e);
     }
@@ -49,7 +49,7 @@ public class AnthropicApiClientTests(ConfigurationFixture configFixture) : EndTo
 
     var response = _client.CreateMessageAsync(request);
 
-    await foreach (var e in response)
+    foreach (var e in await response)
     {
       if (e.Data is MessageCompleteEventData messageCompleteData)
       {
@@ -326,7 +326,7 @@ public class AnthropicApiClientTests(ConfigurationFixture configFixture) : EndTo
   [Fact]
   public async Task ListAllModelsAsync_WhenCalled_ItShouldReturnResponse()
   {
-    var responses = await _client.ListAllModelsAsync(limit: 1).ToListAsync();
+    var responses = (await _client.ListAllModelsAsync(limit: 1)).ToList();
 
     responses.Should().HaveCountGreaterThan(0);
   }
@@ -423,7 +423,7 @@ public class AnthropicApiClientTests(ConfigurationFixture configFixture) : EndTo
     var createResultOne = await _client.CreateMessageBatchAsync(requestNumberOne);
     var createResultTwo = await _client.CreateMessageBatchAsync(requestNumberTwo);
 
-    var responses = await _client.ListAllMessageBatchesAsync(limit: 1).ToListAsync();
+    var responses = (await _client.ListAllMessageBatchesAsync(limit: 1)).ToList();
 
     responses.Should().HaveCountGreaterThan(2);
 

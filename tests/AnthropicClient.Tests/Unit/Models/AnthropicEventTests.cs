@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+
 namespace AnthropicClient.Tests.Unit.Models;
 
 public class AnthropicEventTests : SerializationTest
@@ -371,6 +373,6 @@ public class AnthropicEventTests : SerializationTest
 
     Action act = () => Deserialize<AnthropicEvent>(json);
 
-    act.Should().Throw<JsonException>();
+    act.Should().Throw<JsonSerializationException>();
   }
 }

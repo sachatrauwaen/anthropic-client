@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+
 namespace AnthropicClient.Tests.Unit.Models;
 
 public class MessageBatchResultTests : SerializationTest
@@ -9,7 +11,7 @@ public class MessageBatchResultTests : SerializationTest
 
     var action = () => Deserialize<MessageBatchResult>(json);
 
-    action.Should().Throw<JsonException>();
+    action.Should().Throw<JsonSerializationException>();
   }
 
   [Fact]

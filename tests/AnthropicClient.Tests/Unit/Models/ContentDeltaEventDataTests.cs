@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+
 namespace AnthropicClient.Tests.Unit.Models;
 
 public class ContentDeltaEventDataTests : SerializationTest
@@ -98,6 +100,6 @@ public class ContentDeltaEventDataTests : SerializationTest
 
     var action = () => Deserialize<ContentDeltaEventData>(json);
 
-    action.Should().Throw<JsonException>();
+    action.Should().Throw<JsonSerializationException>();
   }
 }

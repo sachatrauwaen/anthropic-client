@@ -40,14 +40,14 @@ public static class MockHttpMessageHandlerExtensions
   {
     return mockHttpMessageHandler
       .SetupBaseRequest(HttpMethod.Post, MessagesEndpoint)
-      .WithJsonContent<MessageRequest>(r => r.Stream == false, JsonSerializationOptions.DefaultOptions);
+      .WithJsonContent<MessageRequest>(r => r.Stream == false /*, JsonSerializationOptions.DefaultOptions*/);
   }
 
   public static MockedRequest WhenCreateStreamMessageRequest(this MockHttpMessageHandler mockHttpMessageHandler)
   {
     return mockHttpMessageHandler
       .SetupBaseRequest(HttpMethod.Post, MessagesEndpoint)
-      .WithJsonContent<StreamMessageRequest>(r => r.Stream == true, JsonSerializationOptions.DefaultOptions);
+      .WithJsonContent<StreamMessageRequest>(r => r.Stream == true/*, JsonSerializationOptions.DefaultOptions*/);
   }
 
   public static MockedRequest WhenCountMessageTokensRequest(this MockHttpMessageHandler mockHttpMessageHandler)
