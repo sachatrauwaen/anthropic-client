@@ -78,7 +78,8 @@ static class JsonSchemaGenerator
     // Check if a definition for the type already exists
     // If it does, return a reference to the definition
     // no need to evaluate the type further
-    if (definitions.ContainsKey(type.FullName))
+    // if (definitions.ContainsKey(type.FullName))
+      if (definitions.Property(type.FullName) != null)
     {
       return new JObject()
       {
@@ -187,7 +188,9 @@ static class JsonSchemaGenerator
       var memberDescription = attribute?.Description ?? string.Empty;
       var memberRequired = attribute?.Required ?? Nullable.GetUnderlyingType(memberType) is null;
 
-      memberProperty = definitions.ContainsKey(memberType.FullName)
+            
+          memberProperty = definitions.Property(memberType.FullName) != null
+          //memberProperty = definitions.ContainsKey(memberType.FullName)
         ? new JObject()
         {
           [RefKey] = GetDefinitionPath(memberType)
